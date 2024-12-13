@@ -26,13 +26,11 @@ void CItem::Output()
     {
     case EItemType::Weapon:
         std::cout << "종류 : 무기" << std::endl;
-        std::cout << "공격력 : " <<
-            mOption << std::endl;
+        std::cout << "공격력 : " << mOption << std::endl;
         break;
     case EItemType::Armor:
         std::cout << "종류 : 방어구" << std::endl;
-        std::cout << "방어력 : " <<
-            mOption << std::endl;
+        std::cout << "방어력 : " << mOption << std::endl;
         break;
     }
 

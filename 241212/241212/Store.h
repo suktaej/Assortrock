@@ -8,10 +8,11 @@ public:
 	~CStore();
 private:
 	EStoreType mType;
-	class CItem* mItem[3] = {};
+	class CItem* mItem[MAX_ITEM] = {};
 public:
 	bool Init(EStoreType);
 	void Run();
+	void SellRun();
 
 };
 

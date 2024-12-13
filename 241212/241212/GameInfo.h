@@ -46,5 +46,19 @@ enum class EStoreType
 {
 	Weapon,
 	Armor,
+	Sell,
+	End
+};
+//enum class EStoreType 
+//{
+//	Weapon,
+//	Armor,
+//	End
+//};
+
+enum class EEquip
+{
+	Weapon,
+	Armor,
 	End
 };

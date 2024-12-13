@@ -6,9 +6,17 @@ enum class EStoreMenu
 	None,
 	Weapon,
 	Armor,
+	Sell,
 	Back
 };
 
+//enum class EStoreMenu
+//{
+//	None,
+//	Weapon,
+//	Armor,
+//	Back
+//};
 class CStoreManager
 {
 	friend class CGameManager;

@@ -10,10 +10,11 @@ CGameManager::CGameManager()
 }
 CGameManager::~CGameManager()
 {
-    CObjectManager::DestroyInst();  //오브젝트 관리자 제거
-    SAFE_DELETE(mStoreMgr);
-    SAFE_DELETE(mBattleMgr);
-    SAFE_DELETE(mInventory);
+	CObjectManager::DestroyInst();  //오브젝트 관리자 제거
+	CInventory::DestroyInst();      //인벤토리 제거
+	SAFE_DELETE(mStoreMgr);
+	SAFE_DELETE(mBattleMgr);
+    //SAFE_DELETE(mInventory);
 }
 
 EMainMenu CGameManager::Menu()
@@ -46,8 +47,6 @@ bool CGameManager::Init()
     mBattleMgr = new CBattleManager;
     //상점관리자 생성
     mStoreMgr = new CStoreManager;
-    //인벤토리 생성
-    mInventory = new CInventory;
 
     if (false == mBattleMgr->Init())
         return false;
@@ -71,7 +70,7 @@ void CGameManager::Run()
             mStoreMgr->Run();
             break;
         case EMainMenu::Inventory:
-            mInventory->Run();
+            CInventory::GetInst()->Run();
             break;
         case EMainMenu::Exit:
             return;

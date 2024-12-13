@@ -15,11 +15,12 @@ private:
 public:
 	bool Init(FILE* File);
 	void Output();
-	CItem* Clone(){ return new CItem(*this); }
+	CItem* Clone(){ return new CItem(*this); } //this 泅 按眉狼 林家, *this 泅 按眉
 public:
 	int GetBuy() { return mBuy; }
 	int GetSell() { return mSell; }
 	int GetOption() { return mOption; }
+	const char* GetName() { return mName; }
 	EItemType GetType() { return mItemType; }
 };
 

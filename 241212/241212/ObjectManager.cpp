@@ -45,15 +45,15 @@ bool CObjectManager::LoadMonster(){
 bool CObjectManager::LoadItem()
 {
     FILE* File = nullptr;
-	int Count = 0;
+	//int ItemSize = 0;
     
     fopen_s(&File, "WeaponStore.sto", "rb");
     if (!File)
         return false;
 
-    fread(&Count, sizeof(int), 1, File);
+    fread(&ItemSize, sizeof(int), 1, File);
 
-    for (int i = 0;i < Count;i++)
+    for (int i = 0;i < ItemSize;i++)
     {   
         CItem* Item = new CItem;
         Item->Init(File);
@@ -65,9 +65,9 @@ bool CObjectManager::LoadItem()
     if (!File)
         return false;
 
-    fread(&Count, sizeof(int), 1, File);
+    fread(&ItemSize, sizeof(int), 1, File);
     
-    for (int i = 0;i < Count;i++)
+    for (int i = 0;i < ItemSize;i++)
     {   
         CItem* Item = new CItem;
         Item->Init(File);

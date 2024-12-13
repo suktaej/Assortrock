@@ -1,5 +1,6 @@
 #pragma once
 #include "GameInfo.h"
+
 class CPlayer
 {
 private:
@@ -14,6 +15,7 @@ private:
 	int mGold = 0;
 	int mExp = 0;
 	int mLevel = 1;
+	class CItem* mEquip[static_cast<int>(EEquip::End)] = {};
 public:
 	CPlayer();
 	~CPlayer();
@@ -24,6 +26,8 @@ public:
 	void Resurrection();
 	void SetHP(int);
 	void SetGold(int);
+	class CItem* Equip(class CItem* Item);
+	class CItem* GetEquipItem(EEquip Type);
 	int GetHP();
 	int GetMaxHP();
 	int GetATK();

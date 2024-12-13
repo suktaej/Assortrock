@@ -14,7 +14,8 @@ EStoreMenu CStoreManager::Menu()
     system("cls");
     std::cout << "1. 무기" << std::endl;
     std::cout << "2. 방어구" << std::endl;
-    std::cout << "3. 뒤로가기" << std::endl;
+    std::cout << "3. 판매점" << std::endl;
+    std::cout << "4. 뒤로가기" << std::endl;
     std::cout << "메뉴 선택 : ";
 
     int SelectMenu = 0;
@@ -34,6 +35,7 @@ bool CStoreManager::Init()
     mStore[static_cast<int>(EStoreType::Weapon)]->Init(EStoreType::Weapon);
     mStore[static_cast<int>(EStoreType::Armor)] = new CStore;
     mStore[static_cast<int>(EStoreType::Armor)]->Init(EStoreType::Armor);
+
     return true;
 }
 
@@ -48,6 +50,11 @@ void CStoreManager::Run()
             break;
         case EStoreMenu::Armor:
             mStore[static_cast<int>(EStoreType::Armor)]->Run();
+            break;
+        case EStoreMenu::Sell:
+			mStore[static_cast<int>(EStoreType::Sell)] = new CStore;
+			mStore[static_cast<int>(EStoreType::Sell)]->Init(EStoreType::Sell);
+            mStore[static_cast<int>(EStoreType::Sell)]->SellRun();
             break;
         case EStoreMenu::Back:
             return;

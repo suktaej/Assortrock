@@ -27,6 +27,7 @@ private:
 	CPlayer* mPlayer = nullptr;
 	CMonster* mMonster[static_cast<int>(EBattleType::End)] = {};
 	class CItem* mItem[static_cast<int>(EItemType::End)][3];	
+	int ItemSize = 0;
 	//전방선언
 private:
 	bool LoadMonster();
@@ -37,5 +38,6 @@ public:
 	CMonster* CreateMonster(EBattleType);
 	CItem* GetItem(EItemType Type, int Index);
 	CItem* CopyItem(EItemType Type, int Index);
+	int GetItemSize() { return ItemSize; }
 };
 
