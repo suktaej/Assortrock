@@ -16,5 +16,5 @@ bool CObject::Init()
 
 void CObject::Output()
 {
-	std::cout << mName << std::endl;
+	std::cout << "ÀÌ¸§: "<< mName << std::endl;
 }

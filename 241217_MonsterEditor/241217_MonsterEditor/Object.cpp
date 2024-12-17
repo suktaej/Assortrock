@@ -20,8 +20,8 @@ CObject::~CObject()
 
 bool CObject::Init()
 {
-	std::cout << "Object Init" << std::endl;
-
+	std::cout << "이름: ";
+	std::cin >> mName;
 	return true;
 }
 
@@ -34,25 +34,10 @@ bool CObject::Init(FILE* File)
 
 void CObject::Output()
 {
-	std::cout << "이름 : " << mName << std::endl;
+	std::cout << "이름: " << mName << std::endl;
 }
 
-void CObject::CharacterExclusive()
+void CObject::Save(FILE* File)
 {
-}
-
-void CObject::OverrideTest()
-{
-}
-
-void CObject::VirtualPure1()
-{
-}
-
-void CObject::VirtualPure2()
-{
-}
-
-void CObject::VirtualPure3()
-{
+	fwrite(mName, sizeof(char), 32, File);
 }

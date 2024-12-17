@@ -18,6 +18,14 @@ bool CItem::Init()
 {
     CObject::Init();
 
+    std::cout << "Option: ";
+    std::cin >> mOption;
+
+    std::cout << "Buy Cost: ";
+    std::cin >> mBuy;
+    
+    std::cout << "Sell Cost: ";
+    std::cin >> mSell;
     return true;
 }
 
@@ -30,42 +38,26 @@ bool CItem::Init(FILE* File)
     fread(&mBuy, sizeof(int), 1, File);
     fread(&mSell, sizeof(int), 1, File);
 
-
-
     return true;
 }
 
 void CItem::Output()
 {
-    std::cout << "구매금액 : " << mBuy <<
+    std::cout << "Buy Cost : " << mBuy <<
         std::endl;
-    std::cout << "판매금액 : " << mSell <<
+    std::cout << "Sell Cost : " << mSell <<
         std::endl;
 }
 
-void CItem::OverrideTest()
+void CItem::Save(FILE* File)
 {
+    CObject::Save(File);
+    fwrite(&mType, sizeof(EItemType),1,File);
+    fwrite(&mOption, sizeof(int),1,File);
+    fwrite(&mBuy, sizeof(int),1,File);
+    fwrite(&mSell, sizeof(int),1,File);
 }
 
-//void CItem::OverrideTest(int Number)
-//{
-//}
-
-void CItem::VirtualPure()
-{
-}
-
-void CItem::VirtualPure1()
-{
-}
-
-void CItem::VirtualPure2()
-{
-}
-
-void CItem::VirtualPure3()
-{
-}
 
 CItem* CItem::Clone()
 {

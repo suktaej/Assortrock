@@ -17,6 +17,7 @@ protected:
 	EObjectType mObjType;
 	char mName[MAX_NAME];
 public:
+	void SetName(const char* Name) { strcpy_s(mName, Name); }
 	virtual bool Init();
 	virtual void Output();
 };

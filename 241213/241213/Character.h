@@ -12,12 +12,12 @@ protected:
 	int mHPMax;
 	int mMP;
 	int mMPMax;
-	int mLevel;
-	int mExp;
-	int mGold;
+	int mLevel = 1;
+	int mExp = 0;
+	int mGold = 10000;
 public:
 	bool Init();
-	void Output();
+	void Output() override;
 public:
 	void SetCharaterInfo(int ATK, int DEF, int HP, int MP);
 };
