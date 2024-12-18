@@ -36,6 +36,11 @@ bool CCharacter::Init()
 	return true;
 }
 
+bool CCharacter::Init(FILE* File)
+{
+	return true;
+}
+
 void CCharacter::Output()
 {
 	CObject::Output();

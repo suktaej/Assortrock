@@ -15,6 +15,7 @@ public:
 	bool Init() override; 
 	void Output() override;
 	void Save(FILE*) override;
+	bool Init(FILE* File) override;
 	CMonster* Clone();
 
 };

@@ -22,6 +22,7 @@ protected:
 public:
 public:
 	bool Init() override;
+	bool Init(FILE* File) override;
 	void Output() override;
 	void Save(FILE*) override;
 	CCharacter* Clone() = 0;
