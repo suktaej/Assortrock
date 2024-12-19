@@ -1,0 +1,2 @@
+Cfopen_s write
+Number = 100
