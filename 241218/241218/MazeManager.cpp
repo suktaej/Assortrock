@@ -53,7 +53,35 @@ bool CMazeManager::Init()
 	return true;
 }
 
+int CMazeManager::Menu()
+{
+	system("cls");
+	for (int i = 0;i < mMazeCount;i++)
+	{
+		std::cout << i + 1 << ". " << mMazeArray[i]->GetName() << std::endl;
+	}
+	std::cout << mMazeCount + 1 << ". 뒤로가기" << std::endl;
+	std::cout << "선택: ";
+	int Input;
+	std::cin >> Input;
+
+	if (Input<1 || Input>mMazeCount + 1)
+		return 0;
+
+	return Input;
+}
+
 void CMazeManager::Run()
 {
-	mMazeArray[0]->Output();
+	while (true)
+	{
+		int Input = Menu();
+		if (Input == 0)
+			continue;
+		else if (Input == mMazeCount + 1)
+			break;
+
+		int Index = Input - 1;
+		mMazeArray[Index]->Run();
+	}
 }

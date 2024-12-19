@@ -25,6 +25,7 @@ private:
 	int mMazeCount = 0;
 public:
 	bool Init();
+	int Menu();
 	void Run();
 };
 

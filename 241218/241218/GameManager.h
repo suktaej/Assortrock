@@ -2,6 +2,14 @@
 #include<iostream>
 #include<Windows.h>
 
+enum class EMainMenu
+{
+	None,
+	Maze,
+	Score,
+	Exit
+};
+
 class CGameManager
 {
 private:
@@ -26,5 +34,6 @@ public:
 public:
 	bool Init();
 	void Run();
+	EMainMenu Menu();
 };
 
