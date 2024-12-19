@@ -1,13 +1,5 @@
 #pragma once
-#include "Gameinfo.h"
-
-enum class EMainMenu
-{
-	None,
-	Maze,
-	Score,
-	Exit
-};
+#include "GameInfo.h"
 
 class CGameManager
 {
@@ -24,16 +16,12 @@ public:
 	}
 	static void DestroyInst()
 	{
-		if (mInst != nullptr) 
-		{
-			delete mInst;
-			mInst = nullptr;
-		}
+		delete mInst;
+		mInst = nullptr;
 	}
-private:
-	EMainMenu Menu();
 public:
 	bool Init();
 	void Run();
+	EMainMenu Menu();
 };
 

@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Maze.h"
 
 CPlayer::CPlayer()
 {
@@ -27,28 +28,33 @@ void CPlayer::Update()
             //2회 받아올 때, 첫번째는 방향키에 대한 수치, 다음으로 받아오는 것은 어느 방향인지에 대한 수치
             switch ((Ekey)Key)
             {
+                //맵마다 가로, 세로의 크기가 다를 수 있으므로 미로의 정보를 받아올 필요가 있음
             case Ekey::Up:
                 --mPos.Y;
-                if (mPos.Y < 0)
-                    mPos.Y = 0;
+                if (mMaze->GetTile(mPos.X, mPos.Y) == ETileType::Wall)
+                    ++mPos.Y;
                 break;
             case Ekey::Down:
                 ++mPos.Y;
+                if (mMaze->GetTile(mPos.X, mPos.Y) == ETileType::Wall)
+                    --mPos.Y;
                 break;
             case Ekey::Left:
                 --mPos.X;
-                if (mPos.X < 0)
-                    mPos.X = 0;
+                if (mMaze->GetTile(mPos.X, mPos.Y) == ETileType::Wall)
+                    ++mPos.X;
                 break;
             case Ekey::Right:
                 ++mPos.X;
+                if (mMaze->GetTile(mPos.X, mPos.Y) == ETileType::Wall)
+                    --mPos.X;
                 break;
             }
         }
     }
 }
 
-void CPlayer::Output()
+void CPlayer::Output(char* OutBuffer,int CountX)
 {
         SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), mPos);
         std::cout << "P";

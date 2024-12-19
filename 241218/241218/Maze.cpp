@@ -1,5 +1,6 @@
 #include "Maze.h"
-#include "Player.h" //player 생성 시 호출을 위함
+#include "Player.h"
+#include "Item.h"
 
 CMaze::CMaze()
 {
@@ -7,10 +8,22 @@ CMaze::CMaze()
 
 CMaze::~CMaze()
 {
+    if (nullptr != mMazeArray)
+    {
+        for (int i = 0;i < mCountY;i++)
+            delete[] mMazeArray[i];
+    }
+    delete mMazeArray;
+    //삭제 확인
+    if(nullptr!=mOutputBuffer)
+		delete[] mOutputBuffer;
 }
 
 bool CMaze::Init(const char* FileName)
 {
+    mObjectList = new CObject * [mObjectCapacity];
+    //생성한 아이템, 함정 등을 저장하기 위한 오브젝트 배열
+
     FILE* File = nullptr;
     fopen_s(&File, FileName, "rt");
 
@@ -69,11 +82,34 @@ bool CMaze::Init(const char* FileName)
                 mStartPos.X = j;
                 mStartPos.Y = i;
                 mOutputBuffer[OutputIndex] = 'S';
-                std::cout << "S";
                 break;
             case ETileType::Goal:
+                mGoalPos.X = j;
+                mGoalPos.Y = i;
                 mOutputBuffer[OutputIndex] = 'G';
-                std::cout << "G";
+                break;
+            case ETileType::Item:
+                //아이템 생성
+                CItem* Item = new CItem;
+                Item->Init();
+                Item->SetPos(j, i);
+
+                if (mObjectCount == mObjectCapacity)
+                {
+                    mObjectCapacity *= 2;
+                    CObject** Array = new CObject * [mObjectCapacity];
+                    memcpy(Array, mObjectList, sizeof(CObject*)*mObjectCount);
+
+                    delete[] mObjectList;
+                    mObjectList = Array;
+                }
+                //배열 크기 재정의
+                mObjectList[mObjectCount] = Item;
+                mObjectCount++;
+
+                mOutputBuffer[OutputIndex] = ' ';
+                //디폴트 이미지는 길과 동일
+                
                 break;
             }
 
@@ -136,7 +172,16 @@ void CMaze::Run()
     CPlayer* Player = new CPlayer;
 
     Player->Init();
-    Player->SetPos1(mStartPos);
+    Player->SetPos(mStartPos);
+    Player->SetMaze(this);
+	//===this확인===
+
+    int StartIndex = mStartPos.Y * (mCountX + 1) + mStartPos.X;
+    mPrevPlayerIndex = StartIndex;
+    mPrevPlayerOutput = 0;
+    int GoalIndex = mGoalPos.Y * (mCountX + 1) + mGoalPos.X;
+    //===+1 확인==17:54===
+    //==1차원 배열 위에서의 시작지점과 도착지점의 위치
 
     while (true)
     {
@@ -144,10 +189,47 @@ void CMaze::Run()
         //출력이 느림
         Player->Update();
 
+        for (int i = 0;i < mObjectCount;i++)
+            mObjectList[i]->Update();
+        
+        //시작지점과 도착지점의 출력을 버퍼를 통해 새로 생성
+        mOutputBuffer[StartIndex] = 'S';
+        mOutputBuffer[GoalIndex] = 'G';
+
+        //플레이어의 이전 프레임 인덱스를 복구
+        if (mPrevPlayerOutput != 0)
+            mOutputBuffer[mPrevPlayerIndex] = mPrevPlayerOutput;
+
+        COORD PlayerPos = Player->GetPos();
+        int PlayerIndex = PlayerPos.Y * (mCountX + 1) + PlayerPos.X;
+
+        mPrevPlayerIndex = PlayerIndex;
+        mPrevPlayerOutput = mOutputBuffer[PlayerIndex];
+        //===25:55===
+        mOutputBuffer[PlayerIndex] = 'P';
+
+        for (int i = 0; i < mObjectCount; i++)
+            mObjectList[i]->Output(mOutputBuffer,mCountX+1);
+
         COORD Cursor = {};
         SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Cursor);
+        //콘솔 커서의 위치를 처음으로 돌려줌
         HideCursor();
         Output();
-        Player->Output();
+
+        if (GetTile(PlayerPos.X, PlayerPos.Y) == ETileType::Goal)
+            break;
+        //Player->Output();
+
     }
+    SAFE_DELETE(Player);
+}
+
+ETileType CMaze::GetTile(int x, int y) const
+{
+    if (x < 0 || x >= mCountX ||
+        y < 0 || y >= mCountY)
+        return ETileType::Wall;
+
+    return mMazeArray[y][x];
 }

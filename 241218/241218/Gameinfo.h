@@ -2,12 +2,15 @@
 #include <iostream>
 #include <windows.h>
 #include <conio.h>
+#define SAFE_DELETE(p) {delete p;p=nullptr;}
+
 enum class ETileType :unsigned char
 {
 	Road,
 	Wall,
 	Start,
 	Goal,
+	Item
 };
 
 enum class Ekey

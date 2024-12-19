@@ -1,17 +1,14 @@
 #pragma once
 #include "Object.h"
-class CPlayer :
+class CItem :
     public CObject
 {
 public:
-    CPlayer();
-    ~CPlayer();
-private:
-    class CMaze* mMaze = nullptr;
+    CItem();
+    ~CItem();
 public:
     bool Init() override;
     void Update() override;
     void Output(char* OutBuffer,int CountX) override;
-    void SetMaze(class CMaze* Maze) { mMaze = Maze; }
 };
 

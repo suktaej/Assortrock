@@ -23,9 +23,9 @@ public:
 private:
 	class CMaze** mMazeArray = nullptr;
 	int mMazeCount = 0;
+	int Menu();
 public:
 	bool Init();
-	int Menu();
 	void Run();
 };
 
