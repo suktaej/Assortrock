@@ -27,6 +27,7 @@ void CGameManager::Run()
 			CMazeManager::GetInst()->Run();
             break;
         case EMainMenu::Score:
+            CMazeManager::GetInst()->RunScore();
             break;
         case EMainMenu::Exit:
             return;

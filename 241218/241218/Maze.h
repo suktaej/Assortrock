@@ -26,6 +26,10 @@ private:
 	//오브젝트 주소를 저장하는 포인터 가변 배열
 	int mObjectCount = 0;
 	int mObjectCapacity = 4;
+
+	int mScore = 0;
+	__int64 mTime = 0;
+
 public:
 	bool Init(const char* FileName);
 	void Output();
@@ -33,5 +37,6 @@ public:
 	
 	ETileType GetTile(int x, int y) const;
 	const char* GetName() const { return mName; }
+	__int64 GetTime() const { return mTime; }
 };
 

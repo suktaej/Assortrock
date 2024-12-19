@@ -168,6 +168,9 @@ void HideCursor() {
 void CMaze::Run()
 {
     system("cls");
+    //시간
+    __int64 TimeStart = time(0);
+
     //플레이어 생성
     CPlayer* Player = new CPlayer;
 
@@ -177,9 +180,10 @@ void CMaze::Run()
 	//===this확인===
 
     int StartIndex = mStartPos.Y * (mCountX + 1) + mStartPos.X;
+    int GoalIndex = mGoalPos.Y * (mCountX + 1) + mGoalPos.X;
+    
     mPrevPlayerIndex = StartIndex;
     mPrevPlayerOutput = 0;
-    int GoalIndex = mGoalPos.Y * (mCountX + 1) + mGoalPos.X;
     //===+1 확인==17:54===
     //==1차원 배열 위에서의 시작지점과 도착지점의 위치
 
@@ -189,9 +193,46 @@ void CMaze::Run()
         //출력이 느림
         Player->Update();
 
+        //플레이어 위치 받아오기
+        COORD PlayerPos = Player->GetPos();
+        int PlayerIndex = PlayerPos.Y * (mCountX + 1) + PlayerPos.X;
+        
+        //오브젝트 업데이트
         for (int i = 0;i < mObjectCount;i++)
             mObjectList[i]->Update();
         
+        for (int i = 0;i < mObjectCount;i++)
+        {
+            //오브젝트가 아이템인지 확인
+            //1.열거형으로 오브젝트 타입을 저장
+            //2.dynamic cast를 사용해 오브젝트 타입을 확인
+            CItem* Item = dynamic_cast<CItem*>(mObjectList[i]);
+            
+            if (Item != nullptr)
+            {
+                if (PlayerPos.X == Item->GetPos().X &&
+                    PlayerPos.Y == Item->GetPos().Y)
+                {
+                    mScore += 10;
+                    //아이템을 먹게 되면 버퍼를 길로 변경
+                    mOutputBuffer[PlayerIndex] = ' ';
+
+                    //현재 위치의 아이템과 배열의 가장 마지막 오브젝트 위치 변경
+                    //배열의 크기를 1 감소
+                    //배열 마지막의 오브젝트일 경우 예외처리
+                    if (i < mObjectCount - 1)
+                    {
+                        CObject* Temp = mObjectList[i];
+                        mObjectList[i] = mObjectList[mObjectCount - 1];
+                        mObjectList[mObjectCount - 1] = Temp;
+                    }
+                    delete mObjectList[mObjectCount - 1];
+                    mObjectList[mObjectCount - 1] = nullptr;
+                    --mObjectCount;
+                }
+            }
+        }
+
         //시작지점과 도착지점의 출력을 버퍼를 통해 새로 생성
         mOutputBuffer[StartIndex] = 'S';
         mOutputBuffer[GoalIndex] = 'G';
@@ -200,16 +241,14 @@ void CMaze::Run()
         if (mPrevPlayerOutput != 0)
             mOutputBuffer[mPrevPlayerIndex] = mPrevPlayerOutput;
 
-        COORD PlayerPos = Player->GetPos();
-        int PlayerIndex = PlayerPos.Y * (mCountX + 1) + PlayerPos.X;
-
         mPrevPlayerIndex = PlayerIndex;
         mPrevPlayerOutput = mOutputBuffer[PlayerIndex];
         //===25:55===
-        mOutputBuffer[PlayerIndex] = 'P';
 
         for (int i = 0; i < mObjectCount; i++)
             mObjectList[i]->Output(mOutputBuffer,mCountX+1);
+        
+        mOutputBuffer[PlayerIndex] = 'P';
 
         COORD Cursor = {};
         SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Cursor);
@@ -221,6 +260,26 @@ void CMaze::Run()
             break;
         //Player->Output();
 
+        COORD ScorePos;
+        ScorePos.X = 0;
+        ScorePos.Y = mCountY + 1;
+
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), ScorePos);
+        std::cout << "Score: " << mScore;
+        //스코어 출력
+
+        __int64 Time = time(0);
+        mTime = Time - TimeStart;
+
+        COORD TimePos;
+        TimePos.X = 10;
+        TimePos.Y = mCountY + 1;
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), TimePos);
+
+        int Minute = mTime / 60;
+        int Second = mTime % 60;
+		std::cout<<"Time: "<<Minute << ":" << Second;
+        //시간 출력
     }
     SAFE_DELETE(Player);
 }

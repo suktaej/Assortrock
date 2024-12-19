@@ -1,4 +1,6 @@
 #include "GameManager.h"
+	
+static CGameManager* mInst = nullptr;
 
 CGameManager::CGameManager()
 {

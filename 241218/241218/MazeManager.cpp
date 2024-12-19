@@ -83,5 +83,28 @@ void CMazeManager::Run()
 
 		int Index = Input - 1;
 		mMazeArray[Index]->Run();
+
+		__int64 Time = mMazeArray[Index]->GetTime();
+		if (mScoreCount < 5)
+		{
+			//시간 정렬(작은 시간에서 큰 시간 순서로)
+			mScoreArray[mScoreCount] = Time;
+			mScoreCount++;
+		}
+		else
+		{
+			//배열이 다 찼을 때, 현재 걸린 시간과 비교하여 현재 걸린시간이 더 작으면 한 칸씩 뒤로 밀고 그 자리에 현재 시간을 입력
+		}
 	}
+}
+
+void CMazeManager::RunScore()
+{
+	system("cls");
+	//점수출력
+	for (int i = 0;i < mScoreCount;i++)
+	{
+		std::cout << mScoreArray[i] << std::endl;
+	}
+	system("pause");
 }

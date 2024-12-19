@@ -23,9 +23,12 @@ public:
 private:
 	class CMaze** mMazeArray = nullptr;
 	int mMazeCount = 0;
+	__int64 mScoreArray[5] = {};
+	int mScoreCount = 0;
 	int Menu();
 public:
 	bool Init();
 	void Run();
+	void RunScore();
 };
 

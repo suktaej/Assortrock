@@ -58,5 +58,4 @@ void CPlayer::Output(char* OutBuffer,int CountX)
 {
         SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), mPos);
         std::cout << "P";
-
 }

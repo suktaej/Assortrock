@@ -2,7 +2,9 @@
 #include <iostream>
 #include <windows.h>
 #include <conio.h>
-#define SAFE_DELETE(p) {delete p;p=nullptr;}
+#include <ctime>
+
+#define SAFE_DELETE(p) if(p) {delete p;p=nullptr;}
 
 enum class ETileType :unsigned char
 {
