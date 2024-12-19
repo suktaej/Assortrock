@@ -6,6 +6,7 @@ class CItem :
 public:
     CItem();
     ~CItem();
+private:
 public:
     bool Init() override;
     void Update() override;

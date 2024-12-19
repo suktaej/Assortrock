@@ -108,3 +108,8 @@ void CMazeManager::RunScore()
 	}
 	system("pause");
 }
+
+void CMazeManager::ResetMaze()
+{
+
+}

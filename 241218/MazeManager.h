@@ -26,9 +26,14 @@ private:
 	__int64 mScoreArray[5] = {};
 	int mScoreCount = 0;
 	int Menu();
+	//===아이템 저장
+	class CItem* mItemArray = nullptr;
+	int mItemCount = 0;
 public:
 	bool Init();
 	void Run();
 	void RunScore();
+	//===리셋함수
+	void ResetMaze();
 };
 

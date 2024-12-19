@@ -54,7 +54,7 @@ bool CMaze::Init(const char* FileName)
     //가로줄 + 1(개행문자) * 세로줄 수 + 1(배열의 마지막 \0) 만큼 출력버퍼에 동적할당 
     memset(mOutputBuffer,0,sizeof(char)*((mCountX + 1) * mCountY + 1));
     //메모리 초기화 함수
-
+    mItemBackup = new COORD[mObjectCapacity];
     for (int i = 0;i < mCountY;i++)
     {
         mMazeArray[i] = new ETileType[mCountX];
@@ -99,17 +99,23 @@ bool CMaze::Init(const char* FileName)
                     mObjectCapacity *= 2;
                     CObject** Array = new CObject * [mObjectCapacity];
                     memcpy(Array, mObjectList, sizeof(CObject*)*mObjectCount);
+                    
+                    COORD* BackupArray = new COORD[mObjectCapacity];
+                    memcpy(BackupArray, mItemBackup, sizeof(COORD) * mItemCount);
 
                     delete[] mObjectList;
+                    delete[] mItemBackup;
                     mObjectList = Array;
+                    mItemBackup = BackupArray;
                 }
                 //배열 크기 재정의
                 mObjectList[mObjectCount] = Item;
+                mItemBackup[mItemCount] = { (short)j, (short)i };
                 mObjectCount++;
+                mItemCount++;
 
                 mOutputBuffer[OutputIndex] = ' ';
                 //디폴트 이미지는 길과 동일
-                
                 break;
             }
 
@@ -282,6 +288,8 @@ void CMaze::Run()
         //시간 출력
     }
     SAFE_DELETE(Player);
+    ResetItems();
+    mScore = 0;
 }
 
 ETileType CMaze::GetTile(int x, int y) const
@@ -292,3 +300,23 @@ ETileType CMaze::GetTile(int x, int y) const
 
     return mMazeArray[y][x];
 }
+
+void CMaze::ResetItems()
+{
+    for (int i = 0; i < mObjectCount; i++)
+        delete mObjectList[i];
+
+    mObjectCount = 0;
+
+    // 백업 배열을 기반으로 아이템 재생성
+    for (int i = 0; i < mItemCount; i++)
+    {
+        CItem* Item = new CItem;
+        Item->Init();
+        Item->SetPos(mItemBackup[i].X, mItemBackup[i].Y);
+
+        mObjectList[mObjectCount] = Item;
+        mObjectCount++;
+    }
+}
+
