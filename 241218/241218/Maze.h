@@ -29,7 +29,6 @@ private:
 
 	int mScore = 0;
 	__int64 mTime = 0;
-
 public:
 	bool Init(const char* FileName);
 	void Output();
@@ -38,5 +37,10 @@ public:
 	ETileType GetTile(int x, int y) const;
 	const char* GetName() const { return mName; }
 	__int64 GetTime() const { return mTime; }
+	int GetScore() const { return mScore; }
+
+	void SetFunc(FILE* InputFile);
+	void SetFunc();
+	void ArrayRedef();
 };
 

@@ -12,7 +12,9 @@ enum class ETileType :unsigned char
 	Wall,
 	Start,
 	Goal,
-	Item
+	Item,
+	Trap,
+	HP
 };
 
 enum class Ekey
@@ -22,4 +24,16 @@ enum class Ekey
 	Down = 80,
 	Left = 75,
 	Right = 77
+};
+
+enum class EObjectType
+{
+	Item,
+	Trap
+};
+
+struct FScore
+{
+	__int64 Time;
+	int Score;
 };

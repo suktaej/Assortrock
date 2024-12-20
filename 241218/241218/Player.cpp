@@ -59,3 +59,13 @@ void CPlayer::Output(char* OutBuffer,int CountX)
         SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), mPos);
         std::cout << "P";
 }
+
+bool CPlayer::SetHP(int Input)
+{
+    mHP += Input;
+
+    if (mHP > 5)
+        mHP = 5;
+
+    return mHP <= 0;
+}
