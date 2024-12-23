@@ -1,4 +1,5 @@
 #include "MazeManager.h"
+#include "Score.h"
 
 CMazeManager* CMazeManager::mInst = nullptr;
 
@@ -73,6 +74,7 @@ int CMazeManager::Menu()
 
 void CMazeManager::Run()
 {
+	
 	while (true)
 	{
 		int Input = Menu();
@@ -84,32 +86,37 @@ void CMazeManager::Run()
 		int Index = Input - 1;
 		mMazeArray[Index]->Run();
 
-		__int64 Time = mMazeArray[Index]->GetTime();
-		if (mScoreCount < 5)
-		{
-			//시간 정렬(작은 시간에서 큰 시간 순서로)
-			mScoreArray[mScoreCount] = Time;
-			mScoreCount++;
-		}
-		else
-		{
-			//배열이 다 찼을 때, 현재 걸린 시간과 비교하여 현재 걸린시간이 더 작으면 한 칸씩 뒤로 밀고 그 자리에 현재 시간을 입력
-		}
+		mScore = new CScore;
+		mScore->SetScore(mMazeArray[Index]);
 	}
 }
-
 void CMazeManager::RunScore()
 {
-	system("cls");
-	//점수출력
-	for (int i = 0;i < mScoreCount;i++)
-	{
-		std::cout << mScoreArray[i] << std::endl;
-	}
-	system("pause");
+	mScore->OutputScore();
 }
+<<<<<<< HEAD:241218/MazeManager.cpp
 
 void CMazeManager::ResetMaze()
 {
 
 }
+=======
+//{
+//	system("cls");
+//	//점수출력
+//	std::cout << "시간\t점수" << std::endl;
+//
+//	for (int i = 0; i < mScoreCount; ++i)
+//	{
+//		__int64 Minute = mScoreArray[i].Time / 60;
+//		__int64 Second = mScoreArray[i].Time % 60;
+//
+//		std::cout << Minute << ":" << Second << "\t" <<
+//			mScoreArray[i].Score << std::endl;
+//	}
+//	system("pause");
+//}
+//
+
+
+>>>>>>> 3b54cb982d9f6ac9aad46879d29b5974319ce203:241218/241218/MazeManager.cpp

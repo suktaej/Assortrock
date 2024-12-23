@@ -22,9 +22,11 @@ public:
 	}
 private:
 	class CMaze** mMazeArray = nullptr;
+	class CScore* mScore = nullptr;
 	int mMazeCount = 0;
-	__int64 mScoreArray[5] = {};
-	int mScoreCount = 0;
+	//__int64 mScoreArray[5] = {};
+	//FScore mScoreArray[5] = {};
+	//int mScoreCount = 0;
 	int Menu();
 	//===아이템 저장
 	class CItem* mItemArray = nullptr;

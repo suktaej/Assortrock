@@ -30,10 +30,13 @@ private:
 
 	int mScore = 0;
 	__int64 mTime = 0;
+<<<<<<< HEAD:241218/Maze.h
 	
 	COORD* mItemBackup = nullptr;
 	int mItemCount = 0;
 
+=======
+>>>>>>> 3b54cb982d9f6ac9aad46879d29b5974319ce203:241218/241218/Maze.h
 public:
 	bool Init(const char* FileName);
 	void Output();
@@ -43,5 +46,10 @@ public:
 	ETileType GetTile(int x, int y) const;
 	const char* GetName() const { return mName; }
 	__int64 GetTime() const { return mTime; }
+	int GetScore() const { return mScore; }
+
+	void SetFunc(FILE* InputFile);
+	void SetFunc();
+	void ArrayRedef();
 };
 
