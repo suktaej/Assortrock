@@ -80,8 +80,42 @@ FPoint FPoint::Pool[20];
 //문자열 복사 예제
 struct FString
 {
-	char* Text = nullptr;
-	int Count = 0;
+public:
+	FString():Text(nullptr),Count(0) {}
+	FString(const char* _Text)
+	{
+		Count = (int)strlen(_Text);
+		Text = new char[Count + 1];
+		memset(Text, 0, Count + 1);
+		strcpy_s(Text, Count + 1, _Text);
+	}
+	FString(const FString& str)
+	{
+		Count = str.Count;
+		Text = new char[Count + 1];
+		memset(Text, 0, Count + 1);
+		strcpy_s(Text, Count + 1, str.Text);
+	}
+	FString(FString&& str)
+	{
+		Count = str.Count;
+		Text = str.Text;
+		//얕은 복사(rvalue type에 대한 참조를 하고 있음)
+		str.Text = nullptr;
+		//메모리 이동
+	}
+	//이동생성자의 필요성
+	//임시객체의 메모리 주소를 대입받은 객체의 메모리로 복사
+	//속도측면에서 빠름
+	
+	~FString() 
+	{
+		if (nullptr != Text)
+			delete[] Text;
+	}
+private:
+	char* Text;
+	int Count;
 
 public:
 	void operator = (const FString& str)
@@ -92,7 +126,17 @@ public:
 			Text = new char[Count + 1];
 			memset(Text, 0, Count + 1);
 		}
-		strcpy_s(Text, Count+1, str.Text);
+		else
+		{
+			if (Count < str.Count)
+			{
+				delete[] Text;
+				Count = str.Count;
+				Text = new char[Count + 1];
+				memset(Text, 0, Count + 1);
+			}
+		}
+		strcpy_s(Text, str.Count+1, str.Text);
 	}
 
 	void operator = (const char* str)
@@ -105,6 +149,7 @@ public:
 		}
 		strcpy_s(Text, Count+1, str);
 	}
+	//코드 추가 필요(str의 길이가 길 경우)
 
 	FString operator + (const FString& str) const
 	{
@@ -161,7 +206,23 @@ int main(void)
 	
 	FString strResult;
 	strResult = str + str1;
-	std::cout << strResult.Text << std::endl;
+	//std::cout << strResult.Text << std::endl;
+	FString str2 = "New String";
+	//생성자로 초기화
+	FString str3 = str2;
+	//복사생성자로 초기화
 
+	FString("temp obj");
+	//임시객체는 생성과 동시에 제거
+
+	//FString str4 = FString("temp obj");
+	//임시객체 최적화로 자동할당
+	//임시객체가 제거되지 않고 참조로 인식됨
+	//임시객체를 대입. 이동생성자 방식으로 메모리 이동이 일어남
+	//str4가 제거될 때, 임시객체가 제거된 것과 같음
+
+	FString str4 = std::move(FString("temp obj"));
+	//강제 이동생성자
+	
 	return 0;
 }
