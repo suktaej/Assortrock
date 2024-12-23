@@ -82,6 +82,7 @@ struct FString
 {
 public:
 	FString():Text(nullptr),Count(0) {}
+	//일반 생성자 초기화
 	FString(const char* _Text)
 	{
 		Count = (int)strlen(_Text);
@@ -89,6 +90,7 @@ public:
 		memset(Text, 0, Count + 1);
 		strcpy_s(Text, Count + 1, _Text);
 	}
+	//문자열 초기화
 	FString(const FString& str)
 	{
 		Count = str.Count;
@@ -96,6 +98,7 @@ public:
 		memset(Text, 0, Count + 1);
 		strcpy_s(Text, Count + 1, str.Text);
 	}
+	//복사생성자 초기화
 	FString(FString&& str)
 	{
 		Count = str.Count;
@@ -113,11 +116,13 @@ public:
 		if (nullptr != Text)
 			delete[] Text;
 	}
+
 private:
 	char* Text;
 	int Count;
 
 public:
+	char* GetChar() { return Text; }
 	void operator = (const FString& str)
 	{
 		if (!Text)
@@ -126,6 +131,7 @@ public:
 			Text = new char[Count + 1];
 			memset(Text, 0, Count + 1);
 		}
+		//초기 문자열이 없을 경우 메모리 초기화 및 동적할당
 		else
 		{
 			if (Count < str.Count)
@@ -135,21 +141,34 @@ public:
 				Text = new char[Count + 1];
 				memset(Text, 0, Count + 1);
 			}
+			//새로 입력된 문자열 길이가 기존보다 길 경우
+			//기존 문자열을 제거 후 재할당
 		}
 		strcpy_s(Text, str.Count+1, str.Text);
 	}
 
 	void operator = (const char* str)
 	{
+		int Length = (int)strlen(str);
 		if (!Text)
 		{
-			Count = (int)strlen(str);
+			Count = Length;
 			Text = new char[Count + 1];
 			memset(Text, 0, Count + 1);
 		}
+
+		else
+		{
+			if (Count < Length)
+			{
+				delete[] Text;
+				Count = Length;
+				Text = new char[Count + 1];
+				memset(Text, 0, Count + 1);
+			}
+		}
 		strcpy_s(Text, Count+1, str);
 	}
-	//코드 추가 필요(str의 길이가 길 경우)
 
 	FString operator + (const FString& str) const
 	{
@@ -165,6 +184,91 @@ public:
 			strcpy_s(result.Text, Count + 1, Text);
 			strcat_s(result.Text,result.Count+1,str.Text);
 		}
+		return result;
+	}
+
+	FString operator + (const char* str) const
+	{
+		FString result;
+	
+		if (!Text)
+			result = str;
+		else
+		{
+			int Length = (int)strlen(str);
+			result.Count = Count + Length+1;
+			result.Text = new char[result.Count + 1];
+			memset(result.Text, 0, result.Count + 1);
+			strcpy_s(result.Text, Count + 1, Text);
+			strcat_s(result.Text,result.Count+1,str);
+		}
+		return result;
+	}
+
+	void operator += (const FString& str)
+	{
+		if (!Text)
+		{
+			Count = str.Count;
+			Text = new char[Count + 1];
+			memset(Text, 0, Count + 1);
+			strcpy_s(Text, Count + 1, str.Text);
+		}
+		else
+		{
+			int Length = Count + str.Count + 1;
+			char* _Text = new char[Length];
+			memset(_Text, 0, Length);
+			//strcpy_s(_Text, Length, Text);
+			strcpy_s(_Text, Count + 1, Text);
+			strcat_s(_Text, Length, str.Text);
+			//두번째 인자의 경우 원본 문자열 길이+추가 문자열 길이가 아님
+			//버퍼(배열)크기(위의 경우 Length)를 기준으로 동작
+
+			delete[] Text;
+			//기존 문자열 제거
+			Count = Length - 1;
+			Text = _Text;
+			//결과 문자열의 주소를 기존 문자열에 대입
+		}
+	}
+
+	bool operator == (const FString& str)	const
+	{ return strcmp(Text, str.Text) == 0; }
+
+	bool operator == (const char* str)	const
+	{ return strcmp(Text, str) == 0; }
+
+	bool operator != (const FString& str)	const
+	{ return strcmp(Text, str.Text) != 0; }
+
+	bool operator != (const char* str)	const
+	{ return strcmp(Text, str) != 0; }
+
+	const char* operator * ()	const
+	{ return Text; }
+
+	int Length() { return Count; }
+
+	FString Split(const char* str)
+	{
+		char* Context = nullptr;
+		char* Left = strtok_s(Text, str, &Context);
+
+		Count = (int)strlen(Context);
+		//잘리고 남은 문자열의 길이
+		char* _Text = new char[Count + 1];
+		memset(_Text, 0, Count + 1);
+		strcpy_s(_Text, Count + 1, Context);
+		//남은 문자열 시작주소 복사
+
+		FString result = Left;
+		//자른 문자열 반환
+		delete[] Text;
+		//기존 문자열 삭세
+		Text = _Text;
+		//남은 문자열 주소를 기존 문자열 주소에 저장
+
 		return result;
 	}
 };
@@ -198,11 +302,12 @@ int main(void)
 	++p1;
 	p1++;
 
-	FString str;
+	FString str = "Copy";
 	str = "String";
+	str = "Split";
 
 	FString str1;
-	str1 = "Test";
+	str1 = ": Test";
 	
 	FString strResult;
 	strResult = str + str1;
@@ -223,6 +328,8 @@ int main(void)
 
 	FString str4 = std::move(FString("temp obj"));
 	//강제 이동생성자
+	
+	std::cout << strResult.Split(":").GetChar();
 	
 	return 0;
 }
