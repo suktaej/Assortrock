@@ -8,7 +8,7 @@ private:
 	~CMazeManager();
 	static CMazeManager* mInst;
 public:
-	static CMazeManager* GetInt()
+	static CMazeManager* GetInst()
 	{
 		if (nullptr == mInst)
 			mInst = new CMazeManager;

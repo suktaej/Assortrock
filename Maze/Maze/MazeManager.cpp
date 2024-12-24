@@ -1,6 +1,8 @@
 #include "MazeManager.h"
 #include "Maze.h"
 
+CMazeManager* CMazeManager::mInst = nullptr;
+
 CMazeManager::CMazeManager()
 {
 }
@@ -48,4 +50,5 @@ bool CMazeManager::Init()
 
 void CMazeManager::Run()
 {
+    mMazeArray[0]->Output();
 }

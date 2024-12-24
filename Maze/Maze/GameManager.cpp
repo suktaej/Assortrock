@@ -1,6 +1,7 @@
 #include "GameManager.h"
+#include "MazeManager.h"
 	
-static CGameManager* mInst = nullptr;
+CGameManager* CGameManager::mInst = nullptr;
 
 CGameManager::CGameManager()
 {
@@ -12,6 +13,7 @@ CGameManager::~CGameManager()
 
 bool CGameManager::Init()
 {
+	CMazeManager::GetInst()->Init();
     return true;
 }
 
@@ -22,6 +24,7 @@ void CGameManager::Run()
 		switch (Menu())
 		{
 		case EMainMenu::Maze:
+			CMazeManager::GetInst()->Run();
 			break;
 		case EMainMenu::Score:
 			break;

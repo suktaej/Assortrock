@@ -1,11 +1,6 @@
 #include <iostream>
 #include <list>
 
-class C1
-{
-
-};
-
 int main(void)
 {
 	std::list<int> IntList;

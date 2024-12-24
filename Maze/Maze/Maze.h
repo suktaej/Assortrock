@@ -8,9 +8,8 @@ public:
 	~CMaze();
 private:
 	ETileType** mMazeArray = nullptr;
-	
-	int mPosX = 0;
-	int mPosY = 0;
+	int mXsize = 0;
+	int mYsize = 0;
 public:
 	bool Init();
 	bool Init(const char* FileName);
