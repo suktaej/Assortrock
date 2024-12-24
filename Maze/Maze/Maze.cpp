@@ -1,14 +1,32 @@
-﻿#include "GameManager.h"
+#include "Maze.h"
 
-int main()
+CMaze::CMaze()
 {
-	if (!CGameManager::GetInst()->Init())
-	{
-		CGameManager::DestroyInst();
-		return 0;
-	}
+}
 
-	CGameManager::GetInst()->Run();
-	CGameManager::DestroyInst();
-	return 0;
+CMaze::~CMaze()
+{
+}
+
+bool CMaze::Init()
+{
+    return true;
+}
+
+bool CMaze::Init(const char* FileName)
+{
+    FILE* File = nullptr;
+    fopen_s(&File, FileName, "rt");
+
+    if (!File)
+        return false;
+
+    char Line[MAX_STRING] = {};
+    fgets(Line, MAX_STRING, File);
+
+    return true;
+}
+
+void CMaze::Output()
+{
 }

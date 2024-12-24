@@ -37,5 +37,18 @@ int main()
         std::cout << *iter << std::endl;
     }
 
+    vecInt.push_back(1);
+    vecInt.push_back(2);
+    vecInt.push_back(3);
+    vecInt.push_back(4);
+    vecInt.push_back(5);
+
+    //vecInt.resize(2);
+    //vecInt.resize(20);
+
+    //vecInt.reserve(2);
+    //size에는 영향이 없음
+    //capacity만 증가
+
     return 0;
 }
