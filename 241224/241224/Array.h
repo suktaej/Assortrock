@@ -2,9 +2,78 @@
 #include <memory.h>
 #include <assert.h>
 
+
+template <typename T>
+class CArrayIterator
+{
+	template<typename T>
+	friend class CArray;
+public:
+	CArrayIterator() {};
+	~CArrayIterator() {};
+private:
+	//T* mValue = nullptr;
+	int mIndex = -1;
+	CArray<T>* mArray;
+	//index를 사용해서 직접적으로 배열에 접근
+public:
+	T& operator*()
+	{
+		return mArray->mArray[mIndex];
+	}
+	//시작주소와 개수를 알고 있을필요가 있음
+	//size, reserve, push_back 등으로 begin, end 등의 위치가 달라질 수 있기 때문
+	//더욱이 크기의 재할당이 일어날 경우 오류가 커질 수 있음
+	//기존의 배열을 제거해버리기 때문에 메모리 주소가 달라지기 때문
+	void operator++()
+	{
+		//.end까지만 허용
+		//size 변경 시 .end의 범위도 달라질 수 있음
+		//외부 객체에서 size를 가져올 수 있어야 함
+		++mValue;
+		assert((mIndex <= mArray->mSize + 1 && mIndex >= 1));
+		//.end(): mSize+1
+	}
+
+	void operator++(int)
+	{
+		++mValue;
+		assert((mIndex <= mArray->mSize + 1 && mIndex >= 1));
+	}
+
+	bool operator==(const CArrayIterator<T>& iter)
+	{
+		return mIndex == iter.mIndex;
+	}
+
+	CArrayIterator<T> operator+(int Num) const
+	{
+		CArrayIterator<T> iter;
+		iter.mArray = mArray;
+		iter.mIndex = mIndex + Num;
+		assert((iter.mIndex <= mArray->mSize + 1 && iter.mIndex >= 1));
+
+		return iter;
+	}
+	
+	const CArrayIterator<T>& operator+=(int Num) 
+	{
+		mIndex += Num;
+		assert((mIndex <= mArray->mSize+1 && mIndex >= 1));
+		return *this;
+	}
+};
+
+
+
 template <typename T>
 class CArray
 {
+	template <typename T>
+	friend class CArrayIterator;
+public:
+	typedef CArrayIterator<T> iterator;
+	//inner 클래스'처럼' 사용하는 방법
 public:
 	CArray() {};
 	CArray(const CArray<T>& Arr) {};
@@ -137,5 +206,41 @@ public:
 		assert(0 <= Index && Index < mSize);
 		return mArray[Index + 1];
 	}
+
+	iterator begin()
+	{
+		iterator iter;
+		iter.mArray = this;
+		iter.mIndex = 1;
+		return iter;
+	}
+
+	iterator end() 
+	{
+		iterator iter;
+		iter.mArray = this;
+		iter.mIndex = mSize + 1;
+		return iter;
+	}
+
+	iterator erase(cosnt iterator& iter)
+	{
+		//잘못된 index에 대한 처리 시 assert처리
+		//end까지 처리
+		assert((iter.mIndex < mSize + 1 && iter.mIndex >= 1));
+	
+		//1.반복으로 구현
+		for (int i = iter.mIndex;i < mSize;i++)
+			mArray[i] = mArray[i + 1];
+		--mSize;
+	
+		//2.memcpy로 구현(복사에 복사로 swap)
+
+		return iter;
+	}
 };
 
+class CInner1 {};
+class COuter1 
+{
+};
