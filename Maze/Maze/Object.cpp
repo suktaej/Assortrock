@@ -20,3 +20,7 @@ void CObject::Update()
 void CObject::Output()
 {
 }
+
+void CObject::Output(char* OutBuffer, int CountX)
+{
+}

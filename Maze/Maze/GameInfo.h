@@ -5,6 +5,7 @@
 
 #define SAFE_DELETE(p) if(p) {delete p;p=nullptr;}
 #define MAX_STRING 128
+#define DEFAULT_CAPACITY 4
 
 enum class EMainMenu:unsigned char 
 {
