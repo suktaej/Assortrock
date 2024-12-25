@@ -1,4 +1,5 @@
 #include "Maze.h"
+#include "Player.h"
 
 CMaze::CMaze()
 {
@@ -46,6 +47,25 @@ bool CMaze::Init(const char* FileName)
     return true;
 }
 
+void CMaze::Run()
+{
+    system("cls");
+
+    CPlayer* Player = new CPlayer;
+    //player 동적할당, 삭제 생각
+    Player->Init();
+    Player->SetPos(mStartPos);
+    //플레이어 시작지점은 스타트지점과 동일한 좌표
+    Player->SetMaze(this);
+    //객체 자신의 주소값을 넘겨준다...
+
+    while (true)
+    {
+        Player->Update();
+    }
+
+}
+
 void CMaze::Output()
 {
     system("cls");
@@ -82,4 +102,11 @@ void CMaze::HideCursor()
     GetConsoleCursorInfo(consoleHandle, &cursorInfo); // 현재 커서 정보 가져오기
     cursorInfo.bVisible = FALSE;                     // 커서를 숨김
     SetConsoleCursorInfo(consoleHandle, &cursorInfo); // 커서 정보 설정
+}
+
+ETileType CMaze::GetTile(int x, int y) const
+{
+    if (x < 0 || x >= mXsize || y < 0 || y >= mYsize)
+        return ETileType::Wall;
+    return mMazeArray[y][x];
 }

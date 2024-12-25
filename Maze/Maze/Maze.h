@@ -11,7 +11,7 @@ private:
 	int mXsize = 0;
 	int mYsize = 0;
 
-	char* mName[32] = {};
+	char mName[32] = {};
 	COORD mStartPos;
 	COORD mGoalPos;
 
@@ -29,8 +29,10 @@ private:
 public:
 	bool Init();
 	bool Init(const char* FileName);
+	void Run();
 	void Output();
 	void HideCursor();
 	const char* GetName() const { return mName; }
+	ETileType GetTile(int x, int y) const; 
 };
 
