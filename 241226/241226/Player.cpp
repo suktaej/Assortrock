@@ -12,15 +12,13 @@ CPlayer::~CPlayer()
 
 bool CPlayer::Init()
 {
-    mPos.Y = 15;
+    mPos.Y = 13;
     mPos.X = 7;
 	return true;
 }
 
-void CPlayer::Update()
+void CPlayer::Update(float DeltaTime)
 {
-
-
     if (_kbhit() > 0)
     {
         int Key = _getch();
@@ -35,11 +33,15 @@ void CPlayer::Update()
                 break;
             case EKey::Down:
                 break;
-            case EKey::Left:
-                --mPos.X;
-                break;
-            case EKey::Right:
-                ++mPos.X;
+			case EKey::Left:
+				--mPos.X;
+				if (mPos.X < 1)
+					mPos.X = 1;
+				break;
+			case EKey::Right:
+				++mPos.X;
+				if (mPos.X > 13)
+                    mPos.X = 13;
                 break;
             }
         }

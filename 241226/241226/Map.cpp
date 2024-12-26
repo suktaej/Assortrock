@@ -68,7 +68,7 @@ void CMap::Run()
     while (true)
     {
         system("cls");
-        Player->Update();
+        //Player->Update();
         Output();
         Player->Output();
     }

@@ -10,7 +10,7 @@ private:
     //class CMap* mMap = nullptr;
 public:
     bool Init() override;
-    void Update() override;
+    void Update(float DeltaTime) override;
     void Output() override;
     //void SetMap(class CMap* Map) { mMap = Map; }
 };

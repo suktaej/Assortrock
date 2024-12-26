@@ -40,7 +40,7 @@ public:
 	//템플릿 선언은 header에 작성
 	//T는 반드시 Obejct를 상속받아야 함
 	bool Init();
-	void Update();
 	void Output();
+	void Update(float DeltaTime);
 };
 

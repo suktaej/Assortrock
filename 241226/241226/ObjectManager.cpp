@@ -16,14 +16,14 @@ bool CObjectManager::Init()
 	return true;
 }
 
-void CObjectManager::Update()
+void CObjectManager::Update(float DeltaTime)
 {
     //for(CObject*& Obj : mObjList)
     std::list<CObject*>::iterator iter;
     std::list<CObject*>::iterator iterEnd = mObjList.end();
 
     for (iter = mObjList.begin();iter != iterEnd;iter++)
-        (*iter)->Update();
+        (*iter)->Update(DeltaTime);
 }
 
 void CObjectManager::Output()

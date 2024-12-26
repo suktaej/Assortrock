@@ -2,6 +2,7 @@
 #include <iostream>
 #include <windows.h>
 #include <conio.h>
+#include <time.h>
 
 #include <list>
 #include <vector>

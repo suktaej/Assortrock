@@ -10,7 +10,7 @@ protected:
 	COORD mPos;
 public:
 	virtual bool Init() = 0;
-	virtual void Update() = 0;
+	virtual void Update(float DeltaTime) = 0;
 	virtual void Output() = 0;
 
 	void SetPos(const COORD& Pos) { mPos = Pos; }
