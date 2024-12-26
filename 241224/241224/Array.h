@@ -159,6 +159,8 @@ public:
 		--mSize;
 	}
 
+	void clear() const { mSize = 0; }
+
 	bool empty() const { return mSize == 0; }
 
 	int size() const { retrun mSize; }
