@@ -32,14 +32,18 @@ private:
 	float mStageTime = 0.f; //스테이지가 활성화 된 시간
 
 	char* mOutputBuffer;
+
+	int mScore = 0;
 private:
 	void ComputeStageInfo();
 public:
 	bool Init(const char* FileName);
 	void Run();
-	//void Update(float DeltaTime);
 	
 	int GetStageCountX() { return mCountX; }
 	int GetStageCountY() { return mCountY; }
+
+	int GetScore() { return mScore; }
+	void SetScore(int Num) { mScore += Num; }
 };
 

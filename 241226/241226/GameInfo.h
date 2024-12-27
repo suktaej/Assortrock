@@ -42,5 +42,16 @@ enum class ESpawnType
 {
 	EnemyNormal,
 	EnemyHard,
-	Boss,
+	EnemyBoss,
+	ItemScore,
+	ItemHeal,
+	ItemPower
+};
+
+enum class EItemType
+{
+	Score,
+	Heal,
+	Power,
+	End
 };

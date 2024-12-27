@@ -3,6 +3,7 @@
 #include "Stage.h"
 #include "Bullet.h"
 #include "StageManager.h"
+#include "Item.h"
 
 CPlayer::CPlayer()
 {
@@ -73,6 +74,8 @@ ECollisionType CPlayer::CollisionEnable(CObject* Dest)
     case EObjectType::Enemy:
     case EObjectType::EnemyBullet:
         return ECollisionType::Damage;
+    case EObjectType::Item:
+        //return 
     }
     return ECollisionType::None;
 }

@@ -3,6 +3,7 @@
 
 CItem::CItem()
 {
+    mType = EObjectType::Item;
 }
 
 CItem::~CItem()
@@ -16,7 +17,7 @@ bool CItem::Init()
 
 void CItem::Update(float DeltaTime)
 {
-    mMoveY += DeltaTime;
+    mMoveY += DeltaTime * 6.f;
 
     if (mMoveY >= 1.f)
     {

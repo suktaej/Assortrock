@@ -20,10 +20,9 @@ public:
 
 	void SetPos(const COORD& Pos) { mPos = Pos; }
 	void SetPos(short x, short y) { mPos.X = x; mPos.Y = y; }
+	const COORD& GetPos() const { return mPos; }
 
 	bool GetActive() { return mActive; }
-
-	const COORD& GetPos() const { return mPos; }
 
 	EObjectType GetType() { return mType; }
 	void SetType(EObjectType Type) { mType = Type; }

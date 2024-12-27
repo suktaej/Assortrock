@@ -17,6 +17,6 @@ public:
 	ECollisionType CollisionEnable(CObject* Dest) override;
 public:
     int GetHP() { return mHP; }
-    void SetHP(int Heal) { mHP += Heal; }
+    void SetHP(int Val) { mHP += Val; }
 };
 

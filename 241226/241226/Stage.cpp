@@ -107,6 +107,12 @@ void CStage::Run()
 		CObjectManager::GetInst()->Output(mOutputBuffer);
 		//buffer Ãâ·Â
 		std::cout << mOutputBuffer;
+
+		COORD ScorePos;
+		ScorePos.X = mCountX + 4;
+		ScorePos.Y = mCountY = 2;
+		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), ScorePos);
+		std::cout << "Score: " << mScore;
 	}
 }
 
@@ -128,7 +134,8 @@ void CStage::ComputeStageInfo()
 				break;
 			case ESpawnType::EnemyHard:
 				break;
-			case ESpawnType::Boss:
+			case ESpawnType::EnemyBoss:
+				Enemy = CObjectManager::GetInst()->CreateObj<CEnemy>();
 				break;
 			}
 			Enemy->SetType(EObjectType::Enemy);

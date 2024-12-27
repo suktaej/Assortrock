@@ -46,7 +46,6 @@ void CBullet::Update(float DeltaTime)
         if (mPos.X < 1 || mPos.X >= CountX-1)
             mActive = false;
     }
-
 }
 
 void CBullet::Output(char* OutputBuffer)

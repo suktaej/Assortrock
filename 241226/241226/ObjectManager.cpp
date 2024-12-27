@@ -1,5 +1,7 @@
 #include "ObjectManager.h"
 #include "Player.h"
+#include "StageManager.h"
+
 CObjectManager* CObjectManager::mInst;
 
 CObjectManager::CObjectManager()
@@ -79,6 +81,15 @@ void CObjectManager::Update(float DeltaTime)
                     case ECollisionType::Power:
                         break;
                     case ECollisionType::Score:
+                        CStageManager::GetInst()->GetStage()->SetScore(10);
+                        Death = (*iter)->Damage((*iter1)->GetDamage());
+                        Death1 = (*iter1)->Damage((*iter)->GetDamage());
+                    
+                        //iter, iter1 중 어느쪽이 플레이어인지 확인
+                        if (dynamic_cast<CPlayer*>(*iter))
+                            Death1 = true;
+                        else
+                            Death = true;
                         break;
                     }
 
@@ -89,6 +100,9 @@ void CObjectManager::Update(float DeltaTime)
                         iter1End = mObjList.end();
                         iterEnd = iter1End;
                         --iterEnd;
+                        //===마지막 1개가 남았을 때 오류가 발생할 수 있음? ~17:47
+                        if (mObjList.size() == 1)
+                            IterErase = true;
                     }
                     if (Death)
                     {

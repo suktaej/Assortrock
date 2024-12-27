@@ -3,6 +3,8 @@
 #include "Bullet.h"
 #include "StageManager.h"
 #include "ObjectManager.h"
+#include "Item.h"
+#include "Itemscore.h"
 
 CEnemy::CEnemy()
 {
@@ -66,8 +68,30 @@ ECollisionType CEnemy::CollisionEnable(CObject* Dest)
 bool CEnemy::Damage(int Dmg)
 {
 	mHP -= Dmg;
-	if (mHP <= 0)
-		return true;
+
+    int Spawn = rand() % 100;
+    CItem* Item = nullptr;
+
+    if (mHP <= 0)
+    {
+        if (Spawn <50)
+        {
+            Spawn = rand() % (int)EItemType::End;
+            switch ((EItemType)Spawn)
+            {
+            case EItemType::Score:
+                Item = CObjectManager::GetInst()->CreateObj<CItemScore>();
+                break;
+            case EItemType::Heal:
+                Item = CObjectManager::GetInst()->CreateObj<CItemScore>();
+                break;
+            case EItemType::Power:
+                Item = CObjectManager::GetInst()->CreateObj<CItemScore>();
+                break;
+            }
+            Item->SetPos(mPos.X, mPos.Y);
+        }
+        return true;
+    }
 	return false;
 }
-
