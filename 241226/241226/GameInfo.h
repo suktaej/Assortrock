@@ -16,13 +16,8 @@ enum class EKey
 	Up = 72,
 	Down = 80,
 	Left = 75,
-	Right = 77
-};
-
-enum class ETile
-{
-	Space,
-	Wall
+	Right = 77,
+	Fire = 32
 };
 
 enum class EObjectType

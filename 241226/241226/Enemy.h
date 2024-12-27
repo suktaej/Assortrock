@@ -11,7 +11,7 @@ protected:
     float mMoveY = 0.f;
 public:
     bool Init() override;
-    void Output() override;
+    void Output(char* OutputBuffer) override;
     void Update(float DeltaTime) override;
 };
 

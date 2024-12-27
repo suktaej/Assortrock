@@ -7,11 +7,11 @@ public:
 	CObject();
 	virtual ~CObject();
 protected:
-	COORD mPos;
+	COORD mPos = {};
 public:
 	virtual bool Init() = 0;
 	virtual void Update(float DeltaTime) = 0;
-	virtual void Output() = 0;
+	virtual void Output(char* OutputBuffer) = 0;
 
 	void SetPos(const COORD& Pos) { mPos = Pos; }
 	void SetPos(short x, short y) { mPos.X = x; mPos.Y = y; }

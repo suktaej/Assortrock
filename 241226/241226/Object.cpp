@@ -7,4 +7,3 @@ CObject::CObject()
 CObject::~CObject()
 {
 }
-

@@ -28,5 +28,6 @@ private:
 public:
 	bool Init();
 	void Run();
+	CStage* GetStage() { return mStage; }
 };
 

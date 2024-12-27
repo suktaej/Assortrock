@@ -11,7 +11,7 @@ private:
 public:
     bool Init() override;
     void Update(float DeltaTime) override;
-    void Output() override;
+    void Output(char* OutputBuffer) override;
     //void SetMap(class CMap* Map) { mMap = Map; }
 };
 

@@ -30,9 +30,14 @@ private:
 	LARGE_INTEGER mSecond;	//초당 흐를 값
 	float mDeltaTime = 0.f;	//Delta Time
 	float mStageTime = 0.f; //스테이지가 활성화 된 시간
+
+	char* mOutputBuffer;
 public:
 	bool Init(const char* FileName);
 	void Run();
 	//void Update(float DeltaTime);
+	
+	int GetStageCountX() { return mCountX; }
+	int GetStageCountY() { return mCountY; }
 };
 

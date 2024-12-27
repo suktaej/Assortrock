@@ -21,7 +21,6 @@ bool CStageManager::Init()
 	fgets(Line, 64, File);
 	mStageCount = atoi(Line);
 
-
 	//mvecFileName.reserve(mStageCount);
 	mvecFileName.resize(mStageCount);
 
@@ -36,10 +35,12 @@ bool CStageManager::Init()
 
 		//mvecFileName.emplace_back(Line);
 		//입력할 개수를 모를 때 emplace 권장
-		//mvecFileName[i] = Line;
+		mvecFileName[i] = Line;
 		//입력 개수를 알고 있으므로 resize로 공간을 확보 후 대입
-		char *Context;
-		mvecFileName[i] = strtok_s(Line, ".",&Context);
+		
+		//char *Context;
+		//mvecFileName[i] = strtok_s(Line, ".",&Context);
+		//.txt 확장자 제거
 	}
 
 	fclose(File);

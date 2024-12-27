@@ -21,6 +21,7 @@ void CStage::ComputeStageInfo()
 		if (mStageTime >= Info.Time)
 		{
 			CEnemy* Enemy = nullptr;
+
 			switch (Info.Type)
 			{
 			case EObjectType::EnemyNormal:
@@ -52,8 +53,8 @@ bool CStage::Init(const char* FileName)
 	//파일 끝이 아니면 0을 반환
 	while (!feof(File))
 	{
-		char Line[64] = {};
-		fgets(Line, 64, File);
+		char Line[128] = {};
+		fgets(Line, 128, File);
 		
 		char* Context = nullptr;
 		char* Result = nullptr;
@@ -62,13 +63,13 @@ bool CStage::Init(const char* FileName)
 		FStageInfo Info;
 		Info.Time = atoi(Result);
 		
-		Result = strtok_s(Line, ", ", &Context);
+		Result = strtok_s(nullptr, ", ", &Context);
 		Info.Type = (EObjectType)atoi(Result);
 		
-		Result = strtok_s(Line, ", ", &Context);
+		Result = strtok_s(nullptr, ", ", &Context);
 		Info.xPos = atoi(Result);
 		
-		Result = strtok_s(Line, ", ", &Context);
+		Result = strtok_s(nullptr, ", ", &Context);
 		Info.yPos = atoi(Result);
 
 		Info.Dir = (ESpawnDir)atoi(Context);
@@ -80,6 +81,10 @@ bool CStage::Init(const char* FileName)
 	
 	QueryPerformanceFrequency(&mSecond);	//고해상도 타이머가 1초당 얼마나 흐르는 지 가져옴
 	mStageTime = 0.f;
+
+	mOutputBuffer = new char[(mCountX + 1) * mCountY + 1];
+	memset(mOutputBuffer, 0, (mCountX + 1) * mCountY + 1);
+
 	return true;
 }
 
@@ -101,22 +106,33 @@ void CStage::Run()
 		
 		ComputeStageInfo();
 		//stage 정보 처리
+		CObjectManager::GetInst()->Update(mDeltaTime);
 
 		COORD Start = {};
 		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Start);
-
+		
+		int Index = 0;
 		for (int i = 0;i < mCountY;i++)
 		{
 			for (int j = 0;j < mCountX;j++)
 			{
+				Index = i * (mCountX + 1) + j;
 				if (i == 0 || j == 0 || i == mCountY - 1 || j == mCountX - 1)
-					std::cout << "#";
+				{
+					mOutputBuffer[Index] = '#';
+					//std::cout << "#";
+				}
 				else
-					std::cout << " ";
+				{
+					mOutputBuffer[Index] = ' ';
+					//std::cout << " ";
+				}
 			}
-			std::cout << std::endl;
+			mOutputBuffer[i * (mCountX + 1) + mCountX] = '\n';
+			//std::cout << std::endl;
 		}
-		CObjectManager::GetInst()->Output();
+		CObjectManager::GetInst()->Output(mOutputBuffer);
 		//buffer 출력
+		std::cout << mOutputBuffer;
 	}
 }

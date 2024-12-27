@@ -1,6 +1,8 @@
 #include "Player.h"
 #include "ObjectManager.h"
-//#include "Map.h"
+#include "Stage.h"
+#include "Bullet.h"
+#include "StageManager.h"
 
 CPlayer::CPlayer()
 {
@@ -45,11 +47,19 @@ void CPlayer::Update(float DeltaTime)
                 break;
             }
         }
+        else if (Key == (int)EKey::Fire)
+        {
+            CBullet* Bullet = CObjectManager::GetInst()->CreateObj<CBullet>();
+            Bullet->SetPos(mPos.X, mPos.Y - 1);
+            Bullet->SetMoveDir(0.f, -1.f);
+        }
     }
 }
 
-void CPlayer::Output()
+void CPlayer::Output(char* OutputBuffer)
 {
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), mPos);
-    std::cout << "P";
+    int CountX = CStageManager::GetInst()->GetStage()->GetStageCountX();
+    OutputBuffer[mPos.Y * (CountX + 1) + mPos.X] = 'P';
+    //SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), mPos);
+    //std::cout << "P";
 }

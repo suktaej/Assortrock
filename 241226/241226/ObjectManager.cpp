@@ -26,11 +26,11 @@ void CObjectManager::Update(float DeltaTime)
         (*iter)->Update(DeltaTime);
 }
 
-void CObjectManager::Output()
+void CObjectManager::Output(char* OutputBuffer)
 {
     std::list<CObject*>::iterator iter;
     std::list<CObject*>::iterator iterEnd = mObjList.end();
 
     for (iter = mObjList.begin();iter != iterEnd;iter++)
-        (*iter)->Output();
+        (*iter)->Output(OutputBuffer);
 }

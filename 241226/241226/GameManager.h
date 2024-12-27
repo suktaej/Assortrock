@@ -27,9 +27,10 @@ public:
 		delete mInst;
 		mInst = nullptr; 
 	}
+private:
+	EMainMenu Menu();
 public:
 	bool Init();
 	void Run();
-	EMainMenu Menu();
 };
 
