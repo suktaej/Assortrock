@@ -11,33 +11,6 @@ CStage::~CStage()
 {
 }
 
-void CStage::ComputeStageInfo()
-{
-	if (!mInfoList.empty())
-	{
-		//리스트에 있는 첫 번째 요소를 얻어온다
-		const FStageInfo& Info = mInfoList.front();
-
-		if (mStageTime >= Info.Time)
-		{
-			CEnemy* Enemy = nullptr;
-
-			switch (Info.Type)
-			{
-			case EObjectType::EnemyNormal:
-				Enemy = CObjectManager::GetInst()->CreateObj<CEnemy>();
-				break;
-			case EObjectType::EnemyHard:
-				break;
-			case EObjectType::Boss:
-				break;
-			}
-			Enemy->SetPos(Info.xPos, Info.yPos);
-			mInfoList.pop_front();
-		}
-	}
-}
-
 bool CStage::Init(const char* FileName)
 {
 	FILE* File = nullptr;
@@ -64,7 +37,7 @@ bool CStage::Init(const char* FileName)
 		Info.Time = atoi(Result);
 		
 		Result = strtok_s(nullptr, ", ", &Context);
-		Info.Type = (EObjectType)atoi(Result);
+		Info.Type = (ESpawnType)atoi(Result);
 		
 		Result = strtok_s(nullptr, ", ", &Context);
 		Info.xPos = atoi(Result);
@@ -136,3 +109,33 @@ void CStage::Run()
 		std::cout << mOutputBuffer;
 	}
 }
+
+void CStage::ComputeStageInfo()
+{
+	if (!mInfoList.empty())
+	{
+		//리스트에 있는 첫 번째 요소를 얻어온다
+		const FStageInfo& Info = mInfoList.front();
+
+		if (mStageTime >= Info.Time)
+		{
+			CEnemy* Enemy = nullptr;
+
+			switch (Info.Type)
+			{
+			case ESpawnType::EnemyNormal:
+				Enemy = CObjectManager::GetInst()->CreateObj<CEnemy>();
+				break;
+			case ESpawnType::EnemyHard:
+				break;
+			case ESpawnType::Boss:
+				break;
+			}
+			Enemy->SetType(EObjectType::Enemy);
+
+			Enemy->SetPos(Info.xPos, Info.yPos);
+			mInfoList.pop_front();
+		}
+	}
+}
+

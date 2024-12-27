@@ -22,7 +22,25 @@ enum class EKey
 
 enum class EObjectType
 {
+	Enemy,
+	Player,
+	PlayerBullet,
+	EnemyBullet,
+	Item
+};
+
+enum class ECollisionType
+{
+	None,
+	Damage,
+	Heal,
+	Power,
+	Score
+};
+
+enum class ESpawnType
+{
 	EnemyNormal,
 	EnemyHard,
-	Boss
+	Boss,
 };

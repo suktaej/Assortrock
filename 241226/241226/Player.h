@@ -7,11 +7,16 @@ public:
     CPlayer();
     ~CPlayer() override;
 private:
-    //class CMap* mMap = nullptr;
+    int mHP = 5;
+    int mHPMax = 5;
 public:
     bool Init() override;
     void Update(float DeltaTime) override;
     void Output(char* OutputBuffer) override;
-    //void SetMap(class CMap* Map) { mMap = Map; }
+    bool Damage(int Dmg) override;
+	ECollisionType CollisionEnable(CObject* Dest) override;
+public:
+    int GetHP() { return mHP; }
+    void SetHP(int Heal) { mHP += Heal; }
 };
 
