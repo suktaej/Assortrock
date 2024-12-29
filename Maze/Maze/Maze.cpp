@@ -1,5 +1,6 @@
 #include "Maze.h"
 #include "Player.h"
+#include "Item.h"
 
 CMaze::CMaze()
 {
@@ -7,6 +8,15 @@ CMaze::CMaze()
 
 CMaze::~CMaze()
 {
+    if (nullptr != mMazeArray)
+    {
+        for (int i = 0; i < mYsize; i++)
+            delete[] mMazeArray[i];
+        delete[] mMazeArray;
+    }
+
+    if (nullptr != mOutputBuffer)
+        delete[]mOutputBuffer;
 }
 
 bool CMaze::Init()
@@ -22,6 +32,8 @@ bool CMaze::Init(const char* FileName)
     if (!File)
         return false;
 
+    strcpy_s(mName, FileName);
+    
     char Line[MAX_STRING] = {};
     fgets(Line, MAX_STRING, File);
 
@@ -33,14 +45,57 @@ bool CMaze::Init(const char* FileName)
     mXsize = atoi(Result);
     mYsize = atoi(Context);
 
+    mOutputBuffer = new char[(mXsize + 1) * mYsize + 1];
+    memset(mOutputBuffer, 0, sizeof(char) * ((mXsize + 1) * mYsize + 1));
+
     mMazeArray = new ETileType * [mYsize];
     for (int i = 0;i < mYsize;i++)
     {
         mMazeArray[i] = new ETileType[mXsize];
         fgets(Line, MAX_STRING, File);
 
-        for (int j = 0;j < mXsize;j++)
+        for (int j = 0; j < mXsize; j++)
+        {
+            int OutputBufferIndex = i * (mXsize + 1) + j;
             mMazeArray[i][j] = (ETileType)(Line[j] - '0');
+            
+            switch (mMazeArray[i][j])
+            {
+            case ETileType::Road:
+                mOutputBuffer[OutputBufferIndex] = ' ';
+                break;
+            case ETileType::Wall:
+                mOutputBuffer[OutputBufferIndex] = '#';
+                break;
+            case ETileType::Start:
+                mOutputBuffer[OutputBufferIndex] = 'S';
+                mStartPos.X = j;
+                mStartPos.Y = i;
+                break;
+            case ETileType::Goal:
+                mOutputBuffer[OutputBufferIndex] = 'G';
+                mGoalPos.X = j;
+                mGoalPos.Y = i;
+                break;
+            case ETileType::Item:
+            {
+                CItem* Item = new CItem;
+
+                Item->Init();
+                Item->SetPos(j, i);
+
+                Reallocation();
+                
+                mObjectList[mObjectCount] = Item;
+                ++mObjectCount;
+
+                mOutputBuffer[OutputBufferIndex] = '!';
+            }
+                break;
+            }
+        }
+        int LFIndex = i * (mXsize + 1) + mXsize;
+        mOutputBuffer[LFIndex] = '\n';
     }
     
     fclose(File);
@@ -52,47 +107,94 @@ void CMaze::Run()
     system("cls");
 
     CPlayer* Player = new CPlayer;
-    //player 동적할당, 삭제 생각
+    
     Player->Init();
     Player->SetPos(mStartPos);
-    //플레이어 시작지점은 스타트지점과 동일한 좌표
     Player->SetMaze(this);
-    //객체 자신의 주소값을 넘겨준다...
+
+    int StartIndex = mStartPos.Y * (mXsize + 1) + mStartPos.X;
+    int GoalIndex = mGoalPos.Y * (mXsize + 1) + mGoalPos.X;
+    
+    mPrevPlayerIndex = StartIndex;
+    mPrevPlayerOutput = 0;
 
     while (true)
     {
         Player->Update();
-    }
+        
+        COORD PlayerPos = Player->GetPos();
+        int PlayerIndex = PlayerPos.Y * (mXsize + 1) + PlayerPos.X;
 
+        for (int i = 0; i < mObjectCount; i++)
+            mObjectList[i]->Update();
+
+        for (int i = 0; i < mObjectCount; i++)
+        {
+            CItem* Item = dynamic_cast<CItem*>(mObjectList[i]);
+
+            if (nullptr != Item)
+            {
+                if (PlayerPos.X == Item->GetPos().X &&
+                    PlayerPos.Y == Item->GetPos().Y)
+                {
+                    //mScore += 10;
+                    mOutputBuffer[PlayerIndex] = ' ';
+
+                    if (i < mObjectCount - 1)
+                    {
+                        CObject* Temp = mObjectList[i];
+                        mObjectList[i] = mObjectList[mObjectCount - 1];
+                        mObjectList[mObjectCount - 1] = Temp;
+                    }
+
+                    delete mObjectList[mObjectCount - 1];
+                    mObjectList[mObjectCount - 1] = nullptr;
+                    --mObjectCount;
+                }
+            }
+        }
+
+        //mOutputBuffer[StartIndex] = 'S';
+        //mOutputBuffer[GoalIndex] = 'G';
+
+        for (int i = 0; i < mObjectCount; i++)
+            mObjectList[i]->Output(mOutputBuffer,mXsize+1);
+
+        if (mPrevPlayerOutput != 0)
+            mOutputBuffer[mPrevPlayerIndex] = mPrevPlayerOutput;
+
+        mPrevPlayerIndex = PlayerIndex;
+        mPrevPlayerOutput = mOutputBuffer[PlayerIndex];
+
+        mOutputBuffer[PlayerIndex] = 'P';
+
+        COORD   Cursor = {};
+        SetConsoleCursorPosition( GetStdHandle(STD_OUTPUT_HANDLE), Cursor);
+
+        std::cout << mOutputBuffer;
+
+		if (GetTile(PlayerPos.X, PlayerPos.Y) == ETileType::Goal)
+            break;
+    }
 }
 
 void CMaze::Output()
 {
-    system("cls");
-    for (int i = 0;i < mYsize;i++)
-    {
-        for (int j = 0;j < mXsize;j++)
-        {
-            switch (mMazeArray[i][j])
-            {
-            case ETileType::Road:
-                std::cout << " ";
-                break;
-            case ETileType::Wall:
-                std::cout << "#";
-                break;
-            case ETileType::Start:
-                std::cout << "S";
-                break;
-            case ETileType::Goal:
-                std::cout << "G";
-                break;
-            }
-        }
-        std::cout << std::endl;
-    }
-    system("pause");
 }
+
+void CMaze::Reallocation()
+{
+    if (mObjectCapacity == mObjectCount)
+    {
+        mObjectCapacity *= 2;
+
+        CObject** Array = new CObject * [mObjectCapacity];
+        memset(Array, 0, sizeof(CObject*) * mObjectCapacity);
+        delete[] mObjectList;
+        mObjectList = Array;
+    }
+}
+
 
 void CMaze::HideCursor()
 {

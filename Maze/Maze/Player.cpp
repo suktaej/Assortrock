@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Maze.h"
 
 CPlayer::CPlayer()
 {
@@ -28,19 +29,23 @@ void CPlayer::Update()
             {
             case EKey::Up:
                 --mPos.Y;
-                if (mPos.Y < 0)
-                    mPos.Y = 0;
+                if (mMaze->GetTile(mPos.X,mPos.Y) == ETileType::Wall)
+                    ++mPos.Y;
                 break;
             case EKey::Down:
                 ++mPos.Y;
+                if (mMaze->GetTile(mPos.X,mPos.Y) == ETileType::Wall)
+                    --mPos.Y;
                 break;
             case EKey::Left:
                 --mPos.X;
-                if (mPos.X < 0)
-                    mPos.X = 0;
+                if (mMaze->GetTile(mPos.X,mPos.Y) == ETileType::Wall)
+                    ++mPos.X;
                 break;
             case EKey::Right:
                 ++mPos.X;
+                if (mMaze->GetTile(mPos.X,mPos.Y) == ETileType::Wall)
+                    --mPos.X;
                 break;
             }
         }

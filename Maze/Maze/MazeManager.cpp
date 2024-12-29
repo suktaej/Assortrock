@@ -17,6 +17,27 @@ CMazeManager::~CMazeManager()
     }
 }
 
+int CMazeManager::Menu()
+{
+    system("cls");
+
+    for (int i = 0; i < mMazeCount; ++i)
+    {
+        std::cout << i + 1 << ". " <<
+            mMazeArray[i]->GetName() << std::endl;
+    }
+
+    std::cout << mMazeCount + 1 << ". Back" << std::endl;
+    std::cout << "Select Menu: ";
+    int	Input;
+    std::cin >> Input;
+
+    if (Input < 1 || Input > mMazeCount + 1)
+        return 0;
+
+    return Input;
+}
+
 bool CMazeManager::Init()
 {
     FILE* File = nullptr;
@@ -50,5 +71,20 @@ bool CMazeManager::Init()
 
 void CMazeManager::Run()
 {
-    mMazeArray[0]->Output();
+    while (true)
+    {
+        int Input = Menu();
+
+        if (Input == 0)
+            continue;
+
+        else if (Input == mMazeCount + 1)
+            break;
+
+        int Index = Input - 1;
+        mMazeArray[Index]->Run();
+
+        //__int64 Time = mMazeArray[Index]->GetTime();
+
+    }
 }

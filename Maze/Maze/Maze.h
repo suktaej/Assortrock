@@ -18,7 +18,7 @@ private:
 	char* mOutputBuffer;
 	//출력용 1차원 배열
 	int mPrevPlayerIndex = 0;
-	char mPrevplayerOutput;
+	char mPrevPlayerOutput;
 	//출력용 배열에서 플레이어 이전 프레임의 인덱스
 
 	class CObject** mObjectList = nullptr;
@@ -31,6 +31,7 @@ public:
 	bool Init(const char* FileName);
 	void Run();
 	void Output();
+	void Reallocation();
 	void HideCursor();
 	const char* GetName() const { return mName; }
 	ETileType GetTile(int x, int y) const; 

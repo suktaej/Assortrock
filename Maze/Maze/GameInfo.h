@@ -20,7 +20,8 @@ enum class ETileType :unsigned char
 	Road,
 	Wall,
 	Start,
-	Goal
+	Goal,
+	Item
 };
 
 enum class EKey

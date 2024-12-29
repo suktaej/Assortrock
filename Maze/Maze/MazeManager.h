@@ -21,6 +21,8 @@ public:
 private:
 	class CMaze** mMazeArray = nullptr;
 	int mMazeCount = 0;
+private:
+	int Menu();
 public:
 	bool Init();
 	void Run();
