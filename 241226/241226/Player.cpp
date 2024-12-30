@@ -74,7 +74,7 @@ ECollisionType CPlayer::CollisionEnable(CObject* Dest)
     case EObjectType::Enemy:
     case EObjectType::EnemyBullet:
         return ECollisionType::Damage;
-    case EObjectType::Item:
+    //case EObjectType::Item:
         //return 
     }
     return ECollisionType::None;
