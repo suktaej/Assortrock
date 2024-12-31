@@ -38,35 +38,40 @@ void CObjectManager::Update(float DeltaTime)
 		(*iter)->Update(DeltaTime);
 		++iter;
 
-		if (CStage::GetInst()->GetDeath())
-			return;
+		//if (CStage::GetInst()->GetDeath())
+		//	return;
 	}
 
-	std::cout<<CStage::GetInst()->GetDeath();
-	/*if (mObjList.size() >= 2)
+	//std::cout<<CStage::GetInst()->GetDeath();
+
+	if (mObjList.size() > 1)
 	{
 		iter = mObjList.begin();
-		
-		iterEnd = mObjList.end();
-		iterEnd--;
+		//iterEnd = mObjList.end();
+		//iterEnd--;
 
-		while (iter != iterEnd)
+		std::list<CObject*>::iterator ItemIter = iter;
+		ItemIter++;
+
+		std::list<CObject*>::iterator ItemIterEnd = mObjList.end();
+
+		//bool IterErase = false;
+		while (ItemIter != ItemIterEnd)
 		{
-			std::list<CObject*>::iterator iter1 = iter;
-			iter1++;
-
-			std::list<CObject*>::iterator iter1End = mObjList.end();
-
-			while (iter1 != iter1End)
+			if ((*iter)->GetPos().X == (*ItemIter)->GetPos().X &&
+				(*iter)->GetPos().Y == (*ItemIter)->GetPos().Y)
 			{
-				if ((*iter)->GetPos().X == (*iter1)->GetPos().X &&
-					(*iter)->GetPos().Y == (*iter1)->GetPos().Y)
-				{
-					bool ItemCollison = false;
-				}
+				if (CPlayer* Player = dynamic_cast<CPlayer*>(*iter))
+					Player->SetScore(100);
+
+				SAFE_DELETE(*ItemIter);
+				ItemIter = mObjList.erase(ItemIter);
+				ItemIterEnd = mObjList.end();
+				continue;
 			}
+			ItemIter++;
 		}
-	}*/
+	}
 }
 
 void CObjectManager::Output(char* Buffer)
