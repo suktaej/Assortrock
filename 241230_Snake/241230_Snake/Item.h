@@ -16,4 +16,3 @@ public:
     void SetCount(int Num) { mCount = Num; }
     int GetCount() { return mCount; }
 };
-

@@ -38,11 +38,10 @@ void CObjectManager::Update(float DeltaTime)
 		(*iter)->Update(DeltaTime);
 		++iter;
 
-		//if (CStage::GetInst()->GetDeath())
-		//	return;
+		if (CStage::GetInst()->GetDeath())
+			//문제
+			return;
 	}
-
-	//std::cout<<CStage::GetInst()->GetDeath();
 
 	if (mObjList.size() > 1)
 	{
@@ -62,6 +61,10 @@ void CObjectManager::Update(float DeltaTime)
 				(*iter)->GetPos().Y == (*ItemIter)->GetPos().Y)
 			{
 				CStage::GetInst()->SetScore(100);
+				if (CStage::GetInst() == nullptr) {
+					std::cout << "CStage instance is not initialized!" << std::endl;
+				}
+				//문제
 
 				SAFE_DELETE(*ItemIter);
 				ItemIter = mObjList.erase(ItemIter);

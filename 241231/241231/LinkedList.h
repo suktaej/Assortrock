@@ -8,6 +8,8 @@ class CListNode
 	friend class CLinkedList;
 	template<typename T>
 	friend class CListIterator;
+	template<typename T>
+	friend class CReverseListIterator;
 
 private:
 	CListNode() {}
@@ -89,6 +91,7 @@ private:
 public:
 	typedef CListIterator<T> iterator;
 	//외부에서 iterator 호출가능
+	typedef CReverseListiterator<T> reverse_iterator;
 public:
 	CLinkedList()
 	{
@@ -250,5 +253,69 @@ public:
 		result.mNode = Next;
 		return result;
 	}
+
+	reverse_iterator rbegin() const
+	{
+		reverse_iterator riter;
+		riter.mNode = mEnd->mPrev;
+		return riter;
+	}
+
+	reverse_iterator rend() const
+	{
+		reverse_iterator riter;
+		riter.mNode = mPrev;
+		return riter;
+	}
 };
 
+
+
+template <typename T>
+class CReverseListIterator
+{
+	template<typename T>
+	friend class CLinkedList;
+
+public:
+	CReverseListIterator() 
+	{
+
+	}
+	~CReverseListIterator()
+	{
+
+	}
+private:
+	CListNode<T>* mNode = nullptr;
+public:
+	bool operator==(const CReverseListIterator<T>& iter) const
+	{
+		return mNode == iter.mNode;
+	}
+	bool operator!=(const CReverseListIterator<T>& iter) const
+	{
+		return mNode != iter.mNode;
+	}
+	const CReverseListIterator<T>& operator++ ()
+	{
+		mNode = mNode->mPrev;
+		assert(mNode != nullptr);
+
+		return *this;
+	}
+
+	const CReverseListIterator<T>& operator++ (int)
+	{
+		mNode = mNode->mPrev;
+		assert(mNode != nullptr);
+
+		return *this;
+	}
+	T& operator *()
+	{
+		assert(mNode != nullptr);
+
+		return mNode->mData;
+	}
+};

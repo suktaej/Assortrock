@@ -40,9 +40,3 @@ namespace EKey
 	};
 }
 
-
-enum class EObjType
-{
-	Player,
-	Item
-};
