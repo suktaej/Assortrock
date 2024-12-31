@@ -6,6 +6,9 @@ class CListNode
 {
 	template<typename T>
 	friend class CLinkedList;
+	template<typename T>
+	friend class CListIterator;
+
 private:
 	CListNode() {}
 	~CListNode() 
@@ -20,12 +23,72 @@ private:
 	CListNode<T>* mPrev = nullptr;
 };
 
+template <typename T>
+class CListIterator
+{
+	template<typename T>
+	friend class CLinkedList;
+
+public:
+	CListIterator() 
+	{
+
+	}
+	~CListIterator()
+	{
+
+	}
+private:
+	CListNode<T>* mNode = nullptr;
+public:
+	//==, !=
+	//iterator가 가지고 있는 노드를 비교 
+	//두 iterator의 주소가 같을 경우 같은 것으로 판단
+	bool operator==(const CListIterator<T>& iter) const
+	{
+		return mNode == iter.mNode;
+	}
+	bool operator!=(const CListIterator<T>& iter) const
+	{
+		return mNode != iter.mNode;
+	}
+	//++, -- 
+	//반환값이 void일 경우 대입이 불가능
+	//iter = iter++;
+	const CListIterator<T>& operator++ ()
+	{
+		mNode = mNode->mNext;
+		assert(mNode != nullptr);
+
+		return *this;
+	}
+
+	const CListIterator<T>& operator++ (int)
+	{
+		mNode = mNode->mNext;
+		assert(mNode != nullptr);
+
+		return *this;
+	}
+
+	//*(역참조)
+	T& operator *()
+	{
+		assert(mNode != nullptr);
+
+		return mNode->mData;
+	}
+};
+
 template<typename T>
 class CLinkedList
 {
 private:
 	typedef CListNode<T> NODE;
 	//클래스에서 CListNode<T> 대신 NODE로 선언 
+public:
+	typedef CListIterator<T> iterator;
+	//외부에서 iterator 호출가능
 public:
 	CLinkedList()
 	{
@@ -61,7 +124,7 @@ public:
 		mEnd->mPrev = Node;
 		Node->mNext = mEnd;
 
-		++mSzie;
+		++mSize;
 	}
 
 	void push_front(const T& Data)
@@ -131,6 +194,61 @@ public:
 		mBegin->mNext = mEnd;
 		mEnd->mPrev = mBegin;
 		mSize = 0;
+	}
+
+	//Begin노드의 다음 노드를 가지고 있는 iterator를 반환
+	iterator begin() const
+	{
+		iterator iter;
+		iter.mNode = mBegin->mNext;
+		return iter;
+	}
+
+	iterator end() const
+	{
+		iterator iter;
+		iter.mNode = mEnd;
+		return iter;
+	}
+
+	void insert(const iterator& iter, const T& Data)
+	{
+		NODE* Node = new NODE;
+		Node->mData = Data;
+
+		NODE* Prev = iter.mNode->mPrev;
+		Prev->mNext = Node;
+		Node->mPrev = Prev;
+
+		Node->mNext = iter.Node;
+		iter.mNode->mPrev = Node;
+
+		mSize++;
+	}
+
+	//iterator erase(const T& Data)
+	//{
+
+	//}
+
+	iterator erase(const iterator* iter)
+	{
+		if (mSize == 0)
+			return end();
+
+		NODE* Prev = iter.mNode->mPrev;
+		NODE* Next = iter.mNode->mNext;
+
+		delete iter.mNode;
+
+		Prev.mNext = Next;
+		Next.mPrev = Prev;
+
+		mSize--;
+
+		iterator result;
+		result.mNode = Next;
+		return result;
 	}
 };
 

@@ -18,14 +18,17 @@ private:
 	float mStageTime = 0.f;
 
 	bool mDeath = false;
+	int mScore = 0;
 public:
 	bool Init();
 	void Run();
 public:
 	int GetXsize() { return mXsize; }
 	int GetYsize() { return mYsize; }
+	
 	bool GetDeath() { return mDeath; }
 	void SetDeath() { mDeath = true; }
 
+	void SetScore(int Num) { mScore += Num; }
 };
 

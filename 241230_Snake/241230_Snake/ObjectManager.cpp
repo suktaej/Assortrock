@@ -61,8 +61,7 @@ void CObjectManager::Update(float DeltaTime)
 			if ((*iter)->GetPos().X == (*ItemIter)->GetPos().X &&
 				(*iter)->GetPos().Y == (*ItemIter)->GetPos().Y)
 			{
-				if (CPlayer* Player = dynamic_cast<CPlayer*>(*iter))
-					Player->SetScore(100);
+				CStage::GetInst()->SetScore(100);
 
 				SAFE_DELETE(*ItemIter);
 				ItemIter = mObjList.erase(ItemIter);

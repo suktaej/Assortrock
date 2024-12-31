@@ -5,11 +5,14 @@ int main()
 {
 	CLinkedList<int> IntList;
 
-	for (int i = 0;i < 100;i++)
+	for (int i = 0;i < 10;i++)
 		IntList.push_back(i);
 	
-	for (int i = 0;i < 100;i++)
-		IntList.pop_back();
+	CLinkedList<int>::iterator iter;
+	CLinkedList<int>::iterator iterEnd = IntList.end();
+
+	for (iter = IntList.begin();iter!=iterEnd;iter++)
+		std::cout << *iter << std::endl;
 
 	return 0;
 }

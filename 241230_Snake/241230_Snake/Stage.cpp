@@ -68,6 +68,10 @@ void CStage::Run()
 
         CObjectManager::GetInst()->Output(mOutputBuffer);
         std::cout << mOutputBuffer;
+
+        COORD ScorePos = {2, mYsize+1};
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), ScorePos);
+        std::cout << "Score: "<< mScore;
     }
 }
 
