@@ -267,9 +267,42 @@ public:
 		riter.mNode = mPrev;
 		return riter;
 	}
+	//범위 삭제(First~Second)
+	iterator erase(const iterator& First, const iterator& Second)
+	{
+		assert(First.mNode);
+		assert(Second.mNode);
+		assert(First.mNode!=mBegin);
+		assert(Second.mNode!=mBegin);
+		assert(First.mNode!=mEnd);
+		assert(Second.mNode!=mEnd);
+
+		iterator Check = Second;
+		Check++;
+
+		iterator iterEnd;
+		iterEnd.mNode = mEnd;
+
+		//list에서 전후관계를 확인하려면 반복문으로 탐색
+		while (Check != iterEnd)
+		{
+			assert(Check != First);
+			Check++;
+		}
+
+		NODE* Prev = First.mNode->mPrev;
+		//종료 시 First의 이전 노드와 Second의 다음 노드를 연결하기 위함
+
+		for (iterator iter = First;iter != Second;iter++)
+		{
+			delete iter.mNode;
+			--mSize;
+		}
+		
+		Prev->mNext = Second.mNode;
+		Second.mNode->mPrev = Prev;
+	}
 };
-
-
 
 template <typename T>
 class CReverseListIterator
@@ -293,10 +326,12 @@ public:
 	{
 		return mNode == iter.mNode;
 	}
+
 	bool operator!=(const CReverseListIterator<T>& iter) const
 	{
 		return mNode != iter.mNode;
 	}
+
 	const CReverseListIterator<T>& operator++ ()
 	{
 		mNode = mNode->mPrev;
@@ -312,6 +347,7 @@ public:
 
 		return *this;
 	}
+
 	T& operator *()
 	{
 		assert(mNode != nullptr);
@@ -319,3 +355,4 @@ public:
 		return mNode->mData;
 	}
 };
+
