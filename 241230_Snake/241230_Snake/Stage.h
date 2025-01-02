@@ -28,7 +28,7 @@ public:
 	
 	bool GetDeath() { return mDeath; }
 	void SetDeath() { mDeath = true; }
-
+	
 	void SetScore(int Num) { mScore += Num; }
 };
 

@@ -38,6 +38,8 @@ void CObjectManager::Update(float DeltaTime)
 		(*iter)->Update(DeltaTime);
 		++iter;
 
+		bool death = CStage::GetInst()->GetDeath();
+
 		if (CStage::GetInst()->GetDeath())
 			//문제
 			return;
@@ -61,9 +63,6 @@ void CObjectManager::Update(float DeltaTime)
 				(*iter)->GetPos().Y == (*ItemIter)->GetPos().Y)
 			{
 				CStage::GetInst()->SetScore(100);
-				if (CStage::GetInst() == nullptr) {
-					std::cout << "CStage instance is not initialized!" << std::endl;
-				}
 				//문제
 
 				SAFE_DELETE(*ItemIter);
