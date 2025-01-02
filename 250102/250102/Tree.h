@@ -48,20 +48,19 @@ public:
 		//Parent Node가 없다면 Root
 		if (!Parent)
 		{
+			//삽입 전 이미 roo에 값이 있다면
 			if (mRoot)
 			{
 				mRoot->mParent = Node;
 				Node->mChildArray.push_back(mRoot);
 			}
 			mRoot = Node;
-			//루트를 새 입력과 교체
 		}
 		else
 		{
 			Parent->mChildArray.push_back(Node);
 			Node->mParent = Parent;
 		}
-
 		mSize++;
 	}
 
@@ -141,7 +140,6 @@ private:
 			clear(Node->mChildArray[i]);
 		}
 		delete Node;
-
 	}
 };
 
