@@ -39,33 +39,80 @@ int main()
 	
 	
 	//==========bin_tree================
-	CBinarySearchTree<std::string, int>	IntMap;
+	//CBinarySearchTree<std::string, int>	IntMap;
 
-	IntMap.insert("R", 100);
-	IntMap.insert("F", 200);
-	IntMap.insert("V", 300);
-	IntMap.insert("D", 400);
-	IntMap.insert("T", 500);
+	//IntMap.insert("R", 100);
+	//IntMap.insert("F", 200);
+	//IntMap.insert("V", 300);
+	//IntMap.insert("D", 400);
+	//IntMap.insert("T", 500);
 
-	CBinarySearchTree<std::string, int>::ITR iter;
-	CBinarySearchTree<std::string, int>::ITR iterEnd = IntMap.end();
+	//CBinarySearchTree<std::string, int>::ITR iter;
+	//CBinarySearchTree<std::string, int>::ITR iterEnd = IntMap.end();
 
-	for (iter = IntMap.begin(); iter != iterEnd; ++iter)
+	//for (iter = IntMap.begin(); iter != iterEnd; ++iter)
+	//{
+	//	std::cout << "Key : " << iter->mKey << " Value : " <<
+	//		iter->mData << std::endl;
+	//}
+
+	//iter = IntMap.find("D");
+
+	//if (iter != IntMap.end())
+	//{
+	//	std::cout << "Find Key : " << iter->mKey << " Value : " <<
+	//		iter->mData << std::endl;
+	//}
+
+	//else
+	//	std::cout << "None Key" << std::endl;
+
+
+	CBinarySearchTree<int, int>	IntTree;
+
+	IntTree.insert(10, 10);
+	IntTree.insert(4, 4);
+	IntTree.insert(2, 2);
+	IntTree.insert(1, 1);
+	IntTree.insert(3, 3);
+	IntTree.insert(8, 8);
+	IntTree.insert(7, 7);
+
+	IntTree.insert(30, 30);
+	IntTree.insert(20, 20);
+	IntTree.insert(15, 15);
+	IntTree.insert(25, 25);
+
+	IntTree.insert(50, 50);
+	IntTree.insert(40, 40);
+	IntTree.insert(80, 80);
+	IntTree.insert(45, 45);
+
+	CBinarySearchTree<int, int>::ITR iter;
+	CBinarySearchTree<int, int>::ITR iterEnd =
+		IntTree.end();
+
+	/*iter = IntTree.erase(4);
+	std::cout << "erase Next Key : " << iter->mKey <<
+		", Value : " << iter->mData << std::endl;*/
+
+	for (iter = IntTree.begin(); iter != iterEnd; ++iter)
 	{
-		std::cout << "Key : " << iter->mKey << " Value : " <<
-			iter->mData << std::endl;
+		std::cout << "Key : " << iter->mKey <<
+			", Value : " << iter->mData << std::endl;
 	}
 
-	iter = IntMap.find("D");
+	std::cout << "======== PreOrder ========" <<
+		std::endl;
+	IntTree.PreOrder();
 
-	if (iter != IntMap.end())
-	{
-		std::cout << "Find Key : " << iter->mKey << " Value : " <<
-			iter->mData << std::endl;
-	}
+	std::cout << "======== InOrder ========" <<
+		std::endl;
+	IntTree.InOrder();
 
-	else
-		std::cout << "None Key" << std::endl;
+	std::cout << "======== PostOrder ========" <<
+		std::endl;
+	IntTree.PostOrder();
 
 	return 0;
 }
