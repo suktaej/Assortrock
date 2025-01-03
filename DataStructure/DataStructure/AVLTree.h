@@ -4,7 +4,7 @@ template<typename Key, typename Value>
 class CNode
 {
 	template<typename Key, typename Value>
-	friend class CBinarySearchTree;
+	friend class CAVLTree;
 	template<typename Key, typename Value>
 	friend class CIterator;
 private:
@@ -22,12 +22,12 @@ private:
 	NODE* mNext = nullptr;
 	NODE* mPrev = nullptr;
 };
-	
+
 template<typename Key, typename Value>
 class CIterator
 {
 	template<typename Key, typename Value>
-	friend class CBinarySearchTree;
+	friend class CAVLTree;
 public:
 	CIterator() {}
 	~CIterator() {}
@@ -73,19 +73,19 @@ public:
 
 
 template<typename Key, typename Value>
-class CBinarySearchTree
+class CAVLTree
 {
 public:
-	CBinarySearchTree() 
+	CAVLTree()
 	{
 		mBegin = new NODE;
 		mEnd = new NODE;
 		mBegin->mNext = mEnd;
 		mEnd->mPrev = mBegin;
 	}
-	~CBinarySearchTree() {}
+	~CAVLTree() {}
 private:
-	typedef CBinarySearchTree<Key, Value> CBT;
+	typedef CAVLTree<Key, Value> CBT;
 	typedef CNode<Key, Value> NODE;
 public:
 	typedef CIterator<Key, Value> ITR;
@@ -123,6 +123,7 @@ private:
 				NewNode->mNext = Node;
 				Node->mPrev = NewNode;
 				//Linkedlist 생성
+				ReBalance_1(Node->mParent);
 			}
 			// 좌측에 노드가 있을 경우
 			else
@@ -147,7 +148,9 @@ private:
 				NewNode->mNext = Next;
 
 				NewNode->mPrev = Node;
-				Node->mNext= NewNode;
+				Node->mNext = NewNode;
+
+				ReBalance_1(Node->mParent);
 			}
 			else
 				insert(pKey, Data, Node->mRight);
@@ -172,18 +175,18 @@ private:
 	NODE* FindMin(NODE* Node)
 	{
 		while (Node->mLeft)
-			Node = Node->mData;
+			Node = Node->mLeft;
 
 		return Node;
 	}
 	NODE* FindMax(NODE* Node)
 	{
 		while (Node->mRight)
-			Node = Node->mData;
+			Node = Node->mRight;
 
 		return Node;
 	}
-	void PreOrder(NODE* Node) 
+	void PreOrder(NODE* Node)
 	{
 		if (!Node)
 			return;
@@ -196,24 +199,169 @@ private:
 	{
 		if (!Node)
 			return;
-		
+
 		PreOrder(Node->mLeft);
 		std::cout << "Key:" << Node->mKey << std::endl;
 		PreOrder(Node->mRight);
 	}
-	void PostOrder(NODE* Node) 
+	void PostOrder(NODE* Node)
 	{
 		if (!Node)
 			return;
-		
+
 		PreOrder(Node->mLeft);
 		PreOrder(Node->mRight);
 		std::cout << "Key:" << Node->mKey << std::endl;
 	}
+
+	//노드의 높이를 확인
+	int GetHeight(NODE* Node)
+	{
+		if (!Node)
+			return 0;
+
+		int Left = GetHeight(Node->mLeft);
+		int Right = GetHeight(Node->mRight);
+
+		return Left < Right ? Right + 1 : Left + 1;
+	}
+	//좌우 밸런스를 확인하고 높이차를 반환
+	int BalanceFactor(NODE* Node)
+	{
+		if (!Node)
+			return 0;
+
+		return GetHeight(Node->mLeft) - GetHeight(Node->mRight);
+		//반환한 값의 절대값이 2보다 클 경우 밸런스가 깨진상태
+		//음수값일 경우 우측 편향
+		//양수일 경우 좌측 편향
+	}
+
+	//밸런스가 깨졌으면 트리를 재정렬
+	NODE* Balance(NODE* Node)
+	{
+
+	}
+
+
+	//좌측회전
+	NODE* RotationLeft(NODE* Node)
+	{
+		NODE* RightChild = Node->mRight;
+		NODE* RCLeftChild = RightChild->mLeft;
+		NODE* Parent = Node->mParent;
+
+		if (Parent)
+		{
+			if (Parent->mLeft == Node)
+				Parent->mLeft = RightChild;
+			else
+				Parent->mRight = RightChild;
+		}
+		else
+			mRoot = RightChild;
+
+		RightChild->mParent = Parent;
+
+		RightChild->mLeft = Node;
+		Node->mParent = RightChild;
+
+		Node->mRight = RCLeftChild;
+		if (RCLeftChild)
+			RCLeftChild->mParent = Node;
+
+		return RightChild;
+	}
+	//우측회전
+	NODE* RotationRight(NODE* Node)
+	{
+		NODE* LeftChild = Node->mLeft;
+		NODE* LCRightChild = LeftChild->mRight;
+		NODE* Parent = Node->mParent;
+
+		if (Parent)
+		{
+			if (Parent->mLeft == Node)
+				Parent->mLeft = LeftChild;
+			else
+				Parent->mRight = LeftChild;
+		}
+		else
+			mRoot = LeftChild;
+
+		LeftChild->mParent = Parent;
+
+		LeftChild->mRight = Node;
+		Node->mParent = LeftChild;
+
+		Node->mLeft = LCRightChild;
+		if(LCRightChild)
+			LCRightChild->mParent = Node;
+
+		return LeftChild;
+	}
+	
+	void ReBalance_1(NODE* Node)
+	{
+		while (Node)
+		{
+			int Factor = BalanceFactor(Node);
+
+			//왼쪽이 클 경우
+			if (Factor > 1)
+			{
+				//LR
+				if (BalanceFactor(Node->mLeft) < 0)
+					RotationLeft(Node->mLeft);
+				//LL
+				Node = RotationRight(Node);
+			}
+			else if (Factor < -1)
+			{
+				//RL
+				if (BalanceFactor(Node->mRight) > 0)
+					RotationLeft(Node->mRight);
+				//RR
+				Node = RotationLeft(Node);
+			}
+		//회전으로 균형을 맞춘 후 루트노드까지 상위탐색
+		Node = Node->mParent;
+		}
+	}
+
+	void Output(NODE* Node)
+	{
+		if (!Node)
+			return;
+		std::cout << std::endl;
+		std::cout << "Key : " << Node->mKey << ", Value : " <<
+			Node->mData << std::endl;
+		std::cout << "Parent : ";
+		if (Node->mParent)
+			std::cout << Node->mParent->mKey << std::endl;
+		else
+			std::cout << "None" << std::endl;
+
+		std::cout << "Left : ";
+		if (Node->mLeft)
+			std::cout << Node->mLeft->mKey << std::endl;
+		else
+			std::cout << "None" << std::endl;
+
+		std::cout << "Right : ";
+		if (Node->mRight)
+			std::cout << Node->mRight->mKey << std::endl;
+		else
+			std::cout << "None" << std::endl;
+
+		Output(Node->mLeft);
+		Output(Node->mRight);
+	}
+
 public:
 	void insert(const Key& pKey, const Value& Data)
 	{
-		if(!mRoot)
+		if (!mRoot)
 		{
 			mRoot = new NODE;
 			mRoot->mKey = pKey;
@@ -226,7 +374,7 @@ public:
 			mRoot->mNext = mEnd;
 		}
 		else
-			insert(pKey, Data, mRoot); 
+			insert(pKey, Data, mRoot);
 
 		mSize++;
 	}
@@ -239,7 +387,7 @@ public:
 
 	ITR erase(ITR& iter)
 	{
-		if (iter.mNode==mEnd)
+		if (iter.mNode == mEnd)
 			return iter;
 
 		NODE* DeleteNode = nullptr;
@@ -254,9 +402,9 @@ public:
 			if (ParentNode)
 			{
 				if (ParentNode->mLeft == iter.mNode)
-					ParentNode->mLeft == nullptr;
+					ParentNode->mLeft = nullptr;
 				else
-					ParentNode->mRight == nullptr;
+					ParentNode->mRight = nullptr;
 			}
 			else
 				mRoot = nullptr;
@@ -310,7 +458,9 @@ public:
 
 		Prev->mNext = Next;
 		Next->mPrev = Prev;
-		
+
+		ReBalance_1(DeleteNode->mParent);
+
 		delete DeleteNode;
 
 		mSize--;
@@ -336,7 +486,7 @@ public:
 		mBegin->mNext = mEnd;
 		mEnd->mPrev = mBegin;
 		mSize = 0;
- 	}
+	}
 
 	ITR begin() const
 	{
@@ -360,4 +510,5 @@ public:
 	void PreOrder() { PreOrder(mRoot); }
 	void InOrder() { InOrder(mRoot); }
 	void PostOrder() { PostOrder(mRoot); }
+	void Output() { Output(mRoot); }
 };
