@@ -8,7 +8,11 @@ public:
 	CArray() {}
 	CArray(const CArray<T>& Arr) {}
 	CArray(CArray<T>&& Arr) {}
-	~CArray() {}
+	~CArray() 
+	{
+		if (mArray != nullptr)
+			delete[] mArray;
+	}
 
 private:
 	T* mArray = nullptr;
@@ -22,6 +26,7 @@ private:
 		//Begin, End를 위한 공간 추가
 		if (nullptr != mArray)
 		{
+			//Begin이 0번 공간에 할당되어 있으므로 +1번 공간만큼 복사
 			memcpy(Array + 1, mArray + 1, sizeof(T) * mSize);
 			delete[] mArray;
 		}
@@ -34,8 +39,6 @@ public:
 		{
 			if (mCapacity == 0)
 				ReAlloc(1);
-			else if (mCapacity == 1)
-				ReAlloc(2);
 			else
 				ReAlloc();
 		}

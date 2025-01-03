@@ -243,7 +243,6 @@ private:
 
 	}
 
-
 	//ÁÂÃøÈ¸Àü
 	NODE* RotationLeft(NODE* Node)
 	{
