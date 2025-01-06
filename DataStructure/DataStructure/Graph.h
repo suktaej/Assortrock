@@ -49,7 +49,6 @@ enum class EGrpahType
 	NonDir
 };
 
-
 template<typename T>
 class CGraph
 {
@@ -94,9 +93,9 @@ public:
 		if (!SrcNode || !DestNode)
 			return;
 
+		//노드가 가지는 변수는 엣지배열
 		EDGE* Edge = new EDGE;
 		Edge->m_Node = DestNode;
-		//노드가 가지는 변수는 엣지배열
 		SrcNode->m_EdgeArray.push_back(Edge);
 	
 		if (m_Type == EGrpahType::NonDir)
