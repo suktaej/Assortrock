@@ -152,6 +152,7 @@ public:
 				unsigned int Weight = Node->m_Weight + Node->m_EdgeArray[i]->m_Weight;
 
 				//최종비용이 Edge에 붙어있는 노드의 비용보다 작다면 교체
+				//각 노드의 초기 가중치는 모르는 상태(0xffffffff)로 설정되어 있음
 				if (Weight < Node->m_EdgeArray[i]->m_Node->m_Weight)
 				{
 					if (!Node->m_EdgeArray[i]->m_Node->m_Visit)
