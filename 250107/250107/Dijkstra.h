@@ -43,7 +43,7 @@ private:
 	CDijkstraNode<T>* m_PrevNode = nullptr;
 	CArray<CDijkstraEdge<T>*> m_EdgeArray;
 	unsigned int m_Weight = UINT_MAX;	
-	bool m_Visit = false;
+	//bool m_Visit = false;
 	//비용의 적립값(가중치)
 	//UINT_MAX = 0xffffffff : unsigned int로 표기 가능한 최대값
 };
@@ -125,7 +125,7 @@ public:
 				EndNode = m_NodeArray[i];
 			//시작노드 초기화
 			m_NodeArray[i]->m_PrevNode = nullptr;
-			m_NodeArray[i]->m_Visit = false;
+			//m_NodeArray[i]->m_Visit = false;
 			m_NodeArray[i]->m_Weight = 0xffffffff;
 		}
 
@@ -155,10 +155,12 @@ public:
 				//각 노드의 초기 가중치는 모르는 상태(0xffffffff)로 설정되어 있음
 				if (Weight < Node->m_EdgeArray[i]->m_Node->m_Weight)
 				{
-					if (!Node->m_EdgeArray[i]->m_Node->m_Visit)
-						Queue.insert(Node->m_EdgeArray[i]->m_Node);
-
-					Node->m_EdgeArray[i]->m_Node->m_Visit = true;
+					Queue.insert(Node->m_EdgeArray[i]->m_Node);
+					//코드 확인
+					
+					//if (!Node->m_EdgeArray[i]->m_Node->m_Visit)
+					//	Queue.insert(Node->m_EdgeArray[i]->m_Node);
+					//Node->m_EdgeArray[i]->m_Node->m_Visit = true;
 
 					//Edge에 붙어있는 노드의 비용을 교체
 					Node->m_EdgeArray[i]->m_Node->m_Weight = Weight;

@@ -42,7 +42,7 @@ int main()
 	std::cout << "-----------------" << std::endl;
 
 	for (iter = lst.begin(); iter != iterEnd; ++iter)
-		std::cout << *iter << std::endl;
+		std::cout << *iter <<'\t';
 
 	return 0;
 }
