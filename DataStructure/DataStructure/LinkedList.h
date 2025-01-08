@@ -162,7 +162,7 @@ public:
 
 	void clear()
 	{
-		CNode<T>* Node = mBeign->mNext;
+		CNode<T>* Node = mBegin->mNext;
 		while (!mEnd)
 		{
 			CNode<T>* Next = Node->mNext;
