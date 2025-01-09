@@ -1,14 +1,15 @@
-﻿#include "GameManager.h"
+#include "GameManager.h"
 
 int main()
 {
-	if (!CGameManager::GetInst()->Init())
+	if (!FGameManager::GetInst()->Init())
 	{
-		CGameManager::DestroyInst();
+		FGameManager::GetInst()->DestroyInst();
 		return 0;
 	}
 
-	CGameManager::GetInst()->Run();
-	CGameManager::DestroyInst();
+	FGameManager::GetInst()->Run();
+	FGameManager::GetInst()->DestroyInst();
+
 	return 0;
 }

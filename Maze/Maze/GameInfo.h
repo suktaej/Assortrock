@@ -1,34 +1,47 @@
 #pragma once
 #include <iostream>
-#include <windows.h>
+#include <Windows.h>
 #include <conio.h>
+#include <time.h>
 
-#define SAFE_DELETE(p) if(p) {delete p;p=nullptr;}
-#define MAX_STRING 128
-#define DEFAULT_CAPACITY 4
+#define	SAFE_DELETE(p)	if(p)	{ delete p; p = nullptr;}
 
-enum class EMainMenu:unsigned char 
-{
-	None,
-	Maze,
-	Score,
-	Exit
-};
+#define	DECLARE_SINGLE(Type)	\
+private:\
+	Type();\
+	~Type();\
+private:\
+	static Type*	s_Inst;\
+public:\
+	static Type* GetInst()\
+	{\
+		if(nullptr == s_Inst)\
+			s_Inst = new Type;\
+		return s_Inst;\
+	}\
+	static void DestroyInst()\
+	{\
+		SAFE_DELETE(s_Inst);\
+	}
 
-enum class ETileType :unsigned char
+#define	DEFINITION_SINGLE(Type) Type* Type::s_Inst = nullptr;
+
+enum class ETileType : unsigned char
 {
 	Road,
 	Wall,
 	Start,
 	Goal,
-	Item
+	Item,
+	Pitfall,
+	HP
 };
 
-enum class EKey
-{
-	MoveKey = 224,
-	Up = 72,
-	Down = 80,
-	Left = 75,
-	Right = 77
-};
+	enum class EKeyType
+	{
+		MoveKey = 224,
+		Up = 72,
+		Down = 80,
+		Left = 75,
+		Right = 77
+	};

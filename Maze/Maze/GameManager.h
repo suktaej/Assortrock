@@ -1,27 +1,37 @@
 #pragma once
 #include "GameInfo.h"
+enum class EMainMenu
+{
+	None,
+	Maze,
+	Score,
+	Exit
+};
 
-class CGameManager
+class FGameManager
 {
 private:
-	CGameManager();
-	~CGameManager();
-	static CGameManager* mInst;
+	FGameManager();
+	~FGameManager();
+	static FGameManager* s_Inst;
 public:
-	static CGameManager* GetInst()
+	static FGameManager* GetInst()
 	{
-		if (mInst == nullptr)
-			mInst = new CGameManager;
-		return mInst;
+		if (s_Inst == nullptr)
+			s_Inst = new FGameManager;
+		return s_Inst;
 	}
 	static void DestroyInst()
 	{
-		delete mInst;
-		mInst = nullptr;
+		delete s_Inst;
+		s_Inst = nullptr;
 	}
+
+private:
+	EMainMenu Menu();
+
 public:
 	bool Init();
 	void Run();
-	EMainMenu Menu();
 };
 

@@ -1,40 +1,17 @@
 #include "GameManager.h"
 #include "MazeManager.h"
-	
-CGameManager* CGameManager::mInst = nullptr;
 
-CGameManager::CGameManager()
+FGameManager* FGameManager::s_Inst = nullptr;
+
+FGameManager::FGameManager()
 {
 }
 
-CGameManager::~CGameManager()
+FGameManager::~FGameManager()
 {
 }
 
-bool CGameManager::Init()
-{
-	CMazeManager::GetInst()->Init();
-    return true;
-}
-
-void CGameManager::Run()
-{
-	while (true)
-	{
-		switch (Menu())
-		{
-		case EMainMenu::Maze:
-			CMazeManager::GetInst()->Run();
-			break;
-		case EMainMenu::Score:
-			break;
-		case EMainMenu::Exit:
-			return;
-		}
-	}
-}
-
-EMainMenu CGameManager::Menu()
+EMainMenu FGameManager::Menu()
 {
 	system("cls");
 	std::cout << "1. ¹Ì·Î" << std::endl;
@@ -44,8 +21,35 @@ EMainMenu CGameManager::Menu()
 	int	Input;
 	std::cin >> Input;
 
-	if(Input<(int)EMainMenu::None|| Input>(int)EMainMenu::Exit)
+	if (Input < (int)EMainMenu::None ||
+		Input >(int)EMainMenu::Exit)
 		return EMainMenu::None;
 
-    return (EMainMenu)Input;
+	return (EMainMenu)Input;
+}
+
+bool FGameManager::Init()
+{
+	if (!FMazeManager::GetInst()->Init())
+		return false;
+
+    return true;
+}
+
+void FGameManager::Run()
+{
+	while (true)
+	{
+		switch (Menu())
+		{
+		case EMainMenu::Maze:
+			FMazeManager::GetInst()->Run();
+			break;
+		case EMainMenu::Score:
+			//FMazeManager::GetInst()->RunScore();
+			break;
+		case EMainMenu::Exit:
+			return;
+		}
+	}
 }

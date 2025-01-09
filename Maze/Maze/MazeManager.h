@@ -1,30 +1,12 @@
 #pragma once
 #include "GameInfo.h"
 
-class CMazeManager
+class FMazeManager
 {
+	DECLARE_SINGLE(FMazeManager)
 private:
-	CMazeManager();
-	~CMazeManager();
-	static CMazeManager* mInst;
-public:
-	static CMazeManager* GetInst()
-	{
-		if (nullptr == mInst)
-			mInst = new CMazeManager;
-		return mInst;
-	}
-	static void DestroyInst()
-	{
-		SAFE_DELETE(mInst);
-	}
-private:
-	class CMaze** mMazeArray = nullptr;
-	int mMazeCount = 0;
-private:
-	int Menu();
+	class FMaze* m_Maze = nullptr;
 public:
 	bool Init();
 	void Run();
 };
-

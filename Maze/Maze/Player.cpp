@@ -1,64 +1,56 @@
 #include "Player.h"
 #include "Maze.h"
 
-CPlayer::CPlayer()
+FPlayer::FPlayer()
 {
 }
 
-CPlayer::~CPlayer()
+FPlayer::~FPlayer()
 {
 }
 
-bool CPlayer::Init()
+bool FPlayer::Init()
 {
     return true;
 }
 
-void CPlayer::Update()
+void FPlayer::Update()
 {
     if (_kbhit())
     {
         int Key = _getch();
-        //처음 받아오는 값은 일반키(a,s,d...)가 아닌 특수키인 경우
-        //별도의 값(left, right가 아닌 Movekey)이 반환
-        if (Key == (int)EKey::MoveKey)
+
+        if (Key == (int)EKeyType::MoveKey)
         {
             Key = _getch();
-            //두 번째 호출 시 방향키 값을 반환
-            switch ((EKey)Key)
+            switch ((EKeyType)Key)
             {
-            case EKey::Up:
+            case EKeyType::Up:
                 --mPos.Y;
-                if (mMaze->GetTile(mPos.X,mPos.Y) == ETileType::Wall)
+                if (m_Maze->GetTile(mPos.X, mPos.Y) == ETileType::Wall)
                     ++mPos.Y;
                 break;
-            case EKey::Down:
+            case EKeyType::Down:
                 ++mPos.Y;
-                if (mMaze->GetTile(mPos.X,mPos.Y) == ETileType::Wall)
+                if (m_Maze->GetTile(mPos.X, mPos.Y) == ETileType::Wall)
                     --mPos.Y;
                 break;
-            case EKey::Left:
+            case EKeyType::Left:
                 --mPos.X;
-                if (mMaze->GetTile(mPos.X,mPos.Y) == ETileType::Wall)
+                if (m_Maze->GetTile(mPos.X, mPos.Y) == ETileType::Wall)
                     ++mPos.X;
                 break;
-            case EKey::Right:
+            case EKeyType::Right:
                 ++mPos.X;
-                if (mMaze->GetTile(mPos.X,mPos.Y) == ETileType::Wall)
+                if (m_Maze->GetTile(mPos.X, mPos.Y) == ETileType::Wall)
                     --mPos.X;
                 break;
             }
-        }
 
+        }
     }
 }
 
-void CPlayer::Output()
+void FPlayer::Output(char* Buffer, int CountX)
 {
-}
-
-void CPlayer::Output(char* OutBuffer, int CountX)
-{
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), mPos);
-    std::cout << "P";
 }

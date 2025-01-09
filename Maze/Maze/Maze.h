@@ -1,39 +1,28 @@
 #pragma once
 #include "GameInfo.h"
 
-class CMaze
+class FMaze
 {
 public:
-	CMaze();
-	~CMaze();
+	FMaze();
+	~FMaze();
 private:
-	ETileType** mMazeArray = nullptr;
-	int mXsize = 0;
-	int mYsize = 0;
+	int m_Xsize;
+	int m_Ysize;
+	//출력용 버퍼
+	char* m_Buffer;
+	//2차원 배열
+	ETileType** m_MazeArray = nullptr;
+	COORD m_StartPos;
+	COORD m_EndPos;
 
-	char mName[32] = {};
-	COORD mStartPos;
-	COORD mGoalPos;
-
-	char* mOutputBuffer;
-	//출력용 1차원 배열
-	int mPrevPlayerIndex = 0;
-	char mPrevPlayerOutput;
-	//출력용 배열에서 플레이어 이전 프레임의 인덱스
-
-	class CObject** mObjectList = nullptr;
-	//아이템 출력(오브젝트 주소를 저장하는 포인터 가변 배열)
-	int mObjectCount = 0;
-	int mObjectCapacity = DEFAULT_CAPACITY;
-
+	int m_PrevPlayerIndex = 0;
+	char m_PrevPlayerOutput;
 public:
 	bool Init();
-	bool Init(const char* FileName);
 	void Run();
-	void Output();
-	void Reallocation();
-	void HideCursor();
-	const char* GetName() const { return mName; }
-	ETileType GetTile(int x, int y) const; 
+	void Reset();
+	ETileType GetTile(int x, int y) const 
+	{ return m_MazeArray[y][x]; }
 };
 

@@ -1,21 +1,20 @@
 #pragma once
 #include "GameInfo.h"
 
-class CObject
+class FObject
 {
 public:
-	CObject();
-	virtual ~CObject();
+	FObject();
+	virtual ~FObject();
 protected:
 	COORD mPos;
 public:
+	const COORD& GetPos() const { return mPos; }
+	void SetPos(short x, short y) { mPos.X = x; mPos.Y = y; }
+	void SetPos(const COORD& Pos) { mPos = Pos; }
+public:
 	virtual bool Init();
 	virtual void Update();
-	virtual void Output();
-	virtual void Output(char* OutBuffer,int CountX);
-
-	void SetPos(short X, short Y) { mPos.X = X;mPos.Y = Y; }
-	void SetPos(const COORD& Pos) { mPos = Pos; }
-	const COORD& GetPos() { return mPos; }
+	virtual void Output(char* Buffer, int CountX);
 };
 

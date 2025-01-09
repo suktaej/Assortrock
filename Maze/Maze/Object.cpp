@@ -1,26 +1,22 @@
 #include "Object.h"
 
-CObject::CObject()
+FObject::FObject()
 {
 }
 
-CObject::~CObject()
+FObject::~FObject()
 {
 }
 
-bool CObject::Init()
+bool FObject::Init()
 {
     return true;
 }
 
-void CObject::Update()
+void FObject::Update()
 {
 }
 
-void CObject::Output()
-{
-}
-
-void CObject::Output(char* OutBuffer, int CountX)
+void FObject::Output(char* Buffer, int CountX)
 {
 }
