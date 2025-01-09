@@ -46,7 +46,7 @@ void FGameManager::Run()
 			FMazeManager::GetInst()->Run();
 			break;
 		case EMainMenu::Score:
-			//FMazeManager::GetInst()->RunScore();
+			FMazeManager::GetInst()->RunScore();
 			break;
 		case EMainMenu::Exit:
 			return;

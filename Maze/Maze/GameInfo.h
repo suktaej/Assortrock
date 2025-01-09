@@ -37,11 +37,17 @@ enum class ETileType : unsigned char
 	Heal
 };
 
-	enum class EKeyType
-	{
-		MoveKey = 224,
-		Up = 72,
-		Down = 80,
-		Left = 75,
-		Right = 77
-	};
+enum class EKeyType
+{
+	MoveKey = 224,
+	Up = 72,
+	Down = 80,
+	Left = 75,
+	Right = 77
+};
+
+struct FScore
+{
+	int		Score;
+	__int64	Time;
+};

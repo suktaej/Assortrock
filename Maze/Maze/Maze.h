@@ -32,10 +32,17 @@ public:
 	bool Init();
 	void Run();
 	void Reset();
+
 	void ReAlloc();
 	void SwapNPop(int);
+
 	void InfoOutput(__int64 ,class FPlayer*);
+	
+	int GetScore()	const { return m_Score; }
+	__int64 GetTime()	const { return m_Time; }
+
 	ETileType GetTile(int x, int y) const 
 	{ return m_MazeArray[y][x]; }
+
 };
 

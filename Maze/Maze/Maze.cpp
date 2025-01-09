@@ -161,6 +161,10 @@ void FMaze::Reset()
 	for (int i = 0;i < m_ObjCount;i++)
 		SAFE_DELETE(m_ObjList[i]);
 
+	m_ObjCount = 0;
+	m_Score = 0;
+	m_Time = 0;
+
 	memset(m_Buffer, 0, sizeof(char) * ((m_Xsize + 1) * m_Ysize + 1));
 
 	for (int i = 0;i < m_Ysize;i++)
