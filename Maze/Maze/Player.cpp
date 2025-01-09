@@ -16,7 +16,7 @@ bool FPlayer::Init()
 
 void FPlayer::Update()
 {
-    if (_kbhit())
+    if (_kbhit()>0)
     {
         int Key = _getch();
 

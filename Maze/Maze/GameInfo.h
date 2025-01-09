@@ -32,9 +32,9 @@ enum class ETileType : unsigned char
 	Wall,
 	Start,
 	Goal,
-	Item,
-	Pitfall,
-	HP
+	Score,
+	Damage,
+	Heal
 };
 
 	enum class EKeyType
