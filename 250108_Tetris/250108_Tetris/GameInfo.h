@@ -10,7 +10,7 @@
 #define SAFE_DELETE(p) {delete p;p=nullptr;}
 
 #define MAP_XSIZE 12
-#define MAP_YSIZE 8//26
+#define MAP_YSIZE 26
 #define BLOCKSIZE 4
 
 enum class EKey
@@ -19,14 +19,15 @@ enum class EKey
 	Up = 72,
 	Down = 80,
 	Left = 75,
-	Right = 77
+	Right = 77,
+	Space = 32
 };
 
 enum class EMenu
 {
 	None,
 	Game,
-	Score,
+	//Score,
 	Exit
 };
 
@@ -44,8 +45,7 @@ enum class EBlockType
 enum class ECollisionType
 {
 	None,
-	RightWall,
-	LeftWall,
+	Wall,
 	Floor,
 	End
 };

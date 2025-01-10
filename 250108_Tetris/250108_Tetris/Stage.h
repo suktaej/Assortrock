@@ -20,20 +20,25 @@ private:
 	float m_DeltaTime = 0.f;
 	float m_StageTime = 0.f;
 
-	//class FObject* m_CurrentBlock;
-	//std::list<FObject*> m_StackedBlock;
 	bool m_BlockActive = false;
+
+	int m_LineCounter = k_Xsize-2;
+
+	int m_Score = 0;
 public:
 	bool Init();
 	void Run();
 	void Output();
 public:	
-	ECollisionType CheckCollison(class FObject*);
+	ECollisionType CheckCollison(class FObject*,int);
 	void LockBlock(FObject*);
-	void CreateBlock();
 	void MapReset();
+	bool LineClear();
 public:
 	int GetXsize() { return k_Xsize; }
 	int GetYsize() { return k_Ysize; }
+	char GetBlock(int y, int x) { return m_Map[x][y]; }
 	void SetActive() { m_BlockActive = true; }
+
+	void HideCursor();
 };

@@ -28,8 +28,8 @@ EMenu FGameManager::Menu()
 	system("cls");
 
 	std::cout << "1.Start" << std::endl;
-	std::cout << "2.Score" << std::endl;
-	std::cout << "3.Exit" << std::endl;
+	//std::cout << "2.Score" << std::endl;
+	std::cout << "2.Exit" << std::endl;
 	std::cout << "Select Number: ";
 	std::cin >> Input;
 
@@ -48,8 +48,8 @@ void FGameManager::Run()
 		case EMenu::Game:
 			FStageManager::GetInst()->Run();
 			break;
-		case EMenu::Score:
-			break;
+		//case EMenu::Score:
+		//  break;
 		case EMenu::Exit:
 			return;
 		}

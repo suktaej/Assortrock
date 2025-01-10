@@ -17,15 +17,10 @@ bool FStageManager::Init()
 
 void FStageManager::Run()
 {
-	m_Stage = nullptr;
+	m_Stage = new FStage;
+	m_Stage->Init();
+	m_Stage->Run();
 
-	while (true)
-	{
-		m_Stage = new FStage;
-		m_Stage->Init();
-		m_Stage->Run();
-
-		SAFE_DELETE(m_Stage);
-	}
+	SAFE_DELETE(m_Stage);
 }
 

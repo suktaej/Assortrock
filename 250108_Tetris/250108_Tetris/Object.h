@@ -7,7 +7,7 @@ public:
 	FObject();
 	virtual ~FObject();
 protected:
-	COORD mPos = {MAP_XSIZE/2,1};
+	COORD mPos = {};
 	float mMoveX = 0.f;
 	float mMoveY = 0.f;
 	float mDirX = 0.f;
