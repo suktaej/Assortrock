@@ -1,7 +1,6 @@
 #include "Stage.h"
 #include "ObjectManager.h"
-#include "IBlock.h"
-#include "TBlock.h"
+#include "Block.h"
 
 FStage::FStage()
 {
@@ -16,10 +15,12 @@ bool FStage::Init()
 	QueryPerformanceFrequency(&m_Second);
 	m_StageTime = 0.f;
 	
-	//행 종료 시 \n 문자, 모든 문자 입력 후 \0 문자
-	m_OutputBuffer = new char[(k_Xsize + 1) * k_Ysize + 1];
-	//출력버퍼 0으로 초기화
-	memset(m_OutputBuffer, 0, (k_Xsize + 1) * k_Ysize + 1);
+	//첫 블록 생성
+	FObjectManager::GetInst()->CreateObj<FBlock>();
+	
+	//맵 초기화
+	m_Map.resize(k_Ysize, std::vector<char>(k_Xsize));
+	MapReset();
 
 	return true;
 }
@@ -40,63 +41,119 @@ void FStage::Run()
 		m_DeltaTime = (Time.QuadPart - m_Time.QuadPart) / (float)m_Second.QuadPart;
 		m_StageTime += m_DeltaTime;
 		m_Time = Time;
-	
-		if(m_BlockActive==true)
+
+		//활성화 된 블록이 없다면 블록을 생성
+		if(m_BlockActive==false)
 			CreateBlock();
-		//m_CurrentBlock->Update(m_DeltaTime);
-		//FObjectManager::GetInst()->Update(m_DeltaTime);
-		CreateMap();
-		//FObjectManager::GetInst()->Output(m_OutputBuffer);
+		//제어권 부여
+		std::list<FObject*>::iterator iter = FObjectManager::GetInst()->GetObjList().begin();
+		(*iter)->Update(m_DeltaTime);
+
+		//출력
+		MapReset();
+		//블록이 고정되었다면 블록을 제거	
+		if(m_BlockActive==false)
+			FObjectManager::GetInst()->RemoveBlock();
+		//그렇지 않다면 블록을 출력
+		else
+			(*iter)->Output(m_Map);	
+
 		Output();
 	}
 }
 
-void FStage::CreateBlock()
+ECollisionType FStage::CheckCollison(FObject* Obj)
 {
-	m_BlockActive = false;
-	FObjectManager::GetInst()->CreateObj<FIBlock>();
+	FBlock* Block = dynamic_cast<FBlock*>(Obj);
+	
+	assert(Block);
 
-	//auto& ObjList = FObjectManager::GetInst()->GetObjList();
-	//std::list<FObject*>::iterator iter = ObjList.begin();
+	const COORD& Pos = Block->GetPos();
+	const std::vector<std::vector<char>>& Shape = Block->GetShape();
 
-	//if (!ObjList.empty())
-	//{
-	//	while (true)
-	//	{
-	//		if ((*iter)->GetState() == false)
-	//		{
-	//			m_CurrentBlock = *iter;
-	//			break;
-	//		}
-	//		else
-	//			iter++;
-	//	}
-	//}
+	for (int i = 0; i < BLOCKSIZE;i++)
+	{
+		for (int j = 0; j < BLOCKSIZE; j++)
+		{
+			if (Shape[i][j] == '*')
+			{
+				int BlockX = Pos.X + j;
+				int BlockY = Pos.Y + i;
+				
+				//벽면 충돌
+				if (BlockX <= 0)
+					return ECollisionType::LeftWall;
+				if (BlockX >= k_Xsize-1)
+					return ECollisionType::RightWall;
+				if (BlockY < 0)
+					return ECollisionType::End;
+				if	(BlockY >= k_Ysize-1)
+					return ECollisionType::Floor;
+				
+				//블록 충돌
+				//if (m_Map[BlockY][BlockX] == '+')
+
+			}
+		}
+	}
+	return ECollisionType::None;
 }
 
-void FStage::CreateMap()
+void FStage::LockBlock(FObject* Obj)
 {
-	//커서 초기화
-	COORD InitPos = { 0,0 };
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), InitPos);
+	FBlock* Block = dynamic_cast<FBlock*>(Obj);
 
-	for(int i=0;i<k_Ysize;i++)
+	assert(Block);
+
+	const COORD& Pos = Block->GetPos();
+	const std::vector<std::vector<char>>& Shape = Block->GetShape();
+
+	for (int i = 0; i < BLOCKSIZE;i++)
+	{
+		for (int j = 0; j < BLOCKSIZE; j++)
+		{
+			if (Shape[i][j] == '*')
+			{
+				int BlockX = Pos.X + j;
+				int BlockY = Pos.Y + i;
+				
+				m_Map[BlockY][BlockX] = '+';
+			}
+		}
+	}
+	m_BlockActive = false;
+}
+
+//블록이 비활성화될 때마다 새 블록 생성 및 위치 초기화
+void FStage::CreateBlock()
+{
+	m_BlockActive = true;
+	FObjectManager::GetInst()->CreateObj<FBlock>();
+}
+
+void FStage::MapReset()
+{
+	for (int i = 0;i < k_Ysize;i++)
 	{
 		for (int j = 0;j < k_Xsize;j++)
 		{
-			int Index = i *(k_Xsize+1) + j;
-			//배열 인덱스 값이므로 -1
-			if (j == 0 || j == k_Xsize-1 || i == k_Ysize-1)
-				m_OutputBuffer[Index] = '#';
-			else
-				m_OutputBuffer[Index] = ' ';
+			if (j == 0 || j == k_Xsize - 1 || i == k_Ysize - 1)
+				m_Map[i][j] = '#';
+			else if (m_Map[i][j] != '+')
+				m_Map[i][j] = '.'; 
 		}
-		m_OutputBuffer[i * (k_Xsize + 1) + k_Xsize] = '\n';
 	}
 }
 
 void FStage::Output()
 {
-	std::cout << m_OutputBuffer;
+	COORD InitPos = { 0,0 };
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), InitPos);
+	
+	for (int i = 0;i < k_Ysize;i++)
+	{
+		for (int j = 0;j < k_Xsize;j++)
+			std::cout << m_Map[i][j];
+		std::cout << '\n';
+	}
 }
-

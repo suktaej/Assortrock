@@ -1,6 +1,5 @@
 #include "ObjectManager.h"
 #include "Object.h"
-#include "IBlock.h"
 
 FObjectManager* FObjectManager::s_Inst = nullptr;
 
@@ -31,9 +30,19 @@ void FObjectManager::Update(float DeltaTime)
 
 void FObjectManager::Output(char* OutputBuffer)
 {
-	std::list<FObject*>::iterator	iter;
-	std::list<FObject*>::iterator	iterEnd = m_BlockList.end();
+	//std::list<FObject*>::iterator	iter;
+	//std::list<FObject*>::iterator	iterEnd = m_BlockList.end();
 
-	for (iter = m_BlockList.begin(); iter != iterEnd; ++iter)
-		(*iter)->Output(OutputBuffer);
+	//for (iter = m_BlockList.begin(); iter != iterEnd; ++iter)
+	//	(*iter)->Output();
+}
+
+void FObjectManager::RemoveBlock()
+{
+	if (!m_BlockList.empty())
+	{
+		FObject* Block = m_BlockList.front();
+		delete Block;
+		m_BlockList.pop_front();
+	}
 }

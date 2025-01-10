@@ -40,7 +40,8 @@ public:
 			SAFE_DELETE(Obj);
 			return nullptr;
 		}
-		m_ObjList.emplace_back(Obj);
+		m_BlockList.emplace_back(Obj);
 		return Obj;
 	}
+	void RemoveBlock();
 };

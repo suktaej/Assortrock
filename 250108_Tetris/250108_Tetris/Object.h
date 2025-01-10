@@ -7,22 +7,18 @@ public:
 	FObject();
 	virtual ~FObject();
 protected:
-	COORD mPos = {XSIZE/2,0};
-	bool mPlaced= false;
+	COORD mPos = {MAP_XSIZE/2,1};
 	float mMoveX = 0.f;
 	float mMoveY = 0.f;
-	float mMoveDirX = 0.f;
-	float mMoveDirY = 0.f;
-
+	float mDirX = 0.f;
+	float mDirY = 0.f;
 public:
-	bool GetState() { return mPlaced; }
 	const COORD& GetPos() { return mPos; }
 	void SetPos(short x, short y) { mPos.X = x, mPos.Y = y; }
-	void SetDir(float x, float y) { mMoveDirX = x, mMoveDirY = y; }
-	void SetLock();
-	void Update(float);
+	void SetDir(float x, float y) { mDirX = x, mDirY = y; }
 public:
+	virtual void Update(float) = 0;
 	virtual bool Init() = 0;
-	virtual void Output(char*) = 0;
+    virtual void Output(std::vector<std::vector<char>>&) = 0;
 };
 
