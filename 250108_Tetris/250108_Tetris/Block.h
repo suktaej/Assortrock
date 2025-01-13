@@ -9,7 +9,6 @@ public:
     ~FBlock() override;
 private:
     EBlockType m_BlockType;
-    //char m_BlockShape[4][4];
     std::vector<std::vector<char>> m_BlockShape;
 public:
     bool Init() override;

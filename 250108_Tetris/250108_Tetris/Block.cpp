@@ -131,6 +131,7 @@ void FBlock::Rotate() {
 void FBlock::Update(float DeltaTime)
 {
 	int PrevX = mPos.X;
+	int PrevY = mPos.Y;
 
     //키조작
     if (_kbhit() > 0)
@@ -162,7 +163,7 @@ void FBlock::Update(float DeltaTime)
             while (true)
             {
                 ++mPos.Y;
-                ECollisionType Type = FStageManager::GetInst()->GetStage()->CheckCollison(this, PrevX);
+                ECollisionType Type = FStageManager::GetInst()->GetStage()->CheckCollison(this, PrevX, PrevY);
 
                 if (Type == ECollisionType::Floor)
                 {
@@ -180,11 +181,11 @@ void FBlock::Update(float DeltaTime)
 	if (mMoveY >= 1.f)
 	{
 		mMoveY -= 1.f;
-		mPos.Y++;
+		++mPos.Y;
 	}
     
     //충돌 발생 시
-    ECollisionType CollisionType = FStageManager::GetInst()->GetStage()->CheckCollison(this,PrevX);
+    ECollisionType CollisionType = FStageManager::GetInst()->GetStage()->CheckCollison(this,PrevX,PrevY);
 
     switch (CollisionType)
     {
@@ -195,7 +196,7 @@ void FBlock::Update(float DeltaTime)
         break;
     case ECollisionType::Floor:
     {
-        --mPos.Y;
+        mPos.Y = PrevY;
         //블록 고정
         FStageManager::GetInst()->GetStage()->LockBlock(this);
 		break;

@@ -68,7 +68,7 @@ void FStage::Run()
 	}
 }
 
-ECollisionType FStage::CheckCollison(FObject* Obj,int PrevX)
+ECollisionType FStage::CheckCollison(FObject* Obj,int PrevX, int PrevY)
 {
 	FBlock* Block = dynamic_cast<FBlock*>(Obj);
 	
@@ -143,10 +143,10 @@ void FStage::MapReset()
 			if (j == 0 || j == k_Xsize - 1 || i == k_Ysize - 1)
 				m_Map[i][j] = '#';
 			else if (i == 3)
-				m_Map[i][j] = '/';
-			//블록이 생성되지 않은 부분만 공백화
+				m_Map[i][j] = ',';
+			// 고정된 블록(+)은 유지
 			else if (m_Map[i][j] != '+')
-				m_Map[i][j] = '.'; 
+				m_Map[i][j] = '.';
 		}
 	}
 }

@@ -30,7 +30,7 @@ public:
 	void Run();
 	void Output();
 public:	
-	ECollisionType CheckCollison(class FObject*,int);
+	ECollisionType CheckCollison(class FObject*,int,int);
 	void LockBlock(FObject*);
 	void MapReset();
 	bool LineClear();
