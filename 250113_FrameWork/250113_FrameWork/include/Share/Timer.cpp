@@ -12,10 +12,13 @@ void CTimer::Init()
 
 float CTimer::Update()
 {
-	LARGE_INTEGER Time;
+	LARGE_INTEGER	Time;
 
 	QueryPerformanceCounter(&Time);
 	m_DeltaTime = (Time.QuadPart - m_Time.QuadPart) / (float)m_Second.QuadPart;
+
+	m_Time = Time;
+
 	return m_DeltaTime;
 }
 

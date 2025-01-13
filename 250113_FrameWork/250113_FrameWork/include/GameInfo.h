@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Windows.h>
+#include <list>
 
 #define	SAFE_DELETE(p)	if(p)	{ delete p; p = nullptr;}
 
@@ -25,3 +26,11 @@ public:\
 #define	DEFINITION_SINGLE(Type) Type* Type::mInst = nullptr;
 
 #define MAX_STRING 256
+
+struct FRect
+{
+	float Left = 0.f;
+	float Top = 0.f;
+	float Right =0.f;
+	float Bottom = 0.f;
+};

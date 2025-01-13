@@ -12,6 +12,16 @@ private:
 	HDC m_hdc = 0;
 	TCHAR m_ClassName[MAX_STRING] = {};
 	TCHAR m_TitleName[MAX_STRING] = {};
+
+	//RECT m_RC = { 100,100,200,200 };
+	FRect m_RC = { 100,100,200,200 };
+	bool m_bEnemyMove = true;
+	FRect m_Enemy = { 1000,1,1100,101 };
+
+	std::list<FRect> m_BulletList;
+	std::list<FRect> m_EnemyBulletList;
+	float m_EnemyBulletCreate = 0.f;
+
 public:
 	bool Init(HINSTANCE hInst);
 	int Run();

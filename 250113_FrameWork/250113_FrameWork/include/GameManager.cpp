@@ -168,10 +168,97 @@ void CGameManager::Logic()
 
 void CGameManager::Input(float DeltaTime)
 {
+    //키입력 처리 함수
+    //& 연산으로 0x8000이 true일 경우 누르고 있는 상태
+    if (GetAsyncKeyState('W') & 0x8000)
+    {
+        m_RC.Top -= 400*DeltaTime;
+        m_RC.Bottom -= 400 * DeltaTime;
+    }
+
+    if (GetAsyncKeyState('S') & 0x8000)
+    {
+        m_RC.Top += 400*DeltaTime;
+        m_RC.Bottom += 400 * DeltaTime;
+    }
+    
+    if (GetAsyncKeyState('D') & 0x8000)
+    {
+        m_RC.Right += 400*DeltaTime;
+        m_RC.Left += 400 * DeltaTime;
+    }
+
+    if (GetAsyncKeyState('A') & 0x8000)
+    {
+        m_RC.Right -= 400*DeltaTime;
+        m_RC.Left -= 400 * DeltaTime;
+    }
+    //특수키는 Virtual key(VK_UP, VK_END)로 처리
+    if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+    {
+        FRect Bullet;
+
+        Bullet.Left = m_RC.Left + 100.f;
+        Bullet.Top = m_RC.Top + 25.f;
+        Bullet.Right = Bullet.Left + 50.f;
+        Bullet.Bottom = Bullet.Top + 50.f;
+
+        m_BulletList.push_back(Bullet);
+    }
 }
 
 void CGameManager::Update(float DeltaTime)
 {
+    std::list<FRect>::iterator iter = m_BulletList.begin();
+    std::list<FRect>::iterator iterEnd = m_BulletList.end();
+
+    while (iter != iterEnd)
+    {
+        (*iter).Left += 500.f * DeltaTime;
+        (*iter).Right += 500.f * DeltaTime;
+        iter++;
+    }
+
+    m_EnemyBulletCreate += DeltaTime;
+
+    if (m_EnemyBulletCreate >= 1.f)
+    {
+        FRect Bullet;
+
+        Bullet.Left = m_Enemy.Left - 50.f;
+        Bullet.Top = m_Enemy.Top + 25.f;
+        Bullet.Right = Bullet.Left + 50.f;
+        Bullet.Bottom = Bullet.Top + 50.f;
+
+        m_EnemyBulletList.push_back(Bullet);
+
+        m_EnemyBulletCreate -= 1;
+    }
+
+	std::list<FRect>::iterator iter1 = m_EnemyBulletList.begin();
+	std::list<FRect>::iterator iter1End = m_EnemyBulletList.end();
+    
+    while (iter1 != iter1End)
+    {
+        (*iter1).Left -= 500.f * DeltaTime;
+        (*iter1).Right -= 500.f * DeltaTime;
+        iter1++;
+    }
+
+    if (m_bEnemyMove)
+    {
+        m_Enemy.Top += 300.f * DeltaTime;
+        m_Enemy.Bottom += 300.f * DeltaTime;
+        if (m_Enemy.Bottom >= 719)
+            m_bEnemyMove = false;
+    }
+    else
+    {
+        m_Enemy.Top -= 300.f * DeltaTime;
+        m_Enemy.Bottom -= 300.f * DeltaTime;
+        if (m_Enemy.Top <= 1)
+            m_bEnemyMove = true;
+    }
 }
 
 void CGameManager::PostUpdate(float DeltaTime)
@@ -188,6 +275,25 @@ void CGameManager::PostCollisionUpdate(float DeltaTime)
 
 void CGameManager::Render(float DeltaTime)
 {
-    Rectangle(m_hdc, 1, 1, 1279, 719);
+    //Rectangle(m_hdc, 1, 1, 1279, 719);
+    Rectangle(m_hdc, m_RC.Left, m_RC.Top, m_RC.Right, m_RC.Bottom);
+    Rectangle(m_hdc, m_Enemy.Left, m_Enemy.Top, m_Enemy.Right, m_Enemy.Bottom);
+    
+    std::list<FRect>::iterator iter = m_BulletList.begin();
+    std::list<FRect>::iterator iterEnd = m_BulletList.end();
+   
+    while (iter != iterEnd)
+    {
+        Ellipse(m_hdc, (*iter).Left, (*iter).Top, (*iter).Right, (*iter).Bottom);
+        iter++;
+    }
 
+    std::list<FRect>::iterator iter1 = m_EnemyBulletList.begin();
+    std::list<FRect>::iterator iter1End = m_EnemyBulletList.end();
+
+    while (iter1 != iter1End)
+    {
+        Ellipse(m_hdc, (*iter1).Left, (*iter1).Top, (*iter1).Right, (*iter1).Bottom);
+        iter1++;
+    }
 }
