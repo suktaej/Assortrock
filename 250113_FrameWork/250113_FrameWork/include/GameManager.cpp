@@ -1,5 +1,5 @@
 #include "GameManager.h"
-//#include "resource.h"
+#include "resource.h"
 
 DEFINITION_SINGLE(CGameManager)
 bool CGameManager::m_Loop = true;
@@ -81,7 +81,7 @@ void CGameManager::RegisterWindowClass()
     wcex.hInstance = m_hInst;
 
     // 실행파일 아이콘을 지정한다.
-    wcex.hIcon = LoadIcon(m_hInst, MAKEINTRESOURCE(IDI_MY250113WINDOW));
+    wcex.hIcon = LoadIcon(m_hInst, MAKEINTRESOURCE(IDI_ICON1));
 
     // 윈도우 창에서의 커서 모양을 나타낸다.
     wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
@@ -98,7 +98,7 @@ void CGameManager::RegisterWindowClass()
     wcex.lpszClassName = m_ClassName;
 
     // 윈도우창 좌측 상단의 작은 아이콘을 지정한다.
-    wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
+    wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_ICON1));
 
     // 위에서 설정한 윈도우클래스를 등록한다.
     RegisterClassExW(&wcex);
@@ -108,24 +108,6 @@ LRESULT CGameManager::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
 {
     switch (message)
     {
-    case WM_COMMAND:
-    {
-        int wmId = LOWORD(wParam);
-        // 메뉴 선택을 구문 분석합니다:
-        switch (wmId)
-        {
-        case IDM_ABOUT:
-            DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-            break;
-        case IDM_EXIT:
-            DestroyWindow(hWnd);
-            break;
-        default:
-            return DefWindowProc(hWnd, message, wParam, lParam);
-        }
-    }
-    break;
-    // 윈도우 창에 그려야 하는 경우 동작한다.
     case WM_PAINT:
     {
         PAINTSTRUCT ps;
@@ -151,22 +133,22 @@ LRESULT CGameManager::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
 bool CGameManager::Create()
 {
     m_hWnd = CreateWindowW(m_ClassName, m_TitleName, WS_OVERLAPPEDWINDOW,
-        -1000, 100, 1280, 720, nullptr, nullptr, m_hInst, nullptr);
+        100, 100, 1280, 720, nullptr, nullptr, m_hInst, nullptr);
     //윈도우 창 전체의 크기(타이틀 바, 틱 프레임(창을 늘리는 막대))
     //위에서 지정한 윈도우 크기는 타이틀 바 등의 크기가 모두 합쳐진 크기로 지정
-    
+
+    if (!m_hWnd)
+        return false;
     //RECT 구조체 타입
     RECT WindowRC = { 0,0,1280,720 };
     //클라이언트 영역이 1280,720이 되기 위해 필요한 윈도우 전체 크기를 가져오는 함수
     //(TickFrame,Meun, TitleBar 등이 포함된 전체 크기)
+    //클라이언트 영역을 첫번째 인자(RECT 구조체)의 크기만큼 조정
     AdjustWindowRect(&WindowRC, WS_OVERLAPPEDWINDOW, FALSE);
-
-    SetWindowPos(m_hWnd, HWND_TOPMOST, -1700, 100, WindowRC.right - WindowRC.left, WindowRC.bottom - WindowRC.top, SWP_NOMOVE | SWP_NOZORDER);
+    //윈도우의 위치와 크기를 실제 화면에서 설정
+    SetWindowPos(m_hWnd, HWND_TOPMOST, 100, 100, WindowRC.right - WindowRC.left, 
+        WindowRC.bottom - WindowRC.top, SWP_NOMOVE | SWP_NOZORDER);
     
-
-    if (!m_hWnd)
-        return false;
-
     ShowWindow(m_hWnd, SW_SHOW);
     UpdateWindow(m_hWnd);
 
@@ -206,6 +188,6 @@ void CGameManager::PostCollisionUpdate(float DeltaTime)
 
 void CGameManager::Render(float DeltaTime)
 {
-    Rectangle(m_hdc, 100, 100, 200, 200);
+    Rectangle(m_hdc, 1, 1, 1279, 719);
 
 }
