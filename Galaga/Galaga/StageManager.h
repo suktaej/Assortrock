@@ -20,11 +20,11 @@ public:
 	}
 private:
 	std::vector<std::string> m_vecFileName;
-	std::vector<std::string> m_vceName;
+	std::vector<std::string> m_vecName;
 	CStage* m_Stage = nullptr;
 	int m_Count = 0;
 public:
-	int Init();
+	bool Init();
 	void Run();
 };
 

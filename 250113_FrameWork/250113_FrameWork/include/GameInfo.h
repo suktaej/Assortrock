@@ -2,6 +2,7 @@
 
 #include <Windows.h>
 #include <list>
+#include "Vector2D.h"
 
 #define	SAFE_DELETE(p)	if(p)	{ delete p; p = nullptr;}
 

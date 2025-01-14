@@ -245,20 +245,36 @@ void CGameManager::Update(float DeltaTime)
         iter1++;
     }
 
-    if (m_bEnemyMove)
+    m_Enemy.Top += m_EnemyDir * 300.f * DeltaTime;
+    m_Enemy.Bottom += m_EnemyDir * 300.f * DeltaTime;
+
+    if (m_Enemy.Bottom >= 720.f)
     {
-        m_Enemy.Top += 300.f * DeltaTime;
-        m_Enemy.Bottom += 300.f * DeltaTime;
-        if (m_Enemy.Bottom >= 719)
-            m_bEnemyMove = false;
+        m_Enemy.Bottom = 720.f;
+        m_Enemy.Top = 620.f;
+        m_EnemyDir = -1.f;
     }
-    else
+    else if (m_Enemy.Top <= 0.f)
     {
-        m_Enemy.Top -= 300.f * DeltaTime;
-        m_Enemy.Bottom -= 300.f * DeltaTime;
-        if (m_Enemy.Top <= 1)
-            m_bEnemyMove = true;
+        m_Enemy.Bottom = 100.f;
+        m_Enemy.Top = 0.f;
+        m_EnemyDir = 1.f;
     }
+
+    //if (m_bEnemyMove)
+    //{
+    //    m_Enemy.Top += 300.f * DeltaTime;
+    //    m_Enemy.Bottom += 300.f * DeltaTime;
+    //    if (m_Enemy.Bottom >= 719)
+    //        m_bEnemyMove = false;
+    //}
+    //else
+    //{
+    //    m_Enemy.Top -= 300.f * DeltaTime;
+    //    m_Enemy.Bottom -= 300.f * DeltaTime;
+    //    if (m_Enemy.Top <= 1)
+    //        m_bEnemyMove = true;
+    //}
 }
 
 void CGameManager::PostUpdate(float DeltaTime)
@@ -276,8 +292,8 @@ void CGameManager::PostCollisionUpdate(float DeltaTime)
 void CGameManager::Render(float DeltaTime)
 {
     //Rectangle(m_hdc, 1, 1, 1279, 719);
-    Rectangle(m_hdc, m_RC.Left, m_RC.Top, m_RC.Right, m_RC.Bottom);
-    Rectangle(m_hdc, m_Enemy.Left, m_Enemy.Top, m_Enemy.Right, m_Enemy.Bottom);
+    Rectangle(m_hdc, (float)m_RC.Left, (float)m_RC.Top, (float)m_RC.Right, (float)m_RC.Bottom);
+    Rectangle(m_hdc, (float)m_Enemy.Left, (float)m_Enemy.Top, (float)m_Enemy.Right, (float)m_Enemy.Bottom);
     
     std::list<FRect>::iterator iter = m_BulletList.begin();
     std::list<FRect>::iterator iterEnd = m_BulletList.end();
@@ -293,7 +309,7 @@ void CGameManager::Render(float DeltaTime)
 
     while (iter1 != iter1End)
     {
-        Ellipse(m_hdc, (*iter1).Left, (*iter1).Top, (*iter1).Right, (*iter1).Bottom);
+        Ellipse(m_hdc, (float)(*iter1).Left, (float)(*iter1).Top, (float)(*iter1).Right, (float)(*iter1).Bottom);
         iter1++;
     }
 }

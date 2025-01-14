@@ -44,6 +44,5 @@ public:
 public:
 	int GetX() { return m_Xsize; }
 	int GetY() { return m_Ysize; }
-	void AddScore(int Score) { m_Score += Score; }
 };
 

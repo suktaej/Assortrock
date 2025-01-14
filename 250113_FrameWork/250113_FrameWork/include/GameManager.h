@@ -15,8 +15,9 @@ private:
 
 	//RECT m_RC = { 100,100,200,200 };
 	FRect m_RC = { 100,100,200,200 };
+	FRect m_Enemy = { 1000,100,1100,200 };
+	float m_EnemyDir = 1.f;
 	bool m_bEnemyMove = true;
-	FRect m_Enemy = { 1000,1,1100,101 };
 
 	std::list<FRect> m_BulletList;
 	std::list<FRect> m_EnemyBulletList;
