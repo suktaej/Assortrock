@@ -168,40 +168,117 @@ void CGameManager::Logic()
 
 void CGameManager::Input(float DeltaTime)
 {
+    FVector2D PlayerDir;
     //키입력 처리 함수
     //& 연산으로 0x8000이 true일 경우 누르고 있는 상태
     if (GetAsyncKeyState('W') & 0x8000)
     {
-        m_RC.Top -= 400*DeltaTime;
-        m_RC.Bottom -= 400 * DeltaTime;
+        PlayerDir.y -= 1.f;
+        //m_RC.Top -= 400*DeltaTime;
+        //m_RC.Bottom -= 400 * DeltaTime;
     }
 
     if (GetAsyncKeyState('S') & 0x8000)
     {
-        m_RC.Top += 400*DeltaTime;
-        m_RC.Bottom += 400 * DeltaTime;
+        PlayerDir.y += 1.f;
+        //m_RC.Top += 400*DeltaTime;
+        //m_RC.Bottom += 400 * DeltaTime;
     }
     
     if (GetAsyncKeyState('D') & 0x8000)
     {
-        m_RC.Right += 400*DeltaTime;
-        m_RC.Left += 400 * DeltaTime;
+        PlayerDir.x += 1.f;
+        //m_RC.Right += 400*DeltaTime;
+        //m_RC.Left += 400 * DeltaTime;
     }
 
     if (GetAsyncKeyState('A') & 0x8000)
     {
-        m_RC.Right -= 400*DeltaTime;
-        m_RC.Left -= 400 * DeltaTime;
+        PlayerDir.x -= 1.f;
+        //m_RC.Right -= 400*DeltaTime;
+        //m_RC.Left -= 400 * DeltaTime;
+    }
+
+    //PlayerDir(Vector2D)의 단위벡터화
+    //방향이동시 모든 값이 일정하게 변화
+    //단위벡터화 하지 않을 경우 시간당 거리를 이동
+    //대각선 이동의 경우 약 1.4배 빠른 속도를 가짐
+    PlayerDir.Normalize();
+    m_PlayerPos += PlayerDir * 400.f * DeltaTime;
+
+    if (GetAsyncKeyState('1') & 0x8000)
+    {   
+        for (int i = 0; i < 3;i++)
+        {
+            FBullet Bullet;
+
+            Bullet.Pos.x = m_PlayerPos.x + m_PlayerSize.x / 2.f + 25.f;
+            Bullet.Pos.y = m_PlayerPos.y;
+            Bullet.Size = FVector2D(50.f, 50.f);
+            Bullet.MoveDir = FVector2D(1.f, i - 1.f);
+            Bullet.MoveDir.Normalize();
+
+            m_BulletList.push_back(Bullet);
+        }
+        //바라보는 방향을 향해 각도를 회전해서 발사하는 것이 일반
+    }
+
+    if (GetAsyncKeyState('2') & 0x8000)
+    {
+        FVector2D Dir[8] =
+        {
+            {1.f, 0.f},
+            {1.f, 1.f},
+            {0.f, 1.f},
+            {-1.f, 1.f},
+            {-1.f, 0.f},
+            {-1.f, -1.f},
+            {0.f, -1.f},
+            {1.f, -1.f}
+        };
+
+        for (int i = 0; i < 8;i++)
+        {
+            FBullet Bullet;
+
+            //Bullet.Pos.x = m_PlayerPos.x + m_PlayerSize.x / 2.f + 25.f;
+            //Bullet.Pos.y = m_PlayerPos.y;
+            Bullet.Size = FVector2D(50.f, 50.f);
+            Bullet.MoveDir = Dir[i];
+            Bullet.MoveDir.Normalize();
+            
+            Bullet.Pos = m_PlayerPos + Bullet.MoveDir * 100.f;
+
+            m_BulletList.push_back(Bullet);
+        }
+    }
+    if (GetAsyncKeyState('3') & 0x8000)
+    {
+        FBullet Bullet;
+        
+        Bullet.Pos.x = m_PlayerPos.x + m_PlayerSize.x / 2.f + 25.f;
+        Bullet.Pos.y = 300;//m_PlayerPos.y;
+
+        Bullet.Size = FVector2D(50.f, 50.f);
+        Bullet.MoveDir = FVector2D(1.f, -1.f);
+        Bullet.MoveDir.Normalize();
+
+        Bullet.Distance = FLT_MAX;
+        Bullet.Option = EBulletOption::Bound;
+
+        m_BulletList.push_back(Bullet);
     }
     //특수키는 Virtual key(VK_UP, VK_END)로 처리
     if (GetAsyncKeyState(VK_SPACE) & 0x8000)
     {
-        FRect Bullet;
+        FBullet Bullet;
 
-        Bullet.Left = m_RC.Left + 100.f;
-        Bullet.Top = m_RC.Top + 25.f;
-        Bullet.Right = Bullet.Left + 50.f;
-        Bullet.Bottom = Bullet.Top + 50.f;
+        Bullet.Pos.x = m_PlayerPos.x + m_PlayerSize.x / 2.f + 25.f;
+        Bullet.Pos.y = m_PlayerPos.y;
+
+        Bullet.Size = FVector2D(50.f, 50.f);
+        Bullet.MoveDir = FVector2D(1.f, 0.f);
+        Bullet.Distance = 1000.f;
 
         m_BulletList.push_back(Bullet);
     }
@@ -209,72 +286,142 @@ void CGameManager::Input(float DeltaTime)
 
 void CGameManager::Update(float DeltaTime)
 {
-    std::list<FRect>::iterator iter = m_BulletList.begin();
-    std::list<FRect>::iterator iterEnd = m_BulletList.end();
-
+    //Player bullet traversal
+    std::list<FBullet>::iterator iter = m_BulletList.begin();
+    std::list<FBullet>::iterator iterEnd = m_BulletList.end();
+    
     while (iter != iterEnd)
     {
-        (*iter).Left += 500.f * DeltaTime;
-        (*iter).Right += 500.f * DeltaTime;
+        FVector2D Move = (*iter).MoveDir * 500.f * DeltaTime;
+
+        (*iter).Pos += Move;
+       
+        float Dist = Move.Length();
+        (*iter).Distance -= Dist;
+        
+        if ((*iter).Distance <= 0.f)
+        {
+            iter = m_BulletList.erase(iter);
+            iterEnd = m_BulletList.end();
+            continue;
+        }
+
+        else if (((*iter).Pos.x + (*iter).Size.x / 2.f <= 0.f ||
+            (*iter).Pos.y + (*iter).Size.y / 2.f <= 0.f ||
+            (*iter).Pos.x - (*iter).Size.x / 2.f >= 1280.f ||
+            (*iter).Pos.y - (*iter).Size.y / 2.f >= 720.f) &&
+            (*iter).Option == EBulletOption::Normal)
+        {
+            iter = m_BulletList.erase(iter);
+            iterEnd = m_BulletList.end();
+            continue;
+        }
+
+        else if ((*iter).Option==EBulletOption::Bound)
+        {
+            FVector2D Normal;
+
+            if ((*iter).Pos.x - (*iter).Size.x / 2.f <= 0.f)
+            {
+                Normal.x = 1.f;
+                (*iter).Pos.x = 25.f;
+            }
+            else if ((*iter).Pos.x + (*iter).Size.x / 2.f >= 1280.f)
+            {
+                Normal.x = -1.f;
+                (*iter).Pos.x = 1255.f;
+            }
+            else if ((*iter).Pos.y + (*iter).Size.y / 2.f <= 0.f)
+            {
+                Normal.y = 1.f;
+                (*iter).Pos.y = 25.f;
+            }
+            else if ((*iter).Pos.y + (*iter).Size.y / 2.f >= 720.f)
+            {
+                Normal.y = -1.f;
+                (*iter).Pos.y = 695.f;
+            }
+			
+            if (Normal.Length() > 0.f)
+            {
+                (*iter).MoveDir = (*iter).MoveDir - Normal * 2.f * Normal.Dot((*iter).MoveDir);
+                (*iter).MoveDir.Normalize();
+            }
+        }
         iter++;
     }
 
-    m_EnemyBulletCreate += DeltaTime;
+    //Enemy Movement 
+    m_EnemyPos.y += m_EnemyDir * 300.f * DeltaTime;
 
-    if (m_EnemyBulletCreate >= 1.f)
+    if (m_EnemyPos.y - m_EnemySize.y / 2.f >=720.f)
     {
-        FRect Bullet;
-
-        Bullet.Left = m_Enemy.Left - 50.f;
-        Bullet.Top = m_Enemy.Top + 25.f;
-        Bullet.Right = Bullet.Left + 50.f;
-        Bullet.Bottom = Bullet.Top + 50.f;
-
-        m_EnemyBulletList.push_back(Bullet);
-
-        m_EnemyBulletCreate -= 1;
-    }
-
-	std::list<FRect>::iterator iter1 = m_EnemyBulletList.begin();
-	std::list<FRect>::iterator iter1End = m_EnemyBulletList.end();
-    
-    while (iter1 != iter1End)
-    {
-        (*iter1).Left -= 500.f * DeltaTime;
-        (*iter1).Right -= 500.f * DeltaTime;
-        iter1++;
-    }
-
-    m_Enemy.Top += m_EnemyDir * 300.f * DeltaTime;
-    m_Enemy.Bottom += m_EnemyDir * 300.f * DeltaTime;
-
-    if (m_Enemy.Bottom >= 720.f)
-    {
-        m_Enemy.Bottom = 720.f;
-        m_Enemy.Top = 620.f;
+        m_EnemyPos.y = 670.f;
         m_EnemyDir = -1.f;
     }
-    else if (m_Enemy.Top <= 0.f)
+    else if (m_EnemyPos.y - m_EnemySize.y / 2.f <= 0.f)
     {
-        m_Enemy.Bottom = 100.f;
-        m_Enemy.Top = 0.f;
+        m_EnemyPos.y = 50.f;
         m_EnemyDir = 1.f;
     }
 
-    //if (m_bEnemyMove)
-    //{
-    //    m_Enemy.Top += 300.f * DeltaTime;
-    //    m_Enemy.Bottom += 300.f * DeltaTime;
-    //    if (m_Enemy.Bottom >= 719)
-    //        m_bEnemyMove = false;
-    //}
-    //else
-    //{
-    //    m_Enemy.Top -= 300.f * DeltaTime;
-    //    m_Enemy.Bottom -= 300.f * DeltaTime;
-    //    if (m_Enemy.Top <= 1)
-    //        m_bEnemyMove = true;
-    //}
+    //Enemy Bullet traversal
+	std::list<FBullet>::iterator iter1 = m_EnemyBulletList.begin();
+	std::list<FBullet>::iterator iter1End = m_EnemyBulletList.end();
+    
+    while (iter1 != iter1End)
+    {
+        FVector2D Move = (*iter1).MoveDir * 500.f * DeltaTime;
+        //생성
+        (*iter1).Pos += Move;
+        
+        //삭제
+        //벡터의 길이를 Dist에 업데이트
+        float Dist = Move.Length();
+        //객체의 사거리(Distance)를 이동한 거리만큼 감소
+        (*iter1).Distance -= Dist;
+        //사거리가 0이 될 경우 객체를 제거
+        if ((*iter1).Distance <= 0.f)
+        {
+            iter1 = m_EnemyBulletList.erase(iter1);
+            iter1End = m_EnemyBulletList.end();
+            continue;
+        }
+        
+        //탄환이 화면 외곽좌표에 도달하면 객체를 제거
+		if ((*iter1).Pos.x + (*iter1).Size.x / 2.f <= 10.f ||
+			(*iter1).Pos.y + (*iter1).Size.y / 2.f <= 10.f ||
+			(*iter1).Pos.x - (*iter1).Size.x / 2.f >= 1270.f ||
+			(*iter1).Pos.y - (*iter1).Size.y / 2.f >= 710.f)
+        {
+            iter1 = m_EnemyBulletList.erase(iter1);
+            iter1End = m_EnemyBulletList.end();
+            continue;
+        }
+        iter1++;
+    }
+    //Enemy Bullet Create
+
+    m_FireAccTime += DeltaTime;
+
+    if (m_FireAccTime >= m_FireTime)
+    {
+        m_FireAccTime -= m_FireTime;
+        
+        FBullet Bullet;
+
+        Bullet.Pos.x = m_EnemyPos.x - m_EnemySize.x / 2.f - 25.f;
+        Bullet.Pos.y = m_EnemyPos.y;
+
+        Bullet.Size = FVector2D(50.f, 50.f);
+        //Vector minus
+        Bullet.MoveDir = m_PlayerPos - Bullet.Pos;
+        Bullet.MoveDir.Normalize();
+
+        Bullet.Distance = 800.f;
+
+        m_EnemyBulletList.push_back(Bullet);
+    }
 }
 
 void CGameManager::PostUpdate(float DeltaTime)
@@ -291,25 +438,45 @@ void CGameManager::PostCollisionUpdate(float DeltaTime)
 
 void CGameManager::Render(float DeltaTime)
 {
-    //Rectangle(m_hdc, 1, 1, 1279, 719);
-    Rectangle(m_hdc, (float)m_RC.Left, (float)m_RC.Top, (float)m_RC.Right, (float)m_RC.Bottom);
-    Rectangle(m_hdc, (float)m_Enemy.Left, (float)m_Enemy.Top, (float)m_Enemy.Right, (float)m_Enemy.Bottom);
-    
-    std::list<FRect>::iterator iter = m_BulletList.begin();
-    std::list<FRect>::iterator iterEnd = m_BulletList.end();
-   
+    //Player
+    Rectangle(m_hdc, 
+        (int)(m_PlayerPos.x - m_PlayerSize.x / 2.f),
+		(int)(m_PlayerPos.y - m_PlayerSize.y / 2.f),
+		(int)(m_PlayerPos.x + m_PlayerSize.x / 2.f),
+		(int)(m_PlayerPos.y + m_PlayerSize.y / 2.f));
+
+    //PlayerBullet
+    std::list<FBullet>::iterator iter = m_BulletList.begin();
+    std::list<FBullet>::iterator iterEnd = m_BulletList.end();
+
     while (iter != iterEnd)
     {
-        Ellipse(m_hdc, (*iter).Left, (*iter).Top, (*iter).Right, (*iter).Bottom);
+        Ellipse(m_hdc,
+            (int)((*iter).Pos.x - (*iter).Size.x/2.f),
+            (int)((*iter).Pos.y - (*iter).Size.y/2.f),
+            (int)((*iter).Pos.x + (*iter).Size.x/2.f),
+            (int)((*iter).Pos.y + (*iter).Size.y/2.f));
         iter++;
     }
+    
+    //Enemy
+    Rectangle(m_hdc, 
+        (int)(m_EnemyPos.x - m_EnemySize.x / 2.f),
+        (int)(m_EnemyPos.y - m_EnemySize.y / 2.f),
+        (int)(m_EnemyPos.x + m_EnemySize.x / 2.f),
+        (int)(m_EnemyPos.y + m_EnemySize.y / 2.f));
 
-    std::list<FRect>::iterator iter1 = m_EnemyBulletList.begin();
-    std::list<FRect>::iterator iter1End = m_EnemyBulletList.end();
+    //EnemyBullet
+    std::list<FBullet>::iterator iter1 = m_EnemyBulletList.begin();
+    std::list<FBullet>::iterator iter1End = m_EnemyBulletList.end();
 
     while (iter1 != iter1End)
     {
-        Ellipse(m_hdc, (float)(*iter1).Left, (float)(*iter1).Top, (float)(*iter1).Right, (float)(*iter1).Bottom);
+        Ellipse(m_hdc, 
+            (int)((*iter1).Pos.x - (*iter1).Size.x/2.f),
+            (int)((*iter1).Pos.y - (*iter1).Size.y/2.f),
+            (int)((*iter1).Pos.x + (*iter1).Size.x/2.f),
+            (int)((*iter1).Pos.y + (*iter1).Size.y/2.f));
         iter1++;
     }
 }

@@ -1,6 +1,9 @@
 #pragma once
 #include "GameInfo.h"
 #include "Share/Timer.h"
+#include "Vector2D.h"
+#include "Vector3D.h"
+#include "Vector4D.h"
 
 class CGameManager
 {
@@ -13,15 +16,18 @@ private:
 	TCHAR m_ClassName[MAX_STRING] = {};
 	TCHAR m_TitleName[MAX_STRING] = {};
 
-	//RECT m_RC = { 100,100,200,200 };
-	FRect m_RC = { 100,100,200,200 };
-	FRect m_Enemy = { 1000,100,1100,200 };
+	FVector2D m_PlayerPos = { 150.f, 150.f };
+	FVector2D m_PlayerSize = { 100.f, 100.f };
+	FVector2D m_EnemyPos = { 1050.f, 150.f };
+	FVector2D m_EnemySize = { 100.f, 100.f };
 	float m_EnemyDir = 1.f;
-	bool m_bEnemyMove = true;
 
-	std::list<FRect> m_BulletList;
-	std::list<FRect> m_EnemyBulletList;
-	float m_EnemyBulletCreate = 0.f;
+	std::list<FBullet> m_BulletList;
+	std::list<FBullet> m_EnemyBulletList;
+	
+	float m_FireTime = 1.f;
+	float m_FireAccTime = 0.f;
+
 
 public:
 	bool Init(HINSTANCE hInst);

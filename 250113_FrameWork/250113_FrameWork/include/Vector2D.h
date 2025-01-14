@@ -11,6 +11,7 @@ struct FVector2D
 	FVector2D(const FVector2D& v) :x(v.x), y(v.y) {}
 	FVector2D(FVector2D&& v) :x(v.x), y(v.y) {}
 
+#pragma region equal
 	const FVector2D& operator=(const FVector2D& v)
 	{
 		x = v.x;
@@ -36,6 +37,8 @@ struct FVector2D
 		y = (float)Value;
 		return *this;
 	}
+#pragma endregion Equal
+
 #pragma region Plus
 	FVector2D operator + (const FVector2D& v) const
 	{
@@ -66,6 +69,14 @@ struct FVector2D
 		result.y = y + (float)Value;
 		return result;
 	}
+
+	const FVector2D& operator +=(const FVector2D& v)
+	{
+		x += v.x;
+		y += v.y;
+		return *this;
+	}
+
 	const FVector2D& operator += (float Value)
 	{
 		x += Value;
@@ -129,10 +140,18 @@ struct FVector2D
 		result.y = y - (float)Value;
 		return result;
 	}
+	
+	const FVector2D& operator -=(const FVector2D& v)
+	{
+		x -= v.x;
+		y -= v.y;
+		return *this;
+	}
+
 	const FVector2D& operator -= (float Value)
 	{
-		x -= (float)Value;
-		y -= (float)Value;
+		x -= Value;
+		y -= Value;
 		return *this;
 	}
 	const FVector2D& operator -= (int Value)
@@ -192,6 +211,13 @@ struct FVector2D
 		result.y = y * (float)Value;
 		return result;
 	}
+
+	const FVector2D& operator *=(const FVector2D& v)
+	{
+		x *= v.x;
+		y *= v.y;
+		return *this;
+	}
 	const FVector2D& operator *= (float Value)
 	{
 		x *= (float)Value;
@@ -243,6 +269,13 @@ struct FVector2D
 		result.y = y / (float)Value;
 		return result;
 	}
+
+	const FVector2D& operator /=(const FVector2D& v)
+	{
+		x /= v.x;
+		y /= v.y;
+		return *this;
+	}
 	const FVector2D& operator /= (float Value)
 	{
 		x /= (float)Value;
@@ -264,6 +297,7 @@ struct FVector2D
 
 #pragma endregion Divide
 
+#pragma region Function
 	float Length() const { return sqrtf(x*x+y*y); }
 	float Dot(const FVector2D& v) const { return x * v.x + y*v.y; }
 	FVector2D Cross(const FVector2D& v) const { }
@@ -271,6 +305,10 @@ struct FVector2D
 	void Normalize()
 	{
 		float Size = Length();
+
+		if (Size == 0.f)
+			return;
+
 		x /= Size;
 		y /= Size;
 	}
@@ -278,7 +316,12 @@ struct FVector2D
 	static FVector2D Normalize(const FVector2D& v)
 	{
 		FVector2D result;
+		
 		float Size = v.Length();
+
+		if (Size == 0.f)
+			return result;
+	
 		result.x = v.x / Size;
 		result.y = v.y / Size;
 
@@ -290,7 +333,7 @@ struct FVector2D
 		FVector2D v1 = *this - v;
 		return v1.Length();
 	}
-
+#pragma endregion Function
 
 
 	

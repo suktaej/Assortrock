@@ -28,6 +28,12 @@ public:\
 
 #define MAX_STRING 256
 
+enum class EBulletOption
+{
+	Normal,
+	Bound,
+};
+
 struct FRect
 {
 	float Left = 0.f;
@@ -35,3 +41,13 @@ struct FRect
 	float Right =0.f;
 	float Bottom = 0.f;
 };
+
+struct FBullet
+{
+	FVector2D Pos;
+	FVector2D Size;
+	FVector2D MoveDir;
+	float Distance = 800.f;
+	EBulletOption Option = EBulletOption::Normal;
+};
+

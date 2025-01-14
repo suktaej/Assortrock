@@ -16,3 +16,12 @@ enum class ESpawnType
 	ItemHeal,
 	ItemPower
 };
+
+enum class ECollisionType
+{
+	None,
+	Damage,
+	Heal,
+	Power,
+	Score
+};
