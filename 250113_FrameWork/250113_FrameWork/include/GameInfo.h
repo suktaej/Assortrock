@@ -2,6 +2,12 @@
 
 #include <Windows.h>
 #include <list>
+#include <vector>
+#include <unordered_map>
+
+#include <d3d11.h>
+#include <d3dcompiler.h>
+
 #include "Vector2D.h"
 
 #define	SAFE_DELETE(p)	if(p)	{ delete p; p = nullptr;}
