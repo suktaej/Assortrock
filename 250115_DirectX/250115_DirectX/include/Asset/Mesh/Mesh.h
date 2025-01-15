@@ -19,7 +19,7 @@ protected:
 	//여러개의 인덱스 버퍼를 저장
     std::vector<FMeshSlot*> m_MeshSlot;
 	//그리기 형태 지정
-    D3D11_PRIMITIVE_TOPOLOGY m_Primitive;
+	D3D11_PRIMITIVE_TOPOLOGY m_Primitive;
 public:
 	virtual bool CreateMesh(
 		void* VertexData,

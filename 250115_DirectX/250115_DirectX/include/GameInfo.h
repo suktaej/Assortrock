@@ -4,6 +4,7 @@
 #include <list>
 #include <vector>
 #include <unordered_map>
+#include <string>
 
 #include <d3d11.h>
 #include <d3dcompiler.h>
@@ -12,11 +13,13 @@
 #include <crtdbg.h>
 
 #include "Vector2D.h"
+//별다른 include 없이 외부에서 sharedPtr 사용 가능
+#include "Share/SharedPtr.h"
 
 //.lib를 링크를 거는 기능
 #pragma comment(lib,"d3d11.lib")
-#pragma commnet(lib,"d3dcompiler.lib")
-#pragma commnet(lib,"dxguid.lib")
+#pragma comment(lib,"d3dcompiler.lib")
+#pragma comment(lib,"dxguid.lib")
 
 #define	SAFE_DELETE(p)	if(p)	{ delete p; p = nullptr;}
 #define	SAFE_DELETE_ARRAY(p)	if(p)	{ delete[] p; p = nullptr;}

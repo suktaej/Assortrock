@@ -140,12 +140,14 @@
     <ClInclude Include="Asset\Asset.h" />
     <ClInclude Include="Asset\AssetManager.h" />
     <ClInclude Include="Asset\Mesh\Mesh.h" />
+    <ClInclude Include="Asset\Mesh\MeshManager.h" />
     <ClInclude Include="Asset\Mesh\StaticMesh.h" />
     <ClInclude Include="Device.h" />
     <ClInclude Include="GameInfo.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Share\Object.h" />
+    <ClInclude Include="Share\SharedPtr.h" />
     <ClInclude Include="Share\Timer.h" />
     <ClInclude Include="Vector2D.h" />
     <ClInclude Include="Vector3D.h" />
@@ -155,11 +157,13 @@
     <ClCompile Include="Asset\Asset.cpp" />
     <ClCompile Include="Asset\AssetManager.cpp" />
     <ClCompile Include="Asset\Mesh\Mesh.cpp" />
+    <ClCompile Include="Asset\Mesh\MeshManager.cpp" />
     <ClCompile Include="Asset\Mesh\StaticMesh.cpp" />
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Share\Object.cpp" />
+    <ClCompile Include="Share\SharedPtr.cpp" />
     <ClCompile Include="Share\Timer.cpp" />
     <ClCompile Include="Vector4D.cpp" />
   </ItemGroup>
