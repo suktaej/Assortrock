@@ -146,6 +146,7 @@
     <ClInclude Include="GameInfo.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Shader\ColorMeshShader.h" />
     <ClInclude Include="Shader\ComputeShader.h" />
     <ClInclude Include="Shader\GraphicShader.h" />
     <ClInclude Include="Shader\Shader.h" />
@@ -169,6 +170,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Shader\ColorMeshShader.cpp" />
     <ClCompile Include="Shader\ComputeShader.cpp" />
     <ClCompile Include="Shader\GraphicShader.cpp" />
     <ClCompile Include="Shader\Shader.cpp" />

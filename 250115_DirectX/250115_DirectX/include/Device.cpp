@@ -158,12 +158,12 @@ bool CDevice::Init(HWND hWnd, unsigned int Width, unsigned int Height, bool Wind
 	//DXGIDevice의 부모객체인 IDXGIAdapter를 가져옴
 	//어댑터는 그래픽 카드와 연결된 객체로, GPU와 디스플레이 설정을 관리
 	IDXGIAdapter* Adapter = nullptr;
-	DXGIDevice->GetParent(__uuidof(IDXGIAdapter),(void**)&Adapter);
+	DXGIDevice->GetParent(__uuidof(IDXGIAdapter), (void**)&Adapter);
 
 	//어댑터의 부모 객체인 IDXGIFactory를 가져옴
 	//팩토리는 DirectX에서 그래픽 리소스 객체(스왑체인 등)를 생성하기 위한 인터페이스
 	IDXGIFactory* Factory = nullptr;
-	Adapter->GetParent(__uuidof(IDXGIFactory), (void**)Factory);
+	Adapter->GetParent(__uuidof(IDXGIFactory), (void**)&Factory);
 
 	//Factory를 사용해 스왑체인 생성
 	if (FAILED(Factory->CreateSwapChain(m_Device, &SwapDesc, &m_SwapChain)))

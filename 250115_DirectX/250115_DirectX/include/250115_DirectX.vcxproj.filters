@@ -46,6 +46,9 @@
     <Filter Include="04.Shader\ShaderClass">
       <UniqueIdentifier>{d66f724a-28c4-4552-b65d-b7c22a4841f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04.Shader\ShaderClass\ColorMesh">
+      <UniqueIdentifier>{af2ec9c2-ee3d-4df1-907c-718816a24828}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -100,10 +103,13 @@
       <Filter>04.Shader</Filter>
     </ClInclude>
     <ClInclude Include="Shader\GraphicShader.h">
-      <Filter>04.Shader</Filter>
+      <Filter>04.Shader\ShaderClass</Filter>
     </ClInclude>
     <ClInclude Include="Shader\ComputeShader.h">
-      <Filter>04.Shader</Filter>
+      <Filter>04.Shader\ShaderClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\ColorMeshShader.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -146,11 +152,14 @@
     <ClCompile Include="Shader\ShaderManager.cpp">
       <Filter>04.Shader</Filter>
     </ClCompile>
-    <ClCompile Include="Shader\GraphicShader.cpp">
-      <Filter>04.Shader</Filter>
-    </ClCompile>
     <ClCompile Include="Shader\ComputeShader.cpp">
-      <Filter>04.Shader</Filter>
+      <Filter>04.Shader\ShaderClass</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\GraphicShader.cpp">
+      <Filter>04.Shader\ShaderClass</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\ColorMeshShader.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

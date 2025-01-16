@@ -32,7 +32,7 @@ public:
 		int IndexCount = 0,
 		DXGI_FORMAT Fmt = DXGI_FORMAT_UNKNOWN,
 		D3D11_USAGE IndexUsage = D3D11_USAGE_DEFAULT);
-public:
+
     bool CreateBuffer(
 		ID3D11Buffer** Buffer,
 		D3D11_BIND_FLAG Flag,
@@ -40,5 +40,7 @@ public:
 		int Size,
 		int Count,
 		D3D11_USAGE Usage);
+
+	void Render();
 };
 

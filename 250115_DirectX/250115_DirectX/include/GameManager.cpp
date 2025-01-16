@@ -5,6 +5,10 @@
 #include "Device.h"
 #include "Shader/ShaderManager.h"
 
+#include "Asset/Mesh/MeshManager.h"
+#include "Asset/Mesh/Mesh.h"
+#include "Shader/Shader.h"
+
 DEFINITION_SINGLE(CGameManager)
 bool CGameManager::m_Loop = true;
 
@@ -211,5 +215,11 @@ void CGameManager::Render(float DeltaTime)
     CDevice::GetInst()->ClearDepthStencil(1.f, 0);
     CDevice::GetInst()->SetTarget();
 
+    // Ãâ·Â
+    CSharedPtr<CShader>  Shader = CShaderManager::GetInst()->FindShader("ColorMeshShader");
+    CSharedPtr<CMesh>  Mesh = CAssetManager::GetInst()->GetMeshManager()->FindMesh("CenterRect");
+    Shader->SetShader();
+    Mesh->Render();
+    
     CDevice::GetInst()->Render();
 }

@@ -6,7 +6,7 @@ class CShader abstract:
     friend class CShaderManager;
 protected:
     CShader();
-    virtual ~CShader();
+    ~CShader() override;
 public:
     virtual bool Init() = 0;
     virtual void SetShader() = 0;
