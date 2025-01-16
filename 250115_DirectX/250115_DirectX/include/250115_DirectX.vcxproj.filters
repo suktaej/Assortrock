@@ -37,6 +37,15 @@
     <Filter Include="02.Share\SharedPtr">
       <UniqueIdentifier>{52c675aa-6741-450a-963f-5c77a5945005}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04.Shader">
+      <UniqueIdentifier>{31cce56c-d5e0-4b79-890a-8df8bff7f430}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Shader\HLSL">
+      <UniqueIdentifier>{3526fb2f-1642-406d-ab0e-f0149ddb4150}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Shader\ShaderClass">
+      <UniqueIdentifier>{d66f724a-28c4-4552-b65d-b7c22a4841f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -84,6 +93,18 @@
     <ClInclude Include="Asset\Mesh\MeshManager.h">
       <Filter>03.Asset\Mesh</Filter>
     </ClInclude>
+    <ClInclude Include="Shader\Shader.h">
+      <Filter>04.Shader\ShaderClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\ShaderManager.h">
+      <Filter>04.Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\GraphicShader.h">
+      <Filter>04.Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\ComputeShader.h">
+      <Filter>04.Shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -116,16 +137,36 @@
     <ClCompile Include="Asset\Mesh\StaticMesh.cpp">
       <Filter>03.Asset\Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="Share\SharedPtr.cpp">
-      <Filter>02.Share\SharedPtr</Filter>
-    </ClCompile>
     <ClCompile Include="Asset\Mesh\MeshManager.cpp">
       <Filter>03.Asset\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\Shader.cpp">
+      <Filter>04.Shader\ShaderClass</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\ShaderManager.cpp">
+      <Filter>04.Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\GraphicShader.cpp">
+      <Filter>04.Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\ComputeShader.cpp">
+      <Filter>04.Shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="icon1.ico">
       <Filter>리소스 파일</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Bin\Shader\Share.fx">
+      <Filter>04.Shader\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\Shader\ColorMesh.fx">
+      <Filter>04.Shader\HLSL</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

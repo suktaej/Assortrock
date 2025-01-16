@@ -1,5 +1,9 @@
 #include "GameManager.h"
 #include "resource.h"
+#include "Share/Timer.h"
+#include "Asset/AssetManager.h"
+#include "Device.h"
+#include "Shader/ShaderManager.h"
 
 DEFINITION_SINGLE(CGameManager)
 bool CGameManager::m_Loop = true;
@@ -10,6 +14,10 @@ CGameManager::CGameManager()
 
 CGameManager::~CGameManager()
 {
+    CAssetManager::DestroyInst();
+    CDevice::DestroyInst();
+    CShaderManager::DestroyInst();
+
     ReleaseDC(m_hWnd, m_hdc);
 }
 
@@ -32,7 +40,14 @@ bool CGameManager::Init(HINSTANCE hInst)
     //Device 초기화
     if (!CDevice::GetInst()->Init(m_hWnd, 1280, 720, true))
         return false;
+    //에셋 관리자 초기화
+    if (!CAssetManager::GetInst()->Init())
+        return false;
+    //셰이더 관리자 초기화
+    if (!CShaderManager::GetInst()->Init())
+        return false;
 
+    //타이머 초기화
     CTimer::Init();
 
 	return true;

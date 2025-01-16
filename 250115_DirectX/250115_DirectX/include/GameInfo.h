@@ -13,6 +13,8 @@
 #include <crtdbg.h>
 
 #include "Vector2D.h"
+#include "Vector3D.h"
+#include "Vector4D.h"
 //별다른 include 없이 외부에서 sharedPtr 사용 가능
 #include "Share/SharedPtr.h"
 
@@ -46,8 +48,6 @@ public:\
 
 #define SAFE_RELEASE(p) if(p) {p->Release();}
 
-#define MAX_STRING 256
-
 struct FResolution
 {
 	unsigned int Width = 0;
@@ -64,7 +64,7 @@ struct FIndexBuffer
 	//데이터의 개수
 	int Count = 0;
 	//데이터 포맷
-	
+
 	//DXGI_FORMAT은 DirectX Graphics Infrastructure에서 사용
 	//데이터의 형식을 정의한 열거형
 	DXGI_FORMAT Fmt = DXGI_FORMAT_UNKNOWN;
@@ -102,3 +102,23 @@ struct FVertexBuffer
 	}
 };
 
+//위치, 정점의 색
+struct FVertexColor
+{
+	FVector3D Pos;
+	FVector4D Color;
+
+	FVertexColor()
+	{
+	}
+
+	FVertexColor(const FVector3D& _Pos, const FVector4D& _Color)
+		: Pos(_Pos), Color(_Color)
+	{
+	}
+	FVertexColor(float x, float y, float z, float r, float g, float b, float a)
+		: Pos(x, y, z), Color(r, g, b, a)
+	{
+	}
+
+};

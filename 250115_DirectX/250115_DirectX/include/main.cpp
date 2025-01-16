@@ -24,5 +24,5 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     int Ret = CGameManager::GetInst()->Run();
     CGameManager::DestroyInst();
 
-    return 0;
+    return Ret;
 }
