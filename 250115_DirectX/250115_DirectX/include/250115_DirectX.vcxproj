@@ -143,8 +143,10 @@
     <ClInclude Include="Asset\Mesh\MeshManager.h" />
     <ClInclude Include="Asset\Mesh\StaticMesh.h" />
     <ClInclude Include="Device.h" />
+    <ClInclude Include="EngineMath.h" />
     <ClInclude Include="GameInfo.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="Matrix.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Shader\ColorMeshShader.h" />
     <ClInclude Include="Shader\ComputeShader.h" />

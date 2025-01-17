@@ -41,7 +41,14 @@ void CGraphicShader::SetShader()
     CDevice::GetInst()->GetContext()->IASetInputLayout(m_InputLayout);
 }
 
-void CGraphicShader::AddInputLayoutDesc(const char* Semantic, unsigned int SemanticIndex, DXGI_FORMAT Fmt, unsigned int InputSlot, unsigned int Size, D3D11_INPUT_CLASSIFICATION InputSlotClass, unsigned int InstanceDataStepRate)
+void CGraphicShader::AddInputLayoutDesc(
+    const char* Semantic,
+	unsigned int SemanticIndex,
+	DXGI_FORMAT Fmt,
+	unsigned int InputSlot,
+	unsigned int Size,
+	D3D11_INPUT_CLASSIFICATION InputSlotClass,
+	unsigned int InstanceDataStepRate)
 {
     D3D11_INPUT_ELEMENT_DESC Desc = {};
     Desc.SemanticName = Semantic;
@@ -129,7 +136,7 @@ bool CGraphicShader::LoadPixelShader(const char* EntryName, const TCHAR* FileNam
         nullptr,
         D3D_COMPILE_STANDARD_FILE_INCLUDE,
         EntryName,
-        "vs_5_0",
+        "ps_5_0",
         Flag,
         0,
         &m_PSBlob,
@@ -168,7 +175,7 @@ bool CGraphicShader::LoadHullShader(const char* EntryName, const TCHAR* FileName
         nullptr,
         D3D_COMPILE_STANDARD_FILE_INCLUDE,
         EntryName,
-        "vs_5_0",
+        "hs_5_0",
         Flag,
         0,
         &m_HSBlob,
@@ -207,7 +214,7 @@ bool CGraphicShader::LoadDomainShader(const char* EntryName, const TCHAR* FileNa
         nullptr,
         D3D_COMPILE_STANDARD_FILE_INCLUDE,
         EntryName,
-        "vs_5_0",
+        "ds_5_0",
         Flag,
         0,
         &m_DSBlob,
@@ -248,7 +255,7 @@ bool CGraphicShader::LoadGeometryShader(const char* EntryName, const TCHAR* File
         nullptr,
         D3D_COMPILE_STANDARD_FILE_INCLUDE,
         EntryName,
-        "vs_5_0",
+        "gs_5_0",
         Flag,
         0,
         &m_GSBlob,

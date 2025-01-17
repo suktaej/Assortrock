@@ -15,6 +15,7 @@
 #include "Vector2D.h"
 #include "Vector3D.h"
 #include "Vector4D.h"
+#include "Matrix.h"
 //별다른 include 없이 외부에서 sharedPtr 사용 가능
 #include "Share/SharedPtr.h"
 

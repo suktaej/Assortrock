@@ -1,6 +1,7 @@
 #pragma once
 
 #include <math.h>
+#include "EngineMath.h"
 
 struct FVector4D
 {
@@ -444,6 +445,23 @@ struct FVector4D
 	}
 
 #pragma endregion Divide
+
+	float& operator [] (int Index)
+	{
+		assert(0 <= Index && Index <= 3);
+
+		switch (Index)
+		{
+		case 0:
+			return x;
+		case 1:
+			return y;
+		case 2:
+			return z;
+		}
+
+		return w;
+	}
 
 #pragma region Function
 

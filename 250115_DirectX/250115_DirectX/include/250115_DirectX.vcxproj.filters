@@ -109,6 +109,12 @@
       <Filter>04.Shader\ShaderClass</Filter>
     </ClInclude>
     <ClInclude Include="Shader\ColorMeshShader.h">
+      <Filter>04.Shader\ShaderClass\ColorMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineMath.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -159,7 +165,7 @@
       <Filter>04.Shader\ShaderClass</Filter>
     </ClCompile>
     <ClCompile Include="Shader\ColorMeshShader.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>04.Shader\ShaderClass\ColorMesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

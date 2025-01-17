@@ -25,7 +25,9 @@ CShader* CShaderManager::FindShader(const std::string& Name)
 	auto iter = m_ShaderMap.find(Name);
 	//TODO: type check
 	if (iter == m_ShaderMap.end())
+	{
 		return nullptr;
+	}
 
 	return (CShader*)iter->second.Get();
 }

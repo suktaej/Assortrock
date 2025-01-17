@@ -10,11 +10,11 @@ CColorMeshShader::~CColorMeshShader()
 
 bool CColorMeshShader::Init()
 {
-    if (!LoadVertexShader("ColorMeshVS", TEXT("ColorMesh.fx")))
-        return false;
+	if (!LoadVertexShader("ColorMeshVS", TEXT("ColorMesh.fx")))
+		return false;
 
-    if (!LoadPixelShader("ColorMeshPS", TEXT("ColorMesh.fx")))
-        return false;
+	if (!LoadPixelShader("ColorMeshPS", TEXT("ColorMesh.fx")))
+		return false;
 
     AddInputLayoutDesc(
         "POSITION",
