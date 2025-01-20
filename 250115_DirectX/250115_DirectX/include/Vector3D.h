@@ -2,6 +2,7 @@
 
 #include <math.h>
 #include "EngineMath.h"
+#include "Matrix.h"
 
 struct FVector3D
 {
@@ -458,5 +459,35 @@ struct FVector3D
 		return v1.Length();
 	}
 
+	DirectX::XMVECTOR Convert() const
+	{
+		return DirectX::XMLoadFloat3((DirectX::XMFLOAT3*)this);
+	}
+
+	FVector3D TransformNormal(const FMatrix& mat) const
+	{
+		// XMVector3TransformNormal : w를 0으로 하여 4x4 행렬과 곱
+		// 결과를 반환
+		DirectX::XMVECTOR result = DirectX::XMVector3TransformNormal(Convert(), mat.m);
+
+		return result;
+	}
+
+	FVector3D TransfromCoord(const FMatrix& mat) const
+	{
+		// XMVector3TransformCoord : w를 1로 하여 4x4 행렬과 곱
+		// 결과를 반환 
+		DirectX::XMVECTOR result = DirectX::XMVector3TransformCoord(Convert(), mat.m);
+
+		return result;
+	}
+
+	//들어오는 값을 통해 배열곱으로 회전
+	FVector3D GetRotation(const FVector3D& Rot)
+	{
+		FMatrix m_MatRotX, m_MatRotY, m_MatRotZ, m_MatRot;
+
+		m_MatRot.Rotation(Rot);
+	}
 #pragma endregion Function
 };

@@ -17,12 +17,12 @@ bool CColorMeshShader::Init()
 		return false;
 
     AddInputLayoutDesc(
-        "POSITION",
-		0,
+        "POSITION",						//sementic
+		0,								//index
 		DXGI_FORMAT_R32G32B32_FLOAT,
-		0,
-		12,
-		D3D11_INPUT_PER_VERTEX_DATA,
+		0,								//input slot
+		12,								//byte
+		D3D11_INPUT_PER_VERTEX_DATA,	
 		0);
 
     AddInputLayoutDesc(

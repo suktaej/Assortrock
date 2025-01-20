@@ -21,7 +21,6 @@ public:
 	{
 		mObj = Ptr.mObj;
 
-		// 오브젝트가 있을 경우 참조가 일어나는 것이기 때문에 참조 카운트를 1 증가시킨다.
 		if (mObj)
 			mObj->AddRef();
 	}
@@ -30,14 +29,12 @@ public:
 	{
 		mObj = Ptr.mObj;
 
-		// 오브젝트가 있을 경우 참조가 일어나는 것이기 때문에 참조 카운트를 1 증가시킨다.
 		if (mObj)
 			mObj->AddRef();
 	}
 
 	~CSharedPtr()
 	{
-		// 오브젝트가 있을 경우 참조카운트가 증가되었기 때문에 참조카운트를 감소시킨다.
 		if (mObj)
 			mObj->Release();
 	}
@@ -46,12 +43,12 @@ public:
 public:
 	void operator = (T* Obj)
 	{
+		//기존 생성자가 있을 경우 릴리즈
 		if (mObj)
 			mObj->Release();
 
 		mObj = Obj;
 
-		// 오브젝트가 있을 경우 참조가 일어나는 것이기 때문에 참조 카운트를 1 증가시킨다.
 		if (mObj)
 			mObj->AddRef();
 	}
@@ -63,7 +60,6 @@ public:
 
 		mObj = Ptr.mObj;
 
-		// 오브젝트가 있을 경우 참조가 일어나는 것이기 때문에 참조 카운트를 1 증가시킨다.
 		if (mObj)
 			mObj->AddRef();
 	}
@@ -75,7 +71,6 @@ public:
 
 		mObj = Ptr.mObj;
 
-		// 오브젝트가 있을 경우 참조가 일어나는 것이기 때문에 참조 카운트를 1 증가시킨다.
 		if (mObj)
 			mObj->AddRef();
 	}

@@ -52,6 +52,18 @@
     <Filter Include="04.Shader\ConstantBuffer">
       <UniqueIdentifier>{171f7b97-7a6d-47dd-adf6-e6a19514f76c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="05.Scene">
+      <UniqueIdentifier>{44ec1554-84cf-4d9a-bda3-b30e4d7bc12a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.Object">
+      <UniqueIdentifier>{8d8df4f1-c502-4d14-badb-206e25099c88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07.Component">
+      <UniqueIdentifier>{e8a493dc-3e61-454a-b235-14c7dfafdc3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07.Component\SceneComponent">
+      <UniqueIdentifier>{3be81705-e899-48fd-8dbe-55cd7cf2a967}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -126,6 +138,30 @@
     <ClInclude Include="Shader\ConstantBufferData.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Scene\Scene.h">
+      <Filter>05.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\SceneObject.h">
+      <Filter>06.Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\Component.h">
+      <Filter>07.Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneMain.h">
+      <Filter>05.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\SceneComponent.h">
+      <Filter>07.Component\SceneComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\MeshComponent.h">
+      <Filter>07.Component\SceneComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\StaticMeshComponent.h">
+      <Filter>07.Component\SceneComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneManager.h">
+      <Filter>05.Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -181,6 +217,33 @@
     </ClCompile>
     <ClCompile Include="Shader\ConstantBufferData.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Scene.cpp">
+      <Filter>05.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\SceneObject.cpp">
+      <Filter>06.Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\Component.cpp">
+      <Filter>07.Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SceneMain.cpp">
+      <Filter>05.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3D.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\SceneComponent.cpp">
+      <Filter>07.Component\SceneComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\MeshComponent.cpp">
+      <Filter>07.Component\SceneComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\StaticMeshComponent.cpp">
+      <Filter>07.Component\SceneComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SceneManager.cpp">
+      <Filter>05.Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

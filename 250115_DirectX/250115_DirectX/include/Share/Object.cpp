@@ -20,3 +20,4 @@ void CObject::Release()
 	if (m_RefCount == 0)
 		delete this;
 }
+

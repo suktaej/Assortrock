@@ -50,7 +50,6 @@ bool CGameManager::Init(HINSTANCE hInst)
     //에셋 관리자 초기화
     if (!CAssetManager::GetInst()->Init())
         return false;
-
     //타이머 초기화
     CTimer::Init();
 

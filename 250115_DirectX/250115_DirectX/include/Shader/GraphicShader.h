@@ -10,9 +10,9 @@ protected:
     ~CGraphicShader() override;
 private:
     //레이아웃, 번호 등을 지정하기 위한 구조체
-    //구조체 하나 당 
+    //구조체 하나 당 요소 하나를 지정할 수 있음
     //정점 구조는 원하는 대로 작성 가능
-    //입력 레이아웃 구성 시 정적배열로 처리 불가(동적배열)
+    //때문에 입력 레이아웃 구성 시 정적배열로 처리 불가(동적배열)
     ID3D11InputLayout* m_InputLayout = nullptr;
 
     //레지스터 지정을 위한 구조체
@@ -45,6 +45,7 @@ public:
     bool Init() override;
     void SetShader() final;
 public:
+    //입력 레이아웃 생성함수
     void AddInputLayoutDesc(
         const char* Semantic,
         unsigned int SemanticIndex,
@@ -54,7 +55,10 @@ public:
         D3D11_INPUT_CLASSIFICATION InputSlotClass,
         unsigned int InstanceDataStepRate
     );
+    //입력 레이아웃 생성함수 2
     bool CreateInputLayout();
+    //EntryName : 함수이름
+    //FileName : 경로
     bool LoadVertexShader(const char* EntryName, const TCHAR* FileName);
     bool LoadPixelShader(const char* EntryName, const TCHAR* FileName);
     bool LoadHullShader(const char* EntryName, const TCHAR* FileName);

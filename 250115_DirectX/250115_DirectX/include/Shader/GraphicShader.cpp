@@ -29,7 +29,8 @@ bool CGraphicShader::Init()
 {
     return true;
 }
-
+//출력에 사용하고자 하는 렌더링 파이프라인에 등록
+//이후에 출력
 void CGraphicShader::SetShader()
 {
     CDevice::GetInst()->GetContext()->VSSetShader(m_VS, nullptr, 0);
@@ -37,7 +38,9 @@ void CGraphicShader::SetShader()
     CDevice::GetInst()->GetContext()->HSSetShader(m_HS, nullptr, 0);
     CDevice::GetInst()->GetContext()->DSSetShader(m_DS, nullptr, 0);
     CDevice::GetInst()->GetContext()->GSSetShader(m_GS, nullptr, 0);
-
+    //입력 조립기(IA)
+    //입력 레이아웃 지정
+    //vertex 구조체에서 바이트 별 레지스터 지정
     CDevice::GetInst()->GetContext()->IASetInputLayout(m_InputLayout);
 }
 
@@ -58,7 +61,7 @@ void CGraphicShader::AddInputLayoutDesc(
     Desc.InputSlotClass = InputSlotClass;
     Desc.InstanceDataStepRate = InstanceDataStepRate;
     Desc.AlignedByteOffset = m_InputLayoutSize;
-
+    //byte offset처리용 
     m_InputLayoutSize += Size;
 
     m_vecDesc.emplace_back(Desc);
@@ -67,11 +70,11 @@ void CGraphicShader::AddInputLayoutDesc(
 bool CGraphicShader::CreateInputLayout()
 {
     if (FAILED(CDevice::GetInst()->GetDevice()->CreateInputLayout(
-        &m_vecDesc[0],
-        (UINT)m_vecDesc.size(), 
-        m_VSBlob->GetBufferPointer(),
-        m_VSBlob->GetBufferSize(), 
-        &m_InputLayout)))
+        &m_vecDesc[0],                  //디스크립션 시작주소
+        (UINT)m_vecDesc.size(),         //개수
+        m_VSBlob->GetBufferPointer(),   //VSBlob의 주소
+        m_VSBlob->GetBufferSize(),      //크기
+        &m_InputLayout)))               //입력 레이아웃
         return false;
 
     return true;
@@ -80,25 +83,25 @@ bool CGraphicShader::CreateInputLayout()
 bool CGraphicShader::LoadVertexShader(const char* EntryName, const TCHAR* FileName)
 {
     TCHAR FullPath[MAX_PATH] = {};
-    lstrcpy(FullPath, TEXT("../Bin/Shader/"));
-    lstrcat(FullPath, FileName);
+    lstrcpy(FullPath, TEXT("../Bin/Shader/"));  //유니코드 문자열 복사 함수
+    lstrcat(FullPath, FileName);                //최종경로 뒤 파일이름을 삽입
 
     unsigned int Flag = 0;
 #ifdef _DEBUG
     Flag = D3DCOMPILE_DEBUG;
 #endif //_DEBUG
     
-    ID3DBlob* ErrorBlob = nullptr;
+    ID3DBlob* ErrorBlob = nullptr;              //에러 발생 시 확인용
    
-    if(FAILED(D3DCompileFromFile(
+    if(FAILED(D3DCompileFromFile(               //directX 파일로부터 컴파일
         FullPath, 
-        nullptr, 
-        D3D_COMPILE_STANDARD_FILE_INCLUDE, 
-        EntryName, 
-        "vs_5_0",
-        Flag,
+        nullptr,                                //매크로
+        D3D_COMPILE_STANDARD_FILE_INCLUDE,      //표준파일 include
+        EntryName,                              //함수 이름
+        "vs_5_0",                               //타겟의 버전
+        Flag,                                   
         0,
-        &m_VSBlob,
+        &m_VSBlob,                              //받아온 바이트코드가 컴파일되어 버퍼에 저장
         &ErrorBlob
         )))
     {
@@ -106,15 +109,20 @@ bool CGraphicShader::LoadVertexShader(const char* EntryName, const TCHAR* FileNa
         char ErrorText[512] = {};
         strcpy_s(ErrorText,(const char*)ErrorBlob->GetBufferPointer());
         strcat_s(ErrorText, "\n");
-        OutputDebugStringA(ErrorText);
+        OutputDebugStringA(ErrorText);          //출력창 문자열 출력함수
 #endif //_DEBUG
         return false;
     }
     // m_VSBlob->GetBufferPointer() : 컴파일된 코드
     // m_VSBlob->GetBufferSize() : 컴파일된 코드의 크기
+    // 성공 시 쉐이더 객체를 생성
     if (FAILED(CDevice::GetInst()->GetDevice()->CreateVertexShader(
-        m_VSBlob->GetBufferPointer(), m_VSBlob->GetBufferSize(), nullptr, &m_VS)))
+        m_VSBlob->GetBufferPointer(),           //바이트 코드의 시작주소
+        m_VSBlob->GetBufferSize(),              //컴파일된 코드의 길이
+        nullptr, 
+        &m_VS)))
         return false;
+
     return true;
 }
 
@@ -229,8 +237,6 @@ bool CGraphicShader::LoadDomainShader(const char* EntryName, const TCHAR* FileNa
 #endif //_DEBUG
         return false;
     }
-    // m_VSBlob->GetBufferPointer() : 컴파일된 코드
-    // m_VSBlob->GetBufferSize() : 컴파일된 코드의 크기
     if (FAILED(CDevice::GetInst()->GetDevice()->CreateDomainShader(
         m_DSBlob->GetBufferPointer(), m_DSBlob->GetBufferSize(), nullptr, &m_DS)))
         return false;
@@ -270,8 +276,6 @@ bool CGraphicShader::LoadGeometryShader(const char* EntryName, const TCHAR* File
 #endif //_DEBUG
         return false;
     }
-    // m_VSBlob->GetBufferPointer() : 컴파일된 코드
-    // m_VSBlob->GetBufferSize() : 컴파일된 코드의 크기
     if (FAILED(CDevice::GetInst()->GetDevice()->CreateGeometryShader(
         m_GSBlob->GetBufferPointer(), m_GSBlob->GetBufferSize(), nullptr, &m_GS)))
         return false;

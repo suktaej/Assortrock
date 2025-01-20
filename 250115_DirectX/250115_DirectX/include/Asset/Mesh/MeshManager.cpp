@@ -54,6 +54,10 @@ bool CMeshManager::Init()
 		FVertexColor(-0.5f, -0.5f, 0.5f, 1.f, 1.f, 1.f, 1.f),
 		FVertexColor(0.5f, -0.5f, 0.5f, 1.f, 0.f, 0.f, 1.f),
 	};
+	
+	//인덱스 하나를 2byte(16bit) 또는 4byte(32bit)로 구할 수 있음
+	//2byte일 경우 65355개 까지만 구성
+	//일반적으로 4byte 사용
 
 	unsigned short  BoxIdx[36] =
 	{
@@ -65,8 +69,17 @@ bool CMeshManager::Init()
 		2, 3, 7, 2, 7, 6
 	};
 
-	if (!CreateMesh("Box", BoxVtx, sizeof(FVertexColor), 8, D3D11_USAGE_DEFAULT,
-		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST, BoxIdx, sizeof(unsigned short), 36, DXGI_FORMAT_R16_UINT))
+	if (!CreateMesh(
+		"Box",
+		BoxVtx,
+		sizeof(FVertexColor),
+		8,
+		D3D11_USAGE_DEFAULT,
+		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
+		BoxIdx,
+		sizeof(unsigned short),
+		36,
+		DXGI_FORMAT_R16_UINT))
 		return false;
 
 	FVertexColor    CenterRect[4] =
@@ -79,8 +92,17 @@ bool CMeshManager::Init()
 
 	unsigned short RectIdx[6] = { 0, 1, 3, 0, 3, 2 };
 
-	if (!CreateMesh("CenterRect", CenterRect, sizeof(FVertexColor), 4, D3D11_USAGE_DEFAULT,
-		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST, RectIdx, sizeof(unsigned short), 6, DXGI_FORMAT_R16G16B16A16_UINT))
+	if (!CreateMesh(
+		"CenterRect",
+		CenterRect,
+		sizeof(FVertexColor),
+		4,
+		D3D11_USAGE_DEFAULT,
+		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
+		RectIdx,
+		sizeof(unsigned short),
+		6,
+		DXGI_FORMAT_R16_UINT))
 		return false;
 
 	return true;

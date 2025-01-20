@@ -102,17 +102,17 @@ bool CMesh::CreateBuffer(
 
 void CMesh::Render()
 {
+	//stride: 정점 하나의 크기
+	//offset: 
 	unsigned int Stride = m_VertexBuffer.Size;
 	unsigned int Offset = 0;
 
 	// 그려줄 도형 타입을 지정한다.
 	CDevice::GetInst()->GetContext()->IASetPrimitiveTopology(m_Primitive);
 	// 버텍스버퍼를 지정한다.
-	CDevice::GetInst()->GetContext()->IASetVertexBuffers(0, 1,
-		&m_VertexBuffer.Buffer, &Stride, &Offset);
+	CDevice::GetInst()->GetContext()->IASetVertexBuffers(0, 1, &m_VertexBuffer.Buffer, &Stride, &Offset);
 
 	size_t	SlotCount = m_MeshSlot.size();
-
 	// 인덱스버퍼가 있을 경우 없을 경우로 나누어서 출력한다.
 
 	if (SlotCount > 0)
@@ -120,19 +120,14 @@ void CMesh::Render()
 		for (size_t i = 0; i < SlotCount; ++i)
 		{
 			// 출력에 사용할 인덱스버퍼를 지정한다.
-			CDevice::GetInst()->GetContext()->IASetIndexBuffer(m_MeshSlot[i]->IndexBuffer.Buffer,
-				m_MeshSlot[i]->IndexBuffer.Fmt, 0);
-
+			CDevice::GetInst()->GetContext()->IASetIndexBuffer(m_MeshSlot[i]->IndexBuffer.Buffer, m_MeshSlot[i]->IndexBuffer.Fmt, 0);
 			// 인덱스를 참고하여 화면에 도형을 그린다.
-			CDevice::GetInst()->GetContext()->DrawIndexed(m_MeshSlot[i]->IndexBuffer.Count,
-				0, 0);
+			CDevice::GetInst()->GetContext()->DrawIndexed(m_MeshSlot[i]->IndexBuffer.Count, 0, 0);
 		}
 	}
 	else
 	{
-		CDevice::GetInst()->GetContext()->IASetIndexBuffer(nullptr,
-			DXGI_FORMAT_UNKNOWN, 0);
-		CDevice::GetInst()->GetContext()->Draw(m_VertexBuffer.Count,
-			0);
+		CDevice::GetInst()->GetContext()->IASetIndexBuffer(nullptr, DXGI_FORMAT_UNKNOWN, 0);
+		CDevice::GetInst()->GetContext()->Draw(m_VertexBuffer.Count, 0);
 	}
 }

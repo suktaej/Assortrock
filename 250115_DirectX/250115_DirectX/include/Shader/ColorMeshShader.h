@@ -1,7 +1,6 @@
 #pragma once
 #include "GraphicShader.h"
-#pragma once
-#include "GraphicShader.h"
+
 class CColorMeshShader :
     public CGraphicShader
 {
