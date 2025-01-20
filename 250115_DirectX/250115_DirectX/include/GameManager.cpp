@@ -44,11 +44,11 @@ bool CGameManager::Init(HINSTANCE hInst)
     //Device 초기화
     if (!CDevice::GetInst()->Init(m_hWnd, 1280, 720, true))
         return false;
-    //에셋 관리자 초기화
-    if (!CAssetManager::GetInst()->Init())
-        return false;
     //셰이더 관리자 초기화
     if (!CShaderManager::GetInst()->Init())
+        return false;
+    //에셋 관리자 초기화
+    if (!CAssetManager::GetInst()->Init())
         return false;
 
     //타이머 초기화
@@ -188,6 +188,7 @@ void CGameManager::Logic()
     PostCollisionUpdate(DeltaTime);
     Render(DeltaTime);
 }
+
 
 void CGameManager::Input(float DeltaTime)
 {

@@ -6,15 +6,17 @@ DEFINITION_SINGLE(CAssetManager)
 CAssetManager::CAssetManager()
 {
 }
+
 CAssetManager::~CAssetManager()
 {
-	SAFE_DELETE(m_MeshManager);
+	SAFE_DELETE(mMeshManager);
 }
 
 bool CAssetManager::Init()
 {
-	m_MeshManager = new CMeshManager;
-	if (!m_MeshManager->Init())
+	mMeshManager = new CMeshManager;
+
+	if (!mMeshManager->Init())
 		return false;
 
 	return true;

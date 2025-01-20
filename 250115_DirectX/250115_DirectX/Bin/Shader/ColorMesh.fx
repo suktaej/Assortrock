@@ -27,7 +27,8 @@ VS_Output_Color ColorMeshVS(VS_Input_Color input)
     //(x/w, y/w)를 진행하기 때문
     //inputPos는 로컬 좌표
     //행렬을 사용(복소수)개념
-    output.Pos = float4(input.Pos, 1.f);
+    //output.Pos = float4(input.Pos, 1.f);
+    output.Pos = mul(float4(input.Pos, 1.f), gmatWVP);
     output.Color = input.Color;
 
     return output;

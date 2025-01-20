@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{e71fd441-50a5-4a77-afd6-f77ebc27674d}</ProjectGuid>
-    <RootNamespace>My250115DirectX</RootNamespace>
+    <ProjectGuid>{e6f8005a-570e-4115-af81-a5323ca4b787}</ProjectGuid>
+    <RootNamespace>KDT2Framework</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -71,14 +71,22 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>../Bin</OutDir>
-    <IntDir>../BinObj</IntDir>
+    <OutDir>../Bin/</OutDir>
+    <IntDir>../BinObj/</IntDir>
     <TargetName>$(ProjectName)_Debug</TargetName>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>../Bin/</OutDir>
+    <IntDir>../BinObj/</IntDir>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>../Bin</OutDir>
-    <IntDir>../BinObj</IntDir>
+    <OutDir>../Bin/</OutDir>
+    <IntDir>../BinObj/</IntDir>
     <TargetName>$(ProjectName)_Debug</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>../Bin/</OutDir>
+    <IntDir>../BinObj/</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -137,6 +145,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Asset\Asset.cpp" />
+    <ClCompile Include="Asset\AssetManager.cpp" />
+    <ClCompile Include="Asset\Mesh\Mesh.cpp" />
+    <ClCompile Include="Asset\Mesh\MeshManager.cpp" />
+    <ClCompile Include="Asset\Mesh\StaticMesh.cpp" />
+    <ClCompile Include="Device.cpp" />
+    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Shader\ColorMeshShader.cpp" />
+    <ClCompile Include="Shader\ComputeShader.cpp" />
+    <ClCompile Include="Shader\ConstantBuffer.cpp" />
+    <ClCompile Include="Shader\ConstantBufferData.cpp" />
+    <ClCompile Include="Shader\GraphicShader.cpp" />
+    <ClCompile Include="Shader\Shader.cpp" />
+    <ClCompile Include="Shader\ShaderManager.cpp" />
+    <ClCompile Include="Shader\TransformCBuffer.cpp" />
+    <ClCompile Include="Share\Object.cpp" />
+    <ClCompile Include="Share\Timer.cpp" />
+    <ClCompile Include="Vector4D.cpp" />
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="Asset\Asset.h" />
     <ClInclude Include="Asset\AssetManager.h" />
     <ClInclude Include="Asset\Mesh\Mesh.h" />
@@ -148,6 +177,7 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Shader\CBufferContainer.h" />
     <ClInclude Include="Shader\ColorMeshShader.h" />
     <ClInclude Include="Shader\ComputeShader.h" />
     <ClInclude Include="Shader\ConstantBuffer.h" />
@@ -155,6 +185,7 @@
     <ClInclude Include="Shader\GraphicShader.h" />
     <ClInclude Include="Shader\Shader.h" />
     <ClInclude Include="Shader\ShaderManager.h" />
+    <ClInclude Include="Shader\TransformCBuffer.h" />
     <ClInclude Include="Share\Object.h" />
     <ClInclude Include="Share\SharedPtr.h" />
     <ClInclude Include="Share\Timer.h" />
@@ -163,33 +194,10 @@
     <ClInclude Include="Vector4D.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Asset\Asset.cpp" />
-    <ClCompile Include="Asset\AssetManager.cpp" />
-    <ClCompile Include="Asset\Mesh\Mesh.cpp" />
-    <ClCompile Include="Asset\Mesh\MeshManager.cpp" />
-    <ClCompile Include="Asset\Mesh\StaticMesh.cpp" />
-    <ClCompile Include="Device.cpp" />
-    <ClCompile Include="GameManager.cpp" />
-    <ClCompile Include="main.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Shader\ColorMeshShader.cpp" />
-    <ClCompile Include="Shader\ComputeShader.cpp" />
-    <ClCompile Include="Shader\ConstantBuffer.cpp" />
-    <ClCompile Include="Shader\ConstantBufferData.cpp" />
-    <ClCompile Include="Shader\GraphicShader.cpp" />
-    <ClCompile Include="Shader\Shader.cpp" />
-    <ClCompile Include="Shader\ShaderManager.cpp" />
-    <ClCompile Include="Share\Object.cpp" />
-    <ClCompile Include="Share\Timer.cpp" />
-    <ClCompile Include="Vector4D.cpp" />
+    <ResourceCompile Include="KDT2Framework.rc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="icon1.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Bin\Shader\ColorMesh.fx">
@@ -212,6 +220,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,8 +1,8 @@
+
+
 struct PS_Output_Single
 {
-    //float Å¸ÀÔ 4°³ÀÇ º¤ÅÍ
-    //SV_TARGETÀ» ÇÏ¸é µÚÀÇ 0ÀÌ »ı·«
-    //: ½Ã¸àÆ½, Ãâ·Â ·¹Áö½ºÅÍ¿¡ sv_target 0¹ø ·¹Áö½ºÅÍ¿¡ ÀÔ·Â
+    // SV_TARGETì„ í•˜ë©´ ë’¤ì— 0ì´ ìƒëµëœë‹¤.
     float4 Color : SV_TARGET;
 };
 
@@ -13,4 +13,4 @@ cbuffer Transform : register(b0)
     matrix gmatProj;
     matrix gmatWV;
     matrix gmatWVP;
-}
+};

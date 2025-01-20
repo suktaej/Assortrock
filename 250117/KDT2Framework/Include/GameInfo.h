@@ -4,28 +4,27 @@
 #include <list>
 #include <vector>
 #include <unordered_map>
+#include <crtdbg.h>
 #include <string>
 
 #include <d3d11.h>
 #include <d3dcompiler.h>
 
-//¸Ş¸ğ¸®¸¯ Å½»ö Çì´õ
-#include <crtdbg.h>
-
 #include "Vector2D.h"
 #include "Vector3D.h"
 #include "Vector4D.h"
 #include "Matrix.h"
-//º°´Ù¸¥ include ¾øÀÌ ¿ÜºÎ¿¡¼­ sharedPtr »ç¿ë °¡´É
+
 #include "Share/SharedPtr.h"
 
-//.lib¸¦ ¸µÅ©¸¦ °Å´Â ±â´É
-#pragma comment(lib,"d3d11.lib")
-#pragma comment(lib,"d3dcompiler.lib")
-#pragma comment(lib,"dxguid.lib")
+// .lib ë¥¼ ë§í¬ ê±¸ì–´ì£¼ëŠ” ê¸°ëŠ¥ì´ë‹¤.
+#pragma comment(lib, "d3d11.lib")
+#pragma comment(lib, "d3dcompiler.lib")
+#pragma comment(lib, "dxguid.lib")
 
-#define	SAFE_DELETE(p)	if(p)	{ delete p; p = nullptr;}
-#define	SAFE_DELETE_ARRAY(p)	if(p)	{ delete[] p; p = nullptr;}
+#define	SAFE_DELETE(p)	if(p)	{ delete p; p = nullptr; }
+#define	SAFE_DELETE_ARRAY(p)	if(p)	{ delete[] p; p = nullptr; }
+#define	SAFE_RELEASE(p)	if(p)	{ p->Release(); p = nullptr; }
 
 #define	DECLARE_SINGLE(Type)	\
 private:\
@@ -36,7 +35,7 @@ private:\
 public:\
 	static Type* GetInst()\
 	{\
-		if(nullptr == mInst)\
+		if(!mInst)\
 			mInst = new Type;\
 		return mInst;\
 	}\
@@ -45,9 +44,8 @@ public:\
 		SAFE_DELETE(mInst);\
 	}
 
-#define	DEFINITION_SINGLE(Type) Type* Type::mInst = nullptr;
+#define	DEFINITION_SINGLE(Type)	Type* Type::mInst = nullptr;
 
-#define SAFE_RELEASE(p) if(p) {p->Release();}
 
 namespace EShaderBufferType
 {
@@ -64,17 +62,18 @@ namespace EShaderBufferType
 	};
 }
 
+
 struct FResolution
 {
-	unsigned int Width = 0;
-	unsigned int Height = 0;
+	unsigned int	Width = 0;
+	unsigned int	Height = 0;
 };
 
 struct FVertexBuffer
 {
 	ID3D11Buffer* Buffer = nullptr;
-	int Size = 0;
-	int Count = 0;
+	int			Size = 0;
+	int			Count = 0;
 	void* Data = nullptr;
 
 	FVertexBuffer()
@@ -90,18 +89,14 @@ struct FVertexBuffer
 
 struct FIndexBuffer
 {
-	//¹öÅØ½º ¹öÆÛ³ª ÀÎµ¦½º ¹öÆÛ¸¦ »ı¼ºÇÒ ¼ö ÀÖ´Â ±¸Á¶Ã¼
+	// ë°ì´í„°ë¥¼ ì €ì¥í•˜ê¸° ìœ„í•œ ë²„í¼
 	ID3D11Buffer* Buffer = nullptr;
-	//µ¥ÀÌÅÍ 1°³ÀÇ Å©±â
-	int Size = 0;
-	//µ¥ÀÌÅÍÀÇ °³¼ö
-	int Count = 0;
-	//µ¥ÀÌÅÍ Æ÷¸Ë
-
-	//DXGI_FORMATÀº DirectX Graphics Infrastructure¿¡¼­ »ç¿ë
-	//µ¥ÀÌÅÍÀÇ Çü½ÄÀ» Á¤ÀÇÇÑ ¿­°ÅÇü
-	DXGI_FORMAT Fmt = DXGI_FORMAT_UNKNOWN;
-	//µ¿Àû¹è¿­(¾î¶°ÇÑ Å¸ÀÔÀÌ µé¾î¿À´ÂÁö È®Á¤ÇÒ ¼ö ¾øÀ¸¹Ç·Î ÀÓÀÇÀÇ Æ÷ÀÎÅÍ º¯¼ö)
+	// ë°ì´í„° 1ê°œì˜ í¬ê¸°
+	int		Size = 0;
+	// ë°ì´í„° ê°œìˆ˜
+	int		Count = 0;
+	// ë°ì´í„° í¬ë§·
+	DXGI_FORMAT	Fmt = DXGI_FORMAT_UNKNOWN;
 	void* Data = nullptr;
 
 	FIndexBuffer()
@@ -115,23 +110,25 @@ struct FIndexBuffer
 	}
 };
 
-
-//À§Ä¡, Á¤Á¡ÀÇ »ö
 struct FVertexColor
 {
-	FVector3D Pos;
-	FVector4D Color;
+	FVector3D	Pos;
+	FVector4D	Color;
 
 	FVertexColor()
 	{
 	}
 
-	FVertexColor(const FVector3D& _Pos, const FVector4D& _Color)
-		: Pos(_Pos), Color(_Color)
+	FVertexColor(const FVector3D& _Pos, const FVector4D& _Color)	:
+		Pos(_Pos),
+		Color(_Color)
 	{
 	}
-	FVertexColor(float x, float y, float z, float r, float g, float b, float a)
-		: Pos(x, y, z), Color(r, g, b, a)
+
+	FVertexColor(float x, float y, float z, float r, float g, float b, float a)	:
+		Pos(x, y, z),
+		Color(r, g, b, a)
 	{
 	}
 };
+

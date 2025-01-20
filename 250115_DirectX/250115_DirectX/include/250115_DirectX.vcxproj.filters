@@ -49,6 +49,9 @@
     <Filter Include="04.Shader\ShaderClass\ColorMesh">
       <UniqueIdentifier>{af2ec9c2-ee3d-4df1-907c-718816a24828}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04.Shader\ConstantBuffer">
+      <UniqueIdentifier>{171f7b97-7a6d-47dd-adf6-e6a19514f76c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -117,6 +120,12 @@
     <ClInclude Include="EngineMath.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Shader\ConstantBuffer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\ConstantBufferData.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -166,6 +175,12 @@
     </ClCompile>
     <ClCompile Include="Shader\ColorMeshShader.cpp">
       <Filter>04.Shader\ShaderClass\ColorMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\ConstantBuffer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\ConstantBufferData.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
