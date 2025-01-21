@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "../Object/SceneObject.h"
+#include "Input.h"
 
 CScene::CScene()
 {
@@ -7,15 +8,26 @@ CScene::CScene()
 
 CScene::~CScene()
 {
+	SAFE_DELETE(m_Input);
 }
 
 bool CScene::Init()
 {
+	m_Input = new CInput;
+	
+	if (!m_Input->Init())
+		return false;
+
     return true;
 }
 
 bool CScene::Init(const char* FileName)
 {
+	m_Input = new CInput;
+
+	if (!m_Input->Init())
+		return false;
+
     return true;
 }
 
@@ -99,6 +111,11 @@ void CScene::PostUpdate(float DeltaTime)
 
 void CScene::Collision(float DeltaTime)
 {
+}
+
+void CScene::Input(float DeltaTime)
+{
+	m_Input->Update(DeltaTime);
 }
 
 void CScene::PreRender()

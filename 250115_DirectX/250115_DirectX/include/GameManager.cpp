@@ -8,6 +8,8 @@
 #include "Asset/Mesh/MeshManager.h"
 #include "Asset/Mesh/Mesh.h"
 #include "Shader/Shader.h"
+//È®ÀÎ
+#include "Scene/SceneManager.h"
 
 DEFINITION_SINGLE(CGameManager)
 bool CGameManager::m_Loop = true;
@@ -182,31 +184,25 @@ void CGameManager::Logic()
     float DeltaTime = CTimer::Update();
     Input(DeltaTime);
     Update(DeltaTime);
-    PostUpdate(DeltaTime);
+    //PostUpdate(DeltaTime);
     Collision(DeltaTime);
-    PostCollisionUpdate(DeltaTime);
+    //PostCollisionUpdate(DeltaTime);
     Render(DeltaTime);
 }
 
-
 void CGameManager::Input(float DeltaTime)
 {
-   }
+    CSceneManager::GetInst()->Input(DeltaTime);
+}
 
 void CGameManager::Update(float DeltaTime)
 {
-    }
-
-void CGameManager::PostUpdate(float DeltaTime)
-{
+    CSceneManager::GetInst()->Update(DeltaTime);
 }
 
 void CGameManager::Collision(float DeltaTime)
 {
-}
-
-void CGameManager::PostCollisionUpdate(float DeltaTime)
-{
+    CSceneManager::GetInst()->Collision(DeltaTime);
 }
 
 void CGameManager::Render(float DeltaTime)

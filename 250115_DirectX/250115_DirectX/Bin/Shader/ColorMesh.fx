@@ -29,6 +29,11 @@ VS_Output_Color ColorMeshVS(VS_Input_Color input)
     //inputPos는 로컬 좌표
     //행렬을 사용(복소수)개념
     //output.Pos = float4(input.Pos, 1.f);
+   
+    //최종적으로 월드*뷰*투영 행렬(gmatWVP)의 값을 곱하는 연산을 진행
+    //곱할 때 w값은 1
+    //0일 경우 4x1, 4x2, 4x3에 0을 곱하므로 위치값이 0으로 처리
+    //이동이 필요없는 크기, 회전 시 0
     output.Pos = mul(float4(input.Pos, 1.f), gmatWVP);
     output.Color = input.Color;
 

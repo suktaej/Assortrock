@@ -9,13 +9,14 @@ __declspec(align(16)) union FMatrix
 	//__declspec : 메모리 정렬을 16byte로 만들어준다
 	//SIMD 연산을 지원하는 타입으로 변환
 	//XMMATRIX를 사용해 랩핑
-	//4x4 행렬이므로 64byte
+	//XMMATRIX는 4x4 행렬이므로 64byte
 
 	//64byte
 	//union 내에서 최대 메모리크기 확보
 	DirectX::XMMATRIX m;
 
 	//구조체명이 없을 경우 
+	//내부의 변수들을 합해서 하나의 메모리로 처리
 	struct
 	{
 		float _11, _12, _13, _14;
@@ -32,7 +33,7 @@ __declspec(align(16)) union FMatrix
 
 	FMatrix() 
 	{
-		//항등행렬 생성
+		//항등행렬 생성함수
 		m = DirectX::XMMatrixIdentity();
 	}
 	FMatrix(const FMatrix& _m) { m = _m.m; }
@@ -70,7 +71,13 @@ __declspec(align(16)) union FMatrix
 	void Inverse() 											//역행렬 생성
 	{
 		DirectX::XMVECTOR det = DirectX::XMMatrixDeterminant(m);
+		//첫번째 인자 : 해당 행렬의 역행렬을 구하기 위한 식
+		//XMVECTOR 타입
+		//두번째 인자 : 변경하려는 행렬
 		m = DirectX::XMMatrixInverse(&det,m); 
+
+		//월드행렬의 구성요소
+		//자전, 공전
 	}
 
 	void Scaling(const FVector3D& _v) { m = DirectX::XMMatrixScaling(_v.x, _v.y, _v.z); }	//스케일링
@@ -151,4 +158,65 @@ __declspec(align(16)) union FMatrix
 		DirectX::XMVECTOR	det = DirectX::XMMatrixDeterminant(_m.m);
 		return DirectX::XMMatrixInverse(&det, _m.m);
 	}
+
+	static FMatrix StaticScaling(const FVector3D& _v) { return DirectX::XMMatrixScaling(_v.x, _v.y, _v.z); }
+	static FMatrix StaticScaling(float x, float y, float z) { return DirectX::XMMatrixScaling(x, y, z); }
+	static FMatrix StaticScaling(const FVector2D& _v) { return DirectX::XMMatrixScaling(_v.x, _v.y, 1.f); }
+	static FMatrix StaticScaling(float x, float y) { return DirectX::XMMatrixScaling(x, y, 1.f); }
+
+	static FMatrix StaticRotation(const FVector3D& _v)
+	{
+		float x = DirectX::XMConvertToRadians(_v.x);
+		float y = DirectX::XMConvertToRadians(_v.y);
+		float z = DirectX::XMConvertToRadians(_v.z);
+
+		DirectX::XMVECTOR Quat =
+			DirectX::XMQuaternionRotationRollPitchYaw(x, y, z);
+		return DirectX::XMMatrixRotationQuaternion(Quat);
+	}
+
+	static FMatrix StaticRotation(float _x, float _y, float _z)
+	{
+		float x = DirectX::XMConvertToRadians(_x);
+		float y = DirectX::XMConvertToRadians(_y);
+		float z = DirectX::XMConvertToRadians(_z);
+
+		DirectX::XMVECTOR Quat =
+			DirectX::XMQuaternionRotationRollPitchYaw(x, y, z);
+
+		return DirectX::XMMatrixRotationQuaternion(Quat);
+	}
+
+	static FMatrix StaticRotationX(float _x)
+	{
+		float x = DirectX::XMConvertToRadians(_x);
+		return DirectX::XMMatrixRotationX(x);
+	}
+
+	static FMatrix StaticRotationY(float _y)
+	{
+		float y = DirectX::XMConvertToRadians(_y);
+		return DirectX::XMMatrixRotationY(y);
+	}
+
+	static FMatrix StaticRotationZ(float _z)
+	{
+		float z = DirectX::XMConvertToRadians(_z);
+		return DirectX::XMMatrixRotationZ(z);
+	}
+
+	static FMatrix StaticRotationAxis(const FVector3D& Axis, float _Angle)
+	{
+		float Angle = DirectX::XMConvertToRadians(_Angle);
+
+		DirectX::XMVECTOR	_Axis =
+			DirectX::XMLoadFloat3((DirectX::XMFLOAT3*)&Axis);
+
+		return DirectX::XMMatrixRotationAxis(_Axis, Angle);
+	}
+
+	static FMatrix StaticTranslation(const FVector3D& _v) { return DirectX::XMMatrixTranslation(_v.x, _v.y, _v.z); }
+	static FMatrix StaticTranslation(float x, float y, float z) { return DirectX::XMMatrixTranslation(x, y, z); }
+	static FMatrix StaticTranslation(const FVector2D& _v) { return DirectX::XMMatrixTranslation(_v.x, _v.y, 0.f); }
+	static FMatrix StaticTranslation(float x, float y) { return DirectX::XMMatrixTranslation(x, y, 0.f); }
 };

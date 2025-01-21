@@ -31,3 +31,12 @@ void CSceneManager::Render()
 	m_CurrentScene->Render();
 	m_CurrentScene->PostRender();
 }
+
+void CSceneManager::Input(float DeltaTime)
+{
+	m_CurrentScene->Input(DeltaTime);
+}
+
+void CSceneManager::Collision(float DeltaTime)
+{
+}

@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Vector4D.h"
+#include "Vector3D.h"
+#include "Vector2D.h"
+#include <string>
 
 __declspec(align(16)) union FMatrix
 {
@@ -316,9 +319,6 @@ __declspec(align(16)) union FMatrix
 	}
 };
 
-
-
-
 /*
 4x4 * 4x4 
 
@@ -326,7 +326,7 @@ __declspec(align(16)) union FMatrix
 1 2 3 4 * 1 2 3 4 = 1 + 10 + 27 + 12 = 50  = 50, 30, 40, 78
 		  5 6 7 8   2 + 12 + 0 + 16 = 30
 		  9 0 1 2   3 + 14 + 3 + 20 = 40
-		  3 4 5 6   16 + 32 + 6 + 24 = 78
+		  3 4 5 6   4 + 16 + 6 + 24 = 50
 
 1 2 3 4	  1 2 3 4   50, 30, 40, 78
 5 6 7 8 * 5 6 7 8 = 122, 

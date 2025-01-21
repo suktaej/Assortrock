@@ -17,6 +17,8 @@ private:
 public:
 	bool Init(HINSTANCE hInst);
 	int Run();
+	HINSTANCE GetWindowInstance() const { return m_hInst; }
+	HWND GetWindowHandle() const { return m_hWnd; }
 private:
 	void RegisterWindowClass();
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
@@ -25,9 +27,9 @@ private:
 	void Logic();
 	void Input(float DeltaTime);
 	void Update(float DeltaTime);
-	void PostUpdate(float DeltaTime);
+	//void PostUpdate(float DeltaTime);
 	void Collision(float DeltaTime);
-	void PostCollisionUpdate(float DeltaTime);
+	//void PostCollisionUpdate(float DeltaTime);
 	void Render(float DeltaTime);
 };
 

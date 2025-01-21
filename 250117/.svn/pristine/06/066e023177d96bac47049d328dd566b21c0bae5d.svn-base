@@ -1,0 +1,9 @@
+#pragma once
+
+#include "../Share/Object.h"
+
+class CShader :
+    public CObject
+{
+};
+

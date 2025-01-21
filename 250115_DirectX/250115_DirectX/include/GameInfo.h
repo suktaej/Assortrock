@@ -5,6 +5,7 @@
 #include <vector>
 #include <unordered_map>
 #include <string>
+#include <functional>
 
 #include <d3d11.h>
 #include <d3dcompiler.h>
@@ -26,6 +27,9 @@
 
 #define	SAFE_DELETE(p)	if(p)	{ delete p; p = nullptr;}
 #define	SAFE_DELETE_ARRAY(p)	if(p)	{ delete[] p; p = nullptr;}
+#define SAFE_RELEASE(p) if(p) {p->Release();}
+
+#define	DEFINITION_SINGLE(Type) Type* Type::mInst = nullptr;
 
 #define	DECLARE_SINGLE(Type)	\
 private:\
@@ -44,10 +48,6 @@ public:\
 	{\
 		SAFE_DELETE(mInst);\
 	}
-
-#define	DEFINITION_SINGLE(Type) Type* Type::mInst = nullptr;
-
-#define SAFE_RELEASE(p) if(p) {p->Release();}
 
 namespace EShaderBufferType
 {
@@ -114,7 +114,6 @@ struct FIndexBuffer
 		SAFE_DELETE_ARRAY(Data);
 	}
 };
-
 
 //위치, 정점의 색
 struct FVertexColor

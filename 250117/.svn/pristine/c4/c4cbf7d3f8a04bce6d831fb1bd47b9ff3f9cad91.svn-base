@@ -1,0 +1,171 @@
+#include "SceneComponent.h"
+
+CSceneComponent::CSceneComponent()
+{
+}
+
+CSceneComponent::CSceneComponent(const CSceneComponent& Com) :
+    CComponent(Com)
+{
+}
+
+CSceneComponent::CSceneComponent(CSceneComponent&& Com) :
+    CComponent(Com)
+{
+}
+
+CSceneComponent::~CSceneComponent()
+{
+}
+
+void CSceneComponent::AddChild(CSceneComponent* Child)
+{
+    Child->mParent = this;
+
+    mChildList.emplace_back(Child);
+}
+
+bool CSceneComponent::Init()
+{
+    return true;
+}
+
+bool CSceneComponent::Init(const char* FileName)
+{
+    return true;
+}
+
+void CSceneComponent::PreUpdate(float DeltaTime)
+{
+    CComponent::PreUpdate(DeltaTime);
+}
+
+void CSceneComponent::Update(float DeltaTime)
+{
+    CComponent::Update(DeltaTime);
+}
+
+void CSceneComponent::PostUpdate(float DeltaTime)
+{
+    CComponent::PostUpdate(DeltaTime);
+}
+
+void CSceneComponent::Collision(float DeltaTime)
+{
+    CComponent::Collision(DeltaTime);
+}
+
+void CSceneComponent::PreRender()
+{
+    CComponent::PreRender();
+}
+
+void CSceneComponent::Render()
+{
+    CComponent::Render();
+}
+
+void CSceneComponent::PostRender()
+{
+    CComponent::PostRender();
+}
+
+CSceneComponent* CSceneComponent::Clone()
+{
+    return new CSceneComponent(*this);
+}
+
+void CSceneComponent::SetRelativeScale(const FVector3D& Scale)
+{
+    mRelativeScale = Scale;
+}
+
+void CSceneComponent::SetRelativeScale(float x, float y, float z)
+{
+    mRelativeScale.x = x;
+    mRelativeScale.y = y;
+    mRelativeScale.z = z;
+}
+
+void CSceneComponent::SetRelativeScale(const FVector2D& Scale)
+{
+    mRelativeScale.x = Scale.x;
+    mRelativeScale.y = Scale.y;
+    mRelativeScale.z = 1.f;
+}
+
+void CSceneComponent::SetRelativeScale(float x, float y)
+{
+    mRelativeScale.x = x;
+    mRelativeScale.y = y;
+    mRelativeScale.z = 1.f;
+}
+
+void CSceneComponent::SetRelativeRotation(const FVector3D& Rot)
+{
+    mRelativeRot = Rot;
+}
+
+void CSceneComponent::SetRelativeRotation(float x, float y, float z)
+{
+    mRelativeRot.x = x;
+    mRelativeRot.y = y;
+    mRelativeRot.z = z;
+}
+
+void CSceneComponent::SetRelativeRotation(const FVector2D& Rot)
+{
+    mRelativeRot.x = Rot.x;
+    mRelativeRot.y = Rot.y;
+    mRelativeRot.z = 1.f;
+}
+
+void CSceneComponent::SetRelativeRotation(float x, float y)
+{
+    mRelativeRot.x = x;
+    mRelativeRot.y = y;
+    mRelativeRot.z = 0.f;
+}
+
+void CSceneComponent::SetRelativeRotationX(float x)
+{
+    mRelativeRot.x = x;
+}
+
+void CSceneComponent::SetRelativeRotationY(float y)
+{
+    mRelativeRot.y = y;
+}
+
+void CSceneComponent::SetRelativeRotationZ(float z)
+{
+    mRelativeRot.z = z;
+}
+
+void CSceneComponent::SetRelativeRotationAxis(float Angle, const FVector3D& Axis)
+{
+}
+
+void CSceneComponent::SetRelativePos(const FVector3D& Pos)
+{
+    mRelativePos = Pos;
+}
+
+void CSceneComponent::SetRelativePos(float x, float y, float z)
+{
+    mRelativePos.x = x;
+    mRelativePos.y = y;
+    mRelativePos.z = z;
+}
+
+void CSceneComponent::SetRelativePos(const FVector2D& Pos)
+{
+    mRelativePos.x = Pos.x;
+    mRelativePos.y = Pos.y;
+}
+
+void CSceneComponent::SetRelativePos(float x, float y)
+{
+    mRelativePos.x = x;
+    mRelativePos.y = y;
+}

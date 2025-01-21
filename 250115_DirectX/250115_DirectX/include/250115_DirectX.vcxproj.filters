@@ -64,6 +64,9 @@
     <Filter Include="07.Component\SceneComponent">
       <UniqueIdentifier>{3be81705-e899-48fd-8dbe-55cd7cf2a967}</UniqueIdentifier>
     </Filter>
+    <Filter Include="05.Scene\Input">
+      <UniqueIdentifier>{d89cf9e8-9e3b-4d18-8fb8-3bce9c7308a3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -132,12 +135,6 @@
     <ClInclude Include="EngineMath.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Shader\ConstantBuffer.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader\ConstantBufferData.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Scene\Scene.h">
       <Filter>05.Scene</Filter>
     </ClInclude>
@@ -161,6 +158,15 @@
     </ClInclude>
     <ClInclude Include="Scene\SceneManager.h">
       <Filter>05.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Input.h">
+      <Filter>05.Scene\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\ConstantBuffer.h">
+      <Filter>04.Shader\ConstantBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\ConstantBufferData.h">
+      <Filter>04.Shader\ConstantBuffer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -212,12 +218,6 @@
     <ClCompile Include="Shader\ColorMeshShader.cpp">
       <Filter>04.Shader\ShaderClass\ColorMesh</Filter>
     </ClCompile>
-    <ClCompile Include="Shader\ConstantBuffer.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader\ConstantBufferData.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Scene\Scene.cpp">
       <Filter>05.Scene</Filter>
     </ClCompile>
@@ -244,6 +244,15 @@
     </ClCompile>
     <ClCompile Include="Scene\SceneManager.cpp">
       <Filter>05.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Input.cpp">
+      <Filter>05.Scene\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\ConstantBuffer.cpp">
+      <Filter>04.Shader\ConstantBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\ConstantBufferData.cpp">
+      <Filter>04.Shader\ConstantBuffer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -10,5 +10,8 @@ CSceneMain::~CSceneMain()
 
 bool CSceneMain::Init()
 {
-    return false;
+    if (!CScene::Init())
+        return false;
+
+    return true;
 }

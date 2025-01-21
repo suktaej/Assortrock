@@ -22,10 +22,11 @@ bool CDevice::Init(HWND hWnd, unsigned int Width, unsigned int Height, bool Wind
 	m_hWnd = hWnd;
 	m_RS.Width = Width;
 	m_RS.Height = Height;
+	m_WindowMode = WindowMode;
 
 	unsigned int Flag = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
 	//Direct2D, Direct3D 상호운용 활성화
-	//###
+
 #ifdef _DEBUG
 	Flag |= D3D11_CREATE_DEVICE_DEBUG;
 	//Debug 정보 활성화

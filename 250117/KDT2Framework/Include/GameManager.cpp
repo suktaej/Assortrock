@@ -8,6 +8,7 @@
 #include "Asset/Mesh/Mesh.h"
 #include "Shader/Shader.h"
 #include "Shader/TransformCBuffer.h"
+#include "Scene/SceneManager.h"
 
 DEFINITION_SINGLE(CGameManager)
 
@@ -19,6 +20,8 @@ CGameManager::CGameManager()
 
 CGameManager::~CGameManager()
 {
+    CSceneManager::DestroyInst();
+
     CAssetManager::DestroyInst();
 
     CShaderManager::DestroyInst();
@@ -58,6 +61,10 @@ bool CGameManager::Init(HINSTANCE hInst)
     // 타이머 초기화
     CTimer::Init();
 
+    // 장면관리자 초기화
+    if (!CSceneManager::GetInst()->Init())
+        return false;
+
 	return true;
 }
 
@@ -96,33 +103,24 @@ void CGameManager::Logic()
 
     Update(DeltaTime);
 
-    PostUpdate(DeltaTime);
-
     Collision(DeltaTime);
-
-    PostCollisionUpdate(DeltaTime);
 
     Render(DeltaTime);
 }
 
 void CGameManager::Input(float DeltaTime)
 {
+    CSceneManager::GetInst()->Input(DeltaTime);
 }
 
 void CGameManager::Update(float DeltaTime)
 {
-}
-
-void CGameManager::PostUpdate(float DeltaTime)
-{
+    CSceneManager::GetInst()->Update(DeltaTime);
 }
 
 void CGameManager::Collision(float DeltaTime)
 {
-}
-
-void CGameManager::PostCollisionUpdate(float DeltaTime)
-{
+    CSceneManager::GetInst()->Collision(DeltaTime);
 }
 
 void CGameManager::Render(float DeltaTime)
@@ -131,57 +129,7 @@ void CGameManager::Render(float DeltaTime)
     CDevice::GetInst()->ClearDepthStencil(1.f, 0);
     CDevice::GetInst()->SetTarget();
 
-    // 출력
-    static CTransformCBuffer    buffer;
-    static FVector3D    Pos, Rot;
-
-    Pos.z = 5.f;
-
-    if (GetAsyncKeyState('W') & 0x8000)
-    {
-        Pos.y += 0.5f * DeltaTime;
-    }
-
-    if (GetAsyncKeyState('S') & 0x8000)
-    {
-        Pos.y -= 0.5f * DeltaTime;
-    }
-
-    if (GetAsyncKeyState('D') & 0x8000)
-    {
-        Rot.z += 90.f * DeltaTime;
-    }
-
-    if (GetAsyncKeyState('A') & 0x8000)
-    {
-        Rot.z -= 90.f * DeltaTime;
-    }
-
-    buffer.Init();
-    
-    FMatrix matWorld, matProj;
-    FMatrix matScale, matRot, matTranslate;
-
-    matScale.Scaling(5.f, 5.f, 1.f);
-    matRot.Rotation(Rot);
-    matTranslate.Translation(Pos);
-
-    matWorld = matScale * matRot * matTranslate;
-    matProj = DirectX::XMMatrixPerspectiveFovLH(
-        DirectX::XMConvertToRadians(90.f),
-        1280.f / 720.f, 0.5f, 1000.f);
-
-    buffer.SetWorldMatrix(matWorld);
-    buffer.SetProjMatrix(matProj);
-
-    buffer.UpdateBuffer();
-
-    CSharedPtr<CShader>  Shader = CShaderManager::GetInst()->FindShader("ColorMeshShader");
-    CSharedPtr<CMesh>  Mesh = CAssetManager::GetInst()->GetMeshManager()->FindMesh("CenterRect");
-
-    Shader->SetShader();
-
-    Mesh->Render();
+    CSceneManager::GetInst()->Render();
 
 
     CDevice::GetInst()->Render();

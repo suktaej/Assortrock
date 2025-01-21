@@ -12,6 +12,8 @@ protected:
 	//이는 씬이 끝날 때까지 보관하는 오브젝트 외에
 	//중간 삽입삭제가 일어날 수 있기 때문에 리스트 사용
 	std::list<CSharedPtr<class CSceneObject>> m_ObjList;
+	//씬이 포함하는 인풋
+	class CInput* m_Input = nullptr;
 public:
 	virtual bool Init();
 	virtual bool Init(const char* FileName);
@@ -28,6 +30,8 @@ public:
 	virtual void PostRender();
 
 	virtual void Collision(float DeltaTime);
+
+	virtual void Input(float DeltaTime);
 public:
 	template<typename T>
 	T* CreateObj(const std::string& Name)

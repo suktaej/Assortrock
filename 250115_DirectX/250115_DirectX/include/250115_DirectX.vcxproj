@@ -153,6 +153,7 @@
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Object\SceneObject.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Scene\Input.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneMain.h" />
     <ClInclude Include="Scene\SceneManager.h" />
@@ -187,6 +188,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Object\SceneObject.cpp" />
+    <ClCompile Include="Scene\Input.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneMain.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />

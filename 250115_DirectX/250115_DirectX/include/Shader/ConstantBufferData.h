@@ -9,6 +9,6 @@ public:
 	CConstantBufferData(CConstantBufferData&& Data);
 	virtual ~CConstantBufferData();
 protected:
-	CSharedPtr<CConstantBufferData> m_Buffer;
+	CSharedPtr<CConstantBuffer> m_Buffer;
 };
 

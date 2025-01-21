@@ -1,0 +1,209 @@
+#include "Input.h"
+#include "../GameManager.h"
+#include "../Device.h"
+
+CInput::CInput()
+{
+}
+
+CInput::~CInput()
+{
+    if (mkeyboard)
+    {
+        mkeyboard->Unacquire();
+        SAFE_RELEASE(mkeyboard);
+    }
+
+    if (mMouse)
+    {
+        mMouse->Unacquire();
+        SAFE_RELEASE(mMouse);
+    }
+
+    SAFE_RELEASE(mInput);
+}
+
+bool CInput::InitInput()
+{
+    // 키보드 장치 생성
+    if (FAILED(mInput->CreateDevice(GUID_SysKeyboard, &mkeyboard, nullptr)))
+        return false;
+
+    // 키보드 데이터 형식 설정
+    if (FAILED(mkeyboard->SetDataFormat(&c_dfDIKeyboard)))
+        return false;
+
+    // DISCL_FOREGROUND : 활성화 시에만 키를 입력받게 한다.
+    // DISCL_BACKGROUND : 백그라운드에서도 사용할 수 있게 설정한다.
+    // 활성화 상태가 아니어도 키 입력이 가능하다.
+    // DISCL_EXCLUSIVE : 입력 디바이스를 독점모드로 설정한다.
+    // DISCL_NONEXCLUSIVE : 입력 디바이스를 비독점모드로 설정한다.
+
+    if (CDevice::GetInst()->GetWindowMode())
+    {
+        if (FAILED(mkeyboard->SetCooperativeLevel(mhWnd,
+            DISCL_BACKGROUND | DISCL_NONEXCLUSIVE)))
+            return false;
+    }
+
+    else
+    {
+        if (FAILED(mkeyboard->SetCooperativeLevel(mhWnd,
+            DISCL_FOREGROUND | DISCL_EXCLUSIVE)))
+            return false;
+    }
+
+    // 키보드 장치를 획득한다.
+    if (FAILED(mkeyboard->Acquire()))
+        return false;
+
+
+    // 마우스 장치 생성
+    if (FAILED(mInput->CreateDevice(GUID_SysMouse, &mMouse, nullptr)))
+        return false;
+
+    // 마우스 데이터 형식 설정
+    if (FAILED(mMouse->SetDataFormat(&c_dfDIMouse)))
+        return false;
+
+    if (CDevice::GetInst()->GetWindowMode())
+    {
+        if (FAILED(mMouse->SetCooperativeLevel(mhWnd,
+            DISCL_BACKGROUND | DISCL_NONEXCLUSIVE)))
+            return false;
+    }
+
+    else
+    {
+        if (FAILED(mMouse->SetCooperativeLevel(mhWnd,
+            DISCL_FOREGROUND | DISCL_EXCLUSIVE)))
+            return false;
+    }
+
+    // 마우스 장치를 획득한다.
+    if (FAILED(mMouse->Acquire()))
+        return false;
+
+    return true;
+}
+
+bool CInput::UpdateKeyboard()
+{
+    if (!mkeyboard)
+        return false;
+
+    HRESULT result = mkeyboard->GetDeviceState(256, (LPVOID)&mKeyState);
+
+    if (FAILED(result))
+    {
+        if (result == DIERR_INPUTLOST || result == DIERR_NOTACQUIRED)
+            mkeyboard->Acquire();
+    }
+
+    return true;
+}
+
+bool CInput::UpdateMouse()
+{
+    if (!mMouse)
+        return false;
+
+    // MouseState는 x, y에는 마우스 좌표, z에는 휠값이 들어온다.
+    HRESULT result = mMouse->GetDeviceState(sizeof(mMouseState),
+        (LPVOID)&mMouseState);
+
+    if (FAILED(result))
+    {
+        if (result == DIERR_INPUTLOST || result == DIERR_NOTACQUIRED)
+            mMouse->Acquire();
+    }
+
+    return true;
+}
+
+bool CInput::Init()
+{
+    mhInst = CGameManager::GetInst()->GetWindowInstance();
+    mhWnd = CGameManager::GetInst()->GetWindowHandle();
+
+    if (FAILED(DirectInput8Create(mhInst, DIRECTINPUT_VERSION,
+        IID_IDirectInput8, (void**)&mInput, nullptr)))
+        mInputType = EInputSystem_Type::Window;
+
+    if (mInputType == EInputSystem_Type::DInput)
+    {
+        if (!InitInput())
+            return false;
+    }
+
+    return true;
+}
+
+void CInput::Update(float DeltaTime)
+{
+    if (mInputType == EInputSystem_Type::DInput)
+    {
+        UpdateKeyboard();
+        UpdateMouse();
+    }
+
+
+    UpdateInput(DeltaTime);
+}
+
+void CInput::UpdateInput(float DeltaTime)
+{
+    switch (mInputType)
+    {
+    case EInputSystem_Type::DInput:
+        if (mKeyState[DIK_LCONTROL] & 0x80)
+            mCtrl = true;
+
+        else
+            mCtrl = false;
+
+        if (mKeyState[DIK_LALT] & 0x80)
+            mAlt = true;
+
+        else
+            mAlt = false;
+
+        if (mKeyState[DIK_LSHIFT] & 0x80)
+            mShift = true;
+
+        else
+            mShift = false;
+
+        for (int i = 0; i < EMouseButtonType::End; ++i)
+        {
+            if (mMouseState.rgbButtons[i] & 0x80)
+            {
+                // Down이 false인 경우는 처음 누르는 경우이다.
+                if (!mMouseDown[i] && !mMouseHold[i])
+                {
+                    mMouseDown[i] = true;
+                    mMouseHold[i] = true;
+                }
+
+                // 이전 프레임에도 눌렀고 지금도 누르고 있다는 것이다.
+                else
+                    mMouseDown[i] = false;
+            }
+
+            // 키는 누르지 않았지만 Hold가 true인 경우라면 누르고 있다가
+            // 떼는 경우이다.
+            else if (mMouseHold[i])
+            {
+                mMouseDown[i] = false;
+                mMouseHold[i] = false;
+                mMouseUp[i] = true;
+            }
+
+            else if (mMouseUp[i])
+                mMouseUp[i] = false;
+        }
+        break;
+    case EInputSystem_Type::Window:
+        break;
+    }
+}

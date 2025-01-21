@@ -1,0 +1,19 @@
+#include "AssetManager.h"
+#include "Mesh/MeshManager.h"
+
+DEFINITION_SINGLE(CAssetManager)
+
+CAssetManager::CAssetManager()
+{
+}
+
+CAssetManager::~CAssetManager()
+{
+}
+
+bool CAssetManager::Init()
+{
+	mMeshManager = new CMeshManager;
+
+	return true;
+}

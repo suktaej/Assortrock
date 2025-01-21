@@ -1,0 +1,66 @@
+#pragma once
+
+#define	DIRECTINPUT_VERSION	0x0800
+
+#include "../GameInfo.h"
+#include <dinput.h>
+
+#pragma comment(lib, "dinput8.lib")
+
+enum class EInputSystem_Type
+{
+	DInput,
+	Window
+};
+
+namespace EMouseButtonType
+{
+	enum Type
+	{
+		LButton,
+		RButton,
+		MButton,
+		End
+	};
+}
+
+class CInput
+{
+	friend class CScene;
+
+private:
+	CInput();
+	~CInput();
+
+private:
+	HINSTANCE	mhInst;
+	HWND		mhWnd;
+	IDirectInput8* mInput = nullptr;
+	IDirectInputDevice8* mkeyboard = nullptr;
+	IDirectInputDevice8* mMouse = nullptr;
+	EInputSystem_Type	mInputType = EInputSystem_Type::DInput;
+
+	unsigned char		mKeyState[256] = {};
+	DIMOUSESTATE		mMouseState = {};
+
+	bool				mCtrl = false;
+	bool				mAlt = false;
+	bool				mShift = false;
+
+	bool				mMouseDown[EMouseButtonType::End] = {};
+	bool				mMouseHold[EMouseButtonType::End] = {};
+	bool				mMouseUp[EMouseButtonType::End] = {};
+
+private:
+	bool InitInput();
+	bool UpdateKeyboard();
+	bool UpdateMouse();
+
+public:
+	bool Init();
+	void Update(float DeltaTime);
+
+private:
+	void UpdateInput(float DeltaTime);
+};
+

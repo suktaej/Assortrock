@@ -19,11 +19,13 @@ private:
 	//해상도 처리를 위한 사용자 구조체 생성
 	FResolution m_RS;
 	HWND m_hWnd;
+	bool m_WindowMode = true;
 public:
 	ID3D11Device* GetDevice() const { return m_Device; }
 	ID3D11DeviceContext* GetContext() const{ return m_Context; }
 	IDXGISwapChain* GetSwapChain() const { return m_SwapChain; }
 	const FResolution& GetResolution() const { return m_RS; }
+	bool GetWindowMode() const { return m_WindowMode; }
 
 public:
 	bool Init(HWND hWnd, unsigned int Width, unsigned int Height, bool WindowMode);
