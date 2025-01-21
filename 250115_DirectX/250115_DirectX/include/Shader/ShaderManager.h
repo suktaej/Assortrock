@@ -7,10 +7,20 @@ class CShaderManager
 	DECLARE_SINGLE(CShaderManager)
 private:
 	std::unordered_map<std::string, CSharedPtr<CShader>> m_ShaderMap;
+	std::unordered_map<std::string, CSharedPtr<class CConstantBuffer>> m_CBufferMap;
 public:
 	bool Init();
 	CShader* FindShader(const std::string& Name);
-
+	void ReleaseShader(const std::string& Name);
+public:
+	bool CreateConstantBuffer(
+		const std::string& Name,
+		int Size,
+		int Register,
+		int ShaderBufferType = EShaderBufferType::Graphic);
+	CConstantBuffer* FindCBuffer(const std::string& Name);
+	void ReleaseCBuffer(const std::string& Name);
+public:
 	template <typename T>
 	bool CreateShader(const std::string& Name)
 	{

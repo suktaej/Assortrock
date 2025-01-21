@@ -1,10 +1,11 @@
 #pragma once
 #include "../Share/Object.h"
+#include "CBufferContainer.h"
 
 class CConstantBuffer :
     public CObject
 {
-    friend class ShaderManager;
+    friend class CShaderManager;
 private:
     CConstantBuffer();
     ~CConstantBuffer();
