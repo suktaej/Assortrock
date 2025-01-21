@@ -1,0 +1,29 @@
+# Visual Studio 관련
+.vs/
+*.vcxproj.user
+*.vcxproj.*.log
+
+# 빌드 아티팩트
+*.exe
+*.pdb
+*.ilk
+*.res
+*.recipe
+
+# 로그 파일
+*.log
+
+# 오브젝트 파일
+*.obj
+
+# 빌드 시스템 파일
+*.lastbuildstate
+*.idb
+*.tlog
+
+# 임시 파일
+*.tmp
+
+# 기타
+.DS_Store
+Thumbs.db
