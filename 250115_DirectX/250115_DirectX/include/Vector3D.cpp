@@ -467,23 +467,20 @@ DirectX::XMVECTOR FVector3D::Convert()	const
 	return DirectX::XMLoadFloat3((DirectX::XMFLOAT3*)this);
 }
 
+//x,y,z 값을 가지는 vector3dd의 행렬은 1x3
+//행렬은 4x4
+
 FVector3D FVector3D::TransformNormal(FMatrix& mat)	const
 {
-	// XMVector3TransformNormal : w를 0으로 하여 4x4 행렬과 곱하고 그 결과를
-	// 반환해준다.
-	DirectX::XMVECTOR result = DirectX::XMVector3TransformNormal(Convert(),
-		mat.m);
-
+	// XMVector3TransformNormal : w를 0으로 하여 4x4 행렬과 곱하고 결과를 반환
+	DirectX::XMVECTOR result = DirectX::XMVector3TransformNormal(Convert(), mat.m);
 	return result;
 }
 
 FVector3D FVector3D::TransformCoord(FMatrix& mat)	const
 {
-	// XMVector3TransformCoord : w를 1로 하여 4x4 행렬과 곱하고 그 결과를
-	// 반환해준다.
-	DirectX::XMVECTOR result = DirectX::XMVector3TransformCoord(Convert(),
-		mat.m);
-
+	// XMVector3TransformCoord : w를 1으로 하여 4x4 행렬과 곱하고 결과를 반환
+	DirectX::XMVECTOR result = DirectX::XMVector3TransformCoord(Convert(), mat.m);
 	return result;
 }
 

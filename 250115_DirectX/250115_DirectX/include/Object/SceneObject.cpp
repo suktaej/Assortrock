@@ -7,10 +7,16 @@ CSceneObject::CSceneObject()
 CSceneObject::~CSceneObject()
 {
 }
+CSceneObject::CSceneObject(const CSceneObject& Obj)
+{
+}
+CSceneObject::CSceneObject(CSceneObject&& Obj)
+{
+}
 //트랜스폼을 공유하기 위함
 void CSceneObject::SetRootComponent(CSceneComponent* Root)
 {
-	m_RootComponent = Root;
+	mRootComponent = Root;
 }
 
 bool CSceneObject::Init()
@@ -23,32 +29,40 @@ bool CSceneObject::Init(const char* FileName)
 	return true;
 }
 
+
 void CSceneObject::PreUpdate(float DeltaTime)
 {
+	mRootComponent->PreUpdate(DeltaTime);
 }
 
 void CSceneObject::Update(float DeltaTime)
 {
+	mRootComponent->Update(DeltaTime);
 }
 
 void CSceneObject::PostUpdate(float DeltaTime)
 {
+	mRootComponent->PostUpdate(DeltaTime);
 }
 
 void CSceneObject::PreRender()
 {
+	mRootComponent->PreRender();
 }
 
 void CSceneObject::Render()
 {
+	mRootComponent->Render();
 }
 
 void CSceneObject::PostRender()
 {
+	mRootComponent->PostRender();
 }
 
 void CSceneObject::Collision(float DeltaTime)
 {
+	mRootComponent->Collision(DeltaTime);
 }
 
 CSceneObject* CSceneObject::Clone()

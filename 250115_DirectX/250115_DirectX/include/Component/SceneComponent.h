@@ -10,28 +10,13 @@ protected:
 	virtual ~CSceneComponent();
 	CSceneComponent(const CSceneComponent& Com) {}
 	CSceneComponent(CSceneComponent&& Com) {}
+public:
+	void AddChild(CSceneComponent* Child);
 protected:
 	CSceneComponent* m_Parent = nullptr;
 	//컴포넌트는 삭제되는 경우가 거의 없음
-	//vector 구현
+	//child를 위한 vector 구현
 	std::vector<CSharedPtr<CSceneComponent>> m_ChildList;
-	//Transform 정보
-	//최종적으로 월드 정보를 구현
-	//트랜스폼 정보는 상대적인 정보
-	FVector3D m_RelativeScale;
-	FVector3D m_RelativeRot;
-	FVector3D m_RelativePos;
-	//월드 정보
-	FVector3D m_WorldScale;
-	FVector3D m_WorldRot;
-	FVector3D m_WorldPos;
-	
-	FMatrix m_MatScale;
-	FMatrix m_MatRot;
-	FMatrix m_MatTranslate;
-	FMatrix m_MatWorld;
-public:
-	void AddChild(CSceneComponent* Child);
 public:
 	virtual bool Init();
 	virtual bool Init(const char* FileName);
@@ -47,6 +32,25 @@ public:
 	virtual void Collision(float DeltaTime);
 
 	virtual CSceneComponent* Clone();
+
+protected:
+	//Transform 정보
+	//최종적으로 월드 정보를 구현
+	//트랜스폼 정보는 상대적인 정보
+	//scale값은 0 이상
+	FVector3D m_RelativeScale = FVector3D(1.f,1.f,1.f);
+	FVector3D m_RelativeRot;
+	FVector3D m_RelativePos;
+	//월드 정보
+	FVector3D m_WorldScale = FVector3D(1.f,1.f,1.f);
+	FVector3D m_WorldRot;
+	FVector3D m_WorldPos;
+	
+	FMatrix m_MatScale;
+	FMatrix m_MatRot;
+	FMatrix m_MatTranslate;
+	FMatrix m_MatWorld;
+
 public:
 	void SetRelativeScale(const FVector3D& Scale);
 	void SetRelativeScale(float x, float y, float z);
@@ -66,7 +70,7 @@ public:
 	void SetRelativePos(float x, float y, float z);
 	void SetRelativePos(const FVector2D& Pos);
 	void SetRelativePos(float x, float y);
-	
+
 	void SetWorldScale(const FVector3D& Scale);
 	void SetWorldScale(float x, float y, float z);
 	void SetWorldScale(const FVector2D& Scale);
@@ -85,6 +89,8 @@ public:
 	void SetWorldPos(float x, float y, float z);
 	void SetWorldPos(const FVector2D& Pos);
 	void SetWorldPos(float x, float y);
+private:
+	void ComputeTransform();
 };
 
 

@@ -1,5 +1,7 @@
 #pragma once
 #include "SceneComponent.h"
+
+//Mesh를 출력하기 위한 component
 class CMeshComponent :
     public CSceneComponent
 {
@@ -9,21 +11,20 @@ public:
 	CMeshComponent(CMeshComponent&& Com);
 	~CMeshComponent() override;
 protected:
-	class CTransformCBuffer
+	class CTransformCBuffer* m_TransformCBuffer;
 public:
-	virtual bool Init();
-	virtual bool Init(const char* FileName);
+	bool Init() override;
+	bool Init(const char* FileName) override;
 
-	virtual void PreUpdate(float DeltaTime);
-	virtual void Update(float DeltaTime);
-	virtual void PostUpdate(float DeltaTime);
+	void PreUpdate(float DeltaTime)override;
+	void Update(float DeltaTime)override;
+	void PostUpdate(float DeltaTime)override;
 
-	virtual void PreRender();
-	virtual void Render();
-	virtual void PostRender();
+	void PreRender()override;
+	void Render()override;
+	void PostRender()override;
 
-	virtual void Collision(float DeltaTime);
+	void Collision(float DeltaTime)override;
 
-	virtual CSceneComponent* Clone();
+	CMeshComponent* Clone()override;
 };
-

@@ -17,6 +17,7 @@ CInput::~CInput()
         SAFE_DELETE(iter->second);
         iter++;
     }
+
     auto	iter1 = m_BindKeyMap.begin();
     auto	iter1End = m_BindKeyMap.end();
 
@@ -69,7 +70,7 @@ bool CInput::InitInput()
 	//키보드 장치 생성
 	if (FAILED(m_Input->CreateDevice(GUID_SysKeyboard, &m_Keyboard, nullptr)))
 		return false;
-	//데이터 데이터 형식 설정
+	//입력장치가 생성되었다면 데이터 형식 설정
 	if (FAILED(m_Keyboard->SetDataFormat(&c_dfDIKeyboard)))
 		return false;
 
@@ -234,11 +235,11 @@ void CInput::UpdateInput(float DeltaTime)
         switch (iter->second->Key)
         {
         case DIK_MOUSELBUTTON:
-            if (m_MouseState.rgbButtons[(int)EMouse::Left] & 0x80)
+            if (m_MouseState.rgbButtons[(int)EMouse::LButton] & 0x80)
                 KeyPush = true;
             break;
         case DIK_MOUSERBUTTON:
-            if (m_MouseState.rgbButtons[(int)EMouse::Right] & 0x80)
+            if (m_MouseState.rgbButtons[(int)EMouse::RButton] & 0x80)
                 KeyPush = true;
             break;
         case DIK_MOUSEWHEEL:
@@ -252,26 +253,25 @@ void CInput::UpdateInput(float DeltaTime)
         // 현재 해당 키를 누르고 있을 경우
         if (KeyPush)
         {
+            //이제 막 버튼을 누름
             if (!iter->second->Down && !iter->second->Hold)
             {
                 iter->second->Down = true;
                 iter->second->Hold = true;
             }
-
+            //버튼을 누르는 상태(Hold = true)
             else
                 iter->second->Down = false;
         }
-
         // 현재 해당 키를 안누르고 있을 경우
         // Hold가 true라면 이전프레임에 이 키를 누르고 있다가
-        // 이제 막 키를 해제했다는 것이다.
+        // 이제 막 키를 해제
         else if (iter->second->Hold)
         {
             iter->second->Down = false;
             iter->second->Hold = false;
             iter->second->Up = true;
         }
-
         else if (iter->second->Up)
             iter->second->Up = false;
     }
@@ -393,7 +393,6 @@ void CInput::ChangeKeyShift(const std::string& Name, bool Shift)
 
 unsigned char CInput::ConvertKey(unsigned char Key)
 {
-
     if (m_InputType == EInputSystem_Type::DInput)
     {
         switch (Key)
@@ -635,9 +634,7 @@ unsigned char CInput::ConvertKey(unsigned char Key)
         case VK_OEM_102:
             return DIK_OEM_102;
         }
-
         return 0xff;
     }
-
     return Key;
 }

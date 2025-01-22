@@ -17,8 +17,14 @@ protected:
 	class CScene* mScene = nullptr;
 	std::string		mName;
 	CSharedPtr<class CSceneComponent>	mRootComponent;
+	float			mLifeTime = 0.f;
 
 public:
+	class CSceneComponent* GetRootComponent()
+	{
+		return mRootComponent;
+	}
+
 	class CScene* GetScene()	const
 	{
 		return mScene;
@@ -33,6 +39,11 @@ public:
 	void SetName(const std::string& Name)
 	{
 		mName = Name;
+	}
+
+	void SetLifeTime(float Time)
+	{
+		mLifeTime = Time;
 	}
 
 	void SetRootComponent(class CSceneComponent* Root);

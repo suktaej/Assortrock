@@ -1,17 +1,21 @@
 #include "StaticMeshComponent.h"
-#include "../Shader/TrnasformBuffer.h"
+#include "../Asset/Mesh/StaticMesh.h"
+#include "../Shader/Shader.h"
+#include "../Shader/ShaderManager.h"
+#include "../Asset/AssetManager.h"
+#include "../Asset/Mesh/MeshManager.h"
 
 CStaticMeshComponent::CStaticMeshComponent()
 {
-	//m_TransfromCBuffer = new CTransformCBuffer;
 }
 
-CStaticMeshComponent::CStaticMeshComponent(const CStaticMeshComponent& Com)
+CStaticMeshComponent::CStaticMeshComponent(const CStaticMeshComponent& Com) :
+    CMeshComponent(Com)
 {
-	//m_TransfromCBuffer = Com.m_TransfromC;
 }
 
-CStaticMeshComponent::CStaticMeshComponent(CStaticMeshComponent&& Com)
+CStaticMeshComponent::CStaticMeshComponent(CStaticMeshComponent&& Com) :
+    CMeshComponent(Com)
 {
 }
 
@@ -19,45 +23,81 @@ CStaticMeshComponent::~CStaticMeshComponent()
 {
 }
 
+void CStaticMeshComponent::SetShader(const std::string& Name)
+{
+    m_Shader = CShaderManager::GetInst()->FindShader(Name);
+}
+
+void CStaticMeshComponent::SetShader(CShader* Shader)
+{
+    m_Shader = Shader;
+}
+
+void CStaticMeshComponent::SetMesh(const std::string& Name)
+{
+    m_Mesh = (CStaticMesh*)CAssetManager::GetInst()->GetMeshManager()->FindMesh(Name);
+}
+
+void CStaticMeshComponent::SetMesh(CMesh* Mesh)
+{
+    m_Mesh = (CStaticMesh*)Mesh;
+}
+
 bool CStaticMeshComponent::Init()
 {
-	return false;
+    CMeshComponent::Init();
+
+    return true;
 }
 
 bool CStaticMeshComponent::Init(const char* FileName)
 {
-	return false;
+    CMeshComponent::Init(FileName);
+
+    return true;
 }
 
 void CStaticMeshComponent::PreUpdate(float DeltaTime)
 {
+    CMeshComponent::PreUpdate(DeltaTime);
 }
 
 void CStaticMeshComponent::Update(float DeltaTime)
 {
+    CMeshComponent::Update(DeltaTime);
 }
 
 void CStaticMeshComponent::PostUpdate(float DeltaTime)
 {
-}
-
-void CStaticMeshComponent::PreRender()
-{
-}
-
-void CStaticMeshComponent::Render()
-{
-}
-
-void CStaticMeshComponent::PostRender()
-{
+    CMeshComponent::PostUpdate(DeltaTime);
 }
 
 void CStaticMeshComponent::Collision(float DeltaTime)
 {
+    CMeshComponent::Collision(DeltaTime);
 }
 
-CSceneComponent* CStaticMeshComponent::Clone()
+void CStaticMeshComponent::PreRender()
 {
-	return nullptr;
+    CMeshComponent::PreRender();
+}
+
+void CStaticMeshComponent::Render()
+{
+    CMeshComponent::Render();
+
+    // Static Mesh 출력
+    // 실제 기능으로 작동하는 것은 object가 아닌 component
+    m_Shader->SetShader();
+    m_Mesh->Render();
+}
+
+void CStaticMeshComponent::PostRender()
+{
+    CMeshComponent::PostRender();
+}
+
+CStaticMeshComponent* CStaticMeshComponent::Clone()
+{
+    return new CStaticMeshComponent(*this);
 }

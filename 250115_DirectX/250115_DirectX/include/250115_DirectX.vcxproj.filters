@@ -67,6 +67,9 @@
     <Filter Include="05.Scene\Input">
       <UniqueIdentifier>{d89cf9e8-9e3b-4d18-8fb8-3bce9c7308a3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04.Shader\ConstantBuffer\Transform">
+      <UniqueIdentifier>{efcbd5b2-74f1-4a80-9f50-2a44d987b63c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -168,6 +171,15 @@
     <ClInclude Include="Shader\ConstantBufferData.h">
       <Filter>04.Shader\ConstantBuffer</Filter>
     </ClInclude>
+    <ClInclude Include="Shader\TransformCBuffer.h">
+      <Filter>04.Shader\ConstantBuffer\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\CBufferContainer.h">
+      <Filter>04.Shader\ConstantBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\PlayerObject.h">
+      <Filter>06.Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -253,6 +265,12 @@
     </ClCompile>
     <ClCompile Include="Shader\ConstantBufferData.cpp">
       <Filter>04.Shader\ConstantBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\TransformCBuffer.cpp">
+      <Filter>04.Shader\ConstantBuffer\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\PlayerObject.cpp">
+      <Filter>06.Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

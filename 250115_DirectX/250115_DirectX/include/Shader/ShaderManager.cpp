@@ -17,6 +17,12 @@ CShaderManager::~CShaderManager()
 bool CShaderManager::Init()
 {
 	CreateShader<CColorMeshShader>("ColorMeshShader");
+	CreateConstantBuffer(
+		"Transform",
+		sizeof(FTransformCBufferInfo),
+		0,	
+		EShaderBufferType::Vertex);
+
 	return true;
 }
 

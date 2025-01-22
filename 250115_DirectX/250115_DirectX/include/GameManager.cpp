@@ -8,7 +8,7 @@
 #include "Asset/Mesh/MeshManager.h"
 #include "Asset/Mesh/Mesh.h"
 #include "Shader/Shader.h"
-//확인
+
 #include "Scene/SceneManager.h"
 
 DEFINITION_SINGLE(CGameManager)
@@ -23,6 +23,7 @@ CGameManager::~CGameManager()
     CAssetManager::DestroyInst();
     CDevice::DestroyInst();
     CShaderManager::DestroyInst();
+    CSceneManager::DestroyInst();
 
     ReleaseDC(m_hWnd, m_hdc);
 }
@@ -51,6 +52,9 @@ bool CGameManager::Init(HINSTANCE hInst)
         return false;
     //에셋 관리자 초기화
     if (!CAssetManager::GetInst()->Init())
+        return false;
+    //장면 관리자 초기화
+    if (!CSceneManager::GetInst()->Init())
         return false;
     //타이머 초기화
     CTimer::Init();

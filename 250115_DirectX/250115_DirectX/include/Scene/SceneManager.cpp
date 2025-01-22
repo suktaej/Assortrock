@@ -9,7 +9,7 @@ CSceneManager::CSceneManager()
 }
 CSceneManager::~CSceneManager()
 {
-
+	SAFE_DELETE(m_CurrentScene);
 }
 
 bool CSceneManager::Init()
@@ -39,4 +39,5 @@ void CSceneManager::Input(float DeltaTime)
 
 void CSceneManager::Collision(float DeltaTime)
 {
+	m_CurrentScene->Collision(DeltaTime);
 }

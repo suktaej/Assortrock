@@ -162,6 +162,12 @@
     <ClCompile Include="Scene\Input.cpp">
       <Filter>05. Scene\01. Input</Filter>
     </ClCompile>
+    <ClCompile Include="Object\BulletObject.cpp">
+      <Filter>06. Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\TornadoBullet.cpp">
+      <Filter>06. Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -271,6 +277,12 @@
     </ClInclude>
     <ClInclude Include="Scene\Input.h">
       <Filter>05. Scene\01. Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BulletObject.h">
+      <Filter>06. Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\TornadoBullet.h">
+      <Filter>06. Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

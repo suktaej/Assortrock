@@ -211,7 +211,7 @@ bool CGameManager::Create()
     // (ThickFrame, Menu, TitleBar 등이 포함된 전체크기)
     AdjustWindowRect(&WindowRC, WS_OVERLAPPEDWINDOW, FALSE);
 
-    SetWindowPos(mhWnd, HWND_TOPMOST, -1700, 100, WindowRC.right - WindowRC.left,
+    SetWindowPos(mhWnd, HWND_TOPMOST, 100, 100, WindowRC.right - WindowRC.left,
         WindowRC.bottom - WindowRC.top, SWP_NOMOVE | SWP_NOZORDER);
 
     // 위에서 윈도우 창을 만들었다면 ShowWindow 함수를 이용해서 창을 보여줄지 숨길지를

@@ -41,7 +41,8 @@ void CScene::PreUpdate(float DeltaTime)
         if (!(*iter)->IsActive())
         {
             //erase를 할 경우 iteraotr의 다음 iterator를 반환
-            m_ObjList.erase(iter);
+            iter = m_ObjList.erase(iter);
+			iterEnd = m_ObjList.end();
             continue;
         }
         else if ((*iter)->IsEnable())
@@ -91,7 +92,6 @@ void CScene::PostUpdate(float DeltaTime)
 	{
 		if (!(*iter)->IsActive())
 		{
-			// erase를 하면 지운 iterator의 다음 iterator를 반환한다.
 			iter = m_ObjList.erase(iter);
 			iterEnd = m_ObjList.end();
 			continue;
@@ -127,7 +127,6 @@ void CScene::PreRender()
 	{
 		if (!(*iter)->IsActive())
 		{
-			// erase를 하면 지운 iterator의 다음 iterator를 반환한다.
 			iter = m_ObjList.erase(iter);
 			iterEnd = m_ObjList.end();
 			continue;
@@ -154,7 +153,6 @@ void CScene::Render()
 	{
 		if (!(*iter)->IsActive())
 		{
-			// erase를 하면 지운 iterator의 다음 iterator를 반환한다.
 			iter = m_ObjList.erase(iter);
 			iterEnd = m_ObjList.end();
 			continue;
@@ -181,7 +179,6 @@ void CScene::PostRender()
 	{
 		if (!(*iter)->IsActive())
 		{
-			// erase를 하면 지운 iterator의 다음 iterator를 반환한다.
 			iter = m_ObjList.erase(iter);
 			iterEnd = m_ObjList.end();
 			continue;

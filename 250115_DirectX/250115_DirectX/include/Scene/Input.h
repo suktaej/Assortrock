@@ -20,9 +20,9 @@ enum class EInputSystem_Type
 
 enum class EMouse
 {
-	Right,
-	Left,
-	Wheel,
+	LButton,
+	RButton,
+	MButton,
 	End
 };
 
@@ -65,7 +65,8 @@ struct FBindKey
 
 class CInput
 {
-//씬 마다 입력받는 키가 다를 경우
+//씬 마다 입력받는 키가 다르기 때문에
+//씬이 열릴 때마다 원하는 키를 등록
 	friend class CScene;
 private:
 	CInput();
@@ -99,11 +100,13 @@ private:
 	bool m_MouseUp[(int)EMouse::End] = {};
 public:
 	bool GetMouseDown(EMouse Type) { return m_MouseDown[(int)Type]; }
+	bool GetMouseHold(EMouse Type) { return m_MouseHold[(int)Type]; }
+	bool GetMouseUp(EMouse Type) { return m_MouseUp[(int)Type]; }
 private:
 	bool InitInput();
-
 	bool UpdateKeyboard();
 	bool UpdateMouse();
+
 	void UpdateInput(float DeltaTime);
 	void UpdateBind(float DeltaTime);
 

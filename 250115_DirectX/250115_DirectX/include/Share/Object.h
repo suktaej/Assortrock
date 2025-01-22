@@ -9,7 +9,7 @@ public:
 protected:
 	//참조 카운터
 	int m_RefCount = 0;
-	//객체가 생성되어 영향이 있는지 확인
+	//객체 작동 상태 확인
 	//씬에서 사용
 	bool m_Active = true;
 	//객체의 활성화 상태 확인

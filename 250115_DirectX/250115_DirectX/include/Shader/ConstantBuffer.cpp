@@ -34,3 +34,42 @@ bool CConstantBuffer::Init(int Size, int Register, int ShaderBufferType)
 
 	return true;
 }
+
+void CConstantBuffer::Update(void* Data)
+{
+	//Buffer안에 있는 데이터를 저장하기 위한 배열의 주소를 가져옴
+	D3D11_MAPPED_SUBRESOURCE Map = {};
+
+	CDevice::GetInst()->GetContext()->Map(
+		m_Buffer,
+		0,							//UINT type 
+		D3D11_MAP_WRITE_DISCARD,	//D311_MAP, 기존 데이터를 삭제 후 갱신
+		0,
+		&Map);
+	
+	memcpy(Map.pData, Data, m_Size);	//버퍼의 주소, 인자, 크기
+	
+	//위에서 인자로 들어온 데이터를 버퍼로 넘겨주면
+	//지정된 Shader에 상수버퍼의 데이터를 넘겨준다
+	CDevice::GetInst()->GetContext()->Unmap(m_Buffer, 0);
+
+	//& 비트연산으로 true일 경우 실행
+	//렌더링 최적화시 상수버퍼를 모두 벡터에 전달 후 한번에 전달하는 것이 빠름
+	if (m_ShaderBufferType & EShaderBufferType::Vertex)
+		CDevice::GetInst()->GetContext()->VSSetConstantBuffers(m_Register, 1, &m_Buffer);
+
+	if (m_ShaderBufferType & EShaderBufferType::Pixel)
+		CDevice::GetInst()->GetContext()->PSSetConstantBuffers(m_Register, 1, &m_Buffer);
+
+	if (m_ShaderBufferType & EShaderBufferType::Hull)
+		CDevice::GetInst()->GetContext()->HSSetConstantBuffers(m_Register, 1, &m_Buffer);
+
+	if (m_ShaderBufferType & EShaderBufferType::Domain)
+		CDevice::GetInst()->GetContext()->DSSetConstantBuffers(m_Register, 1, &m_Buffer);
+
+	if (m_ShaderBufferType & EShaderBufferType::Geometry)
+		CDevice::GetInst()->GetContext()->GSSetConstantBuffers(m_Register, 1, &m_Buffer);
+
+	if (m_ShaderBufferType & EShaderBufferType::Compute)
+		CDevice::GetInst()->GetContext()->CSSetConstantBuffers(m_Register, 1, &m_Buffer);
+}

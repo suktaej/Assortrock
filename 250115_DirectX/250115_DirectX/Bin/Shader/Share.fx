@@ -6,6 +6,13 @@ struct PS_Output_Single
     float4 Color : SV_TARGET;
 };
 
+//Prefix
+//Constant Buffer(상수버퍼) :b
+//Texture : t
+//Sampler : s
+//Resource : u
+//Constants : c
+//사용 레지스터 직접 지정
 cbuffer Transform : register(b0)
 {
     matrix gmatWorld;

@@ -18,6 +18,7 @@ public:
 		int Size,
 		int Register,
 		int ShaderBufferType = EShaderBufferType::Graphic);
+
 	CConstantBuffer* FindCBuffer(const std::string& Name);
 	void ReleaseCBuffer(const std::string& Name);
 public:

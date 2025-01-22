@@ -29,6 +29,8 @@ void CSceneComponent::AddChild(CSceneComponent* Child)
     Child->mParent = this;
 
     mChildList.emplace_back(Child);
+
+    Child->ComputeTransform();
 }
 
 bool CSceneComponent::Init()
@@ -320,8 +322,18 @@ void CSceneComponent::SetRelativeRotation(const FVector3D& Rot)
 
     for (size_t i = 0; i < Size; ++i)
     {
-        mChildList[i]->mWorldPos =
-            mChildList[i]->mRelativePos.GetRotation(mWorldRot) + mWorldPos;
+        /*mChildList[i]->mWorldPos =
+            mChildList[i]->mRelativePos.GetRotation(mWorldRot) + mWorldPos;*/
+        FVector3D   ParentRot = GetWorldRotation();
+
+        FMatrix matRot;
+        matRot.Rotation(ParentRot);
+
+        // 행렬의 41, 42, 43 에 부모의 위치를 넣어 부모의 위치를 중심으로
+        // 회전하는 행렬을 만들어준다.
+        memcpy(&matRot._41, &mWorldPos, sizeof(FVector3D));
+
+        mChildList[i]->mWorldPos = mChildList[i]->mRelativePos.TransformCoord(matRot);
 
         mChildList[i]->SetWorldRotation(mChildList[i]->mRelativeRot + mWorldRot);
     }
@@ -466,14 +478,28 @@ void CSceneComponent::SetWorldRotation(const FVector3D& Rot)
     mAxis[EAxis::Y] = Axis[EAxis::Y].TransformNormal(matRot);
     mAxis[EAxis::Z] = Axis[EAxis::Z].TransformNormal(matRot);
 
+    mAxis[EAxis::X].Normalize();
+    mAxis[EAxis::Y].Normalize();
+    mAxis[EAxis::Z].Normalize();
+
     size_t  Size = mChildList.size();
 
     for (size_t i = 0; i < Size; ++i)
     {
         mChildList[i]->SetWorldRotation(mChildList[i]->mRelativeRot + mWorldRot);
 
-        mChildList[i]->SetWorldPos(
-            mChildList[i]->mRelativePos.GetRotation(mWorldRot) + mWorldPos);
+        FVector3D   ParentRot = GetWorldRotation();
+
+        FMatrix matRot;
+        matRot.Rotation(ParentRot);
+
+        // 행렬의 41, 42, 43 에 부모의 위치를 넣어 부모의 위치를 중심으로
+        // 회전하는 행렬을 만들어준다.
+        memcpy(&matRot._41, &mWorldPos, sizeof(FVector3D));
+
+        mChildList[i]->mWorldPos = mChildList[i]->mRelativePos.TransformCoord(matRot);
+        /*mChildList[i]->SetWorldPos(
+            mChildList[i]->mRelativePos.GetRotation(mWorldRot) + mWorldPos);*/
     }
 }
 
@@ -517,14 +543,26 @@ void CSceneComponent::SetWorldPos(const FVector3D& Pos)
 
     if (mParent)
     {
-        FVector3D RelativePos = mWorldPos - mParent->mWorldPos;
-        mRelativePos = RelativePos.GetRotation(mParent->mWorldRot * -1.f);
+        FVector3D   ParentRot = mParent->GetWorldRotation();
+
+        FMatrix matRot;
+        matRot.Rotation(ParentRot);
+
+        // 행렬의 41, 42, 43 에 부모의 위치를 넣어 부모의 위치를 중심으로
+        // 회전하는 행렬을 만들어준다.
+        memcpy(&matRot._41, &mParent->mWorldPos, sizeof(FVector3D));
+
+        mWorldPos = mRelativePos.TransformCoord(matRot);
+
+        /*FVector3D RelativePos = mWorldPos - mParent->mWorldPos;
+        mRelativePos = RelativePos.GetRotation(mParent->mWorldRot * -1.f);*/
     }
 
     else
     {
         mRelativePos = mWorldPos;
     }
+
     size_t  Size = mChildList.size();
 
     for (size_t i = 0; i < Size; ++i)
@@ -546,4 +584,11 @@ void CSceneComponent::SetWorldPos(const FVector2D& Pos)
 void CSceneComponent::SetWorldPos(float x, float y)
 {
     SetRelativeRotation(FVector3D(x, y, mRelativePos.z));
+}
+
+void CSceneComponent::ComputeTransform()
+{
+    SetWorldScale(mRelativeScale * mParent->mWorldScale);
+    SetWorldRotation(mRelativeRot + mParent->mWorldRot);
+    SetWorldPos(mRelativePos + mParent->mWorldPos);
 }

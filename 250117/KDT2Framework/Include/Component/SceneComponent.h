@@ -128,5 +128,10 @@ public:
 	void SetWorldPos(float x, float y, float z);
 	void SetWorldPos(const FVector2D& Pos);
 	void SetWorldPos(float x, float y);
+
+
+
+private:
+	void ComputeTransform();
 };
 
