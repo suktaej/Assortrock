@@ -293,7 +293,7 @@ void CInput::UpdateBind(float DeltaTime)
             size_t Size = iter->second->FunctionList[(int)EInputType::Down].size();
 
             for (size_t i = 0;i < Size;i++)
-                iter->second->FunctionList[(int)EInputType::Down][i].Func();
+                iter->second->FunctionList[(int)EInputType::Down][i].Func(DeltaTime);
         }
         if (iter->second->Key->Hold &&
             iter->second->Ctrl == m_Ctrl &&
@@ -303,7 +303,7 @@ void CInput::UpdateBind(float DeltaTime)
             size_t Size = iter->second->FunctionList[(int)EInputType::Hold].size();
 
             for (size_t i = 0;i < Size;i++)
-                iter->second->FunctionList[(int)EInputType::Hold][i].Func();
+                iter->second->FunctionList[(int)EInputType::Hold][i].Func(DeltaTime);
         }
         if (iter->second->Key->Up &&
             iter->second->Ctrl == m_Ctrl &&
@@ -313,11 +313,10 @@ void CInput::UpdateBind(float DeltaTime)
             size_t Size = iter->second->FunctionList[(int)EInputType::Up].size();
 
             for (size_t i = 0;i < Size;i++)
-                iter->second->FunctionList[(int)EInputType::Up][i].Func();
+                iter->second->FunctionList[(int)EInputType::Up][i].Func(DeltaTime);
         }
         iter++;
     }
-
 }
 
 FKeyState* CInput::FindKeyState(unsigned char Key)

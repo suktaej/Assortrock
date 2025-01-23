@@ -249,23 +249,77 @@ void CInput::UpdateInput(float DeltaTime)
     switch (mInputType)
     {
     case EInputSystem_Type::DInput:
-        if (mKeyState[DIK_LCONTROL] & 0x80)
-            mCtrl = true;
+		if (mKeyState[DIK_LCONTROL] & 0x80)
+		{
+			if (!mCtrl[EInputType::Down] && !mCtrl[EInputType::Hold])
+			{
+				mCtrl[EInputType::Down] = true;
+				mCtrl[EInputType::Hold] = true;
+			}
 
-        else
-            mCtrl = false;
+			else
+				mCtrl[EInputType::Down] = false;
+		}
 
-        if (mKeyState[DIK_LALT] & 0x80)
-            mAlt = true;
+		else if (mCtrl[EInputType::Hold])
+		{
+			mCtrl[EInputType::Down] = false;
+			mCtrl[EInputType::Hold] = false;
+			mCtrl[EInputType::Up] = true;
+		}
 
-        else
-            mAlt = false;
+		else if (mCtrl[EInputType::Up])
+		{
+			mCtrl[EInputType::Up] = false;
+		}
 
-        if (mKeyState[DIK_LSHIFT] & 0x80)
-            mShift = true;
+		if (mKeyState[DIK_LALT] & 0x80)
+		{
+			if (!mAlt[EInputType::Down] && !mAlt[EInputType::Hold])
+			{
+				mAlt[EInputType::Down] = true;
+				mAlt[EInputType::Hold] = true;
+			}
 
-        else
-            mShift = false;
+			else
+				mAlt[EInputType::Down] = false;
+		}
+
+		else if (mAlt[EInputType::Hold])
+		{
+			mAlt[EInputType::Down] = false;
+			mAlt[EInputType::Hold] = false;
+			mAlt[EInputType::Up] = true;
+		}
+
+		else if (mAlt[EInputType::Up])
+		{
+			mAlt[EInputType::Up] = false;
+		}
+
+		if (mKeyState[DIK_LSHIFT] & 0x80)
+		{
+			if (!mShift[EInputType::Down] && !mShift[EInputType::Hold])
+			{
+				mShift[EInputType::Down] = true;
+				mShift[EInputType::Hold] = true;
+			}
+
+			else
+				mShift[EInputType::Down] = false;
+		}
+
+		else if (mShift[EInputType::Hold])
+		{
+			mShift[EInputType::Down] = false;
+			mShift[EInputType::Hold] = false;
+			mShift[EInputType::Up] = true;
+		}
+
+		else if (mShift[EInputType::Up])
+		{
+			mShift[EInputType::Up] = false;
+		}
 
         for (int i = 0; i < EMouseButtonType::End; ++i)
         {
@@ -362,9 +416,9 @@ void CInput::UpdateBind(float DeltaTime)
 	{
 		// Down이 충족될 경우 등록된 함수를 호출한다.
 		if (iter->second->Key->Down &&
-			iter->second->Ctrl == mCtrl &&
-			iter->second->Alt == mAlt &&
-			iter->second->Shift == mShift)
+			iter->second->Ctrl == mCtrl[EInputType::Down] &&
+			iter->second->Alt == mAlt[EInputType::Down] &&
+			iter->second->Shift == mShift[EInputType::Down])
 		{
 			size_t	Size = iter->second->FunctionList[EInputType::Down].size();
 
@@ -376,10 +430,11 @@ void CInput::UpdateBind(float DeltaTime)
 
 		// Hold가 충족될 경우 등록된 함수를 호출한다.
 		if (iter->second->Key->Hold &&
-			iter->second->Ctrl == mCtrl &&
-			iter->second->Alt == mAlt &&
-			iter->second->Shift == mShift)
+			iter->second->Ctrl == mCtrl[EInputType::Hold] &&
+			iter->second->Alt == mAlt[EInputType::Hold] &&
+			iter->second->Shift == mShift[EInputType::Hold])
 		{
+			iter->second->KeyHold = true;
 			size_t	Size = iter->second->FunctionList[EInputType::Hold].size();
 
 			for (size_t i = 0; i < Size; ++i)
@@ -388,12 +443,31 @@ void CInput::UpdateBind(float DeltaTime)
 			}
 		}
 
-		// Up이 충족될 경우 등록된 함수를 호출한다.
-		if (iter->second->Key->Up &&
-			iter->second->Ctrl == mCtrl &&
-			iter->second->Alt == mAlt &&
-			iter->second->Shift == mShift)
+		bool	Verification = false;
+
+		if (iter->second->Ctrl)
 		{
+			if (mCtrl[EInputType::Up])
+				Verification = true;
+		}
+
+		if (iter->second->Alt)
+		{
+			if (mAlt[EInputType::Up])
+				Verification = true;
+		}
+
+		if (iter->second->Shift)
+		{
+			if (mShift[EInputType::Up])
+				Verification = true;
+		}
+
+		// Up이 충족될 경우 등록된 함수를 호출한다.
+		if ((iter->second->Key->Up || Verification) &&
+			iter->second->KeyHold)
+		{
+			iter->second->KeyHold = false;
 			size_t	Size = iter->second->FunctionList[EInputType::Up].size();
 
 			for (size_t i = 0; i < Size; ++i)

@@ -9,7 +9,18 @@ CMeshManager::~CMeshManager()
 {
 }
 
-bool CMeshManager::CreateMesh(const std::string& Name,void* VertexData, int Size, int Count, D3D11_USAGE VertexUsage, D3D11_PRIMITIVE_TOPOLOGY Primitive, void* IndexData, int IndexSize, int IndexCount, DXGI_FORMAT Fmt, D3D11_USAGE IndexUsage)
+bool CMeshManager::CreateMesh(
+	const std::string& Name,
+	void* VertexData,
+	int Size,
+	int Count,
+	D3D11_USAGE VertexUsage,
+	D3D11_PRIMITIVE_TOPOLOGY Primitive,
+	void* IndexData,
+	int IndexSize,
+	int IndexCount,
+	DXGI_FORMAT Fmt,
+	D3D11_USAGE IndexUsage)
 {
 	//이름을 이용하여 메쉬를 얻어옴
 	CMesh* Mesh = FindMesh(Name);

@@ -70,6 +70,15 @@
     <Filter Include="05. Scene\01. Input">
       <UniqueIdentifier>{4cfa6cc5-d46d-498b-89a3-47ca66a69e94}</UniqueIdentifier>
     </Filter>
+    <Filter Include="06. Object\01. Player">
+      <UniqueIdentifier>{cfd808e5-0ad3-4f4e-8519-4598825b37da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Object\02. Bullet">
+      <UniqueIdentifier>{beb7f0a3-8483-47a5-9692-15f75b10cc5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Component\02. NonSceneComponent">
+      <UniqueIdentifier>{dc132258-83a5-487b-917b-30d0c71bcec7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -156,17 +165,23 @@
     <ClCompile Include="Scene\SceneManager.cpp">
       <Filter>05. Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Object\PlayerObject.cpp">
-      <Filter>06. Object</Filter>
-    </ClCompile>
     <ClCompile Include="Scene\Input.cpp">
       <Filter>05. Scene\01. Input</Filter>
     </ClCompile>
+    <ClCompile Include="Object\PlayerObject.cpp">
+      <Filter>06. Object\01. Player</Filter>
+    </ClCompile>
     <ClCompile Include="Object\BulletObject.cpp">
-      <Filter>06. Object</Filter>
+      <Filter>06. Object\02. Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\TalonR.cpp">
+      <Filter>06. Object\02. Bullet</Filter>
     </ClCompile>
     <ClCompile Include="Object\TornadoBullet.cpp">
-      <Filter>06. Object</Filter>
+      <Filter>06. Object\02. Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\MovementComponent.cpp">
+      <Filter>07. Component\02. NonSceneComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -272,17 +287,23 @@
     <ClInclude Include="Scene\SceneManager.h">
       <Filter>05. Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Object\PlayerObject.h">
-      <Filter>06. Object</Filter>
-    </ClInclude>
     <ClInclude Include="Scene\Input.h">
       <Filter>05. Scene\01. Input</Filter>
     </ClInclude>
+    <ClInclude Include="Object\PlayerObject.h">
+      <Filter>06. Object\01. Player</Filter>
+    </ClInclude>
     <ClInclude Include="Object\BulletObject.h">
-      <Filter>06. Object</Filter>
+      <Filter>06. Object\02. Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\TalonR.h">
+      <Filter>06. Object\02. Bullet</Filter>
     </ClInclude>
     <ClInclude Include="Object\TornadoBullet.h">
-      <Filter>06. Object</Filter>
+      <Filter>06. Object\02. Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\MovementComponent.h">
+      <Filter>07. Component\02. NonSceneComponent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

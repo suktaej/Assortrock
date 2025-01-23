@@ -12,5 +12,10 @@ protected:
     ~CPlayerObject() override;
 public:
     bool Init() override;
+private:
+    void MoveUp(float DeltaTime);
+    void MoveDown(float DeltaTime);
+    void RotationZ(float DeltaTime);
+    void RotationZInv(float DeltaTime);
 };
 

@@ -8,8 +8,8 @@ class CSceneComponent :
 protected:
 	CSceneComponent();
 	virtual ~CSceneComponent();
-	CSceneComponent(const CSceneComponent& Com) {}
-	CSceneComponent(CSceneComponent&& Com) {}
+	CSceneComponent(const CSceneComponent& Com);
+	CSceneComponent(CSceneComponent&& Com);
 public:
 	void AddChild(CSceneComponent* Child);
 protected:
@@ -45,6 +45,13 @@ protected:
 	FVector3D m_WorldScale = FVector3D(1.f,1.f,1.f);
 	FVector3D m_WorldRot;
 	FVector3D m_WorldPos;
+
+	FVector3D mAxis[static_cast<int>(EAxis::End)] =
+	{
+		FVector3D(1.f, 0.f, 0.f),
+		FVector3D(0.f, 1.f, 0.f),
+		FVector3D(0.f, 0.f, 1.f)
+	};
 	
 	FMatrix m_MatScale;
 	FMatrix m_MatRot;
@@ -52,6 +59,24 @@ protected:
 	FMatrix m_MatWorld;
 
 public:
+	const FMatrix& GetScaleMatrix()	const { return m_MatScale; }
+	const FMatrix& GetRotationMatrix()	const { return m_MatRot; }
+	const FMatrix& GetTranslateMatrix()	const { return m_MatTranslate; }
+	const FMatrix& GetWorldMatrix()	const { return m_MatWorld; }
+
+	const FVector3D& GetAxis(EAxis Axis) const
+	{
+		return mAxis[static_cast<int>(Axis)];
+	}
+
+	const FVector3D& GetRelativeScale()	const { return m_RelativeScale; }
+	const FVector3D& GetRelativeRotation()	const { return m_RelativeRot; }
+	const FVector3D& GetRelativePosition()	const { return m_RelativePos; }
+
+	const FVector3D& GetWorldScale()	const { return m_WorldScale; }
+	const FVector3D& GetWorldRotation()	const { return m_WorldRot; }
+	const FVector3D& GetWorldPosition()	const { return m_WorldPos; }
+	
 	void SetRelativeScale(const FVector3D& Scale);
 	void SetRelativeScale(float x, float y, float z);
 	void SetRelativeScale(const FVector2D& Scale);

@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Vector4D.h"
+#include "Vector3D.h"
+#include "Vector2D.h"
+#include <string>
 
 //하나의 메모리를 공통으로 사용
 //directX에서 대부분 16byte를 사용
@@ -80,10 +83,11 @@ __declspec(align(16)) union FMatrix
 		//자전, 공전
 	}
 
-	void Scaling(const FVector3D& _v) { m = DirectX::XMMatrixScaling(_v.x, _v.y, _v.z); }	//스케일링
-	void Scaling(float x, float y, float z) { m = DirectX::XMMatrixScaling(x, y, z); }	
+	void Scaling(const FVector3D& _v) { m = DirectX::XMMatrixScaling(_v.x, _v.y, _v.z); }
+	void Scaling(float x, float y, float z) { m = DirectX::XMMatrixScaling(x, y, z); }
 	void Scaling(const FVector2D& _v) { m = DirectX::XMMatrixScaling(_v.x, _v.y, 1.f); }
-	
+	void Scaling(float x, float y) { m = DirectX::XMMatrixScaling(x, y, 1.f); }
+
 	void Rotation(const FVector3D& _v)					//로테이션 
 	{
 		//DirectX::XMConvertToDegrees();

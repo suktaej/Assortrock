@@ -397,7 +397,7 @@ void CSceneComponent::SetWorldRotation(const FVector3D& Rot)
     else
         m_RelativeRot = m_WorldRot;
 
-    FVector3D   Axis[EAxis::End] =
+    FVector3D   Axis[(int)EAxis::End] =
     {
         FVector3D(1.f, 0.f, 0.f),
         FVector3D(0.f, 1.f, 0.f),
@@ -408,9 +408,9 @@ void CSceneComponent::SetWorldRotation(const FVector3D& Rot)
     matRot.Rotation(m_WorldRot);
 
     // 회전된 축을 구한다.
-    mAxis[EAxis::X] = Axis[EAxis::X].TransformNormal(matRot);
-    mAxis[EAxis::Y] = Axis[EAxis::Y].TransformNormal(matRot);
-    mAxis[EAxis::Z] = Axis[EAxis::Z].TransformNormal(matRot);
+    mAxis[(int)EAxis::X] = Axis[(int)EAxis::X].TransformNormal(matRot);
+    mAxis[(int)EAxis::Y] = Axis[(int)EAxis::Y].TransformNormal(matRot);
+    mAxis[(int)EAxis::Z] = Axis[(int)EAxis::Z].TransformNormal(matRot);
 
     size_t  Size = m_ChildList.size();
 

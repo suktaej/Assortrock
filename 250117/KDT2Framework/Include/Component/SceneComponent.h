@@ -55,7 +55,27 @@ protected:
 	FMatrix		mmatWorld;
 
 public:
-	const FVector3D& GetAxis(EAxis::Type Axis)
+	const FMatrix& GetScaleMatrix()	const
+	{
+		return mmatScale;
+	}
+
+	const FMatrix& GetRotationMatrix()	const
+	{
+		return mmatRot;
+	}
+
+	const FMatrix& GetTranslateMatrix()	const
+	{
+		return mmatTranslate;
+	}
+
+	const FMatrix& GetWorldMatrix()	const
+	{
+		return mmatWorld;
+	}
+
+	const FVector3D& GetAxis(EAxis::Type Axis)	const
 	{
 		return mAxis[Axis];
 	}
@@ -128,6 +148,43 @@ public:
 	void SetWorldPos(float x, float y, float z);
 	void SetWorldPos(const FVector2D& Pos);
 	void SetWorldPos(float x, float y);
+
+public:
+	void AddRelativeScale(const FVector3D& Scale);
+	void AddRelativeScale(float x, float y, float z);
+	void AddRelativeScale(const FVector2D& Scale);
+	void AddRelativeScale(float x, float y);
+
+	void AddRelativeRotation(const FVector3D& Rot);
+	void AddRelativeRotation(float x, float y, float z);
+	void AddRelativeRotation(const FVector2D& Rot);
+	void AddRelativeRotation(float x, float y);
+	void AddRelativeRotationX(float x);
+	void AddRelativeRotationY(float y);
+	void AddRelativeRotationZ(float z);
+
+	void AddRelativePos(const FVector3D& Pos);
+	void AddRelativePos(float x, float y, float z);
+	void AddRelativePos(const FVector2D& Pos);
+	void AddRelativePos(float x, float y);
+
+	void AddWorldScale(const FVector3D& Scale);
+	void AddWorldScale(float x, float y, float z);
+	void AddWorldScale(const FVector2D& Scale);
+	void AddWorldScale(float x, float y);
+
+	void AddWorldRotation(const FVector3D& Rot);
+	void AddWorldRotation(float x, float y, float z);
+	void AddWorldRotation(const FVector2D& Rot);
+	void AddWorldRotation(float x, float y);
+	void AddWorldRotationX(float x);
+	void AddWorldRotationY(float y);
+	void AddWorldRotationZ(float z);
+
+	void AddWorldPos(const FVector3D& Pos);
+	void AddWorldPos(float x, float y, float z);
+	void AddWorldPos(const FVector2D& Pos);
+	void AddWorldPos(float x, float y);
 
 
 

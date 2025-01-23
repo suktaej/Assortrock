@@ -2,6 +2,13 @@
 
 #include "SceneObject.h"
 
+enum class ESkill4State
+{
+    Expansion,
+    Maintain,
+    Reduction
+};
+
 class CPlayerObject :
     public CSceneObject
 {
@@ -18,6 +25,7 @@ protected:
     CSharedPtr<class CSceneComponent>       mRotationPivot;
     CSharedPtr<class CStaticMeshComponent>  mSub;
     CSharedPtr<class CStaticMeshComponent>  mSub2;
+    CSharedPtr<class CMovementComponent>    mMovement;
 
     CSharedPtr<class CBulletObject> mSkill1Object;
 
@@ -25,6 +33,16 @@ protected:
     float           mSkill2Time = 3.f;
     float           mSkill2TimeAcc = 0.f;
     float           mSkill2TimeInterval = 0.2f;
+
+    bool            mSkill4Enable = false;
+    float           mSkill4Time = 5.f;
+    float           mSkill4TimeAcc = 0.f;
+    float           mSkill4ReadyTime = 2.f;
+    float           mSkill4MaxRange = 4.f;
+    float           mSkill4Range = 2.f;
+    float           mSkill4RangeLength = 2.f;
+    float           mPivotRotationSpeed = 180.f;
+    ESkill4State    mSkill4State = ESkill4State::Expansion;
 
 public:
     virtual bool Init();
@@ -47,8 +65,13 @@ private:
 
     void Skill3(float DeltaTime);
 
+    void Skill4(float DeltaTime);
+
+    void Skill5(float DeltaTime);
+
 
 private:
     void UpdateSkill2(float DeltaTime);
+    void UpdateSkill4(float DeltaTime);
 };
 

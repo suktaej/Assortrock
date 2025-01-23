@@ -157,4 +157,13 @@ struct FVector3D
 	FVector3D GetRotation(const FVector3D& Rot)	const;
 
 #pragma endregion Function
+
+
+#pragma region StaticVariable
+
+	static FVector3D	Zero;
+	static FVector3D	One;
+	static FVector3D	Axis[EAxis::End];
+
+#pragma endregion StaticVariable
 };

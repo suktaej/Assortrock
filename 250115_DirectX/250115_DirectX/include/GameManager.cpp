@@ -216,10 +216,11 @@ void CGameManager::Render(float DeltaTime)
     CDevice::GetInst()->SetTarget();
 
     // Ãâ·Â
-    CSharedPtr<CShader>  Shader = CShaderManager::GetInst()->FindShader("ColorMeshShader");
-    CSharedPtr<CMesh>  Mesh = CAssetManager::GetInst()->GetMeshManager()->FindMesh("CenterRect");
-    Shader->SetShader();
-    Mesh->Render();
+    CSceneManager::GetInst()->Render();
+    //CSharedPtr<CShader>  Shader = CShaderManager::GetInst()->FindShader("ColorMeshShader");
+    //CSharedPtr<CMesh>  Mesh = CAssetManager::GetInst()->GetMeshManager()->FindMesh("CenterRect");
+    //Shader->SetShader();
+    //Mesh->Render();
     
     CDevice::GetInst()->Render();
 }

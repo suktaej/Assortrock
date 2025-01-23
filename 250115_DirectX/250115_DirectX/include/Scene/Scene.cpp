@@ -8,14 +8,14 @@ CScene::CScene()
 
 CScene::~CScene()
 {
-	SAFE_DELETE(m_Input);
+	SAFE_DELETE(mInput);
 }
 
 bool CScene::Init()
 {
-	m_Input = new CInput;
+	mInput = new CInput;
 	
-	if (!m_Input->Init())
+	if (!mInput->Init())
 		return false;
 
     return true;
@@ -23,9 +23,9 @@ bool CScene::Init()
 
 bool CScene::Init(const char* FileName)
 {
-	m_Input = new CInput;
+	mInput = new CInput;
 
-	if (!m_Input->Init())
+	if (!mInput->Init())
 		return false;
 
     return true;
@@ -33,16 +33,16 @@ bool CScene::Init(const char* FileName)
 
 void CScene::PreUpdate(float DeltaTime)
 {
-    std::list<CSharedPtr<CSceneObject>>::iterator iter = m_ObjList.begin();
-    std::list<CSharedPtr<CSceneObject>>::iterator iterEnd = m_ObjList.end();
+    std::list<CSharedPtr<CSceneObject>>::iterator iter = mObjList.begin();
+    std::list<CSharedPtr<CSceneObject>>::iterator iterEnd = mObjList.end();
 
     while (iter != iterEnd)
     {
         if (!(*iter)->IsActive())
         {
             //erase를 할 경우 iteraotr의 다음 iterator를 반환
-            iter = m_ObjList.erase(iter);
-			iterEnd = m_ObjList.end();
+            iter = mObjList.erase(iter);
+			iterEnd = mObjList.end();
             continue;
         }
         else if ((*iter)->IsEnable())
@@ -59,15 +59,15 @@ void CScene::PreUpdate(float DeltaTime)
 void CScene::Update(float DeltaTime)
 {
 	std::list<CSharedPtr<CSceneObject>>::iterator	iter;
-	std::list<CSharedPtr<CSceneObject>>::iterator	iterEnd = m_ObjList.end();
+	std::list<CSharedPtr<CSceneObject>>::iterator	iterEnd = mObjList.end();
 
-	for (iter = m_ObjList.begin(); iter != iterEnd;)
+	for (iter = mObjList.begin(); iter != iterEnd;)
 	{
 		if (!(*iter)->IsActive())
 		{
 			// erase를 하면 지운 iterator의 다음 iterator를 반환한다.
-			iter = m_ObjList.erase(iter);
-			iterEnd = m_ObjList.end();
+			iter = mObjList.erase(iter);
+			iterEnd = mObjList.end();
 			continue;
 		}
 
@@ -86,14 +86,14 @@ void CScene::Update(float DeltaTime)
 void CScene::PostUpdate(float DeltaTime)
 {
 	std::list<CSharedPtr<CSceneObject>>::iterator	iter;
-	std::list<CSharedPtr<CSceneObject>>::iterator	iterEnd = m_ObjList.end();
+	std::list<CSharedPtr<CSceneObject>>::iterator	iterEnd = mObjList.end();
 
-	for (iter = m_ObjList.begin(); iter != iterEnd;)
+	for (iter = mObjList.begin(); iter != iterEnd;)
 	{
 		if (!(*iter)->IsActive())
 		{
-			iter = m_ObjList.erase(iter);
-			iterEnd = m_ObjList.end();
+			iter = mObjList.erase(iter);
+			iterEnd = mObjList.end();
 			continue;
 		}
 
@@ -115,20 +115,20 @@ void CScene::Collision(float DeltaTime)
 
 void CScene::Input(float DeltaTime)
 {
-	m_Input->Update(DeltaTime);
+	mInput->Update(DeltaTime);
 }
 
 void CScene::PreRender()
 {
 	std::list<CSharedPtr<CSceneObject>>::iterator	iter;
-	std::list<CSharedPtr<CSceneObject>>::iterator	iterEnd = m_ObjList.end();
+	std::list<CSharedPtr<CSceneObject>>::iterator	iterEnd = mObjList.end();
 
-	for (iter = m_ObjList.begin(); iter != iterEnd;)
+	for (iter = mObjList.begin(); iter != iterEnd;)
 	{
 		if (!(*iter)->IsActive())
 		{
-			iter = m_ObjList.erase(iter);
-			iterEnd = m_ObjList.end();
+			iter = mObjList.erase(iter);
+			iterEnd = mObjList.end();
 			continue;
 		}
 
@@ -147,14 +147,14 @@ void CScene::PreRender()
 void CScene::Render()
 {
 	std::list<CSharedPtr<CSceneObject>>::iterator	iter;
-	std::list<CSharedPtr<CSceneObject>>::iterator	iterEnd = m_ObjList.end();
+	std::list<CSharedPtr<CSceneObject>>::iterator	iterEnd = mObjList.end();
 
-	for (iter = m_ObjList.begin(); iter != iterEnd;)
+	for (iter = mObjList.begin(); iter != iterEnd;)
 	{
 		if (!(*iter)->IsActive())
 		{
-			iter = m_ObjList.erase(iter);
-			iterEnd = m_ObjList.end();
+			iter = mObjList.erase(iter);
+			iterEnd = mObjList.end();
 			continue;
 		}
 
@@ -173,14 +173,14 @@ void CScene::Render()
 void CScene::PostRender()
 {
 	std::list<CSharedPtr<CSceneObject>>::iterator	iter;
-	std::list<CSharedPtr<CSceneObject>>::iterator	iterEnd = m_ObjList.end();
+	std::list<CSharedPtr<CSceneObject>>::iterator	iterEnd = mObjList.end();
 
-	for (iter = m_ObjList.begin(); iter != iterEnd;)
+	for (iter = mObjList.begin(); iter != iterEnd;)
 	{
 		if (!(*iter)->IsActive())
 		{
-			iter = m_ObjList.erase(iter);
-			iterEnd = m_ObjList.end();
+			iter = mObjList.erase(iter);
+			iterEnd = mObjList.end();
 			continue;
 		}
 

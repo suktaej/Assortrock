@@ -11,9 +11,9 @@ protected:
 	//오브젝트 목록
 	//이는 씬이 끝날 때까지 보관하는 오브젝트 외에
 	//중간 삽입삭제가 일어날 수 있기 때문에 리스트 사용
-	std::list<CSharedPtr<class CSceneObject>> m_ObjList;
+	std::list<CSharedPtr<class CSceneObject>> mObjList;
 	//씬이 포함하는 인풋
-	class CInput* m_Input = nullptr;
+	class CInput* mInput = nullptr;
 public:
 	virtual bool Init();
 	virtual bool Init(const char* FileName);
@@ -33,12 +33,14 @@ public:
 
 	virtual void Input(float DeltaTime);
 public:
+	class CInput* GetInput() const { return mInput; }
+public:
 	template<typename T>
 	T* CreateObj(const std::string& Name)
 	{
 		T* Obj = new T;
 
-		Obj->m_Scene = This;
+		Obj->mScene = this;
 		Obj->SetName(Name);
 
 		if (!Obj->Init())
@@ -46,7 +48,7 @@ public:
 			SAFE_DELETE(Obj);
 			return nullptr;
 		}
-		m_ObjLlist.push_back(Obj);
+		mObjList.push_back(Obj);
 
 		return Obj;
 	}

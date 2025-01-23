@@ -18,12 +18,12 @@ CComponent::~CComponent()
 
 bool CComponent::Init()
 {
-    return false;
+    return true;
 }
 
 bool CComponent::Init(const char* FileName)
 {
-    return false;
+    return true;
 }
 
 void CComponent::PreUpdate(float DeltaTime)

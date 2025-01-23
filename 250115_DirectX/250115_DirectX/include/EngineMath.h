@@ -3,7 +3,7 @@
 #include <DirectXMath.h>
 #include <DirectXPackedVector.h>
 
-enum class EAixs
+enum class EAxis
 {
 	X,
 	Y,

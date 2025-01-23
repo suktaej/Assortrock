@@ -60,6 +60,7 @@ struct FBindKey
 	bool	Ctrl = false;
 	bool	Alt = false;
 	bool	Shift = false;
+	bool	KeyHold = false;
 	std::vector<FBindFunction>	FunctionList[EInputType::End];
 };
 
@@ -85,9 +86,9 @@ private:
 	unsigned char		mKeyState[256] = {};
 	DIMOUSESTATE		mMouseState = {};
 
-	bool				mCtrl = false;
-	bool				mAlt = false;
-	bool				mShift = false;
+	bool				mCtrl[EInputType::End] = {};
+	bool				mAlt[EInputType::End] = {};
+	bool				mShift[EInputType::End] = {};
 
 	bool				mMouseDown[EMouseButtonType::End] = {};
 	bool				mMouseHold[EMouseButtonType::End] = {};

@@ -49,7 +49,7 @@ struct FBindFunction
 {
 	void* Obj = nullptr;
 	//STL의 펑션 포인터 std::function<반환타입> 함수명
-	std::function<void()> Func;
+	std::function<void(float)> Func;
 };
 
 //키 조합 세팅
@@ -90,11 +90,11 @@ private:
 	//DX에서 지원하는 마우스 상태
 	//x,y: 마우스 위치,z:휠 값, 0:왼쪽, 1:오른쪽, 2:휠(클릭)
 	DIMOUSESTATE m_MouseState = {};
-	//조합키 상태 
+	//조합키 사용여부
 	bool m_Ctrl = false;
 	bool m_Alt = false;
 	bool m_Shift = false;
-	//마우스 상태
+	//마우스 사용여부
 	bool m_MouseDown[(int)EMouse::End] = {};
 	bool m_MouseHold[(int)EMouse::End] = {};
 	bool m_MouseUp[(int)EMouse::End] = {};
@@ -124,14 +124,12 @@ public:
 	void ChangeKeyAlt(const std::string& Name, bool Alt);
 	void ChangeKeyShift(const std::string& Name, bool Shift);
 public:
-	//class CInput* GetInput() const { return m_Input; }
-public:
 	template<typename T>
-	void AddBindFunc(
+	void AddBindFunction(
 		const std::string& KeyName, 
 		EInputType Type, 
 		T* Object, 
-		void(T::*Func)())
+		void(T::*Func)(float))
 	{
 		FBindKey* BindKey = FindBindKey(KeyName);
 
@@ -143,7 +141,8 @@ public:
 		BindFunc.Obj = Object;
 		//클래스 맴버함수 사용 시 std::bind 사용
 		//함수주소와 객체를 이용해 func객체를 생성
-		BindFunc.Func = std::bind(Func, Object);
+		//std::placehloders::param : param의 인자를 고정
+		BindFunc.Func = std::bind(Func, Object, std::placeholders::_1);
 
 		BindKey->FunctionList[static_cast<int>(Type)].emplace_back(BindFunc);
 	}

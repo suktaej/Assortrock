@@ -145,7 +145,6 @@ bool CDevice::Init(HWND hWnd, unsigned int Width, unsigned int Height, bool Wind
 	//Direct3D Device를 DXGI와 연결하는 인터페이스
 	//이미 만들어진 값을 받아오는 역할
 	IDXGIDevice* DXGIDevice = nullptr;
-	//###
 
 	//Device 객체에서 지정된 인터페이스를 얻어오는 함수
 	// DirectX 객체와 DXGI 객체 간 연동 설정
