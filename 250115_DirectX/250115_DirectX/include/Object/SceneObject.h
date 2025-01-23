@@ -26,6 +26,7 @@ public:
 	void SetName(const std::string& Name) { mName = Name; }
 public:
 	void SetRootComponent(class CSceneComponent* Root);
+	class CSceneComponent* GetRootComponent() { return mRootComponent; }
 public:
 	virtual bool Init();
 	virtual bool Init(const char* FileName);
@@ -42,6 +43,9 @@ public:
 	T* CreateComponent()
 	{
 		T* Component = new T;
+		
+		Component->m_Scene = mScene;
+		Component->m_OwnerObject = this;
 
 		if (!Component->Init())
 		{

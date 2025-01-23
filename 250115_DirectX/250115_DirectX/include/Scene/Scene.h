@@ -14,6 +14,10 @@ protected:
 	std::list<CSharedPtr<class CSceneObject>> mObjList;
 	//¾ÀÀÌ Æ÷ÇÔÇÏ´Â ÀÎÇ²
 	class CInput* mInput = nullptr;
+	class CCameraManager* mCameraManager = nullptr;
+public:
+	CInput* GetInput() const { return mInput; }
+	CCameraManager* GetCameraManager() const { return mCameraManager; }
 public:
 	virtual bool Init();
 	virtual bool Init(const char* FileName);
@@ -32,8 +36,6 @@ public:
 	virtual void Collision(float DeltaTime);
 
 	virtual void Input(float DeltaTime);
-public:
-	class CInput* GetInput() const { return mInput; }
 public:
 	template<typename T>
 	T* CreateObj(const std::string& Name)

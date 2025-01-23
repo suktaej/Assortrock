@@ -12,13 +12,12 @@ protected:
 
 protected:
 	class CInput* mInput = nullptr;
+	class CCameraManager* mCameraManager = nullptr;
 	std::list<CSharedPtr<class CSceneObject>>	mObjList;
 
 public:
-	class CInput* GetInput()	const
-	{
-		return mInput;
-	}
+	class CInput* GetInput() const { return mInput; }
+	class CCameraManager* GetCameraManager() const { return mCameraManager; }
 
 public:
 	virtual bool Init();

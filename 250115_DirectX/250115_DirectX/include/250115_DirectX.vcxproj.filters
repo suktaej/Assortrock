@@ -70,6 +70,9 @@
     <Filter Include="04.Shader\ConstantBuffer\Transform">
       <UniqueIdentifier>{efcbd5b2-74f1-4a80-9f50-2a44d987b63c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="05.Scene\Camera">
+      <UniqueIdentifier>{fd52cb5d-c13f-4ef6-a3cb-a5b8df130f41}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -180,6 +183,15 @@
     <ClInclude Include="Object\PlayerObject.h">
       <Filter>06.Object</Filter>
     </ClInclude>
+    <ClInclude Include="Component\CameraComponent.h">
+      <Filter>07.Component\SceneComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\CameraManager.h">
+      <Filter>05.Scene\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BulletObject.h">
+      <Filter>06.Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -270,6 +282,15 @@
       <Filter>04.Shader\ConstantBuffer\Transform</Filter>
     </ClCompile>
     <ClCompile Include="Object\PlayerObject.cpp">
+      <Filter>06.Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\CameraComponent.cpp">
+      <Filter>07.Component\SceneComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\CameraManager.cpp">
+      <Filter>05.Scene\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BulletObject.cpp">
       <Filter>06.Object</Filter>
     </ClCompile>
   </ItemGroup>

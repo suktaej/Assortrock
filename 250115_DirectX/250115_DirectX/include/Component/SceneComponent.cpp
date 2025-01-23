@@ -28,6 +28,8 @@ void CSceneComponent::AddChild(CSceneComponent* Child)
 {
 	Child->m_Parent = this;
 	m_ChildList.emplace_back(Child);
+
+    Child->ComputeTransform();
 }
 
 bool CSceneComponent::Init()
@@ -463,6 +465,7 @@ void CSceneComponent::SetWorldPos(const FVector3D& Pos)
 
         // 행렬의 41, 42, 43 에 부모의 위치를 넣어 부모의 위치를 중심으로
         // 회전하는 행렬을 만들어준다.
+        // 메모리에 연속된 주소로 삽입되어 있음
         memcpy(&matRot._41, &m_Parent->m_WorldPos, sizeof(FVector3D));
 
         m_WorldPos = m_RelativePos.TransformCoord(matRot);

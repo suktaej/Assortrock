@@ -1,5 +1,7 @@
 #include "MeshComponent.h"
 #include "../Shader/TransformCBuffer.h"
+#include "../Scene/Scene.h"
+#include "../Scene/CameraManager.h"
 
 CMeshComponent::CMeshComponent()
 {
@@ -75,6 +77,12 @@ void CMeshComponent::Render()
 
     //임시객체
     FMatrix matProj = DirectX::XMMatrixPerspectiveFovLH( DirectX::XMConvertToRadians(90.f), 1280.f / 720.f, 0.5f, 1000.f);
+
+    //카메라 메니져 적용
+    //FMatrix matView = m_Scene->GetCameraManager()->GetViewMatrix();
+    //FMatrix matProj = m_Scene->GetCameraManager()->GetProjMatrix();
+    //m_TransformCBuffer->SetViewMatrix(matView);
+    //m_TransformCBuffer->SetProjMatrix(matProj);
 
     m_TransformCBuffer->SetProjMatrix(matProj);
     m_TransformCBuffer->UpdateBuffer();

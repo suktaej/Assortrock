@@ -79,6 +79,9 @@
     <Filter Include="07. Component\02. NonSceneComponent">
       <UniqueIdentifier>{dc132258-83a5-487b-917b-30d0c71bcec7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="05. Scene\02.Camera">
+      <UniqueIdentifier>{8b3912ab-2560-412f-8a97-22b021e11ec7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -182,6 +185,9 @@
     </ClCompile>
     <ClCompile Include="Component\MovementComponent.cpp">
       <Filter>07. Component\02. NonSceneComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\250115_DirectX\250115_DirectX\include\Component\CameraComponent.cpp">
+      <Filter>07. Component\01. SceneComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -304,6 +310,9 @@
     </ClInclude>
     <ClInclude Include="Component\MovementComponent.h">
       <Filter>07. Component\02. NonSceneComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\250115_DirectX\250115_DirectX\include\Component\CameraComponent.h">
+      <Filter>07. Component\01. SceneComponent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
