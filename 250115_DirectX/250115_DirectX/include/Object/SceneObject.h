@@ -26,7 +26,10 @@ public:
 	void SetName(const std::string& Name) { mName = Name; }
 public:
 	void SetRootComponent(class CSceneComponent* Root);
-	class CSceneComponent* GetRootComponent() { return mRootComponent; }
+	class CSceneComponent* GetRootComponent() 
+	{
+		return mRootComponent; 
+	}
 public:
 	virtual bool Init();
 	virtual bool Init(const char* FileName);

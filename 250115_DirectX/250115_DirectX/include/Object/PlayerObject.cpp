@@ -52,8 +52,11 @@ bool CPlayerObject::Init()
     mScene->GetInput()->AddBindKey("MoveDown", 'S');
     mScene->GetInput()->AddBindKey("RotationZ", 'D');
     mScene->GetInput()->AddBindKey("RotationZInv", 'A');
-    mScene->GetInput()->AddBindKey("Fire", VK_SPACE);
 
+    mScene->GetInput()->AddBindKey("Fire", VK_SPACE);
+    mScene->GetInput()->AddBindKey("Skill1", '1');
+
+    //Bind
     mScene->GetInput()->AddBindFunction<CPlayerObject>(
         "MoveUp",
         EInputType::Hold,
@@ -83,6 +86,19 @@ bool CPlayerObject::Init()
         EInputType::Down,
         this,
         &CPlayerObject::Fire);
+
+    //Skill 1
+    mScene->GetInput()->AddBindFunction<CPlayerObject>(
+        "Skill1",
+        EInputType::Hold,
+        this,
+        &CPlayerObject::Skill1);
+
+    mScene->GetInput()->AddBindFunction<CPlayerObject>(
+        "Skill1",
+        EInputType::Up,
+        this,
+        &CPlayerObject::Skill1Fire);
 	return true;
 }
 
@@ -115,25 +131,63 @@ void CPlayerObject::MoveDown(float DeltaTime)
 void CPlayerObject::RotationZ(float DeltaTime)
 {
     FVector3D Rot = mRootComponent->GetWorldRotation();
-    mRootComponent->SetWorldRotationZ(Rot.z + DeltaTime * 90.f);
+    mRootComponent->SetWorldRotationZ(Rot.z + DeltaTime * -90.f);
 }
 
 void CPlayerObject::RotationZInv(float DeltaTime)
 {
     FVector3D Rot = mRootComponent->GetWorldRotation();
-    mRootComponent->SetWorldRotationZ(Rot.z + DeltaTime * -90.f);
+    mRootComponent->SetWorldRotationZ(Rot.z + DeltaTime * 90.f);
 }
+#pragma endregion movement
+
+
 void CPlayerObject::Fire(float DeltaTime)
 {
     CBulletObject* Bullet = mScene->CreateObj<CBulletObject>("Bullet");
 
     CSceneComponent* Root = Bullet->GetRootComponent();
 
+    //Root->SetWorldPos(mRoot->GetWorldPosition());
+    
     FVector3D Pos = mRoot->GetWorldPosition();
     FVector3D Dir = mRoot->GetAxis(EAxis::Y);
 
-    Root->SetWorldScale(50.f, 50.f);
+    //Root->SetWorldScale(50.f, 50.f);
     Root->SetWorldRotation(mRoot->GetWorldRotation());
-    Root->SetWorldPos(Pos + Dir * 75.f);
+    Root->SetWorldPos(Pos + Dir);
 }
-#pragma endregion movement
+void CPlayerObject::Skill1(float DeltaTime)
+{
+    if (!mSkill1Object)
+    {
+        mSkill1Object = mScene->CreateObj<CBulletObject>("Bullet");
+        mSkill1Object->SetSpeed(0.f);
+    }
+    FVector3D Pos = mRoot->GetWorldPosition();
+    FVector3D Dir = mRoot->GetAxis(EAxis::Y);
+
+    mSkill1Object->GetRootComponent()->SetWorldRotation(mRoot->GetWorldRotation());
+    mSkill1Object->GetRootComponent()->SetWorldPos(Pos + Dir);
+
+    FVector3D Scale = mSkill1Object->GetRootComponent()->GetWorldScale();
+
+    Scale.x += DeltaTime * 0.5f;
+    Scale.y += DeltaTime * 0.5f;
+
+    if (Scale.x >= 3.f)
+        Scale.x = 3.f;
+
+    if (Scale.y >= 3.f)
+        Scale.y = 3.f;
+
+    mSkill1Object->GetRootComponent()->SetWorldScale(Scale);
+}
+void CPlayerObject::Skill1Fire(float DeltaTime)
+{
+    mSkill1Object->SetSpeed(2.f);
+
+    //mSkill1Object->SetLifeTime(1.f);
+
+    mSkill1Object = nullptr;
+}
