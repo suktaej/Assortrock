@@ -71,8 +71,7 @@ public:
 
 	const FVector3D& GetRelativeScale()	const { return m_RelativeScale; }
 	const FVector3D& GetRelativeRotation()	const { return m_RelativeRot; }
-	const FVector3D& GetRelativePosition()	const { return m_RelativePos; }
-
+	const FVector3D& GetRelativePosition()	const { return m_RelativePos; } 
 	const FVector3D& GetWorldScale()	const { return m_WorldScale; }
 	const FVector3D& GetWorldRotation()	const { return m_WorldRot; }
 	const FVector3D& GetWorldPosition()	const { return m_WorldPos; }

@@ -38,6 +38,14 @@ void CSceneObject::PreUpdate(float DeltaTime)
 void CSceneObject::Update(float DeltaTime)
 {
 	mRootComponent->Update(DeltaTime);
+	
+	if (mLifeTime > 0.f)
+	{
+		mLifeTime -= DeltaTime;
+
+		if (mLifeTime <= 0.f)
+			Destroy();
+	}
 }
 
 void CSceneObject::PostUpdate(float DeltaTime)

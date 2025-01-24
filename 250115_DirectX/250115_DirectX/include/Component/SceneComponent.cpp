@@ -413,6 +413,11 @@ void CSceneComponent::SetWorldRotation(const FVector3D& Rot)
     mAxis[(int)EAxis::X] = Axis[(int)EAxis::X].TransformNormal(matRot);
     mAxis[(int)EAxis::Y] = Axis[(int)EAxis::Y].TransformNormal(matRot);
     mAxis[(int)EAxis::Z] = Axis[(int)EAxis::Z].TransformNormal(matRot);
+    
+    //Normalize
+    mAxis[(int)EAxis::X].Normalize();
+    mAxis[(int)EAxis::Y].Normalize();
+    mAxis[(int)EAxis::Z].Normalize();
 
     size_t  Size = m_ChildList.size();
 

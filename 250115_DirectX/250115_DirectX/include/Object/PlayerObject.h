@@ -16,8 +16,15 @@ protected:
 
     CSharedPtr<class CBulletObject> mSkill1Object;
 protected:
-    float mSkill1Scale = 1.f;
     float mPivotRotationSpeed = 180.f;
+    
+    float mSkill1Scale = 1.f;
+   
+    bool mSkill2Enable = false;
+    float mSkill2Time = 3.f;
+    float mSkill2TimeAcc = 0.f;
+    float mSkill2TimeInterval = 0.2f;
+
 public:
     bool Init() override;
     void Update(float DeltaTime) override;
@@ -28,7 +35,13 @@ private:
     void RotationZInv(float DeltaTime);
 
     void Fire(float DeltaTime);
+
     void Skill1(float DeltaTime);
     void Skill1Fire(float DeltaTime);
+
+    void Skill2(float DeltaTime);
+    void UpdateSkill2(float DeltaTime);
+    
+    void Skill3(float DeltaTime);
 };
 

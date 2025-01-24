@@ -13,12 +13,12 @@ protected:
     virtual ~CBulletObject();
 protected:
     CSharedPtr<class CStaticMeshComponent>  mRoot;
-    float   mSpeed = 2.f;
+    float   mSpeed = 4.f;        
 public:
     void SetSpeed(float Speed) { mSpeed = Speed; }
 public:
-    virtual bool Init();
-    virtual void Update(float DeltaTime);
+    bool Init() override;
+    void Update(float DeltaTime) override;
 };
 
 

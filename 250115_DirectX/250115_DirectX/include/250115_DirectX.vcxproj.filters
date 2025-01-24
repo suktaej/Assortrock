@@ -73,6 +73,9 @@
     <Filter Include="05.Scene\Camera">
       <UniqueIdentifier>{fd52cb5d-c13f-4ef6-a3cb-a5b8df130f41}</UniqueIdentifier>
     </Filter>
+    <Filter Include="07.Component\NonSceneComponent">
+      <UniqueIdentifier>{0923095a-c1b6-488c-9cbe-8d9aa575f33c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -192,6 +195,9 @@
     <ClInclude Include="Object\BulletObject.h">
       <Filter>06.Object</Filter>
     </ClInclude>
+    <ClInclude Include="Object\S3BulletObject.h">
+      <Filter>06.Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -291,6 +297,9 @@
       <Filter>05.Scene\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Object\BulletObject.cpp">
+      <Filter>06.Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\S3BulletObject.cpp">
       <Filter>06.Object</Filter>
     </ClCompile>
   </ItemGroup>

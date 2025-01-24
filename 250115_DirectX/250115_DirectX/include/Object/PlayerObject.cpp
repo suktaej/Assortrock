@@ -3,6 +3,7 @@
 #include "../Scene/Scene.h"
 #include "../Scene/Input.h"
 #include "BulletObject.h"
+#include "S3BulletObject.h"
 
 CPlayerObject::CPlayerObject()
 {
@@ -56,6 +57,10 @@ bool CPlayerObject::Init()
     mScene->GetInput()->AddBindKey("Fire", VK_SPACE);
     mScene->GetInput()->AddBindKey("Skill1", '1');
 
+    mScene->GetInput()->AddBindKey("Skill2", '2');
+    
+    mScene->GetInput()->AddBindKey("Skill3", '3');
+
     //Bind
     mScene->GetInput()->AddBindFunction<CPlayerObject>(
         "MoveUp",
@@ -99,6 +104,20 @@ bool CPlayerObject::Init()
         EInputType::Up,
         this,
         &CPlayerObject::Skill1Fire);
+
+    //Skill 2
+    mScene->GetInput()->AddBindFunction<CPlayerObject>(
+        "Skill2",
+        EInputType::Down,
+        this, 
+        &CPlayerObject::Skill2);
+
+    //Skill 3
+    mScene->GetInput()->AddBindFunction<CPlayerObject>(
+        "Skill3",
+        EInputType::Down,
+        this, 
+        &CPlayerObject::Skill3);
 	return true;
 }
 
@@ -109,6 +128,11 @@ void CPlayerObject::Update(float DeltaTime)
     FVector3D Rot = mRotationPivot->GetRelativeRotation();
     Rot.z += DeltaTime * mPivotRotationSpeed;
     mRotationPivot->SetRelativeRotationZ(Rot.z);
+
+    if (mSkill2Enable)
+    {
+        UpdateSkill2(DeltaTime);
+    }
 }
 
 #pragma region movement
@@ -141,7 +165,7 @@ void CPlayerObject::RotationZInv(float DeltaTime)
 }
 #pragma endregion movement
 
-
+#pragma region skill
 void CPlayerObject::Fire(float DeltaTime)
 {
     CBulletObject* Bullet = mScene->CreateObj<CBulletObject>("Bullet");
@@ -156,6 +180,8 @@ void CPlayerObject::Fire(float DeltaTime)
     //Root->SetWorldScale(50.f, 50.f);
     Root->SetWorldRotation(mRoot->GetWorldRotation());
     Root->SetWorldPos(Pos + Dir);
+
+    Bullet->SetLifeTime(2.f);
 }
 void CPlayerObject::Skill1(float DeltaTime)
 {
@@ -186,8 +212,74 @@ void CPlayerObject::Skill1(float DeltaTime)
 void CPlayerObject::Skill1Fire(float DeltaTime)
 {
     mSkill1Object->SetSpeed(2.f);
-
-    //mSkill1Object->SetLifeTime(1.f);
+    mSkill1Object->SetLifeTime(2.f);
 
     mSkill1Object = nullptr;
 }
+
+void CPlayerObject::Skill2(float DeltaTime)
+{
+    if (!mSkill2Enable)
+    {
+        mSkill2Enable = true;
+        mSkill2Time = 3.f;
+        mSkill2TimeAcc = 0.f;
+        mSkill2TimeInterval = 0.2f;
+    }
+}
+
+void CPlayerObject::UpdateSkill2(float DeltaTime)
+{
+    mSkill2TimeAcc += DeltaTime;
+
+    if (mSkill2TimeAcc >= mSkill2TimeInterval)
+    {
+        mSkill2TimeAcc -= mSkill2TimeInterval;
+
+        CBulletObject* Bullet = mScene->CreateObj<CBulletObject>("Bullet");
+        CSceneComponent* Root = Bullet->GetRootComponent();
+
+        FVector3D Pos = mSub->GetWorldPosition();
+        FVector3D Dir = mSub->GetAxis(EAxis::Y);
+
+        Root->SetWorldRotation(mRoot->GetWorldRotation());
+        Root->SetWorldPos(Pos + Dir);
+
+        Bullet->SetLifeTime(2.f);
+
+       /* Bullet = mScene->CreateObj<CBulletObject>("Bullet");
+
+        Root = Bullet->GetRootComponent();
+
+        Pos = mSub2->GetWorldPosition();
+        Dir = mSub2->GetAxis(EAxis::Y);
+
+        Root->SetWorldRotation(mRoot->GetWorldRotation());
+        Root->SetWorldPos(Pos + Dir);
+
+        Bullet->SetLifeTime(1.f);*/
+    }
+
+    mSkill2Time -= DeltaTime;
+
+    if (mSkill2Time <= 0.f)
+        mSkill2Enable = false;
+}
+void CPlayerObject::Skill3(float DeltaTime)
+{
+    CS3BulletObject* Bullet = mScene->CreateObj<CS3BulletObject>("Bullet");
+
+    CSceneComponent* Root = Bullet->GetRootComponent();
+
+    //Root->SetWorldPos(mRoot->GetWorldPosition());
+
+    FVector3D Pos = mRoot->GetWorldPosition();
+    FVector3D Dir = mRoot->GetAxis(EAxis::Y);
+
+    //Root->SetWorldScale(50.f, 50.f);
+    Root->SetWorldRotation(mRoot->GetWorldRotation());
+    Root->SetWorldPos(Pos + Dir);
+
+    Bullet->SetLifeTime(2.f);
+}
+#pragma endregion skill

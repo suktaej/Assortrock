@@ -18,18 +18,17 @@ protected:
 	//계층구조를 위해 루트 컴포넌트를 확인하기 위한 자료
 	//자식 노드들이 동시에 이동할 수 있도록
 	CSharedPtr<class CSceneComponent> mRootComponent;
+	float mLifeTime = 0;
 public:
 	//포함 된 씬을 반환하기 위함
 	class CScene* GetScene() const { return mScene; }
 	//c_str() : std::string 타입의 문자열 포인터 반환
 	const char* GetName() { return mName.c_str(); }
 	void SetName(const std::string& Name) { mName = Name; }
+	void SetLifeTime(float Time) { mLifeTime = Time; }
 public:
 	void SetRootComponent(class CSceneComponent* Root);
-	class CSceneComponent* GetRootComponent() 
-	{
-		return mRootComponent; 
-	}
+	class CSceneComponent* GetRootComponent() { return mRootComponent; }
 public:
 	virtual bool Init();
 	virtual bool Init(const char* FileName);
