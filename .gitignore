@@ -26,4 +26,5 @@
 
 # 기타
 .DS_Store
+.svn-base
 Thumbs.db
