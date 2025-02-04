@@ -182,6 +182,7 @@
     <ClCompile Include="Shader\ComputeShader.cpp" />
     <ClCompile Include="Shader\ConstantBuffer.cpp" />
     <ClCompile Include="Shader\ConstantBufferData.cpp" />
+    <ClCompile Include="Shader\FrameMeshShader.cpp" />
     <ClCompile Include="Shader\GraphicShader.cpp" />
     <ClCompile Include="Shader\Shader.cpp" />
     <ClCompile Include="Shader\ShaderManager.cpp" />
@@ -234,6 +235,7 @@
     <ClInclude Include="Shader\ComputeShader.h" />
     <ClInclude Include="Shader\ConstantBuffer.h" />
     <ClInclude Include="Shader\ConstantBufferData.h" />
+    <ClInclude Include="Shader\FrameMeshShader.h" />
     <ClInclude Include="Shader\GraphicShader.h" />
     <ClInclude Include="Shader\Shader.h" />
     <ClInclude Include="Shader\ShaderManager.h" />

@@ -1,5 +1,6 @@
 #include "ShaderManager.h"
 #include "ColorMeshShader.h"
+#include "FrameMeshShader.h"
 #include "ConstantBuffer.h"
 
 DEFINITION_SINGLE(CShaderManager)
@@ -15,6 +16,8 @@ CShaderManager::~CShaderManager()
 bool CShaderManager::Init()
 {
 	CreateShader<CColorMeshShader>("ColorMeshShader");
+
+	CreateShader<CFrameMeshShader>("FrameMeshShader");
 
 
 

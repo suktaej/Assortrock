@@ -182,6 +182,15 @@ void CScene::PreRender()
 
 void CScene::Render()
 {
+#ifdef _DEBUG
+
+	if (mDebugQuadTree)
+		mCollision->Render();
+
+#endif // _DEBUG
+
+	mCollision->ReturnNodePool();
+
 	std::list<CSharedPtr<CSceneObject>>::iterator	iter;
 	std::list<CSharedPtr<CSceneObject>>::iterator	iterEnd = mObjList.end();
 

@@ -2,7 +2,7 @@
 
 #include "../GameInfo.h"
 
-#define	QUADTREE_DIVISION_COUNT	10
+#define	QUADTREE_DIVISION_COUNT	5
 #define	QUADTREE_DEPTH_MAX		4
 
 class CCollisionQuadTreeNode
@@ -14,6 +14,7 @@ private:
 	~CCollisionQuadTreeNode();
 
 private:
+	class CScene* mScene = nullptr;
 	CCollisionQuadTree* mTree = nullptr;
 	CCollisionQuadTreeNode* mParent = nullptr;
 	CCollisionQuadTreeNode* mChild[4] = {};
@@ -23,12 +24,18 @@ private:
 	int				mDivisionCount = QUADTREE_DIVISION_COUNT;
 	std::vector<CSharedPtr<class CColliderBase>>	mColliderList;
 
+#ifdef _DEBUG
+	class CTransformCBuffer* mTransformCBuffer;
+#endif // _DEBUG
+
+
 public:
 	void AddCollider(class CColliderBase* Collider,
 		std::vector<CCollisionQuadTreeNode*>& NodePool);
 	void CreateChild(std::vector<CCollisionQuadTreeNode*>& NodePool);
 	void Collision(float DeltaTime);
 	void ReturnNodePool(std::vector<CCollisionQuadTreeNode*>& NodePool);
+	void Render(class CMesh* Mesh, class CShader* Shader);
 
 private:
 	bool IsInCollider(class CColliderBase* Collider);
@@ -49,6 +56,14 @@ private:
 	std::vector<CCollisionQuadTreeNode*>	mNodePool;
 	std::vector<CCollisionQuadTreeNode*>	mCollisionNodeList;
 
+#ifdef _DEBUG
+
+	CSharedPtr<class CMesh>		mMesh;
+	CSharedPtr<class CShader>	mShader;
+
+#endif // _DEBUG
+
+
 public:
 	void SetDivisionCount(int Count);
 	void AddCollisionNodeList(CCollisionQuadTreeNode* Node)
@@ -65,5 +80,7 @@ public:
 	void AddCollider(class CColliderBase* Collider);
 	void Update(float DeltaTime);
 	void Collision(float DeltaTime);
+	void Render();
+	void ReturnNodePool();
 };
 

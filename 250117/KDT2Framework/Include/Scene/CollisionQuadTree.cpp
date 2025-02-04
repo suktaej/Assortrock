@@ -4,13 +4,27 @@
 #include "CameraManager.h"
 #include "../Component/CameraComponent.h"
 #include "../Component/ColliderBase.h"
+#include "../Asset/Mesh/Mesh.h"
+#include "../Asset/AssetManager.h"
+#include "../Asset/Mesh/MeshManager.h"
+#include "../Shader/Shader.h"
+#include "../Shader/ShaderManager.h"
+#include "../Shader/TransformCBuffer.h"
 
 CCollisionQuadTreeNode::CCollisionQuadTreeNode()
 {
+#ifdef _DEBUG
+	mTransformCBuffer = new CTransformCBuffer;
+
+	mTransformCBuffer->Init();
+#endif
 }
 
 CCollisionQuadTreeNode::~CCollisionQuadTreeNode()
 {
+#ifdef _DEBUG
+	SAFE_DELETE(mTransformCBuffer);
+#endif
 	// 자식노드는 하나라도 있을 경우 무조건 4개를 다 분할한
 	// 것이기 때문에 첫번째 자식이 있을 경우 4개의 노드를
 	// 모두 제거한다.
@@ -118,6 +132,7 @@ void CCollisionQuadTreeNode::CreateChild(
 		mChild[i] = NodePool.back();
 
 		mChild[i]->mTree = mTree;
+		mChild[i]->mScene = mScene;
 
 		// 실제 사용되는 노드로 빠졌기 때문에 가장 뒤의 노드를 지운다.
 		NodePool.pop_back();
@@ -163,6 +178,42 @@ void CCollisionQuadTreeNode::ReturnNodePool(
 
 			mChild[i] = nullptr;
 		}
+	}
+}
+
+void CCollisionQuadTreeNode::Render(CMesh* Mesh, CShader* Shader)
+{
+#ifdef _DEBUG
+
+	FMatrix	matScale, matTranslate, matWorld;
+	matScale.Scaling(mSize);
+	matTranslate.Translation(mCenter);
+
+	matWorld = matScale * matTranslate;
+
+	FMatrix	matView, matProj;
+
+	matView = mScene->GetCameraManager()->GetViewMatrix();
+	matProj = mScene->GetCameraManager()->GetProjMatrix();
+
+	mTransformCBuffer->SetWorldMatrix(matWorld);
+	mTransformCBuffer->SetViewMatrix(matView);
+	mTransformCBuffer->SetProjMatrix(matProj);
+
+	mTransformCBuffer->UpdateBuffer();
+
+	Shader->SetShader();
+
+	Mesh->Render();
+
+#endif // _DEBUG
+
+	if (mChild[0])
+	{
+		mChild[0]->Render(Mesh, Shader);
+		mChild[1]->Render(Mesh, Shader);
+		mChild[2]->Render(Mesh, Shader);
+		mChild[3]->Render(Mesh, Shader);
 	}
 }
 
@@ -234,7 +285,17 @@ void CCollisionQuadTree::EraseCollisionNodeList(
 
 bool CCollisionQuadTree::Init()
 {
+#ifdef _DEBUG
+
+	mMesh = CAssetManager::GetInst()->GetMeshManager()->FindMesh("FrameCenterRect");
+	mShader = CShaderManager::GetInst()->FindShader("FrameMeshShader");
+
+#endif // _DEBUG
+
+
 	mRoot = new CCollisionQuadTreeNode;
+
+	mRoot->mScene = mScene;
 
 	const FResolution& RS = CDevice::GetInst()->GetResolution();
 
@@ -276,7 +337,15 @@ void CCollisionQuadTree::Collision(float DeltaTime)
 
 	// 충돌이 완료되고 난 후에는 목록을 비워준다.
 	mCollisionNodeList.clear();
+}
 
+void CCollisionQuadTree::Render()
+{
+	mRoot->Render(mMesh, mShader);
+}
+
+void CCollisionQuadTree::ReturnNodePool()
+{
 	// 생성된 노드들을 노드 풀에 수거하고 다음 프레임에
 	// 활용할 수 있게 해준다.
 	mRoot->ReturnNodePool(mNodePool);

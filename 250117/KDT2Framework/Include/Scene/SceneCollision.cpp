@@ -69,3 +69,13 @@ void CSceneCollision::Update(float DeltaTime)
     // 충돌처리를 진행한다.
     mQuadTree->Collision(DeltaTime);
 }
+
+void CSceneCollision::Render()
+{
+    mQuadTree->Render();
+}
+
+void CSceneCollision::ReturnNodePool()
+{
+    mQuadTree->ReturnNodePool();
+}

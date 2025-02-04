@@ -106,6 +106,9 @@
     <Filter Include="05. Scene\03. Collision">
       <UniqueIdentifier>{65e4b891-b787-4203-89d5-2b4a5e0f7471}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Shader\02. Shader Class\02. FrameMesh">
+      <UniqueIdentifier>{75870eab-432c-4be3-b04b-e462cf1842fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -245,6 +248,9 @@
     </ClCompile>
     <ClCompile Include="Scene\CollisionQuadTree.cpp">
       <Filter>05. Scene\03. Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\FrameMeshShader.cpp">
+      <Filter>04. Shader\02. Shader Class\02. FrameMesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -403,6 +409,9 @@
     </ClInclude>
     <ClInclude Include="Scene\CollisionQuadTree.h">
       <Filter>05. Scene\03. Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\FrameMeshShader.h">
+      <Filter>04. Shader\02. Shader Class\02. FrameMesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
