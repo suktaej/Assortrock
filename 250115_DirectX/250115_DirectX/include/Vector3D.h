@@ -156,5 +156,20 @@ struct FVector3D
 
 	FVector3D GetRotation(const FVector3D& Rot)	const;
 
+	float GetAngle(const FVector3D& v)	const;
+	float GetViewTargetAngle(const FVector3D& v,
+		EAxis AxisType = EAxis::Y)	const;
+
+	static float GetAngle(const FVector3D& v1, const FVector3D& v2);
+
 #pragma endregion Function
+
+
+#pragma region StaticVariable
+
+	static FVector3D	Zero;
+	static FVector3D	One;
+	static FVector3D	Axis[(int)EAxis::End];
+
+#pragma endregion StaticVariable
 };

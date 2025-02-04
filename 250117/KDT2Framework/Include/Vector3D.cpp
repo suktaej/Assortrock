@@ -5,7 +5,7 @@
 
 FVector3D FVector3D::Zero;
 FVector3D FVector3D::One = { 1.f, 1.f, 1.f };
-FVector3D	Axis[EAxis::End] =
+FVector3D FVector3D::Axis[EAxis::End] =
 {
 	{1.f, 0.f, 0.f},
 	{0.f, 1.f, 0.f},
@@ -505,6 +505,55 @@ FVector3D FVector3D::GetRotation(const FVector3D& Rot)	const
 	matRot.Rotation(Rot);
 
 	return TransformNormal(matRot);
+}
+
+float FVector3D::GetAngle(const FVector3D& v) const
+{
+	FVector3D	v1 = *this;
+	FVector3D	v2 = v;
+
+	v1.Normalize();
+	v2.Normalize();
+
+	float Angle = v1.Dot(v2);
+
+	Angle = DirectX::XMConvertToDegrees(acosf(Angle));
+
+	return Angle;
+}
+
+float FVector3D::GetViewTargetAngle(const FVector3D& v,
+	EAxis::Type AxisType)	const
+{
+	FVector3D	v1 = Axis[AxisType];
+	FVector3D	v2 = v - *this;
+
+	v1.Normalize();
+	v2.Normalize();
+
+	float Angle = v1.Dot(v2);
+
+	Angle = DirectX::XMConvertToDegrees(acosf(Angle));
+
+	if (v.x > x)
+		Angle = 360.f - Angle;
+
+	return Angle;
+}
+
+float FVector3D::GetAngle(const FVector3D& v1, const FVector3D& v2)
+{
+	FVector3D	v3 = v1;
+	FVector3D	v4 = v2;
+
+	v3.Normalize();
+	v4.Normalize();
+
+	float Angle = v3.Dot(v4);
+
+	Angle = DirectX::XMConvertToDegrees(acosf(Angle));
+
+	return Angle;
 }
 
 #pragma endregion Function

@@ -1,5 +1,7 @@
 #include "MeshComponent.h"
 #include "../Shader/TransformCBuffer.h"
+#include "../Scene/Scene.h"
+#include "../Scene/CameraManager.h"
 
 CMeshComponent::CMeshComponent()
 {
@@ -71,11 +73,18 @@ void CMeshComponent::Render()
 
     mTransformCBuffer->SetWorldMatrix(mmatWorld);
 
-    FMatrix matProj = DirectX::XMMatrixPerspectiveFovLH(
+    FMatrix matView, matProj;
+    matView = mScene->GetCameraManager()->GetViewMatrix();
+    matProj = mScene->GetCameraManager()->GetProjMatrix();
+
+    mTransformCBuffer->SetViewMatrix(matView);
+    mTransformCBuffer->SetProjMatrix(matProj);
+
+    /*FMatrix matProj = DirectX::XMMatrixPerspectiveFovLH(
         DirectX::XMConvertToRadians(90.f),
         1280.f / 720.f, 0.5f, 1000.f);
 
-    mTransformCBuffer->SetProjMatrix(matProj);
+    mTransformCBuffer->SetProjMatrix(matProj);*/
 
     mTransformCBuffer->UpdateBuffer();
 }

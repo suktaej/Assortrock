@@ -340,6 +340,20 @@ void CSceneComponent::SetRelativeRotationX(float x)
 void CSceneComponent::SetRelativePos(const FVector3D& Pos)
 {
     m_RelativePos = Pos;
+
+    if (m_Parent)
+    {
+        FVector3D ParentRot = m_Parent->GetWorldRotation();
+
+        FMatrix matRot;
+        matRot.Rotation(ParentRot);
+
+        memcpy(&matRot._41, &m_WorldPos, sizeof(FVector3D));
+
+        m_WorldPos = m_RelativePos.TransformCoord(matRot);
+    }
+    else
+        m_WorldPos = m_RelativePos;
 }
 
 void CSceneComponent::SetRelativePos(float x, float y, float z)
@@ -496,6 +510,169 @@ void CSceneComponent::SetWorldPos(const FVector2D& Pos)
 { SetRelativeRotation(FVector3D(x, y, m_RelativePos.z)); }
 #pragma endregion WorldPos
 
+#pragma region AddFunc
+ void CSceneComponent::AddRelativeScale(const FVector3D& Scale)
+ {
+     m_RelativeScale += Scale;
+
+     SetRelativeScale(m_RelativeScale);
+ }
+
+ void CSceneComponent::AddRelativeScale(float x, float y, float z)
+ {
+     AddRelativeScale(FVector3D(x, y, z));
+ }
+
+ void CSceneComponent::AddRelativeScale(const FVector2D& Scale)
+ {
+     AddRelativeScale(FVector3D(Scale.x, Scale.y, 0.f));
+ }
+
+ void CSceneComponent::AddRelativeScale(float x, float y)
+ {
+     AddRelativeScale(FVector3D(x, y, 0.f));
+ }
+
+ void CSceneComponent::AddRelativeRotation(const FVector3D& Rot)
+ {
+     m_RelativeRot += Rot;
+
+     SetRelativeRotation(m_RelativeRot);
+ }
+
+ void CSceneComponent::AddRelativeRotation(float x, float y, float z)
+ {
+     AddRelativeRotation(FVector3D(x, y, z));
+ }
+
+ void CSceneComponent::AddRelativeRotation(const FVector2D& Rot)
+ {
+     AddRelativeRotation(FVector3D(Rot.x, Rot.y, 0.f));
+ }
+
+ void CSceneComponent::AddRelativeRotation(float x, float y)
+ {
+     AddRelativeRotation(FVector3D(x, y, 0.f));
+ }
+
+ void CSceneComponent::AddRelativeRotationX(float x)
+ {
+     AddRelativeRotation(FVector3D(x, 0.f, 0.f));
+ }
+
+ void CSceneComponent::AddRelativeRotationY(float y)
+ {
+     AddRelativeRotation(FVector3D(0.f, y, 0.f));
+ }
+
+ void CSceneComponent::AddRelativeRotationZ(float z)
+ {
+     AddRelativeRotation(FVector3D(0.f, 0.f, z));
+ }
+
+ void CSceneComponent::AddRelativePos(const FVector3D& Pos)
+ {
+     m_RelativePos += Pos;
+
+     SetRelativePos(m_RelativePos);
+ }
+
+ void CSceneComponent::AddRelativePos(float x, float y, float z)
+ {
+     AddRelativePos(FVector3D(x, y, z));
+ }
+
+ void CSceneComponent::AddRelativePos(const FVector2D& Pos)
+ {
+     AddRelativePos(FVector3D(Pos.x, Pos.y, 0.f));
+ }
+
+ void CSceneComponent::AddRelativePos(float x, float y)
+ {
+     AddRelativePos(FVector3D(x, y, 0.f));
+ }
+
+ void CSceneComponent::AddWorldScale(const FVector3D& Scale)
+ {
+     m_WorldScale += Scale;
+
+     SetWorldScale(m_WorldScale);
+ }
+
+ void CSceneComponent::AddWorldScale(float x, float y, float z)
+ {
+     AddWorldScale(FVector3D(x, y, z));
+ }
+
+ void CSceneComponent::AddWorldScale(const FVector2D& Scale)
+ {
+     AddWorldScale(FVector3D(Scale.x, Scale.y, 0.f));
+ }
+
+ void CSceneComponent::AddWorldScale(float x, float y)
+ {
+     AddWorldScale(FVector3D(x, y, 0.f));
+ }
+
+ void CSceneComponent::AddWorldRotation(const FVector3D& Rot)
+ {
+     m_WorldRot += Rot;
+
+     SetWorldRotation(m_WorldRot);
+ }
+
+ void CSceneComponent::AddWorldRotation(float x, float y, float z)
+ {
+     AddWorldRotation(FVector3D(x, y, z));
+ }
+
+ void CSceneComponent::AddWorldRotation(const FVector2D& Rot)
+ {
+     AddWorldRotation(FVector3D(Rot.x, Rot.y, 0.f));
+ }
+
+ void CSceneComponent::AddWorldRotation(float x, float y)
+ {
+     AddWorldRotation(FVector3D(x, y, 0.f));
+ }
+
+ void CSceneComponent::AddWorldRotationX(float x)
+ {
+     AddWorldRotation(FVector3D(x, 0.f, 0.f));
+ }
+
+ void CSceneComponent::AddWorldRotationY(float y)
+ {
+     AddWorldRotation(FVector3D(0.f, y, 0.f));
+ }
+
+ void CSceneComponent::AddWorldRotationZ(float z)
+ {
+     AddWorldRotation(FVector3D(0.f, 0.f, z));
+ }
+
+ void CSceneComponent::AddWorldPos(const FVector3D& Pos)
+ {
+     m_WorldPos += Pos;
+
+     SetWorldPos(m_WorldPos);
+ }
+
+ void CSceneComponent::AddWorldPos(float x, float y, float z)
+ {
+     AddWorldPos(FVector3D(x, y, z));
+ }
+
+ void CSceneComponent::AddWorldPos(const FVector2D& Pos)
+ {
+     AddWorldPos(FVector3D(Pos.x, Pos.y, 0.f));
+ }
+
+ void CSceneComponent::AddWorldPos(float x, float y)
+ {
+     AddWorldPos(FVector3D(x, y, 0.f));
+ }
+#pragma endregion AddFunc
  void CSceneComponent::ComputeTransform()
 {
     SetWorldScale(m_RelativeScale * m_Parent->m_WorldScale);

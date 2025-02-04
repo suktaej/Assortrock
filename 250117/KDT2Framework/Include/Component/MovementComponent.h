@@ -16,11 +16,13 @@ protected:
 
 protected:
 	CSharedPtr<class CSceneComponent>	mUpdateComponent;
+	EAxis::Type		mMoveAxis = EAxis::None;
 
 protected:
 	FVector3D		mVelocity;
 	FVector3D		mMoveStep;
 	float			mSpeed = 1.f;
+	bool			mVelocityInit = true;
 
 public:
 	const FVector3D& GetMoveStep()	const
@@ -40,9 +42,24 @@ public:
 		mSpeed = Speed;
 	}
 
-	void Move(const FVector3D& Dir)
+	void AddMove(const FVector3D& Dir)
 	{
 		mVelocity += Dir;
+	}
+
+	void SetMove(const FVector3D& Dir)
+	{
+		mVelocity = Dir;
+	}
+
+	void SetVelocityInit(bool VelocityInit)
+	{
+		mVelocityInit = VelocityInit;
+	}
+
+	void SetMoveAxis(EAxis::Type Axis)
+	{
+		mMoveAxis = Axis;
 	}
 
 public:

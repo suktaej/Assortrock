@@ -5,7 +5,11 @@
 #include "BulletObject.h"
 #include "TornadoBullet.h"
 #include "TalonR.h"
+#include "GravityBullet.h"
 #include "../Component/MovementComponent.h"
+#include "../Component/RotationComponent.h"
+#include "../Component/CameraComponent.h"
+#include "../Component/ColliderAABB2D.h"
 
 CPlayerObject::CPlayerObject()
 {
@@ -28,20 +32,40 @@ CPlayerObject::~CPlayerObject()
 bool CPlayerObject::Init()
 {
     mRoot = CreateComponent<CStaticMeshComponent>();
+    mBody = CreateComponent<CColliderAABB2D>();
     mRotationPivot = CreateComponent<CSceneComponent>();
     mSub = CreateComponent<CStaticMeshComponent>();
     mSub2 = CreateComponent<CStaticMeshComponent>();
+    mCamera = CreateComponent<CCameraComponent>();
+
+
     mMovement = CreateComponent<CMovementComponent>();
+    mRotation = CreateComponent<CRotationComponent>();
 
     mRoot->SetMesh("CenterRect");
     mRoot->SetShader("ColorMeshShader");
 
-    mRoot->SetWorldPos(0.f, 0.f, 5.5f);
+    mRoot->SetWorldPos(0.f, 0.f, 0.f);
+    mRoot->SetWorldScale(100.f, 100.f, 1.f);
 
     SetRootComponent(mRoot);
 
+    mBody->SetBoxSize(100.f, 100.f);
+
+    mRoot->AddChild(mBody);
+
+    mCamera->SetProjectionType(ECameraProjectionType::Ortho);
+
+    mRoot->AddChild(mCamera);
+
     mMovement->SetUpdateComponent(mRoot);
-    mMovement->SetMoveSpeed(2.f);
+    mMovement->SetMoveSpeed(200.f);
+
+    mRotation->SetUpdateComponent(mRotationPivot);
+
+    mRotation->SetVelocityInit(false);
+
+    mRotation->SetMoveZ(360.f);
 
     mRoot->AddChild(mRotationPivot);
     mRotationPivot->AddChild(mSub);
@@ -50,7 +74,8 @@ bool CPlayerObject::Init()
     mSub->SetMesh("CenterRect");
     mSub->SetShader("ColorMeshShader");
 
-    mSub->SetRelativeScale(0.5f, 0.5f, 1.f);
+    //mSub->SetRelativeScale(0.5f, 0.5f, 1.f);
+    mSub->SetWorldScale(50.f, 50.f, 1.f);
     mSub->SetRelativePos(-mSkill4Range, 0.f, 0.f);
 
     mSub2->SetMesh("CenterRect");
@@ -75,6 +100,8 @@ bool CPlayerObject::Init()
     mScene->GetInput()->AddBindKey("Skill3", '3');
     mScene->GetInput()->AddBindKey("Skill4", '4');
     mScene->GetInput()->AddBindKey("Skill5", '5');
+    mScene->GetInput()->AddBindKey("Skill6", '6');
+    mScene->GetInput()->AddBindKey("Skill7", '7');
 
     mScene->GetInput()->AddBindFunction<CPlayerObject>("MoveUp",
         EInputType::Hold, this, &CPlayerObject::MoveUp);
@@ -111,6 +138,12 @@ bool CPlayerObject::Init()
     mScene->GetInput()->AddBindFunction<CPlayerObject>("Skill5",
         EInputType::Down, this, &CPlayerObject::Skill5);
 
+    mScene->GetInput()->AddBindFunction<CPlayerObject>("Skill6",
+        EInputType::Down, this, &CPlayerObject::Skill6);
+
+    mScene->GetInput()->AddBindFunction<CPlayerObject>("Skill7",
+        EInputType::Down, this, &CPlayerObject::Skill7);
+
     return true;
 }
 
@@ -118,11 +151,11 @@ void CPlayerObject::Update(float DeltaTime)
 {
     CSceneObject::Update(DeltaTime);
 
-    FVector3D Rot = mRotationPivot->GetRelativeRotation();
+    /*FVector3D Rot = mRotationPivot->GetRelativeRotation();
 
     Rot.z += DeltaTime * mPivotRotationSpeed;
 
-    mRotationPivot->SetRelativeRotationZ(Rot.z);
+    mRotationPivot->SetRelativeRotationZ(Rot.z);*/
 
     if (mSkill2Enable)
     {
@@ -135,26 +168,31 @@ void CPlayerObject::Update(float DeltaTime)
     }
 }
 
+void CPlayerObject::Damage(int Dmg)
+{
+    mHP -= Dmg;
+}
+
 void CPlayerObject::MoveUp(float DeltaTime)
 {
-    mMovement->Move(mRootComponent->GetAxis(EAxis::Y));
+    mMovement->AddMove(mRootComponent->GetAxis(EAxis::Y));
 }
 
 void CPlayerObject::MoveDown(float DeltaTime)
 {
-    mMovement->Move(mRootComponent->GetAxis(EAxis::Y) * -1.f);
+    mMovement->AddMove(mRootComponent->GetAxis(EAxis::Y) * -1.f);
 }
 
 void CPlayerObject::RotationZ(float DeltaTime)
 {
     FVector3D   Rot = mRootComponent->GetWorldRotation();
-    mRootComponent->SetWorldRotationZ(Rot.z + DeltaTime * 90.f);
+    mRootComponent->SetWorldRotationZ(Rot.z + DeltaTime * -90.f);
 }
 
 void CPlayerObject::RotationZInv(float DeltaTime)
 {
     FVector3D   Rot = mRootComponent->GetWorldRotation();
-    mRootComponent->SetWorldRotationZ(Rot.z + DeltaTime * -90.f);
+    mRootComponent->SetWorldRotationZ(Rot.z + DeltaTime * 90.f);
 }
 
 void CPlayerObject::Fire(float DeltaTime)
@@ -164,12 +202,13 @@ void CPlayerObject::Fire(float DeltaTime)
     CSceneComponent* Root = Bullet->GetRootComponent();
 
     FVector3D Pos = mRoot->GetWorldPosition();
-    FVector3D   Dir = mRoot->GetAxis(EAxis::Y);
+    FVector3D Dir = mRoot->GetAxis(EAxis::Y);
 
+    Root->SetWorldScale(50.f, 50.f);
     Root->SetWorldRotation(mRoot->GetWorldRotation());
-    Root->SetWorldPos(Pos + Dir);
+    Root->SetWorldPos(Pos + Dir * 75.f);
 
-    Bullet->SetLifeTime(1.f);
+    Bullet->SetLifeTime(2.f);
 }
 
 void CPlayerObject::Skill1(float DeltaTime)
@@ -277,6 +316,32 @@ void CPlayerObject::Skill5(float DeltaTime)
         Dir = Dir.TransformNormal(matRot);
         Dir.Normalize();
     }
+}
+
+void CPlayerObject::Skill6(float DeltaTime)
+{
+    CGravityBullet* Bullet = mScene->CreateObj<CGravityBullet>("Bullet");
+
+    FVector3D Pos = mRoot->GetWorldPosition();
+    FVector3D Dir = mRoot->GetAxis(EAxis::Y);
+
+    Bullet->SetWorldScale(50.f, 50.f);
+    Bullet->SetWorldRotation(mRoot->GetWorldRotation());
+    Bullet->SetWorldPos(Pos + Dir * 75.f);
+}
+
+void CPlayerObject::Skill7(float DeltaTime)
+{
+    CGravityBullet* Bullet = mScene->CreateObj<CGravityBullet>("Bullet");
+
+    Bullet->SetGravityType(EGravityType::Push);
+
+    FVector3D Pos = mRoot->GetWorldPosition();
+    FVector3D Dir = mRoot->GetAxis(EAxis::Y);
+
+    Bullet->SetWorldScale(50.f, 50.f);
+    Bullet->SetWorldRotation(mRoot->GetWorldRotation());
+    Bullet->SetWorldPos(Pos + Dir * 75.f);
 }
 
 void CPlayerObject::UpdateSkill2(float DeltaTime)

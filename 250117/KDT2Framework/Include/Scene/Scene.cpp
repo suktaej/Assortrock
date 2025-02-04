@@ -1,6 +1,8 @@
 #include "Scene.h"
 #include "../Object/SceneObject.h"
 #include "Input.h"
+#include "CameraManager.h"
+#include "SceneCollision.h"
 
 CScene::CScene()
 {
@@ -8,6 +10,9 @@ CScene::CScene()
 
 CScene::~CScene()
 {
+	mObjList.clear();
+	SAFE_DELETE(mCollision);
+	SAFE_DELETE(mCameraManager);
 	SAFE_DELETE(mInput);
 }
 
@@ -18,6 +23,18 @@ bool CScene::Init()
 	if (!mInput->Init())
 		return false;
 
+	mCameraManager = new CCameraManager;
+
+	if (!mCameraManager->Init())
+		return false;
+
+	mCollision = new CSceneCollision;
+
+	mCollision->mScene = this;
+
+	if (!mCollision->Init())
+		return false;
+
 	return true;
 }
 
@@ -26,6 +43,18 @@ bool CScene::Init(const char* FileName)
 	mInput = new CInput;
 
 	if (!mInput->Init())
+		return false;
+
+	mCameraManager = new CCameraManager;
+
+	if (!mCameraManager->Init())
+		return false;
+
+	mCollision = new CSceneCollision;
+
+	mCollision->mScene = this;
+
+	if (!mCollision->Init())
 		return false;
 	
 	return true;
@@ -88,6 +117,8 @@ void CScene::Update(float DeltaTime)
 
 		++iter;
 	}
+
+	mCameraManager->Update(DeltaTime);
 }
 
 void CScene::PostUpdate(float DeltaTime)
@@ -119,6 +150,7 @@ void CScene::PostUpdate(float DeltaTime)
 
 void CScene::Collision(float DeltaTime)
 {
+	mCollision->Update(DeltaTime);
 }
 
 void CScene::PreRender()

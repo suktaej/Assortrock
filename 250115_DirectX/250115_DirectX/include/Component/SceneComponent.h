@@ -38,11 +38,11 @@ protected:
 	//최종적으로 월드 정보를 구현
 	//트랜스폼 정보는 상대적인 정보
 	//scale값은 0 이상
-	FVector3D m_RelativeScale = FVector3D(1.f,1.f,1.f);
+	FVector3D m_RelativeScale = FVector3D(1.f, 1.f, 1.f);
 	FVector3D m_RelativeRot;
 	FVector3D m_RelativePos;
 	//월드 정보
-	FVector3D m_WorldScale = FVector3D(1.f,1.f,1.f);
+	FVector3D m_WorldScale = FVector3D(1.f, 1.f, 1.f);
 	FVector3D m_WorldRot;
 	FVector3D m_WorldPos;
 
@@ -52,7 +52,7 @@ protected:
 		FVector3D(0.f, 1.f, 0.f),
 		FVector3D(0.f, 0.f, 1.f)
 	};
-	
+
 	FMatrix m_MatScale;
 	FMatrix m_MatRot;
 	FMatrix m_MatTranslate;
@@ -63,19 +63,15 @@ public:
 	const FMatrix& GetRotationMatrix()	const { return m_MatRot; }
 	const FMatrix& GetTranslateMatrix()	const { return m_MatTranslate; }
 	const FMatrix& GetWorldMatrix()	const { return m_MatWorld; }
-
-	const FVector3D& GetAxis(EAxis Axis) const
-	{
-		return mAxis[static_cast<int>(Axis)];
-	}
+	const FVector3D& GetAxis(EAxis Axis) const { return mAxis[static_cast<int>(Axis)]; }
 
 	const FVector3D& GetRelativeScale()	const { return m_RelativeScale; }
 	const FVector3D& GetRelativeRotation()	const { return m_RelativeRot; }
-	const FVector3D& GetRelativePosition()	const { return m_RelativePos; } 
+	const FVector3D& GetRelativePosition()	const { return m_RelativePos; }
 	const FVector3D& GetWorldScale()	const { return m_WorldScale; }
 	const FVector3D& GetWorldRotation()	const { return m_WorldRot; }
 	const FVector3D& GetWorldPosition()	const { return m_WorldPos; }
-	
+
 	void SetRelativeScale(const FVector3D& Scale);
 	void SetRelativeScale(float x, float y, float z);
 	void SetRelativeScale(const FVector2D& Scale);
@@ -113,6 +109,43 @@ public:
 	void SetWorldPos(float x, float y, float z);
 	void SetWorldPos(const FVector2D& Pos);
 	void SetWorldPos(float x, float y);
+
+public:
+	void AddRelativeScale(const FVector3D& Scale);
+	void AddRelativeScale(float x, float y, float z);
+	void AddRelativeScale(const FVector2D& Scale);
+	void AddRelativeScale(float x, float y);
+
+	void AddRelativeRotation(const FVector3D& Rot);
+	void AddRelativeRotation(float x, float y, float z);
+	void AddRelativeRotation(const FVector2D& Rot);
+	void AddRelativeRotation(float x, float y);
+	void AddRelativeRotationX(float x);
+	void AddRelativeRotationY(float y);
+	void AddRelativeRotationZ(float z);
+
+	void AddRelativePos(const FVector3D& Pos);
+	void AddRelativePos(float x, float y, float z);
+	void AddRelativePos(const FVector2D& Pos);
+	void AddRelativePos(float x, float y);
+
+	void AddWorldScale(const FVector3D& Scale);
+	void AddWorldScale(float x, float y, float z);
+	void AddWorldScale(const FVector2D& Scale);
+	void AddWorldScale(float x, float y);
+
+	void AddWorldRotation(const FVector3D& Rot);
+	void AddWorldRotation(float x, float y, float z);
+	void AddWorldRotation(const FVector2D& Rot);
+	void AddWorldRotation(float x, float y);
+	void AddWorldRotationX(float x);
+	void AddWorldRotationY(float y);
+	void AddWorldRotationZ(float z);
+
+	void AddWorldPos(const FVector3D& Pos);
+	void AddWorldPos(float x, float y, float z);
+	void AddWorldPos(const FVector2D& Pos);
+	void AddWorldPos(float x, float y);
 private:
 	void ComputeTransform();
 };

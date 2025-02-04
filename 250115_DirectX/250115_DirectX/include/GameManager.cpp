@@ -11,6 +11,8 @@
 
 #include "Scene/SceneManager.h"
 
+#include "Share/Log.h"
+
 DEFINITION_SINGLE(CGameManager)
 bool CGameManager::m_Loop = true;
 
@@ -26,6 +28,8 @@ CGameManager::~CGameManager()
     CSceneManager::DestroyInst();
 
     ReleaseDC(m_hWnd, m_hdc);
+
+    CLog::Destroy();
 }
 
 bool CGameManager::Init(HINSTANCE hInst)
@@ -38,6 +42,9 @@ bool CGameManager::Init(HINSTANCE hInst)
 	RegisterWindowClass();
     
     if (!Create())
+        return false;
+
+    if (!CLog::Init())
         return false;
 
     //인자로 들어간 윈도우에 출력할 수 있는 DC가 생성

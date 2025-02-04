@@ -22,10 +22,14 @@ protected:
 
 protected:
     CSharedPtr<class CStaticMeshComponent>  mRoot;
+    CSharedPtr<class CColliderAABB2D>       mBody;
     CSharedPtr<class CSceneComponent>       mRotationPivot;
     CSharedPtr<class CStaticMeshComponent>  mSub;
     CSharedPtr<class CStaticMeshComponent>  mSub2;
+    CSharedPtr<class CCameraComponent>      mCamera;
+
     CSharedPtr<class CMovementComponent>    mMovement;
+    CSharedPtr<class CRotationComponent>    mRotation;
 
     CSharedPtr<class CBulletObject> mSkill1Object;
 
@@ -39,14 +43,17 @@ protected:
     float           mSkill4TimeAcc = 0.f;
     float           mSkill4ReadyTime = 2.f;
     float           mSkill4MaxRange = 4.f;
-    float           mSkill4Range = 2.f;
+    float           mSkill4Range = 100.f;
     float           mSkill4RangeLength = 2.f;
     float           mPivotRotationSpeed = 180.f;
     ESkill4State    mSkill4State = ESkill4State::Expansion;
 
+    int             mHP = 10;
+
 public:
     virtual bool Init();
     virtual void Update(float DeltaTime);
+    virtual void Damage(int Dmg);
 
 
 private:
@@ -68,6 +75,10 @@ private:
     void Skill4(float DeltaTime);
 
     void Skill5(float DeltaTime);
+
+    void Skill6(float DeltaTime);
+
+    void Skill7(float DeltaTime);
 
 
 private:

@@ -145,27 +145,37 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\250115_DirectX\250115_DirectX\include\Component\CameraComponent.cpp" />
     <ClCompile Include="Asset\Asset.cpp" />
     <ClCompile Include="Asset\AssetManager.cpp" />
     <ClCompile Include="Asset\Mesh\Mesh.cpp" />
     <ClCompile Include="Asset\Mesh\MeshManager.cpp" />
     <ClCompile Include="Asset\Mesh\StaticMesh.cpp" />
+    <ClCompile Include="Component\CameraComponent.cpp" />
+    <ClCompile Include="Component\ColliderAABB2D.cpp" />
+    <ClCompile Include="Component\ColliderBase.cpp" />
     <ClCompile Include="Component\Component.cpp" />
     <ClCompile Include="Component\MeshComponent.cpp" />
     <ClCompile Include="Component\MovementComponent.cpp" />
+    <ClCompile Include="Component\RotationComponent.cpp" />
     <ClCompile Include="Component\SceneComponent.cpp" />
     <ClCompile Include="Component\StaticMeshComponent.cpp" />
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object\BulletObject.cpp" />
+    <ClCompile Include="Object\GravityBullet.cpp" />
+    <ClCompile Include="Object\GunnerMonster.cpp" />
+    <ClCompile Include="Object\MonsterObject.cpp" />
+    <ClCompile Include="Object\NearingMonster.cpp" />
     <ClCompile Include="Object\PlayerObject.cpp" />
     <ClCompile Include="Object\SceneObject.cpp" />
     <ClCompile Include="Object\TalonR.cpp" />
     <ClCompile Include="Object\TornadoBullet.cpp" />
+    <ClCompile Include="Scene\CameraManager.cpp" />
+    <ClCompile Include="Scene\CollisionQuadTree.cpp" />
     <ClCompile Include="Scene\Input.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
+    <ClCompile Include="Scene\SceneCollision.cpp" />
     <ClCompile Include="Scene\SceneMain.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="Shader\ColorMeshShader.cpp" />
@@ -176,21 +186,25 @@
     <ClCompile Include="Shader\Shader.cpp" />
     <ClCompile Include="Shader\ShaderManager.cpp" />
     <ClCompile Include="Shader\TransformCBuffer.cpp" />
+    <ClCompile Include="Share\Log.cpp" />
     <ClCompile Include="Share\Object.cpp" />
     <ClCompile Include="Share\Timer.cpp" />
     <ClCompile Include="Vector3D.cpp" />
     <ClCompile Include="Vector4D.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\250115_DirectX\250115_DirectX\include\Component\CameraComponent.h" />
     <ClInclude Include="Asset\Asset.h" />
     <ClInclude Include="Asset\AssetManager.h" />
     <ClInclude Include="Asset\Mesh\Mesh.h" />
     <ClInclude Include="Asset\Mesh\MeshManager.h" />
     <ClInclude Include="Asset\Mesh\StaticMesh.h" />
+    <ClInclude Include="Component\CameraComponent.h" />
+    <ClInclude Include="Component\ColliderAABB2D.h" />
+    <ClInclude Include="Component\ColliderBase.h" />
     <ClInclude Include="Component\Component.h" />
     <ClInclude Include="Component\MeshComponent.h" />
     <ClInclude Include="Component\MovementComponent.h" />
+    <ClInclude Include="Component\RotationComponent.h" />
     <ClInclude Include="Component\SceneComponent.h" />
     <ClInclude Include="Component\StaticMeshComponent.h" />
     <ClInclude Include="Device.h" />
@@ -199,13 +213,20 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Object\BulletObject.h" />
+    <ClInclude Include="Object\GravityBullet.h" />
+    <ClInclude Include="Object\GunnerMonster.h" />
+    <ClInclude Include="Object\MonsterObject.h" />
+    <ClInclude Include="Object\NearingMonster.h" />
     <ClInclude Include="Object\PlayerObject.h" />
     <ClInclude Include="Object\SceneObject.h" />
     <ClInclude Include="Object\TalonR.h" />
     <ClInclude Include="Object\TornadoBullet.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Scene\CameraManager.h" />
+    <ClInclude Include="Scene\CollisionQuadTree.h" />
     <ClInclude Include="Scene\Input.h" />
     <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Scene\SceneCollision.h" />
     <ClInclude Include="Scene\SceneMain.h" />
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Shader\CBufferContainer.h" />
@@ -217,6 +238,7 @@
     <ClInclude Include="Shader\Shader.h" />
     <ClInclude Include="Shader\ShaderManager.h" />
     <ClInclude Include="Shader\TransformCBuffer.h" />
+    <ClInclude Include="Share\Log.h" />
     <ClInclude Include="Share\Object.h" />
     <ClInclude Include="Share\SharedPtr.h" />
     <ClInclude Include="Share\Timer.h" />

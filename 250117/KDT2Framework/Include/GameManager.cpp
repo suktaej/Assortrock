@@ -9,6 +9,7 @@
 #include "Shader/Shader.h"
 #include "Shader/TransformCBuffer.h"
 #include "Scene/SceneManager.h"
+#include "Share/Log.h"
 
 DEFINITION_SINGLE(CGameManager)
 
@@ -29,6 +30,8 @@ CGameManager::~CGameManager()
     CDevice::DestroyInst();
 
     ReleaseDC(mhWnd, mhDC);
+
+    CLog::Destroy();
 }
 
 bool CGameManager::Init(HINSTANCE hInst)
@@ -42,6 +45,10 @@ bool CGameManager::Init(HINSTANCE hInst)
 
     if (!Create())
         return false;
+
+    if (!CLog::Init())
+        return false;
+
 
     // 인자로 들어간 윈도우에 출력할 수 있는 DC가 만들어진다.
     mhDC = GetDC(mhWnd);
@@ -115,6 +122,22 @@ void CGameManager::Input(float DeltaTime)
 
 void CGameManager::Update(float DeltaTime)
 {
+    //CLog::PrintLog("Update");
+
+    static bool Push = false;
+
+    if (GetAsyncKeyState(VK_RETURN) & 0x8000)
+    {
+        Push = true;
+    }
+
+    else if (Push)
+    {
+        Push = false;
+        CLog::SaveLog();
+    }
+
+
     CSceneManager::GetInst()->Update(DeltaTime);
 }
 
@@ -196,7 +219,7 @@ bool CGameManager::Create()
     // 이렇게 윈도우를 생성하면 윈도우 핸들을 만들어준다.
     // 잘못된 생성일 경우 0을 반환한다.
     mhWnd = CreateWindowW(mClassName, mTitleName, WS_OVERLAPPEDWINDOW,
-        100, 100, 1280, 720, nullptr, nullptr, mhInst, nullptr);
+        -1700, 100, 1280, 720, nullptr, nullptr, mhInst, nullptr);
 
     if (!mhWnd)
     {
@@ -211,7 +234,7 @@ bool CGameManager::Create()
     // (ThickFrame, Menu, TitleBar 등이 포함된 전체크기)
     AdjustWindowRect(&WindowRC, WS_OVERLAPPEDWINDOW, FALSE);
 
-    SetWindowPos(mhWnd, HWND_TOPMOST, 100, 100, WindowRC.right - WindowRC.left,
+    SetWindowPos(mhWnd, HWND_TOPMOST, -1700, 100, WindowRC.right - WindowRC.left,
         WindowRC.bottom - WindowRC.top, SWP_NOMOVE | SWP_NOZORDER);
 
     // 위에서 윈도우 창을 만들었다면 ShowWindow 함수를 이용해서 창을 보여줄지 숨길지를

@@ -4,6 +4,7 @@
 #include "../Scene/Input.h"
 #include "BulletObject.h"
 #include "S3BulletObject.h"
+#include "S5BulletObject.h"
 
 CPlayerObject::CPlayerObject()
 {
@@ -46,7 +47,7 @@ bool CPlayerObject::Init()
     mSub->SetShader("ColorMeshShader");
     
     mSub->SetRelativeScale(0.5f, 0.5f, 1.f);
-    mSub->SetRelativePos(-2.f, 0.f, 0.f);
+    mSub->SetRelativePos(-mSkill4Range, 0.f, 0.f);
        
     //키 지정
     mScene->GetInput()->AddBindKey("MoveUp", 'W');
@@ -55,11 +56,15 @@ bool CPlayerObject::Init()
     mScene->GetInput()->AddBindKey("RotationZInv", 'A');
 
     mScene->GetInput()->AddBindKey("Fire", VK_SPACE);
-    mScene->GetInput()->AddBindKey("Skill1", '1');
 
-    mScene->GetInput()->AddBindKey("Skill2", '2');
+    mScene->GetInput()->AddBindKey("Skill1", '1');
+    mScene->GetInput()->ChangeKeyCtrl("Skill1", true);
+    mScene->GetInput()->ChangeKeyShift("Skill1", true);
     
+    mScene->GetInput()->AddBindKey("Skill2", '2');
     mScene->GetInput()->AddBindKey("Skill3", '3');
+    mScene->GetInput()->AddBindKey("Skill4", '4');
+    mScene->GetInput()->AddBindKey("Skill5", '5');
 
     //Bind
     mScene->GetInput()->AddBindFunction<CPlayerObject>(
@@ -118,6 +123,21 @@ bool CPlayerObject::Init()
         EInputType::Down,
         this, 
         &CPlayerObject::Skill3);
+    
+    //Skill 4
+    mScene->GetInput()->AddBindFunction<CPlayerObject>(
+        "Skill4",
+        EInputType::Down,
+        this, 
+        &CPlayerObject::Skill4);
+    
+    //Skill 5
+    mScene->GetInput()->AddBindFunction<CPlayerObject>(
+        "Skill5",
+        EInputType::Down,
+        this, 
+        &CPlayerObject::Skill5);
+
 	return true;
 }
 
@@ -130,9 +150,10 @@ void CPlayerObject::Update(float DeltaTime)
     mRotationPivot->SetRelativeRotationZ(Rot.z);
 
     if (mSkill2Enable)
-    {
         UpdateSkill2(DeltaTime);
-    }
+    
+    if (mSkill4Enable)
+        UpdateSkill4(DeltaTime);
 }
 
 #pragma region movement
@@ -281,5 +302,87 @@ void CPlayerObject::Skill3(float DeltaTime)
     Root->SetWorldPos(Pos + Dir);
 
     Bullet->SetLifeTime(2.f);
+}
+void CPlayerObject::Skill4(float DeltaTime)
+{
+    if (!mSkill4Enable)
+    {
+        mSkill4Enable = true;
+        mSkill4Time = 3.f;
+        mSkill4TimeAcc = 0.f;
+        mSkill4ReadyTime = 2.f;
+        mPivotRotationSpeed = 360.f;
+        mSkill4State = ESkillState::Expansion;
+    }
+}
+
+void CPlayerObject::UpdateSkill4(float DeltaTime)
+{
+    mSkill4TimeAcc += DeltaTime;
+
+    switch (mSkill4State)
+    {
+    case ESkillState::Expansion:
+        mSkill4Range += DeltaTime / mSkill4ReadyTime * mSkill4RangeLength;
+
+        if (mSkill4TimeAcc >= mSkill4ReadyTime)
+        {
+            mSkill4TimeAcc -= mSkill4ReadyTime;
+            mSkill4Range = mSkill4MaxRange;
+            mSkill4State = ESkillState::Maintain;
+        }
+
+		mSub->SetRelativePos(-mSkill4Range, 0.f, 0.f);
+        break;
+    case ESkillState::Maintain:
+
+        if (mSkill4TimeAcc >= mSkill4Time)
+        {
+            mSkill4TimeAcc = 0.f;
+            mSkill4State = ESkillState::Reduction;
+        }
+        break;
+    case ESkillState::Reduction:
+
+        mSkill4Range -= DeltaTime / mSkill4ReadyTime * mSkill4RangeLength;
+        if (mSkill4TimeAcc >= mSkill4ReadyTime)
+        {
+            mSkill4Enable = false;
+            mSkill4TimeAcc = 0.f;
+            mSkill4Range = 2.f;
+            mSkill4State = ESkillState::Expansion;
+            mPivotRotationSpeed = 180.f;
+        }
+        mSub->SetRelativePos(-mSkill4Range, 0.f, 0.f);
+        break;
+    }
+}
+
+void CPlayerObject::Skill5(float DeltaTime)
+{
+    //플레이어의 방향을 가져온다
+    FVector3D Dir = mRoot->GetAxis(EAxis::Y);
+    FVector3D Rot = mRoot->GetWorldRotation();
+    
+    FMatrix matRot;
+    matRot.RotationZ(45.f);
+
+    for (int i = 0;i < 8;i++)
+    {
+        CS5BulletObject* Bullet = mScene->CreateObj<CS5BulletObject>("Bullet");
+
+        CSceneComponent* Root = Bullet->GetRootComponent();
+
+        //Root->SetWorldPos(mRoot->GetWorldPosition());
+
+        FVector3D Pos = mRoot->GetWorldPosition();
+
+        Root->SetWorldRotation(Rot);
+        Root->SetWorldPos(Pos + Dir);
+
+        Rot.z += 45.f;
+        Dir = Dir.TransformNormal(matRot);
+        Dir.Normalize();
+    }
 }
 #pragma endregion skill

@@ -2,6 +2,16 @@
 #include "Vector3D.h"
 #include "Matrix.h"
 
+
+FVector3D FVector3D::Zero;
+FVector3D FVector3D::One = { 1.f, 1.f, 1.f };
+FVector3D FVector3D::Axis[(int)EAxis::End] =
+{
+	{1.f, 0.f, 0.f},
+	{0.f, 1.f, 0.f},
+	{0.f, 0.f, 1.f}
+};
+
 #pragma region Construction
 
 FVector3D::FVector3D()
@@ -427,6 +437,7 @@ void FVector3D::Normalize()
 	z /= Size;
 }
 
+
 FVector3D FVector3D::Normalize(const FVector3D& v)
 {
 	FVector3D	result;
@@ -467,20 +478,23 @@ DirectX::XMVECTOR FVector3D::Convert()	const
 	return DirectX::XMLoadFloat3((DirectX::XMFLOAT3*)this);
 }
 
-//x,y,z 값을 가지는 vector3dd의 행렬은 1x3
-//행렬은 4x4
-
 FVector3D FVector3D::TransformNormal(FMatrix& mat)	const
 {
-	// XMVector3TransformNormal : w를 0으로 하여 4x4 행렬과 곱하고 결과를 반환
-	DirectX::XMVECTOR result = DirectX::XMVector3TransformNormal(Convert(), mat.m);
+	// XMVector3TransformNormal : w를 0으로 하여 4x4 행렬과 곱하고 그 결과를
+	// 반환해준다.
+	DirectX::XMVECTOR result = DirectX::XMVector3TransformNormal(Convert(),
+		mat.m);
+
 	return result;
 }
 
 FVector3D FVector3D::TransformCoord(FMatrix& mat)	const
 {
-	// XMVector3TransformCoord : w를 1으로 하여 4x4 행렬과 곱하고 결과를 반환
-	DirectX::XMVECTOR result = DirectX::XMVector3TransformCoord(Convert(), mat.m);
+	// XMVector3TransformCoord : w를 1로 하여 4x4 행렬과 곱하고 그 결과를
+	// 반환해준다.
+	DirectX::XMVECTOR result = DirectX::XMVector3TransformCoord(Convert(),
+		mat.m);
+
 	return result;
 }
 
@@ -491,6 +505,55 @@ FVector3D FVector3D::GetRotation(const FVector3D& Rot)	const
 	matRot.Rotation(Rot);
 
 	return TransformNormal(matRot);
+}
+
+float FVector3D::GetAngle(const FVector3D& v) const
+{
+	FVector3D	v1 = *this;
+	FVector3D	v2 = v;
+
+	v1.Normalize();
+	v2.Normalize();
+
+	float Angle = v1.Dot(v2);
+
+	Angle = DirectX::XMConvertToDegrees(acosf(Angle));
+
+	return Angle;
+}
+
+float FVector3D::GetViewTargetAngle(const FVector3D& v,
+	EAxis AxisType)	const
+{
+	FVector3D	v1 = Axis[static_cast<int>(AxisType)];
+	FVector3D	v2 = v - *this;
+
+	v1.Normalize();
+	v2.Normalize();
+
+	float Angle = v1.Dot(v2);
+
+	Angle = DirectX::XMConvertToDegrees(acosf(Angle));
+
+	if (v.x > x)
+		Angle = 360.f - Angle;
+
+	return Angle;
+}
+
+float FVector3D::GetAngle(const FVector3D& v1, const FVector3D& v2)
+{
+	FVector3D	v3 = v1;
+	FVector3D	v4 = v2;
+
+	v3.Normalize();
+	v4.Normalize();
+
+	float Angle = v3.Dot(v4);
+
+	Angle = DirectX::XMConvertToDegrees(acosf(Angle));
+
+	return Angle;
 }
 
 #pragma endregion Function

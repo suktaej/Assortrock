@@ -1,5 +1,7 @@
 #include "BulletObject.h"
 #include "../Component/StaticMeshComponent.h"
+#include "../Component/MovementComponent.h"
+#include "../Component/ColliderAABB2D.h"
 
 CBulletObject::CBulletObject()
 {
@@ -22,6 +24,9 @@ CBulletObject::~CBulletObject()
 bool CBulletObject::Init()
 {
     mRoot = CreateComponent<CStaticMeshComponent>();
+    mBody = CreateComponent<CColliderAABB2D>();
+
+    mMovement = CreateComponent<CMovementComponent>();
 
     mRoot->SetMesh("CenterRect");
     mRoot->SetShader("ColorMeshShader");
@@ -30,6 +35,15 @@ bool CBulletObject::Init()
 
     SetRootComponent(mRoot);
 
+    mBody->SetBoxSize(50.f, 50.f);
+
+    mRoot->AddChild(mBody);
+
+    mMovement->SetUpdateComponent(mRoot);
+
+    mMovement->SetMoveAxis(EAxis::Y);
+    mMovement->SetMoveSpeed(500.f);
+
     return true;
 }
 
@@ -37,9 +51,9 @@ void CBulletObject::Update(float DeltaTime)
 {
     CSceneObject::Update(DeltaTime);
 
-    FVector3D Pos = mRoot->GetWorldPosition();
+    /*FVector3D Pos = mRoot->GetWorldPosition();
 
     Pos += mRoot->GetAxis(EAxis::Y) * mSpeed * DeltaTime;
 
-    mRoot->SetWorldPos(Pos);
+    mRoot->SetWorldPos(Pos);*/
 }

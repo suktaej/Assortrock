@@ -1,5 +1,7 @@
 #include "TalonR.h"
 #include "../Component/StaticMeshComponent.h"
+#include "../Component/MovementComponent.h"
+#include "../Component/RotationComponent.h"
 
 CTalonR::CTalonR()
 {
@@ -23,19 +25,34 @@ bool CTalonR::Init()
 {
     mMesh = CreateComponent<CStaticMeshComponent>();
 
+    mMovement = CreateComponent<CMovementComponent>();
+    mRotation = CreateComponent<CRotationComponent>();
+
+    mMovement->SetUpdateComponent(mMesh);
+    mRotation->SetUpdateComponent(mMesh);
+
+    mRotation->SetEnable(false);
+    mRotation->SetVelocityInit(false);
+
+    mRotation->SetMoveZ(1080.f);
+
+    mMovement->SetMoveAxis(EAxis::Y);
+
+    mMovement->SetMoveSpeed(mMaxRange / mReadyTime);
+
     mMesh->SetMesh("CenterRect");
     mMesh->SetShader("ColorMeshShader");
 
-    mMesh->SetWorldScale(0.5f, 0.5f, 1.f);
+    mMesh->SetWorldScale(50.f, 50.f, 1.f);
 
     SetRootComponent(mMesh);
 
     return true;
 }
 
-void CTalonR::Update(float DeltaTime)
+void CTalonR::PreUpdate(float DeltaTime)
 {
-    CSceneObject::Update(DeltaTime);
+    CSceneObject::PreUpdate(DeltaTime);
 
     FVector3D Pos = mMesh->GetWorldPosition();
     FVector3D   Dir = mMesh->GetAxis(EAxis::Y);
@@ -48,52 +65,51 @@ void CTalonR::Update(float DeltaTime)
         mRange = DeltaTime / mReadyTime *
             mMaxRange;
 
-        mMesh->SetWorldPos(Pos + Dir * mRange);
+        //mMesh->SetWorldPos(Pos + Dir * mRange);
 
         if (mTimeAcc >= mReadyTime)
         {
             mTimeAcc -= mReadyTime;
             mState = ETalonRState::Maintain;
+            mRotation->SetEnable(true);
+            mMovement->SetEnable(false);
         }
         break;
     case Maintain:
     {
-        float   Angle = mMesh->GetWorldRotation().z;
+        /*float   Angle = mMesh->GetWorldRotation().z;
 
         Angle += 1080.f * DeltaTime;
 
-        mMesh->SetWorldRotationZ(Angle);
+        mMesh->SetWorldRotationZ(Angle);*/
 
         if (mTimeAcc >= mTime)
         {
             mTimeAcc = 0.f;
             mState = ETalonRState::Reduction;
             SetLifeTime(5.f);
+            mRotation->SetEnable(false);
+            mMovement->SetEnable(true);
+
+            mMovement->SetMoveAxis(EAxis::None);
         }
     }
-        break;
+    break;
     case Reduction:
     {
         Dir = mTarget->GetRootComponent()->GetWorldPosition() -
             mMesh->GetWorldPosition();
         Dir.Normalize();
 
-        mMesh->SetWorldPos(Pos + Dir * 10.f * DeltaTime);
+        mMovement->SetMove(Dir);
+
+        //mMesh->SetWorldPos(Pos + Dir * 10.f * DeltaTime);
     }
-        break;
+    break;
     }
+}
 
-
-
-    /*FVector3D Pos = mRoot->GetWorldPosition();
-
-    Pos += mRoot->GetAxis(EAxis::Y) * mSpeed * DeltaTime;
-
-    mRoot->SetWorldPos(Pos);
-
-    FVector3D Rot = mPivot->GetRelativeRotation();
-
-    Rot.z += DeltaTime * 720.f;
-
-    mPivot->SetRelativeRotationZ(Rot.z);*/
+void CTalonR::Update(float DeltaTime)
+{
+    CSceneObject::Update(DeltaTime);
 }

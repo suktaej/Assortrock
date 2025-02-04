@@ -76,6 +76,15 @@
     <Filter Include="07.Component\NonSceneComponent">
       <UniqueIdentifier>{0923095a-c1b6-488c-9cbe-8d9aa575f33c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="06.Object\Bullet">
+      <UniqueIdentifier>{6296b6f7-d59b-4660-ba2b-d853e6a7c201}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.Object\Actor">
+      <UniqueIdentifier>{365842e3-9690-40b1-a35b-9b486c640875}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Share\Log">
+      <UniqueIdentifier>{9bc52c11-46f2-4d89-abeb-4a6fd601b8e5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -183,9 +192,6 @@
     <ClInclude Include="Shader\CBufferContainer.h">
       <Filter>04.Shader\ConstantBuffer</Filter>
     </ClInclude>
-    <ClInclude Include="Object\PlayerObject.h">
-      <Filter>06.Object</Filter>
-    </ClInclude>
     <ClInclude Include="Component\CameraComponent.h">
       <Filter>07.Component\SceneComponent</Filter>
     </ClInclude>
@@ -193,10 +199,25 @@
       <Filter>05.Scene\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Object\BulletObject.h">
-      <Filter>06.Object</Filter>
+      <Filter>06.Object\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="Object\S3BulletObject.h">
-      <Filter>06.Object</Filter>
+      <Filter>06.Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\S5BulletObject.h">
+      <Filter>06.Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\PlayerObject.h">
+      <Filter>06.Object\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Share\Log.h">
+      <Filter>02.Share\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\RotationComponent.h">
+      <Filter>07.Component\NonSceneComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\MovementComponent.h">
+      <Filter>07.Component\NonSceneComponent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -287,9 +308,6 @@
     <ClCompile Include="Shader\TransformCBuffer.cpp">
       <Filter>04.Shader\ConstantBuffer\Transform</Filter>
     </ClCompile>
-    <ClCompile Include="Object\PlayerObject.cpp">
-      <Filter>06.Object</Filter>
-    </ClCompile>
     <ClCompile Include="Component\CameraComponent.cpp">
       <Filter>07.Component\SceneComponent</Filter>
     </ClCompile>
@@ -297,10 +315,25 @@
       <Filter>05.Scene\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Object\BulletObject.cpp">
-      <Filter>06.Object</Filter>
+      <Filter>06.Object\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="Object\S3BulletObject.cpp">
-      <Filter>06.Object</Filter>
+      <Filter>06.Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\S5BulletObject.cpp">
+      <Filter>06.Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\PlayerObject.cpp">
+      <Filter>06.Object\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Share\Log.cpp">
+      <Filter>02.Share\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\MovementComponent.cpp">
+      <Filter>07.Component\NonSceneComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\RotationComponent.cpp">
+      <Filter>07.Component\NonSceneComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

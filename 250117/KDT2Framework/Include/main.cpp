@@ -17,7 +17,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     CObject* Obj1 = ptr;*/
 
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-    //_CrtSetBreakAlloc(215);
+    //_CrtSetBreakAlloc(874);
 
     if (!CGameManager::GetInst()->Init(hInstance))
     {

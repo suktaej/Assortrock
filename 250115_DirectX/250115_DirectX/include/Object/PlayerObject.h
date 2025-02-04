@@ -1,5 +1,13 @@
 #pragma once
 #include "SceneObject.h"
+
+enum class ESkillState
+{
+    Expansion,
+    Maintain,
+    Reduction
+};
+
 class CPlayerObject :
     public CSceneObject
 {
@@ -25,6 +33,14 @@ protected:
     float mSkill2TimeAcc = 0.f;
     float mSkill2TimeInterval = 0.2f;
 
+    bool mSkill4Enable = false;
+    float mSkill4Time = 3.f;
+    float mSkill4TimeAcc = 0.f;
+    float mSkill4ReadyTime = 2.f;
+    float mSkill4MaxRange = 4.f;
+    float mSkill4Range = 2.f;
+    float mSkill4RangeLength = 2.f;
+    ESkillState mSkill4State = ESkillState::Expansion;
 public:
     bool Init() override;
     void Update(float DeltaTime) override;
@@ -43,5 +59,8 @@ private:
     void UpdateSkill2(float DeltaTime);
     
     void Skill3(float DeltaTime);
+    void Skill4(float DeltaTime);
+    void UpdateSkill4(float DeltaTime);
+    void Skill5(float DeltaTime);
 };
 

@@ -404,5 +404,25 @@ struct FVector2D
 		return v1.Length();
 	}
 
+	float GetAngle(const FVector2D& v)	const
+	{
+		FVector2D	v1 = *this;
+		FVector2D	v2 = v;
+
+		v1.Normalize();
+		v2.Normalize();
+
+		float Angle = v1.Dot(v2);
+
+		Angle = DirectX::XMConvertToDegrees(acosf(Angle));
+
+		return Angle;
+	}
+
+	static float GetAngle(const FVector2D& v1, const FVector2D& v2)
+	{
+		return 0.f;
+	}
+
 #pragma endregion Function
 };

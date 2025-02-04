@@ -22,7 +22,11 @@ protected:
 
 protected:
     CSharedPtr<class CStaticMeshComponent>  mMesh;
-    float   mSpeed = 2.f;
+
+    CSharedPtr<class CMovementComponent>    mMovement;
+    CSharedPtr<class CRotationComponent>    mRotation;
+
+    float   mSpeed = 400.f;
     ETalonRState    mState = ETalonRState::Expansion;
     CSharedPtr<CSceneObject> mTarget;
 
@@ -30,8 +34,8 @@ protected:
     float           mTimeAcc = 0.f;
     float           mReadyTime = 0.3f;
     float           mRange = 0.f;
-    float           mMaxRange = 4.f;
-    float           mRangeLength = 2.f;
+    float           mMaxRange = 300.f;
+    float           mRangeLength = 75.f;
 
 public:
     void SetTarget(CSceneObject* Target)
@@ -46,6 +50,7 @@ public:
 
 public:
     virtual bool Init();
+    virtual void PreUpdate(float DeltaTime);
     virtual void Update(float DeltaTime);
 };
 

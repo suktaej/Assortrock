@@ -5,6 +5,7 @@
 
 enum class EAxis
 {
+	None = -1,
 	X,
 	Y,
 	Z,

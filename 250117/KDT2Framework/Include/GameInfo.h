@@ -7,6 +7,7 @@
 #include <crtdbg.h>
 #include <string>
 #include <functional>
+#include <iostream>
 
 #include <d3d11.h>
 #include <d3dcompiler.h>
@@ -131,5 +132,22 @@ struct FVertexColor
 		Color(r, g, b, a)
 	{
 	}
+};
+
+enum class EColliderType : unsigned char
+{
+	Colider2D,
+	Colider3D
+};
+
+enum class EColliderShape : unsigned char
+{
+	AABB2D
+};
+
+struct FAABB2D
+{
+	FVector2D	Min;
+	FVector2D	Max;
 };
 

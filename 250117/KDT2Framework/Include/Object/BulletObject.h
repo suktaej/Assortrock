@@ -15,7 +15,9 @@ protected:
 
 protected:
     CSharedPtr<class CStaticMeshComponent>  mRoot;
-    float   mSpeed = 2.f;
+    CSharedPtr<class CColliderAABB2D>       mBody;
+    CSharedPtr<class CMovementComponent>    mMovement;
+    float   mSpeed = 400.f;
 
 public:
     void SetSpeed(float Speed)
