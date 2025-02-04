@@ -505,9 +505,9 @@ void CSceneComponent::SetWorldPos(const FVector3D& Pos)
 void CSceneComponent::SetWorldPos(float x, float y, float z) 
 { SetWorldPos(FVector3D(x, y, z)); }
 void CSceneComponent::SetWorldPos(const FVector2D& Pos)
-{ SetRelativeRotation(FVector3D(Pos.x, Pos.y, m_RelativePos.z)); }
+{ SetWorldPos(FVector3D(Pos.x, Pos.y, m_WorldPos.z)); }
  void CSceneComponent::SetWorldPos(float x, float y)
-{ SetRelativeRotation(FVector3D(x, y, m_RelativePos.z)); }
+{ SetWorldPos(FVector3D(x, y, m_WorldPos.z)); }
 #pragma endregion WorldPos
 
 #pragma region AddFunc

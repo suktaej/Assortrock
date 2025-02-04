@@ -85,6 +85,9 @@
     <Filter Include="02.Share\Log">
       <UniqueIdentifier>{9bc52c11-46f2-4d89-abeb-4a6fd601b8e5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="06.Object\Monster">
+      <UniqueIdentifier>{1e556a84-3db3-4433-91be-3c584face432}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -219,6 +222,15 @@
     <ClInclude Include="Component\MovementComponent.h">
       <Filter>07.Component\NonSceneComponent</Filter>
     </ClInclude>
+    <ClInclude Include="Object\MonsterObject.h">
+      <Filter>06.Object\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\GunnerMonster.h">
+      <Filter>06.Object\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\NearingMonster.h">
+      <Filter>06.Object\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -334,6 +346,15 @@
     </ClCompile>
     <ClCompile Include="Component\RotationComponent.cpp">
       <Filter>07.Component\NonSceneComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\MonsterObject.cpp">
+      <Filter>06.Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\GunnerMonster.cpp">
+      <Filter>06.Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\NearingMonster.cpp">
+      <Filter>06.Object\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

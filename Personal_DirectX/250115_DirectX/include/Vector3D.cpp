@@ -522,8 +522,7 @@ float FVector3D::GetAngle(const FVector3D& v) const
 	return Angle;
 }
 
-float FVector3D::GetViewTargetAngle(const FVector3D& v,
-	EAxis AxisType)	const
+float FVector3D::GetViewTargetAngle(const FVector3D& v, EAxis AxisType)	const
 {
 	FVector3D	v1 = Axis[static_cast<int>(AxisType)];
 	FVector3D	v2 = v - *this;
