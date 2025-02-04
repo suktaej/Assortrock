@@ -64,13 +64,9 @@ void CRotationComponent::Update(float DeltaTime)
         else
         {
             if (mVelocity.Length() > 0.f)
-            {
                 mRotationStep = mVelocity * DeltaTime;
-            }
-
+            
             mUpdateComponent->AddWorldRotation(mRotationStep);
-
-            //mUpdateComponent->AddWorldPos(mMoveStep);
         }
     }
 }

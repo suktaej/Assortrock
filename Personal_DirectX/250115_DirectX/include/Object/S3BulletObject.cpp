@@ -50,7 +50,7 @@ void CS3BulletObject::Update(float DeltaTime)
     mRoot->SetWorldPos(Pos);
     
     FVector3D Rot = mPivot->GetRelativeRotation();
-    Rot.z += DeltaTime * 360.f;
+    Rot.z += DeltaTime * 720.f;
     mPivot->SetRelativeRotationZ(Rot.z);
 }
 

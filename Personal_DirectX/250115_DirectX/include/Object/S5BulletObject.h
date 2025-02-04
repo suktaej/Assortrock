@@ -27,13 +27,13 @@ protected:
      
     ESkill5State mState = ESkill5State::Expansion;
 
-    float mSpeed = 4.f;
+    float mSpeed = 400.f;
     float mTime = 3.f;
     float mTimeAcc = 0.f;
-    float mReadyTime = 1.f;
-    float mMaxRange = 4.f;
+    float mReadyTime = 0.3f;
+    float mMaxRange = 300.f;
     float mRange = 0.f;
-    float mRangeLength = 2.f;
+    float mRangeLength = 75.f;
 public:
     void SetSpeed(float Speed) { mSpeed = Speed; }
     void SetTarget(CSceneObject* Target) { mTarget = Target; }

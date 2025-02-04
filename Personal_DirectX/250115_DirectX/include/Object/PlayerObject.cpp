@@ -5,6 +5,9 @@
 #include "BulletObject.h"
 #include "S3BulletObject.h"
 #include "S5BulletObject.h"
+#include "../Component/MovementComponent.h"
+#include "../Component/RotationComponent.h"
+#include "../Component/CameraComponent.h"
 
 CPlayerObject::CPlayerObject()
 {
@@ -30,22 +33,43 @@ bool CPlayerObject::Init()
     mRoot = CreateComponent<CStaticMeshComponent>();
     mSub = CreateComponent<CStaticMeshComponent>();
     mRotationPivot = CreateComponent<CSceneComponent>();
+    mMovement = CreateComponent<CMovementComponent>();
+    mRotation = CreateComponent<CRotationComponent>();
+    mCamera = CreateComponent<CCameraComponent>();
+
     //mRoot 설정
     mRoot->SetMesh("CenterRect");
     mRoot->SetShader("ColorMeshShader");
-
-    mRoot->SetWorldPos(0.f, 0.f, 5.5f);
+    
+    mRoot->SetWorldPos(0.f, 0.f, 0.f);
+    mRoot->SetWorldScale(100.f,100.f,1.f);
     
     SetRootComponent(mRoot);
+
+    //무브번트가 루트를 움직이기 위해서 update함수를 호출하여 사용
+    mMovement->SetUpdateComponent(mRoot);
+    //직교투영으로 변하면서 픽셀단위 움직임으로 변경됨
+    mMovement->SetMoveSpeed(200.f);
+
+    mRotation->SetUpdateComponent(mRotationPivot);
+    //Velocity 초기화X
+    mRotation->SetVelocityInit(false);
+    mRotation->SetMoveZ(360.f);
 
     mRoot->AddChild(mRotationPivot);    
     //mRotationPivot 설정
     mRotationPivot->AddChild(mSub);
 
+    //카메라 설정을 직교투영
+    mCamera->SetProjectionType(ECameraProjectionType::Ortho);
+    mRoot->AddChild(mCamera);
+
     //mSub 설정
     mSub->SetMesh("CenterRect");
     mSub->SetShader("ColorMeshShader");
-    
+   
+    //직교투영으로 변하며 상대스케일 값은 부모의 월드 스케일을 곱해서 최종 스케일이 도출
+    //월드 스케일로 직접 지정해도 무관
     mSub->SetRelativeScale(0.5f, 0.5f, 1.f);
     mSub->SetRelativePos(-mSkill4Range, 0.f, 0.f);
        
@@ -146,9 +170,10 @@ void CPlayerObject::Update(float DeltaTime)
 {
     CSceneObject::Update(DeltaTime);
 
-    FVector3D Rot = mRotationPivot->GetRelativeRotation();
-    Rot.z += DeltaTime * mPivotRotationSpeed;
-    mRotationPivot->SetRelativeRotationZ(Rot.z);
+    //RotationComponent 삽입으로 기능 제거
+    //FVector3D Rot = mRotationPivot->GetRelativeRotation();
+    //Rot.z += DeltaTime * mPivotRotationSpeed;
+    //mRotationPivot->SetRelativeRotationZ(Rot.z);
 
     if (mSkill2Enable)
         UpdateSkill2(DeltaTime);
@@ -160,18 +185,20 @@ void CPlayerObject::Update(float DeltaTime)
 #pragma region movement
 void CPlayerObject::MoveUp(float DeltaTime)
 {
-    FVector3D Pos = mRootComponent->GetWorldPosition();
-    FVector3D Dir = mRootComponent->GetAxis(EAxis::Y);
+    mMovement->AddMove(mRootComponent->GetAxis(EAxis::Y));
+    //FVector3D Pos = mRootComponent->GetWorldPosition();
+    //FVector3D Dir = mRootComponent->GetAxis(EAxis::Y);
 
-    mRootComponent->SetWorldPos(Pos + Dir * 3.f*DeltaTime);
+    //mRootComponent->SetWorldPos(Pos + Dir * 3.f*DeltaTime);
 }
 
 void CPlayerObject::MoveDown(float DeltaTime)
 {
-    FVector3D Pos = mRootComponent->GetWorldPosition();
-    FVector3D Dir = mRootComponent->GetAxis(EAxis::Y);
+    mMovement->AddMove(mRootComponent->GetAxis(EAxis::Y) * -1.f);
+    //FVector3D Pos = mRootComponent->GetWorldPosition();
+    //FVector3D Dir = mRootComponent->GetAxis(EAxis::Y);
 
-    mRootComponent->SetWorldPos(Pos + Dir* -1 * 3.f* DeltaTime);
+    //mRootComponent->SetWorldPos(Pos + Dir* -1 * 3.f* DeltaTime);
 }
 
 void CPlayerObject::RotationZ(float DeltaTime)
@@ -199,7 +226,7 @@ void CPlayerObject::Fire(float DeltaTime)
     FVector3D Pos = mRoot->GetWorldPosition();
     FVector3D Dir = mRoot->GetAxis(EAxis::Y);
 
-    //Root->SetWorldScale(50.f, 50.f);
+    Root->SetWorldScale(50.f, 50.f);
     Root->SetWorldRotation(mRoot->GetWorldRotation());
     Root->SetWorldPos(Pos + Dir);
 
@@ -324,6 +351,9 @@ void CPlayerObject::UpdateSkill4(float DeltaTime)
     switch (mSkill4State)
     {
     case ESkillState::Expansion:
+		// DeltaTime / mSkill4ReadyTime 을 하게 되면 확장되는 2초라는
+        // 시간에 대해서 현재 DeltaTime이 몇퍼센트의 시간이 흘렀는지를
+        // 구해낸다.
         mSkill4Range += DeltaTime / mSkill4ReadyTime * mSkill4RangeLength;
 
         if (mSkill4TimeAcc >= mSkill4ReadyTime)
@@ -371,6 +401,8 @@ void CPlayerObject::Skill5(float DeltaTime)
     for (int i = 0;i < 8;i++)
     {
         CS5BulletObject* Bullet = mScene->CreateObj<CS5BulletObject>("Bullet");
+
+        Bullet->SetTarget(this);
 
         CSceneComponent* Root = Bullet->GetRootComponent();
 

@@ -10,6 +10,8 @@ enum class ECameraProjectionType
 class CCameraComponent :
     public CSceneComponent
 {
+	friend class CScene;
+	friend class CSceneObject;
 protected:
 	CCameraComponent();
 	CCameraComponent(const CSceneComponent& Com);

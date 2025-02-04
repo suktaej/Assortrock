@@ -13,7 +13,8 @@ protected:
     virtual ~CBulletObject();
 protected:
     CSharedPtr<class CStaticMeshComponent>  mRoot;
-    float   mSpeed = 4.f;        
+    CSharedPtr<class CMovementComponent>  mMovement;
+    float   mSpeed = 400.f;
 public:
     void SetSpeed(float Speed) { mSpeed = Speed; }
 public:

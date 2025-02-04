@@ -13,7 +13,7 @@ protected:
     CSharedPtr<class CSceneComponent>  mRoot;
     CSharedPtr<class CSceneComponent>  mPivot;
     CSharedPtr<class CStaticMeshComponent>  mMesh;
-    float   mSpeed = 4.f;
+    float   mSpeed = 400.f;
 public:
     void SetSpeed(float Speed) { mSpeed = Speed; }
 public:

@@ -76,15 +76,16 @@ void CMeshComponent::Render()
     //최종 월드행렬을 생성하여 가지고 있을 수 있도록
 
     //임시객체
-    FMatrix matProj = DirectX::XMMatrixPerspectiveFovLH( DirectX::XMConvertToRadians(90.f), 1280.f / 720.f, 0.5f, 1000.f);
-
-    //카메라 메니져 적용
-    //FMatrix matView = m_Scene->GetCameraManager()->GetViewMatrix();
-    //FMatrix matProj = m_Scene->GetCameraManager()->GetProjMatrix();
-    //m_TransformCBuffer->SetViewMatrix(matView);
+    //FMatrix matProj = DirectX::XMMatrixPerspectiveFovLH( DirectX::XMConvertToRadians(90.f), 1280.f / 720.f, 0.5f, 1000.f);
     //m_TransformCBuffer->SetProjMatrix(matProj);
 
+    //카메라 메니져 적용
+    FMatrix matView = m_Scene->GetCameraManager()->GetViewMatrix();
+    FMatrix matProj = m_Scene->GetCameraManager()->GetProjMatrix();
+
+    m_TransformCBuffer->SetViewMatrix(matView);
     m_TransformCBuffer->SetProjMatrix(matProj);
+
     m_TransformCBuffer->UpdateBuffer();
 }
 

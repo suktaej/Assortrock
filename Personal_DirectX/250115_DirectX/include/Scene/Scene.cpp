@@ -57,7 +57,7 @@ void CScene::PreUpdate(float DeltaTime)
 			iterEnd = mObjList.end();
             continue;
         }
-        else if ((*iter)->IsEnable())
+        else if (!(*iter)->IsEnable())
         {
             iter++;
             continue;
@@ -93,7 +93,6 @@ void CScene::Update(float DeltaTime)
 
 		++iter;
 	}
-
 	mCameraManager->Update(DeltaTime);
 }
 

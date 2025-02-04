@@ -12,63 +12,37 @@ protected:
 	CMovementComponent();
 	CMovementComponent(const CMovementComponent& Com);
 	CMovementComponent(CMovementComponent&& Com);
-	virtual ~CMovementComponent();
+	~CMovementComponent() override;
 
 protected:
-	CSharedPtr<class CSceneComponent>	mUpdateComponent;
-	EAxis		mMoveAxis = EAxis::None;
+	CSharedPtr<class CSceneComponent> mUpdateComponent;
+	EAxis mMoveAxis = EAxis::None;
 
-protected:
-	FVector3D		mVelocity;
-	FVector3D		mMoveStep;
-	float			mSpeed = 1.f;
-	bool			mVelocityInit = true;
+	FVector3D mVelocity;
+	FVector3D mMoveStep;
 
-public:
-	const FVector3D& GetMoveStep()	const
-	{
-		return mMoveStep;
-	}
-
-	float GetMoveDistance()	const
-	{
-		return mMoveStep.Length();
-	}
+	float mSpeed = 1.f;
+	bool mVelocityInit = true;
 
 public:
-	void SetUpdateComponent(class CSceneComponent* Target);
-	void SetMoveSpeed(float Speed)
-	{
-		mSpeed = Speed;
-	}
+	//업데이트 컴포넌트 지정
+	void SetUpdateComponent(class CSceneComponent* Target){ mUpdateComponent = Target; }
 
-	void AddMove(const FVector3D& Dir)
-	{
-		mVelocity += Dir;
-	}
+	const FVector3D& GetMoveStep()	const { return mMoveStep; }
+	float GetMoveDistance()	const { return mMoveStep.Length(); }
 
-	void SetMove(const FVector3D& Dir)
-	{
-		mVelocity = Dir;
-	}
-
-	void SetVelocityInit(bool VelocityInit)
-	{
-		mVelocityInit = VelocityInit;
-	}
-
-	void SetMoveAxis(EAxis Axis)
-	{
-		mMoveAxis = Axis;
-	}
-
+	void SetMoveSpeed(float Speed) { mSpeed = Speed; }
+	void AddMove(const FVector3D& Dir) { mVelocity += Dir; }
+	void SetMove(const FVector3D& Dir) { mVelocity = Dir; }
+	void SetVelocityInit(bool VelocityInit) { mVelocityInit = VelocityInit; }
+	void SetMoveAxis(EAxis Axis) { mMoveAxis = Axis; }
 public:
-	virtual bool Init();
-	virtual bool Init(const char* FileName);
-	virtual void PreUpdate(float DeltaTime);
-	virtual void Update(float DeltaTime);
-	virtual void PostUpdate(float DeltaTime);
-	virtual void PostRender();
-	virtual CMovementComponent* Clone();
+	 bool Init() override;
+	 bool Init(const char* FileName) override;
+	 void PreUpdate(float DeltaTime) override;
+	 void Update(float DeltaTime) override;
+	 void PostUpdate(float DeltaTime) override;
+	 void PostRender() override;
+	 CMovementComponent* Clone() override;
 };
 

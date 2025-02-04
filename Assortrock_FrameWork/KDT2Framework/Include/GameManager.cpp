@@ -226,7 +226,7 @@ bool CGameManager::Create()
     // 이렇게 윈도우를 생성하면 윈도우 핸들을 만들어준다.
     // 잘못된 생성일 경우 0을 반환한다.
     mhWnd = CreateWindowW(mClassName, mTitleName, WS_OVERLAPPEDWINDOW,
-        -1700, 100, 1280, 720, nullptr, nullptr, mhInst, nullptr);
+        100, 100, 1280, 720, nullptr, nullptr, mhInst, nullptr);
 
     if (!mhWnd)
     {
@@ -241,7 +241,7 @@ bool CGameManager::Create()
     // (ThickFrame, Menu, TitleBar 등이 포함된 전체크기)
     AdjustWindowRect(&WindowRC, WS_OVERLAPPEDWINDOW, FALSE);
 
-    SetWindowPos(mhWnd, HWND_TOPMOST, -1700, 100, WindowRC.right - WindowRC.left,
+    SetWindowPos(mhWnd, HWND_TOPMOST, 100, 100, WindowRC.right - WindowRC.left,
         WindowRC.bottom - WindowRC.top, SWP_NOMOVE | SWP_NOZORDER);
 
     // 위에서 윈도우 창을 만들었다면 ShowWindow 함수를 이용해서 창을 보여줄지 숨길지를
