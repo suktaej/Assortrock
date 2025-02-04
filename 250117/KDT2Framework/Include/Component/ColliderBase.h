@@ -19,8 +19,14 @@ protected:
 	EColliderShape	mColliderShape;
 	FVector3D		mMin;
 	FVector3D		mMax;
+	FCollisionProfile* mProfile = nullptr;
 
 public:
+	FCollisionProfile* GetProfile()	const
+	{
+		return mProfile;
+	}
+
 	EColliderType GetColliderType()	const
 	{
 		return mColliderType;
@@ -35,6 +41,9 @@ public:
 	{
 		return mMax;
 	}
+
+public:
+	void SetCollisionProfile(const std::string& Name);
 
 public:
 	virtual bool Init();

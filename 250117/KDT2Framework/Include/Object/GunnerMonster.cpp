@@ -58,6 +58,8 @@ void CGunnerMonster::Update(float DeltaTime)
 
         CBulletObject* Bullet = mScene->CreateObj<CBulletObject>("Bullet");
 
+        Bullet->SetBulletCollisionProfile("MonsterAttack");
+
         CSceneComponent* Root = Bullet->GetRootComponent();
 
         FVector3D Pos = mRoot->GetWorldPosition();
@@ -74,6 +76,8 @@ void CGunnerMonster::Update(float DeltaTime)
             mFireCount = 0;
             Bullet = mScene->CreateObj<CBulletObject>("Bullet");
 
+            Bullet->SetBulletCollisionProfile("MonsterAttack");
+
             Root = Bullet->GetRootComponent();
 
             Pos = mRoot->GetWorldPosition();
@@ -88,6 +92,8 @@ void CGunnerMonster::Update(float DeltaTime)
 
 
             Bullet = mScene->CreateObj<CBulletObject>("Bullet");
+
+            Bullet->SetBulletCollisionProfile("MonsterAttack");
 
             Root = Bullet->GetRootComponent();
 

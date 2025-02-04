@@ -49,7 +49,8 @@ bool CPlayerObject::Init()
     mRoot->SetWorldScale(100.f, 100.f, 1.f);
 
     SetRootComponent(mRoot);
-
+    
+    mBody->SetCollisionProfile("Player");
     mBody->SetBoxSize(100.f, 100.f);
 
     mRoot->AddChild(mBody);
@@ -198,6 +199,8 @@ void CPlayerObject::RotationZInv(float DeltaTime)
 void CPlayerObject::Fire(float DeltaTime)
 {
     CBulletObject* Bullet = mScene->CreateObj<CBulletObject>("Bullet");
+
+    Bullet->SetBulletCollisionProfile("PlayerAttack");
 
     CSceneComponent* Root = Bullet->GetRootComponent();
 

@@ -21,6 +21,12 @@ CBulletObject::~CBulletObject()
 {
 }
 
+void CBulletObject::SetBulletCollisionProfile(
+    const std::string& Name)
+{
+    mBody->SetCollisionProfile(Name);
+}
+
 bool CBulletObject::Init()
 {
     mRoot = CreateComponent<CStaticMeshComponent>();

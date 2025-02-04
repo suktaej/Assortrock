@@ -25,6 +25,8 @@ public:
         mSpeed = Speed;
     }
 
+    void SetBulletCollisionProfile(const std::string& Name);
+
 public:
     virtual bool Init();
     virtual void Update(float DeltaTime);

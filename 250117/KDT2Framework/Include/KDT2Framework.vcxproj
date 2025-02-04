@@ -171,6 +171,7 @@
     <ClCompile Include="Object\SceneObject.cpp" />
     <ClCompile Include="Object\TalonR.cpp" />
     <ClCompile Include="Object\TornadoBullet.cpp" />
+    <ClCompile Include="ProfileManager.cpp" />
     <ClCompile Include="Scene\CameraManager.cpp" />
     <ClCompile Include="Scene\CollisionQuadTree.cpp" />
     <ClCompile Include="Scene\Input.cpp" />
@@ -222,6 +223,7 @@
     <ClInclude Include="Object\SceneObject.h" />
     <ClInclude Include="Object\TalonR.h" />
     <ClInclude Include="Object\TornadoBullet.h" />
+    <ClInclude Include="ProfileManager.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scene\CameraManager.h" />
     <ClInclude Include="Scene\CollisionQuadTree.h" />

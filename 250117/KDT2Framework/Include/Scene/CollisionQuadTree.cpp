@@ -161,6 +161,74 @@ void CCollisionQuadTreeNode::CreateChild(
 
 void CCollisionQuadTreeNode::Collision(float DeltaTime)
 {
+	size_t	Size = mColliderList.size();
+
+	for (size_t i = 0; i < Size - 1;)
+	{
+		if (!mColliderList[i]->IsActive())
+		{
+			if (i < Size - 1)
+			{
+				mColliderList[i] = mColliderList[Size - 1];
+			}
+			mColliderList.pop_back();
+			--Size;
+			continue;
+		}
+
+		else if (!mColliderList[i]->IsEnable())
+		{
+			++i;
+			continue;
+		}
+
+		FCollisionProfile* SrcProfile = mColliderList[i]->GetProfile();
+
+		if (!SrcProfile->Enable)
+		{
+			++i;
+			continue;
+		}
+
+		for (size_t j = i + 1; j < Size;)
+		{
+			if (!mColliderList[j]->IsActive())
+			{
+				if (j < Size - 1)
+				{
+					mColliderList[j] = mColliderList[Size - 1];
+				}
+				mColliderList.pop_back();
+				--Size;
+				continue;
+			}
+
+			else if (!mColliderList[j]->IsEnable())
+			{
+				++j;
+				continue;
+			}
+
+			FCollisionProfile* DestProfile = mColliderList[j]->GetProfile();
+
+			if (!DestProfile->Enable)
+			{
+				++j;
+				continue;
+			}
+
+			// Src와 Dest가 상호간에 Collision으로 되어 있는지를
+			// 판단한다.
+			else if(SrcProfile->Interaction[DestProfile->Channel] == ECollisionInteraction::Ignore ||
+				DestProfile->Interaction[SrcProfile->Channel] == ECollisionInteraction::Ignore)
+			{
+				++j;
+				continue;
+			}
+
+			// 실제 충돌처리를 진행한다.
+		}
+	}
 }
 
 void CCollisionQuadTreeNode::ReturnNodePool(
@@ -341,7 +409,11 @@ void CCollisionQuadTree::Collision(float DeltaTime)
 
 void CCollisionQuadTree::Render()
 {
+#ifdef _DEBUG
+
 	mRoot->Render(mMesh, mShader);
+
+#endif // _DEBUG
 }
 
 void CCollisionQuadTree::ReturnNodePool()

@@ -109,6 +109,9 @@
     <Filter Include="04. Shader\02. Shader Class\02. FrameMesh">
       <UniqueIdentifier>{75870eab-432c-4be3-b04b-e462cf1842fa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. GameManager\02. ProfileManager">
+      <UniqueIdentifier>{c7537ac7-745f-4a26-9c0c-b9f960b07668}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -251,6 +254,9 @@
     </ClCompile>
     <ClCompile Include="Shader\FrameMeshShader.cpp">
       <Filter>04. Shader\02. Shader Class\02. FrameMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="ProfileManager.cpp">
+      <Filter>01. GameManager\02. ProfileManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -412,6 +418,9 @@
     </ClInclude>
     <ClInclude Include="Shader\FrameMeshShader.h">
       <Filter>04. Shader\02. Shader Class\02. FrameMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="ProfileManager.h">
+      <Filter>01. GameManager\02. ProfileManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

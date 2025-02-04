@@ -151,3 +151,59 @@ struct FAABB2D
 	FVector2D	Max;
 };
 
+namespace ECollisionChannel
+{
+	enum Type : unsigned char
+	{
+		Default,
+		Player,
+		Monster,
+		PlayerAttack,
+		MonsterAttack,
+		End
+	};
+}
+
+namespace ECollisionInteraction
+{
+	enum Type : unsigned char
+	{
+		Ignore,			// 충돌 무시
+		Collision,		// 충돌
+		End
+	};
+}
+
+/*
+플레이어 프로파일을 만들고 채널을 Player로 지정했다.
+이때 다른 채널을 사용하는 프로파일과 충돌해야 할지 여부를
+판단하기 위해서 충돌상호작용이 다른 채널과 어떻게 되어 있는지를
+저장해야 한다.
+
+1번프로파일 정보
+Channel : Player
+Enable : true
+Iteraction[Default] = Collision;
+Iteraction[Player] = Collision;
+Iteraction[Monster] = Collision;
+Iteraction[PlayerAttack] = Ignore;
+Iteraction[MonsterAttack] = Ignore;
+
+2번프로파일 정보
+Channel : MonsterAttack
+Enable : true
+Iteraction[Default] = Collision;
+Iteraction[Player] = Collision;
+Iteraction[Monster] = Ignore;
+Iteraction[PlayerAttack] = Ignore;
+Iteraction[MonsterAttack] = Ignore;
+*/
+struct FCollisionProfile
+{
+	std::string		Name;
+	// 현재 프로파일이 사용하는 충돌채널
+	ECollisionChannel::Type	Channel = ECollisionChannel::Default;
+	bool			Enable = true;
+	ECollisionInteraction::Type	Interaction[ECollisionChannel::End];
+};
+

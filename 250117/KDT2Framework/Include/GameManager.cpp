@@ -10,6 +10,7 @@
 #include "Shader/TransformCBuffer.h"
 #include "Scene/SceneManager.h"
 #include "Share/Log.h"
+#include "ProfileManager.h"
 
 DEFINITION_SINGLE(CGameManager)
 
@@ -21,6 +22,8 @@ CGameManager::CGameManager()
 
 CGameManager::~CGameManager()
 {
+    CProfileManager::DestroyInst();
+
     CSceneManager::DestroyInst();
 
     CAssetManager::DestroyInst();
@@ -63,6 +66,10 @@ bool CGameManager::Init(HINSTANCE hInst)
 
     // 애셋 관리자 초기화
     if (!CAssetManager::GetInst()->Init())
+        return false;
+
+    // Profile 관리자 초기화
+    if (!CProfileManager::GetInst()->Init())
         return false;
 
     // 타이머 초기화
