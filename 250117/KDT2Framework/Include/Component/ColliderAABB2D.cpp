@@ -1,4 +1,8 @@
 #include "ColliderAABB2D.h"
+#include "../Collision.h"
+#include "../Asset/Mesh/Mesh.h"
+#include "../Asset/AssetManager.h"
+#include "../Asset/Mesh/MeshManager.h"
 
 CColliderAABB2D::CColliderAABB2D()
 {
@@ -36,6 +40,13 @@ bool CColliderAABB2D::Init()
     if (!CColliderBase::Init())
         return false;
 
+#ifdef _DEBUG
+
+    mMesh = CAssetManager::GetInst()->GetMeshManager()->FindMesh("FrameCenterRect");
+
+#endif // _DEBUG
+
+
     return true;
 }
 
@@ -66,6 +77,8 @@ void CColliderAABB2D::Update(float DeltaTime)
     mMin.y = mAABB.Min.y;
     mMax.x = mAABB.Max.x;
     mMax.y = mAABB.Max.y;
+
+    SetWorldScale(mBoxSize);
 }
 
 void CColliderAABB2D::PostUpdate(float DeltaTime)
@@ -96,5 +109,21 @@ void CColliderAABB2D::PostRender()
 CColliderAABB2D* CColliderAABB2D::Clone()
 {
     return new CColliderAABB2D(*this);
+}
+
+bool CColliderAABB2D::Collision(FVector3D& HitPoint, 
+    CColliderBase* Dest)
+{
+    if (Dest->GetColliderType() == EColliderType::Colider3D)
+        return false;
+
+    switch (Dest->GetColliderShape())
+    {
+    case EColliderShape::AABB2D:
+        return CCollision::CollisionAABB2DToAABB2D(HitPoint,
+            this, (CColliderAABB2D*)Dest);
+    }
+
+    return false;
 }
 

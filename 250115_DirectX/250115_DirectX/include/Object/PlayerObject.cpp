@@ -64,6 +64,7 @@ bool CPlayerObject::Init()
     mScene->GetInput()->AddBindKey("Skill2", '2');
     mScene->GetInput()->AddBindKey("Skill3", '3');
     mScene->GetInput()->AddBindKey("Skill4", '4');
+    //5번스킬 수정
     mScene->GetInput()->AddBindKey("Skill5", '5');
 
     //Bind

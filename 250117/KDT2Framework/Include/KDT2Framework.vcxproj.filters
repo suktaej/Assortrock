@@ -112,6 +112,12 @@
     <Filter Include="01. GameManager\02. ProfileManager">
       <UniqueIdentifier>{c7537ac7-745f-4a26-9c0c-b9f960b07668}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. GameManager\03. Collision">
+      <UniqueIdentifier>{6ee9e3b6-52d8-443d-8568-85a257d9882b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Shader\03. ConstantBuffer\02. Collider">
+      <UniqueIdentifier>{7b4ab8dd-c923-4392-948d-cbc5d1cc75bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -257,6 +263,12 @@
     </ClCompile>
     <ClCompile Include="ProfileManager.cpp">
       <Filter>01. GameManager\02. ProfileManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>01. GameManager\03. Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\ColliderCBuffer.cpp">
+      <Filter>04. Shader\03. ConstantBuffer\02. Collider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -421,6 +433,12 @@
     </ClInclude>
     <ClInclude Include="ProfileManager.h">
       <Filter>01. GameManager\02. ProfileManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>01. GameManager\03. Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\ColliderCBuffer.h">
+      <Filter>04. Shader\03. ConstantBuffer\02. Collider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

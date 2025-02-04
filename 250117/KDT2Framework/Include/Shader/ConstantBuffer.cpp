@@ -14,7 +14,7 @@ bool CConstantBuffer::Init(int Size, int Register,
     int ShaderBufferType)
 {
     mSize = Size;
-    mRegister = 0;
+    mRegister = Register;
     mShaderBufferType = ShaderBufferType;
 
     D3D11_BUFFER_DESC   Desc = {};

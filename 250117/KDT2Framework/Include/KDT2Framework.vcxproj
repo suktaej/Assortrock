@@ -150,6 +150,7 @@
     <ClCompile Include="Asset\Mesh\Mesh.cpp" />
     <ClCompile Include="Asset\Mesh\MeshManager.cpp" />
     <ClCompile Include="Asset\Mesh\StaticMesh.cpp" />
+    <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Component\CameraComponent.cpp" />
     <ClCompile Include="Component\ColliderAABB2D.cpp" />
     <ClCompile Include="Component\ColliderBase.cpp" />
@@ -179,6 +180,7 @@
     <ClCompile Include="Scene\SceneCollision.cpp" />
     <ClCompile Include="Scene\SceneMain.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
+    <ClCompile Include="Shader\ColliderCBuffer.cpp" />
     <ClCompile Include="Shader\ColorMeshShader.cpp" />
     <ClCompile Include="Shader\ComputeShader.cpp" />
     <ClCompile Include="Shader\ConstantBuffer.cpp" />
@@ -200,6 +202,7 @@
     <ClInclude Include="Asset\Mesh\Mesh.h" />
     <ClInclude Include="Asset\Mesh\MeshManager.h" />
     <ClInclude Include="Asset\Mesh\StaticMesh.h" />
+    <ClInclude Include="Collision.h" />
     <ClInclude Include="Component\CameraComponent.h" />
     <ClInclude Include="Component\ColliderAABB2D.h" />
     <ClInclude Include="Component\ColliderBase.h" />
@@ -233,6 +236,7 @@
     <ClInclude Include="Scene\SceneMain.h" />
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Shader\CBufferContainer.h" />
+    <ClInclude Include="Shader\ColliderCBuffer.h" />
     <ClInclude Include="Shader\ColorMeshShader.h" />
     <ClInclude Include="Shader\ComputeShader.h" />
     <ClInclude Include="Shader\ConstantBuffer.h" />

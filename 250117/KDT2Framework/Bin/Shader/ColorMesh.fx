@@ -1,6 +1,11 @@
 
 #include "Share.fx"
 
+cbuffer Collider : register(b1)
+{
+    float4 ColliderColor;
+};
+
 struct VS_Input_Color
 {
     float3 Pos : POSITION;
@@ -53,7 +58,7 @@ PS_Output_Single FrameMeshPS(float4 Pos : SV_POSITION)
 {
     PS_Output_Single output = (PS_Output_Single) 0;
     
-    output.Color = float4(1.f, 1.f, 1.f, 1.f);
+    output.Color = ColliderColor;
     
     return output;
 }

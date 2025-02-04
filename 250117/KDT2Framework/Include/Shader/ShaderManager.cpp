@@ -25,6 +25,10 @@ bool CShaderManager::Init()
 		sizeof(FTransformCBufferInfo),
 		0, EShaderBufferType::Vertex);
 
+	CreateConstantBuffer("Collider",
+		sizeof(FColliderCBufferInfo),
+		1, EShaderBufferType::Pixel);
+
 	return true;
 }
 

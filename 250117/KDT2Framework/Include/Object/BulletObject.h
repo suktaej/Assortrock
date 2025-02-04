@@ -30,5 +30,11 @@ public:
 public:
     virtual bool Init();
     virtual void Update(float DeltaTime);
+
+
+
+private:
+    void CollisionBullet(const FVector3D& HitPoint,
+        class CColliderBase* Dest);
 };
 

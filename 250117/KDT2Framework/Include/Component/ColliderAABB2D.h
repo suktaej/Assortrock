@@ -52,5 +52,6 @@ public:
 	virtual void Render();
 	virtual void PostRender();
 	virtual CColliderAABB2D* Clone();
+	virtual bool Collision(FVector3D& HitPoint, CColliderBase* Dest);
 };
 

@@ -75,6 +75,8 @@ bool CProfileManager::CreateProfile(const std::string& Name,
 		Profile->Interaction[i] = Interaction;
 	}
 
+	mProfileMap.insert(std::make_pair(Name, Profile));
+
 	return true;
 }
 

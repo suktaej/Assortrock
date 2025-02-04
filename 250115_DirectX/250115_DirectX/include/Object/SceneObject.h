@@ -18,6 +18,7 @@ protected:
 	//계층구조를 위해 루트 컴포넌트를 확인하기 위한 자료
 	//자식 노드들이 동시에 이동할 수 있도록
 	CSharedPtr<class CSceneComponent> mRootComponent;
+
 	float mLifeTime = 0;
 public:
 	//포함 된 씬을 반환하기 위함

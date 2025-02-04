@@ -24,7 +24,7 @@ protected:
     CSharedPtr<class CRotationComponent>    mRotation;
 
     CSharedPtr<CSceneObject> mTarget;
-
+     
     ESkill5State mState = ESkill5State::Expansion;
 
     float mSpeed = 4.f;

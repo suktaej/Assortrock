@@ -178,20 +178,76 @@ void CInput::UpdateInput(float DeltaTime)
 	switch (m_InputType)
 	{
 	case EInputSystem_Type::DInput:
-		if (m_KeyState[DIK_LCONTROL] & 0x80)
-			m_Ctrl = true;
-		else
-			m_Ctrl = false;
+        if (m_KeyState[DIK_LCONTROL] & 0x80)
+        {
+            if (!m_Ctrl[(int)EInputType::Down] && !m_Ctrl[(int)EInputType::Hold])
+            {
+                m_Ctrl[(int)EInputType::Down] = true;
+                m_Ctrl[(int)EInputType::Hold] = true;
+            }
+            else
+                m_Ctrl[(int)EInputType::Down] = false;
+        }
 
-		if (m_KeyState[DIK_LSHIFT] & 0x80)
-			m_Shift = true;
-		else
-			m_Shift = false;
+        else if (m_Ctrl[(int)EInputType::Hold])
+        {
+            m_Ctrl[(int)EInputType::Down] = false;
+            m_Ctrl[(int)EInputType::Hold] = false;
+            m_Ctrl[(int)EInputType::Up] = true;
+        }
 
-		if (m_KeyState[DIK_LALT] & 0x80)
-			m_Alt = true;
-		else
-			m_Alt = false;
+        else if (m_Ctrl[(int)EInputType::Up])
+        {
+            m_Ctrl[(int)EInputType::Up] = false;
+        }
+
+        if (m_KeyState[DIK_LALT] & 0x80)
+        {
+            if (!m_Alt[(int)EInputType::Down] && !m_Alt[(int)EInputType::Hold])
+            {
+                m_Alt[(int)EInputType::Down] = true;
+                m_Alt[(int)EInputType::Hold] = true;
+            }
+
+            else
+                m_Alt[(int)EInputType::Down] = false;
+        }
+
+        else if (m_Alt[(int)EInputType::Hold])
+        {
+            m_Alt[(int)EInputType::Down] = false;
+            m_Alt[(int)EInputType::Hold] = false;
+            m_Alt[(int)EInputType::Up] = true;
+        }
+
+        else if (m_Alt[(int)EInputType::Up])
+        {
+            m_Alt[(int)EInputType::Up] = false;
+        }
+
+        if (m_KeyState[DIK_LSHIFT] & 0x80)
+        {
+            if (!m_Shift[(int)EInputType::Down] && !m_Shift[(int)EInputType::Hold])
+            {
+                m_Shift[(int)EInputType::Down] = true;
+                m_Shift[(int)EInputType::Hold] = true;
+            }
+
+            else
+                m_Shift[(int)EInputType::Down] = false;
+        }
+
+        else if (m_Shift[(int)EInputType::Hold])
+        {
+            m_Shift[(int)EInputType::Down] = false;
+            m_Shift[(int)EInputType::Hold] = false;
+            m_Shift[(int)EInputType::Up] = true;
+        }
+
+        else if (m_Shift[(int)EInputType::Up])
+        {
+            m_Shift[(int)EInputType::Up] = false;
+        }
 
 		for (int i = 0; i<static_cast<int>(EMouse::End);i++)
 		{
@@ -286,9 +342,9 @@ void CInput::UpdateBind(float DeltaTime)
     {
         //down이 충족 될 경우 등록한 함수 호출
         if (iter->second->Key->Down &&
-            iter->second->Ctrl == m_Ctrl &&
-            iter->second->Alt == m_Alt &&
-            iter->second->Shift == m_Shift)
+            iter->second->Ctrl == m_Ctrl[(int)EInputType::Down] &&
+            iter->second->Alt == m_Alt[(int)EInputType::Down] &&
+            iter->second->Shift == m_Shift[(int)EInputType::Down])
         {
             size_t Size = iter->second->FunctionList[(int)EInputType::Down].size();
 
@@ -296,25 +352,60 @@ void CInput::UpdateBind(float DeltaTime)
                 iter->second->FunctionList[(int)EInputType::Down][i].Func(DeltaTime);
         }
         if (iter->second->Key->Hold &&
-            iter->second->Ctrl == m_Ctrl &&
-            iter->second->Alt == m_Alt &&
-            iter->second->Shift == m_Shift)
+            iter->second->Ctrl == m_Ctrl[(int)EInputType::Hold] &&
+            iter->second->Alt == m_Alt[(int)EInputType::Hold] &&
+            iter->second->Shift == m_Shift[(int)EInputType::Hold])
         {
+            //복합키 사용 시 keyHold를 위한 변수 설정
+            iter->second->KeyHold = true;
             size_t Size = iter->second->FunctionList[(int)EInputType::Hold].size();
 
             for (size_t i = 0;i < Size;i++)
                 iter->second->FunctionList[(int)EInputType::Hold][i].Func(DeltaTime);
         }
-        if (iter->second->Key->Up &&
-            iter->second->Ctrl == m_Ctrl &&
-            iter->second->Alt == m_Alt &&
-            iter->second->Shift == m_Shift)
-        {
-            size_t Size = iter->second->FunctionList[(int)EInputType::Up].size();
 
-            for (size_t i = 0;i < Size;i++)
-                iter->second->FunctionList[(int)EInputType::Up][i].Func(DeltaTime);
+        //복합키 사용 시, Up처리에 있어 변수 생성
+        bool	Verification = false;
+
+        if (iter->second->Ctrl)
+        {
+            if (m_Ctrl[(int)EInputType::Up])
+                Verification = true;
         }
+
+        if (iter->second->Alt)
+        {
+            if (m_Alt[(int)EInputType::Up])
+                Verification = true;
+        }
+
+        if (iter->second->Shift)
+        {
+            if (m_Shift[(int)EInputType::Up])
+                Verification = true;
+        }
+        //Up처리
+        if ((iter->second->Key->Up || Verification) &&
+            iter->second->KeyHold)
+        {
+            iter->second->KeyHold = false;
+            size_t	Size = iter->second->FunctionList[(int)EInputType::Up].size();
+
+            for (size_t i = 0; i < Size; ++i)
+            {
+                iter->second->FunctionList[(int)EInputType::Up][i].Func(DeltaTime);
+            }
+        }
+        //if (iter->second->Key->Up|| 
+        //    iter->second->Ctrl == m_Ctrl[(int)EInputType::Up]||
+        //    iter->second->Alt == m_Alt[(int)EInputType::Up]|| 
+        //    iter->second->Shift == m_Shift[(int)EInputType::Up])
+        //{
+        //    size_t Size = iter->second->FunctionList[(int)EInputType::Up].size();
+
+        //    for (size_t i = 0;i < Size;i++)
+        //        iter->second->FunctionList[(int)EInputType::Up][i].Func(DeltaTime);
+        //}
         iter++;
     }
 }

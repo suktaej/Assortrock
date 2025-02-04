@@ -2,6 +2,7 @@
 #include "../Component/StaticMeshComponent.h"
 #include "../Component/MovementComponent.h"
 #include "../Component/ColliderAABB2D.h"
+#include "../Share/Log.h"
 
 CBulletObject::CBulletObject()
 {
@@ -43,6 +44,9 @@ bool CBulletObject::Init()
 
     mBody->SetBoxSize(50.f, 50.f);
 
+    mBody->SetCollisionBeginFunc<CBulletObject>(this,
+        &CBulletObject::CollisionBullet);
+
     mRoot->AddChild(mBody);
 
     mMovement->SetUpdateComponent(mRoot);
@@ -62,4 +66,11 @@ void CBulletObject::Update(float DeltaTime)
     Pos += mRoot->GetAxis(EAxis::Y) * mSpeed * DeltaTime;
 
     mRoot->SetWorldPos(Pos);*/
+}
+
+void CBulletObject::CollisionBullet(const FVector3D& HitPoint,
+    CColliderBase* Dest)
+{
+    CLog::PrintLog("Collision");
+    Destroy();
 }

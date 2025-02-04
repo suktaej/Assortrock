@@ -59,7 +59,8 @@ struct FBindKey
 	bool Ctrl = false;
 	bool Alt = false;
 	bool Shift = false;
-
+	//복합키 사용 시 키를 유지하는지 확인하는 변수
+	bool KeyHold = false;
 	std::vector<FBindFunction> FunctionList[static_cast<int>(EInputType::End)];
 };
 
@@ -91,9 +92,9 @@ private:
 	//x,y: 마우스 위치,z:휠 값, 0:왼쪽, 1:오른쪽, 2:휠(클릭)
 	DIMOUSESTATE m_MouseState = {};
 	//조합키 사용여부
-	bool m_Ctrl = false;
-	bool m_Alt = false;
-	bool m_Shift = false;
+	bool m_Ctrl[(int)EInputType::End] = {};
+	bool m_Alt[(int)EInputType::End] = {};
+	bool m_Shift[(int)EInputType::End] = {};
 	//마우스 사용여부
 	bool m_MouseDown[(int)EMouse::End] = {};
 	bool m_MouseHold[(int)EMouse::End] = {};

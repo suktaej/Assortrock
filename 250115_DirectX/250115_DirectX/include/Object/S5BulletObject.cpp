@@ -43,25 +43,11 @@ bool CS5BulletObject::Init()
     mMesh->SetMesh("CenterRect");
     mMesh->SetShader("ColorMeshShader");
 
-    mMesh->SetWorldScale(50.f, 50.f, 1.f);
+    mMesh->SetWorldScale(0.5f, 0.5f, 1.f);
 
     SetRootComponent(mMesh);
 
     return true;
-}
-
-void CS5BulletObject::Update(float DeltaTime)
-{
-    CSceneObject::Update(DeltaTime);
-    //FVector3D Pos = mMesh->GetWorldPosition();
-
-    //Pos += mMesh->GetAxis(EAxis::Y) * mSpeed * DeltaTime;
-
-    //mMesh->SetWorldPos(Pos);
-
-    //FVector3D Rot = mMesh->GetRelativeRotation();
-    //Rot.z += DeltaTime * 360.f;
-    //mMesh->SetRelativeRotationZ(Rot.z);
 }
 
 void CS5BulletObject::PreUpdate(float DeltaTime)
@@ -76,10 +62,7 @@ void CS5BulletObject::PreUpdate(float DeltaTime)
     switch (mState)
     {
     case Expansion:
-        mRange = DeltaTime / mReadyTime *
-            mMaxRange;
-
-        //mMesh->SetWorldPos(Pos + Dir * mRange);
+        mRange = DeltaTime / mReadyTime * mMaxRange;
 
         if (mTimeAcc >= mReadyTime)
         {
@@ -91,12 +74,6 @@ void CS5BulletObject::PreUpdate(float DeltaTime)
         break;
     case Maintain:
     {
-        /*float   Angle = mMesh->GetWorldRotation().z;
-
-        Angle += 1080.f * DeltaTime;
-
-        mMesh->SetWorldRotationZ(Angle);*/
-
         if (mTimeAcc >= mTime)
         {
             mTimeAcc = 0.f;
@@ -116,9 +93,22 @@ void CS5BulletObject::PreUpdate(float DeltaTime)
         Dir.Normalize();
 
         mMovement->SetMove(Dir);
-
-        //mMesh->SetWorldPos(Pos + Dir * 10.f * DeltaTime);
     }
     break;
     }
+}
+
+void CS5BulletObject::Update(float DeltaTime)
+{
+    CSceneObject::Update(DeltaTime);
+
+   /* FVector3D Pos = mMesh->GetWorldPosition();
+
+    Pos += mMesh->GetAxis(EAxis::Y) * mSpeed * DeltaTime;
+
+    mMesh->SetWorldPos(Pos);
+
+    FVector3D Rot = mMesh->GetRelativeRotation();
+    Rot.z += DeltaTime * 360.f;
+    mMesh->SetRelativeRotationZ(Rot.z);*/
 }
