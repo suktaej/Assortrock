@@ -273,6 +273,9 @@
     <ClCompile Include="Object\ObjectSpawnPoint.cpp">
       <Filter>06. Object</Filter>
     </ClCompile>
+    <ClCompile Include="Component\ColliderSphere2D.cpp">
+      <Filter>07. Component\01. SceneComponent\03. Collider\01. 2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -445,6 +448,9 @@
     </ClInclude>
     <ClInclude Include="Object\ObjectSpawnPoint.h">
       <Filter>06. Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\ColliderSphere2D.h">
+      <Filter>07. Component\01. SceneComponent\03. Collider\01. 2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -27,7 +27,7 @@ bool CMonsterObject::Init()
     mRoot = CreateComponent<CStaticMeshComponent>();
     //mBody = CreateComponent<CColliderAABB2D>();
 
-    mRoot->SetMesh("CenterRect");
+    mRoot->SetMesh("EnemyRect");
     mRoot->SetShader("ColorMeshShader");
 
     mRoot->SetWorldScale(100.f, 100.f, 1.f);

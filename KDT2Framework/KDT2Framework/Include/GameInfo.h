@@ -142,7 +142,8 @@ enum class EColliderType : unsigned char
 
 enum class EColliderShape : unsigned char
 {
-	AABB2D
+	AABB2D,
+	Sphere2D
 };
 
 struct FAABB2D

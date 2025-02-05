@@ -10,6 +10,7 @@
 #include "../Component/RotationComponent.h"
 #include "../Component/CameraComponent.h"
 #include "../Component/ColliderAABB2D.h"
+#include "../Component/ColliderSphere2D.h"
 
 CPlayerObject::CPlayerObject()
 {
@@ -32,7 +33,8 @@ CPlayerObject::~CPlayerObject()
 bool CPlayerObject::Init()
 {
     mRoot = CreateComponent<CStaticMeshComponent>();
-    mBody = CreateComponent<CColliderAABB2D>();
+    //mBody = CreateComponent<CColliderAABB2D>();
+    mBody = CreateComponent<CColliderSphere2D>();
     mRotationPivot = CreateComponent<CSceneComponent>();
     mSub = CreateComponent<CStaticMeshComponent>();
     mSub2 = CreateComponent<CStaticMeshComponent>();
@@ -51,7 +53,8 @@ bool CPlayerObject::Init()
     SetRootComponent(mRoot);
     
     mBody->SetCollisionProfile("Player");
-    mBody->SetBoxSize(100.f, 100.f);
+    //mBody->SetBoxSize(100.f, 100.f);
+    mBody->SetRadius(50.f);
 
     mRoot->AddChild(mBody);
 

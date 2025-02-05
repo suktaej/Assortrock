@@ -38,7 +38,7 @@ bool CPlayerObject::Init()
     mCamera = CreateComponent<CCameraComponent>();
 
     //mRoot ¼³Á¤
-    mRoot->SetMesh("CenterRect");
+    mRoot->SetMesh("PlayerRect");
     mRoot->SetShader("ColorMeshShader");
     
     mRoot->SetWorldPos(0.f, 0.f, 0.f);

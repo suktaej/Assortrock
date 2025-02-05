@@ -116,5 +116,98 @@ bool CMeshManager::Init()
 		DXGI_FORMAT_R16_UINT))
 		return false;
 
+	//Player
+	FVertexColor    PlayerRect[4] =
+	{
+		FVertexColor(-0.5f, 0.5f, 0.f, 0.f, 0.f, 1.f, 1.f),
+		FVertexColor(0.5f, 0.5f, 0.f, 0.f, 0.f, 1.f, 1.f),
+		FVertexColor(-0.5f, -0.5f, 0.f, 0.5f, 0.f, 0.5f, 1.f),
+		FVertexColor(0.5f, -0.5f, 0.f, 0.5f, 0.f, 0.5f, 1.f),
+	};
+
+	if (!CreateMesh(
+		"PlayerRect",
+		PlayerRect,
+		sizeof(FVertexColor),
+		4,
+		D3D11_USAGE_DEFAULT,
+		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
+		RectIdx,
+		sizeof(unsigned short),
+		6,
+		DXGI_FORMAT_R16_UINT))
+		return false;
+
+	//Enemy
+	FVertexColor    EnemyRect[4] =
+	{
+		FVertexColor(-0.5f, 0.5f, 0.f, 1.f, 0.f, 0.f, 1.f),
+		FVertexColor(0.5f, 0.5f, 0.f, 1.f, 0.f, 0.f, 1.f),
+		FVertexColor(-0.5f, -0.5f, 0.f, 0.5f, 0.5f, 0.f, 1.f),
+		FVertexColor(0.5f, -0.5f, 0.f, 0.5f, 0.5f, 0.f, 1.f),
+	};
+
+	if (!CreateMesh(
+		"EnemyRect",
+		EnemyRect,
+		sizeof(FVertexColor),
+		4,
+		D3D11_USAGE_DEFAULT,
+		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
+		RectIdx,
+		sizeof(unsigned short),
+		6,
+		DXGI_FORMAT_R16_UINT))
+		return false;
+
+	//Bullet
+	FVertexColor   BulletRect[4] =
+	{
+		FVertexColor(-0.5f, 0.5f, 0.f, 0.f, 1.f, 0.f, 1.f),
+		FVertexColor(0.5f, 0.5f, 0.f, 0.f, 1.f, 0.f, 1.f),
+		FVertexColor(-0.5f, -0.5f, 0.f, 0.5f, 0.5f, 0.f, 1.f),
+		FVertexColor(0.5f, -0.5f, 0.f, 0.5f, 0.5f, 0.f, 1.f),
+	};
+
+	if (!CreateMesh(
+		"BulletRect",
+		BulletRect,
+		sizeof(FVertexColor),
+		4,
+		D3D11_USAGE_DEFAULT,
+		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
+		RectIdx,
+		sizeof(unsigned short),
+		6,
+		DXGI_FORMAT_R16_UINT))
+		return false;
+
+	//Circle
+	float Circle2DAngle = 12;
+	FVector3D Circle2DPoint[30];
+
+	//360도와 0도의 위치값은 동일하므로 1 제거
+	//라인 스트립의 경우 인덱스버퍼를 구성하지 않아도 무관
+	for (int i = 0;i < 360;i += Circle2DAngle-1)
+	{
+		float Angle = DirectX::XMConvertToRadians(i * Circle2DAngle);
+		//점의 위치는 -0.5~0.5
+		//지름은 1
+		Circle2DPoint[i].x = cosf(Angle) * 0.5f;
+		Circle2DPoint[i].x = sinf(Angle) * 0.5f;
+	}
+
+	if (!CreateMesh(
+		"FrameSphere2D",
+		BulletRect,
+		sizeof(FVertexColor),
+		30,
+		D3D11_USAGE_DEFAULT,
+		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
+		RectIdx,
+		sizeof(unsigned short),
+		6,
+		DXGI_FORMAT_R16_UINT))
+		return false;
 	return true;
 }

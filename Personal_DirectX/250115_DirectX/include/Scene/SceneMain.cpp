@@ -27,21 +27,21 @@ bool CSceneMain::Init()
     Monster->SetTarget(Player);
     Monster->SetWorldPos(-400.f, 300.f);
 
-    Monster = CreateObj<CGunnerMonster>("Monster");
-    Monster->SetTarget(Player);
-    Monster->SetWorldPos(400.f, -300.f);
+    //Monster = CreateObj<CGunnerMonster>("Monster");
+    //Monster->SetTarget(Player);
+    //Monster->SetWorldPos(400.f, -300.f);
 
-    Monster = CreateObj<CGunnerMonster>("Monster");
-    Monster->SetTarget(Player);
-    Monster->SetWorldPos(-400.f, -300.f);
+    //Monster = CreateObj<CGunnerMonster>("Monster");
+    //Monster->SetTarget(Player);
+    //Monster->SetWorldPos(-400.f, -300.f);
 
-    Monster = CreateObj<CGunnerMonster>("Monster");
-    Monster->SetTarget(Player);
-    Monster->SetWorldPos(900.f, 700.f);
+    //Monster = CreateObj<CGunnerMonster>("Monster");
+    //Monster->SetTarget(Player);
+    //Monster->SetWorldPos(900.f, 700.f);
 
-    Monster = CreateObj<CNearingMonster>("Monster");
-    Monster->SetTarget(Player);
-    Monster->SetWorldPos(-400.f, 0.f);
+    //Monster = CreateObj<CNearingMonster>("Monster");
+    //Monster->SetTarget(Player);
+    //Monster->SetWorldPos(-400.f, 0.f);
 
     return true;
 }

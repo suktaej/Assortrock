@@ -12,7 +12,7 @@ private:
 	TCHAR m_ClassName[256] = {};
 	TCHAR m_TitleName[256] = {};
 
-	float m_ClearColor[4] = {};
+	float m_ClearColor[4] = {0.3f, 0.3f, 0.3f, 0.3f};
 
 public:
 	bool Init(HINSTANCE hInst);

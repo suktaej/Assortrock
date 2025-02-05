@@ -28,7 +28,7 @@ bool CBulletObject::Init()
     //트랜스폼과 관련된 추가적인 초기화가 필요
     mMovement = CreateComponent<CMovementComponent>();
     
-    mRoot->SetMesh("CenterRect");
+    mRoot->SetMesh("BulletRect");
     mRoot->SetShader("ColorMeshShader");
 
     mRoot->SetWorldScale(0.5f, 0.5f, 1.f);

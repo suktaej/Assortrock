@@ -72,6 +72,21 @@ bool CMeshManager::Init()
         sizeof(unsigned short), 5, DXGI_FORMAT_R16_UINT))
         return false;
 
+    FVector3D   Sphere2DPoint[37];
+
+    for (int i = 0; i < 37; ++i)
+    {
+        float Angle = DirectX::XMConvertToRadians(i * 10.f);
+
+        Sphere2DPoint[i].x = cosf(Angle) * 0.5f;
+        Sphere2DPoint[i].y = sinf(Angle) * 0.5f;
+    }
+
+    if (!CreateMesh("FrameSphere2D", Sphere2DPoint,
+        sizeof(FVector3D),
+        37, D3D11_USAGE_DEFAULT,
+        D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP))
+        return false;
 
     return true;
 }
