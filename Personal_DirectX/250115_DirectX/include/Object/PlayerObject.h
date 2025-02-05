@@ -41,10 +41,10 @@ protected:
     float mSkill4Time = 3.f;
     float mSkill4TimeAcc = 0.f;
     float mSkill4ReadyTime = 2.f;
-    float mSkill4MaxRange = 4.f;
+    float mSkill4MaxRange = 400.f;
     //직교투영으로 변하며 거리를 수정
-    float mSkill4Range = 200.f;
-    float mSkill4RangeLength = 2.f;
+    float mSkill4Range = 150.f;
+    float mSkill4RangeLength = 200.f;
     ESkillState mSkill4State = ESkillState::Expansion;
 
     int mHP = 5;

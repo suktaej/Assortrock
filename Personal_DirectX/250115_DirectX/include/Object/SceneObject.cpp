@@ -13,9 +13,9 @@ CSceneObject::CSceneObject(const CSceneObject& Obj)
 CSceneObject::CSceneObject(CSceneObject&& Obj)
 {
 }
-//트랜스폼을 공유하기 위함
 void CSceneObject::SetRootComponent(CSceneComponent* Root)
 {
+    //대입 만으로 레퍼런스 카운트 증가
 	mRootComponent = Root;
 }
 

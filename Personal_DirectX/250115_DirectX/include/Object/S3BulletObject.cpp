@@ -25,11 +25,13 @@ bool CS3BulletObject::Init()
     mPivot = CreateComponent<CSceneComponent>();
     mMesh = CreateComponent<CStaticMeshComponent>();
 
-    mMesh->SetMesh("CenterRect");
+    mMesh->SetMesh("BulletRect");
     mMesh->SetShader("ColorMeshShader");
 
-    mMesh->SetWorldScale(0.5f, 0.5f, 1.f);
-    mMesh ->SetRelativePos(-1.5f, 0.f);
+    //mMesh->SetWorldScale(0.5f, 0.5f, 1.f);
+    //mMesh ->SetRelativePos(-1.5f, 0.f);
+    mMesh->SetWorldScale(50.f,50.f);
+    mMesh->SetRelativePos(90.f, 0.f);
 
     SetRootComponent(mRoot);
 

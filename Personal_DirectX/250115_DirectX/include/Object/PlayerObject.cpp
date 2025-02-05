@@ -44,7 +44,7 @@ bool CPlayerObject::Init()
     
     mRoot->SetWorldPos(0.f, 0.f, 0.f);
     mRoot->SetWorldScale(100.f,100.f,1.f);
-    
+    //생성한 mRoot를 씬오브젝트의 루트로 지정 
     SetRootComponent(mRoot);
 
     //무브번트가 루트를 움직이기 위해서 update함수를 호출하여 사용
@@ -232,7 +232,10 @@ void CPlayerObject::Fire(float DeltaTime)
 {
     //탄환 생성
     CBulletObject* Bullet = mScene->CreateObj<CBulletObject>("Bullet");
-
+    //씬에서 탄환오브젝트 생성 후 init 진행
+    //staticmesh 컴포넌트를 생성하고 mRoot에 대입
+    // 
+    //staticmesh 컴포넌트를 불러와서 Root에 저장
     CSceneComponent* Root = Bullet->GetRootComponent();
 
     //Root->SetWorldPos(mRoot->GetWorldPosition());
@@ -240,11 +243,13 @@ void CPlayerObject::Fire(float DeltaTime)
     //mRoot의 위치,회전
     FVector3D Pos = mRoot->GetWorldPosition();
     FVector3D Dir = mRoot->GetAxis(EAxis::Y);
-    
+   
+    //반환받은 컴포넌트의 트랜스폼을 조정
     Root->SetWorldScale(50.f, 50.f);
     Root->SetWorldRotation(mRoot->GetWorldRotation());
 
     Root->SetWorldPos(Pos + Dir);
+    //Root->SetWorldPos(Pos);
 
     Bullet->SetLifeTime(2.f);
 }
@@ -259,18 +264,18 @@ void CPlayerObject::Skill1(float DeltaTime)
     FVector3D Dir = mRoot->GetAxis(EAxis::Y);
 
     mSkill1Object->GetRootComponent()->SetWorldRotation(mRoot->GetWorldRotation());
-    mSkill1Object->GetRootComponent()->SetWorldPos(Pos + Dir);
+    mSkill1Object->GetRootComponent()->SetWorldPos(Pos + Dir*100);
 
     FVector3D Scale = mSkill1Object->GetRootComponent()->GetWorldScale();
 
-    Scale.x += DeltaTime * 0.5f;
-    Scale.y += DeltaTime * 0.5f;
+    Scale.x += DeltaTime * 100.f;
+    Scale.y += DeltaTime * 100.f;
 
-    if (Scale.x >= 3.f)
-        Scale.x = 3.f;
+    if (Scale.x >= 200.f)
+        Scale.x = 200.f;
 
-    if (Scale.y >= 3.f)
-        Scale.y = 3.f;
+    if (Scale.y >= 200.f)
+        Scale.y = 200.f;
 
     mSkill1Object->GetRootComponent()->SetWorldScale(Scale);
 }
@@ -309,6 +314,7 @@ void CPlayerObject::UpdateSkill2(float DeltaTime)
 
         Root->SetWorldRotation(mRoot->GetWorldRotation());
         Root->SetWorldPos(Pos + Dir);
+        Root->SetWorldScale(50.f, 50.f);
 
         Bullet->SetLifeTime(2.f);
 
@@ -396,7 +402,7 @@ void CPlayerObject::UpdateSkill4(float DeltaTime)
         {
             mSkill4Enable = false;
             mSkill4TimeAcc = 0.f;
-            mSkill4Range = 2.f;
+            mSkill4Range = 150.f;
             mSkill4State = ESkillState::Expansion;
             mPivotRotationSpeed = 180.f;
         }

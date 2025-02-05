@@ -15,8 +15,7 @@ protected:
 	class CScene* mScene = nullptr;
 	//씬 오브젝트의 이름정보
 	std::string mName;
-	//계층구조를 위해 루트 컴포넌트를 확인하기 위한 자료
-	//자식 노드들이 동시에 이동할 수 있도록
+	//계층구조를 위해 루트 컴포넌트를 확인하기 위한 변수 
 	CSharedPtr<class CSceneComponent> mRootComponent;
 	//씬 컴포넌트가 아닌 컴포넌트 목록
 	//부모자식의 구분이 필요 없음
