@@ -524,7 +524,9 @@ float FVector3D::GetAngle(const FVector3D& v) const
 
 float FVector3D::GetViewTargetAngle(const FVector3D& v, EAxis AxisType)	const
 {
+	//기준 축
 	FVector3D	v1 = Axis[static_cast<int>(AxisType)];
+	//바라볼 방향
 	FVector3D	v2 = v - *this;
 
 	v1.Normalize();
