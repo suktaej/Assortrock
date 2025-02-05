@@ -12,14 +12,14 @@ protected:
 	CComponent(const CComponent& Obj) {}
 	CComponent(CComponent&& Obj) {}
 protected:
-	class CScene* m_Scene = nullptr;
-	class CSceneObject* m_OwnerObject = nullptr;
-	std::string m_Name;
+	class CScene* mScene = nullptr;
+	class CSceneObject* mOwnerObject = nullptr;
+	std::string mName;
 public:
-	class CScene* GetScene() const { return m_Scene; }
-	const char* GetName() { return m_Name.c_str(); }
-	CSceneObject* GetOwner()	const { return m_OwnerObject; }
-	void SetName(const std::string& Name) { m_Name = Name; }
+	class CScene* GetScene() const { return mScene; }
+	const char* GetName() { return mName.c_str(); }
+	CSceneObject* GetOwner()	const { return mOwnerObject; }
+	void SetName(const std::string& Name) { mName = Name; }
 public:
 	virtual bool Init();
 	virtual bool Init(const char* FileName);

@@ -134,3 +134,21 @@ struct FVertexColor
 	{
 	}
 };
+
+enum class EColliderType : unsigned char
+{
+	Colider2D,
+	Colider3D
+};
+
+enum class EColliderShape : unsigned char
+{
+	AABB2D,
+	Sphere2D
+};
+
+struct FAABB2D
+{
+	FVector2D	Min;
+	FVector2D	Max;
+};

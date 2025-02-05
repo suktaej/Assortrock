@@ -88,6 +88,24 @@
     <Filter Include="06.Object\Monster">
       <UniqueIdentifier>{1e556a84-3db3-4433-91be-3c584face432}</UniqueIdentifier>
     </Filter>
+    <Filter Include="07.Component\SceneComponent\Camera">
+      <UniqueIdentifier>{0eb823d0-c365-477a-9211-7ef1aa777162}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07.Component\SceneComponent\Mesh">
+      <UniqueIdentifier>{586e6e2b-6683-437e-bffe-557448dc2957}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07.Component\SceneComponent\Collider">
+      <UniqueIdentifier>{32ba40f7-f738-4334-aa49-ed17e1415cd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07.Component\SceneComponent\Collider\2D">
+      <UniqueIdentifier>{c8770d3c-0e8b-409f-a33e-6dde919175ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07.Component\SceneComponent\Collider\3D">
+      <UniqueIdentifier>{ecae2ce1-34d1-4b54-8ed6-6a386d60c111}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.Scene\Collision">
+      <UniqueIdentifier>{fb9d9fbb-af19-4ceb-89e9-7aa841b53a37}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -171,12 +189,6 @@
     <ClInclude Include="Component\SceneComponent.h">
       <Filter>07.Component\SceneComponent</Filter>
     </ClInclude>
-    <ClInclude Include="Component\MeshComponent.h">
-      <Filter>07.Component\SceneComponent</Filter>
-    </ClInclude>
-    <ClInclude Include="Component\StaticMeshComponent.h">
-      <Filter>07.Component\SceneComponent</Filter>
-    </ClInclude>
     <ClInclude Include="Scene\SceneManager.h">
       <Filter>05.Scene</Filter>
     </ClInclude>
@@ -194,9 +206,6 @@
     </ClInclude>
     <ClInclude Include="Shader\CBufferContainer.h">
       <Filter>04.Shader\ConstantBuffer</Filter>
-    </ClInclude>
-    <ClInclude Include="Component\CameraComponent.h">
-      <Filter>07.Component\SceneComponent</Filter>
     </ClInclude>
     <ClInclude Include="Scene\CameraManager.h">
       <Filter>05.Scene\Camera</Filter>
@@ -233,6 +242,27 @@
     </ClInclude>
     <ClInclude Include="Object\S6BulletObject.h">
       <Filter>06.Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\CameraComponent.h">
+      <Filter>07.Component\SceneComponent\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\MeshComponent.h">
+      <Filter>07.Component\SceneComponent\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\StaticMeshComponent.h">
+      <Filter>07.Component\SceneComponent\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\ColliderBase.h">
+      <Filter>07.Component\SceneComponent\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\ColliderAABB2D.h">
+      <Filter>07.Component\SceneComponent\Collider\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneCollision.h">
+      <Filter>05.Scene\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\CollisionQuadTree.h">
+      <Filter>05.Scene\Collision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -302,12 +332,6 @@
     <ClCompile Include="Component\SceneComponent.cpp">
       <Filter>07.Component\SceneComponent</Filter>
     </ClCompile>
-    <ClCompile Include="Component\MeshComponent.cpp">
-      <Filter>07.Component\SceneComponent</Filter>
-    </ClCompile>
-    <ClCompile Include="Component\StaticMeshComponent.cpp">
-      <Filter>07.Component\SceneComponent</Filter>
-    </ClCompile>
     <ClCompile Include="Scene\SceneManager.cpp">
       <Filter>05.Scene</Filter>
     </ClCompile>
@@ -322,9 +346,6 @@
     </ClCompile>
     <ClCompile Include="Shader\TransformCBuffer.cpp">
       <Filter>04.Shader\ConstantBuffer\Transform</Filter>
-    </ClCompile>
-    <ClCompile Include="Component\CameraComponent.cpp">
-      <Filter>07.Component\SceneComponent</Filter>
     </ClCompile>
     <ClCompile Include="Scene\CameraManager.cpp">
       <Filter>05.Scene\Camera</Filter>
@@ -361,6 +382,27 @@
     </ClCompile>
     <ClCompile Include="Object\S6BulletObject.cpp">
       <Filter>06.Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\CameraComponent.cpp">
+      <Filter>07.Component\SceneComponent\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\MeshComponent.cpp">
+      <Filter>07.Component\SceneComponent\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\StaticMeshComponent.cpp">
+      <Filter>07.Component\SceneComponent\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\ColliderBase.cpp">
+      <Filter>07.Component\SceneComponent\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\ColliderAABB2D.cpp">
+      <Filter>07.Component\SceneComponent\Collider\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SceneCollision.cpp">
+      <Filter>05.Scene\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\CollisionQuadTree.cpp">
+      <Filter>05.Scene\Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -15,9 +15,11 @@ protected:
 	//¾ÀÀÌ Æ÷ÇÔÇÏ´Â ÀÎÇ²
 	class CInput* mInput = nullptr;
 	class CCameraManager* mCameraManager = nullptr;
+	class CSceneCollision* mCollision = nullptr;
 public:
 	CInput* GetInput() const { return mInput; }
 	CCameraManager* GetCameraManager() const { return mCameraManager; }
+	CSceneCollision* GetCollision() const { return mCollision; }
 public:
 	virtual bool Init();
 	virtual bool Init(const char* FileName);

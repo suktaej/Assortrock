@@ -2,6 +2,7 @@
 #include "../Object/SceneObject.h"
 #include "Input.h"
 #include "CameraManager.h"
+#include "SceneCollision.h"
 
 CScene::CScene()
 {
@@ -9,6 +10,7 @@ CScene::CScene()
 
 CScene::~CScene()
 {
+	SAFE_DELETE(mCollision);
 	SAFE_DELETE(mInput);
 	SAFE_DELETE(mCameraManager);
 }
@@ -23,6 +25,14 @@ bool CScene::Init()
 	mCameraManager = new CCameraManager;
 
 	if (!mCameraManager->Init())
+		return false;
+
+	//충돌체 생성 시 씬 콜리전에 등록하도록 구현
+	//하나의 목록으로 모든 충돌체를 가지고 있도록 
+	//매 프레임 충돌이 발생한다면 별도의 시간을 부여하여 제어할 수 있도록 함
+	mCollision = new CSceneCollision;
+	
+	if (!mCollision->Init())
 		return false;
 
     return true;
@@ -124,6 +134,7 @@ void CScene::PostUpdate(float DeltaTime)
 
 void CScene::Collision(float DeltaTime)
 {
+	mCollision->Update(DeltaTime);
 }
 
 void CScene::Input(float DeltaTime)
