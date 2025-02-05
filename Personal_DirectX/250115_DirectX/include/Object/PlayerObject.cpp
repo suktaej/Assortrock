@@ -5,6 +5,7 @@
 #include "BulletObject.h"
 #include "S3BulletObject.h"
 #include "S5BulletObject.h"
+#include "S6BulletObject.h"
 #include "../Component/MovementComponent.h"
 #include "../Component/RotationComponent.h"
 #include "../Component/CameraComponent.h"
@@ -88,8 +89,9 @@ bool CPlayerObject::Init()
     mScene->GetInput()->AddBindKey("Skill2", '2');
     mScene->GetInput()->AddBindKey("Skill3", '3');
     mScene->GetInput()->AddBindKey("Skill4", '4');
-    //5번스킬 수정
     mScene->GetInput()->AddBindKey("Skill5", '5');
+    mScene->GetInput()->AddBindKey("Skill6", '6');
+    mScene->GetInput()->AddBindKey("Skill7", '7');
 
     //Bind
     mScene->GetInput()->AddBindFunction<CPlayerObject>(
@@ -122,7 +124,6 @@ bool CPlayerObject::Init()
         this,
         &CPlayerObject::Fire);
 
-    //Skill 1
     mScene->GetInput()->AddBindFunction<CPlayerObject>(
         "Skill1",
         EInputType::Hold,
@@ -135,33 +136,41 @@ bool CPlayerObject::Init()
         this,
         &CPlayerObject::Skill1Fire);
 
-    //Skill 2
     mScene->GetInput()->AddBindFunction<CPlayerObject>(
         "Skill2",
         EInputType::Down,
         this, 
         &CPlayerObject::Skill2);
 
-    //Skill 3
     mScene->GetInput()->AddBindFunction<CPlayerObject>(
         "Skill3",
         EInputType::Down,
         this, 
         &CPlayerObject::Skill3);
     
-    //Skill 4
     mScene->GetInput()->AddBindFunction<CPlayerObject>(
         "Skill4",
         EInputType::Down,
         this, 
         &CPlayerObject::Skill4);
     
-    //Skill 5
     mScene->GetInput()->AddBindFunction<CPlayerObject>(
         "Skill5",
         EInputType::Down,
         this, 
         &CPlayerObject::Skill5);
+
+    mScene->GetInput()->AddBindFunction<CPlayerObject>(
+        "Skill6",
+        EInputType::Down,
+        this, 
+        &CPlayerObject::Skill6);
+    
+    mScene->GetInput()->AddBindFunction<CPlayerObject>(
+        "Skill7",
+        EInputType::Down,
+        this, 
+        &CPlayerObject::Skill7);
 
 	return true;
 }
@@ -183,6 +192,10 @@ void CPlayerObject::Update(float DeltaTime)
 }
 
 #pragma region movement
+void CPlayerObject::Damage(int Dmg)
+{
+    mHP -= Dmg;
+}
 void CPlayerObject::MoveUp(float DeltaTime)
 {
     mMovement->AddMove(mRootComponent->GetAxis(EAxis::Y));
@@ -217,17 +230,20 @@ void CPlayerObject::RotationZInv(float DeltaTime)
 #pragma region skill
 void CPlayerObject::Fire(float DeltaTime)
 {
+    //탄환 생성
     CBulletObject* Bullet = mScene->CreateObj<CBulletObject>("Bullet");
 
     CSceneComponent* Root = Bullet->GetRootComponent();
 
     //Root->SetWorldPos(mRoot->GetWorldPosition());
-    
+
+    //mRoot의 위치,회전
     FVector3D Pos = mRoot->GetWorldPosition();
     FVector3D Dir = mRoot->GetAxis(EAxis::Y);
-
+    
     Root->SetWorldScale(50.f, 50.f);
     Root->SetWorldRotation(mRoot->GetWorldRotation());
+
     Root->SetWorldPos(Pos + Dir);
 
     Bullet->SetLifeTime(2.f);
@@ -417,5 +433,33 @@ void CPlayerObject::Skill5(float DeltaTime)
         Dir = Dir.TransformNormal(matRot);
         Dir.Normalize();
     }
+}
+void CPlayerObject::Skill6(float DeltaTime)
+{
+    CS6BulletObject* Bullet = mScene->CreateObj<CS6BulletObject>("Bullet");
+
+    FVector3D Pos = mRoot->GetWorldPosition();
+    FVector3D Dir = mRoot->GetAxis(EAxis::Y);
+
+    Bullet->SetWorldScale(50.f, 50.f);
+    Bullet->SetWorldRotation(mRoot->GetWorldRotation());
+    Bullet->SetWorldPos(Pos + Dir);
+
+    Bullet->SetLifeTime(2.f);
+}
+void CPlayerObject::Skill7(float DeltaTime)
+{
+    CS6BulletObject* Bullet = mScene->CreateObj<CS6BulletObject>("Bullet");
+    
+    Bullet->SetGravityType(EGravityType::Push);
+
+    FVector3D Pos = mRoot->GetWorldPosition();
+    FVector3D Dir = mRoot->GetAxis(EAxis::Y);
+
+    Bullet->SetWorldScale(50.f, 50.f);
+    Bullet->SetWorldRotation(mRoot->GetWorldRotation());
+    Bullet->SetWorldPos(Pos + Dir);
+
+    Bullet->SetLifeTime(2.f);
 }
 #pragma endregion skill

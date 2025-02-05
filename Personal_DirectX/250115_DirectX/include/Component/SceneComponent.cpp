@@ -308,8 +308,8 @@ void CSceneComponent::SetRelativeRotation(const FVector3D& Rot)
         FMatrix matRot;
         matRot.Rotation(ParentRot);
 
-        // 행렬의 41, 42, 43 에 부모의 위치를 넣어 부모의 위치를 중심으로
-        // 회전하는 행렬을 만들어준다.
+        // 행렬의 41, 42, 43 에 부모의 위치를 대입
+        // 부모의 위치를 중심으로회전하는 행렬을 생성
         memcpy(&matRot._41, &m_WorldPos, sizeof(FVector3D));
 
         //나의 상대위치에 부모의 상대위치를 합

@@ -41,8 +41,7 @@ void CGunnerMonster::Update(float DeltaTime)
             ViewDir.Normalize();
 
             float Angle = FVector3D::Axis[EAxis::Y].GetAngle(ViewDir);*/
-            float Angle = GetWorldPosition().GetViewTargetAngle(
-                mTarget->GetWorldPosition());
+            float Angle = GetWorldPosition().GetViewTargetAngle( mTarget->GetWorldPosition());
 
             SetWorldRotationZ(Angle);
         }

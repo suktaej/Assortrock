@@ -139,7 +139,6 @@ struct FVector3D
 
 	void Normalize();
 
-
 	static FVector3D Normalize(const FVector3D& v);
 
 	float Dot(const FVector3D& v)	const;

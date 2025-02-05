@@ -30,11 +30,11 @@ void CLog::Destroy()
 #endif // _DEBUG
 }
 
-void CLog::PrintLog(const std::string& Text, 
+void CLog::PrintLog(const std::string& Text,
 	ELogPrintType PrintType)
 {
 	SYSTEMTIME	sysTime;
-	
+
 	// UTC 표준시간
 	//GetSystemTime(&sysTime);
 
@@ -64,7 +64,7 @@ void CLog::PrintLog(const std::string& Text,
 		WriteConsoleA(hConsole, OutputText.c_str(),
 			(DWORD)OutputText.length(), &Number, nullptr);
 	}
-		break;
+	break;
 	case ELogPrintType::VisualOutput:
 		OutputDebugStringA(OutputText.c_str());
 		break;
@@ -75,7 +75,7 @@ void CLog::PrintLog(const std::string& Text,
 			(DWORD)OutputText.length(), &Number, nullptr);
 		OutputDebugStringA(OutputText.c_str());
 	}
-		break;
+	break;
 	}
 }
 

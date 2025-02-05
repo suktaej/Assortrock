@@ -231,6 +231,9 @@
     <ClInclude Include="Object\NearingMonster.h">
       <Filter>06.Object\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="Object\S6BulletObject.h">
+      <Filter>06.Object\Bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -355,6 +358,9 @@
     </ClCompile>
     <ClCompile Include="Object\NearingMonster.cpp">
       <Filter>06.Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\S6BulletObject.cpp">
+      <Filter>06.Object\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

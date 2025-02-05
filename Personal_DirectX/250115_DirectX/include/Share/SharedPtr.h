@@ -17,24 +17,27 @@ public:
 			mObj->AddRef();
 	}
 
-	CSharedPtr(const CSharedPtr& Ptr)
+	CSharedPtr(const CSharedPtr<T>& Ptr)
 	{
 		mObj = Ptr.mObj;
 
+		// 오브젝트가 있을 경우 참조가 일어나는 것이기 때문에 참조 카운트를 1 증가시킨다.
 		if (mObj)
 			mObj->AddRef();
 	}
 
-	CSharedPtr(CSharedPtr&& Ptr)
+	CSharedPtr(CSharedPtr<T>&& Ptr)
 	{
 		mObj = Ptr.mObj;
 
+		// 오브젝트가 있을 경우 참조가 일어나는 것이기 때문에 참조 카운트를 1 증가시킨다.
 		if (mObj)
 			mObj->AddRef();
 	}
 
 	~CSharedPtr()
 	{
+		// 오브젝트가 있을 경우 참조카운트가 증가되었기 때문에 참조카운트를 감소시킨다.
 		if (mObj)
 			mObj->Release();
 	}
@@ -43,34 +46,36 @@ public:
 public:
 	void operator = (T* Obj)
 	{
-		//기존 생성자가 있을 경우 릴리즈
 		if (mObj)
 			mObj->Release();
 
 		mObj = Obj;
 
+		// 오브젝트가 있을 경우 참조가 일어나는 것이기 때문에 참조 카운트를 1 증가시킨다.
 		if (mObj)
 			mObj->AddRef();
 	}
 
-	void operator = (const CSharedPtr& Ptr)
+	void operator = (const CSharedPtr<T>& Ptr)
 	{
 		if (mObj)
 			mObj->Release();
 
 		mObj = Ptr.mObj;
 
+		// 오브젝트가 있을 경우 참조가 일어나는 것이기 때문에 참조 카운트를 1 증가시킨다.
 		if (mObj)
 			mObj->AddRef();
 	}
 
-	void operator = (CSharedPtr&& Ptr)
+	void operator = (CSharedPtr<T>&& Ptr)
 	{
 		if (mObj)
 			mObj->Release();
 
 		mObj = Ptr.mObj;
 
+		// 오브젝트가 있을 경우 참조가 일어나는 것이기 때문에 참조 카운트를 1 증가시킨다.
 		if (mObj)
 			mObj->AddRef();
 	}
@@ -80,12 +85,12 @@ public:
 		return mObj == Obj;
 	}
 
-	bool operator == (const CSharedPtr& Ptr)	const
+	bool operator == (const CSharedPtr<T>& Ptr)	const
 	{
 		return mObj == Ptr.mObj;
 	}
 
-	bool operator == (CSharedPtr&& Ptr)	const
+	bool operator == (CSharedPtr<T>&& Ptr)	const
 	{
 		return mObj == Ptr.mObj;
 	}
@@ -95,12 +100,12 @@ public:
 		return mObj != Obj;
 	}
 
-	bool operator != (const CSharedPtr& Ptr)	const
+	bool operator != (const CSharedPtr<T>& Ptr)	const
 	{
 		return mObj != Ptr.mObj;
 	}
 
-	bool operator != (CSharedPtr&& Ptr)	const
+	bool operator != (CSharedPtr<T>&& Ptr)	const
 	{
 		return mObj != Ptr.mObj;
 	}

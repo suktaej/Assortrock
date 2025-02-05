@@ -161,6 +161,7 @@
     <ClInclude Include="Object\PlayerObject.h" />
     <ClInclude Include="Object\S3BulletObject.h" />
     <ClInclude Include="Object\S5BulletObject.h" />
+    <ClInclude Include="Object\S6BulletObject.h" />
     <ClInclude Include="Object\SceneObject.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scene\CameraManager.h" />
@@ -211,6 +212,7 @@
     <ClCompile Include="Object\PlayerObject.cpp" />
     <ClCompile Include="Object\S3BulletObject.cpp" />
     <ClCompile Include="Object\S5BulletObject.cpp" />
+    <ClCompile Include="Object\S6BulletObject.cpp" />
     <ClCompile Include="Object\SceneObject.cpp" />
     <ClCompile Include="Scene\CameraManager.cpp" />
     <ClCompile Include="Scene\Input.cpp" />

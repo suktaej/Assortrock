@@ -1,7 +1,5 @@
-
 #include "Vector3D.h"
 #include "Matrix.h"
-
 
 FVector3D FVector3D::Zero;
 FVector3D FVector3D::One = { 1.f, 1.f, 1.f };

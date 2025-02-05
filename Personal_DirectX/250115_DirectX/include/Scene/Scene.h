@@ -54,5 +54,54 @@ public:
 
 		return Obj;
 	}
-};
+	
+	//오브젝트 리스트의 T포인터 타입으로 형변환
+	//다이나믹캐스트이므로 존재할 경우만 반환
+	//nullptr이면 무시
+	template <typename T>
+	T* FindObjectFromType()
+	{
+		auto	iter = mObjList.begin();
+		auto	iterEnd = mObjList.end();
 
+		for (; iter != iterEnd; ++iter)
+		{
+			T* Obj = dynamic_cast<T*>((*iter).Get());
+
+			if (Obj)
+				return Obj;
+		}
+
+		return nullptr;
+	}
+
+	//template <typename T>
+	//T* FindObjectFromName(const std::string& Name)
+	//{
+	//	auto	iter = mObjList.begin();
+	//	auto	iterEnd = mObjList.end();
+
+	//	for (; iter != iterEnd; ++iter)
+	//	{
+	//		if ((*iter)->GetName() == Name)
+	//			return dynamic_cast<T*>((*iter).Get());
+	//	}
+	//	return nullptr;
+	//}
+
+	template <typename T>
+	void FindObjectsFromType(
+		std::list<CSharedPtr<T>>& result)
+	{
+		auto	iter = mObjList.begin();
+		auto	iterEnd = mObjList.end();
+
+		for (; iter != iterEnd; ++iter)
+		{
+			T* Obj = dynamic_cast<T*>((*iter).Get());
+
+			if (Obj)
+				result.push_back(Obj);
+		}
+	}
+};

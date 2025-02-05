@@ -46,7 +46,10 @@ protected:
     float mSkill4Range = 200.f;
     float mSkill4RangeLength = 2.f;
     ESkillState mSkill4State = ESkillState::Expansion;
+
+    int mHP = 5;
 public:
+    virtual void Damage(int Dmg);
     bool Init() override;
     void Update(float DeltaTime) override;
 private:
@@ -67,5 +70,7 @@ private:
     void Skill4(float DeltaTime);
     void UpdateSkill4(float DeltaTime);
     void Skill5(float DeltaTime);
+    void Skill6(float DeltaTime);
+    void Skill7(float DeltaTime);
 };
 

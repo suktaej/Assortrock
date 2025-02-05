@@ -17,7 +17,7 @@ protected:
     //CSharedPtr<class CColliderAABB2D>       mBody;
     CSharedPtr<CSceneObject>  mTarget;
 
-    float           mDetectDistance = 0.f;
+    float mDetectDistance = 0.f;
 
 public:
     void SetTarget(class CSceneObject* Target) { mTarget = Target; }
