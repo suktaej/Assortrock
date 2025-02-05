@@ -2,6 +2,7 @@
 .vs/
 *.vcxproj.user
 *.vcxproj.*.log
+*.svn-base
 
 # 빌드 아티팩트
 *.exe
@@ -26,5 +27,4 @@
 
 # 기타
 .DS_Store
-.svn-base
 Thumbs.db
