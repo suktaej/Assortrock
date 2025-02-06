@@ -5,6 +5,7 @@
 #include "../Component/ColliderAABB2D.h"
 #include "../Component/ColliderOBB2D.h"
 #include "../Component/ColliderSphere2D.h"
+#include "../Share/Log.h"
 
 CMonsterObject::CMonsterObject()
 {
@@ -43,6 +44,8 @@ bool CMonsterObject::Init()
     //mBody->SetBoxSize(100.f, 100.f);
     mBody->SetCollisionBeginFunc<CMonsterObject>(this,
         &CMonsterObject::CollisionMonster);
+    mBody->SetCollisionEndFunc<CMonsterObject>(this,
+        &CMonsterObject::CollisionMonsterEnd);
 
     mRoot->AddChild(mBody);
 
@@ -76,4 +79,11 @@ float CMonsterObject::Damage(float Attack,
 void CMonsterObject::CollisionMonster(
     const FVector3D& HitPoint, CColliderBase* Dest)
 {
+    CLog::PrintLog("Collision");
+}
+
+void CMonsterObject::CollisionMonsterEnd(
+    CColliderBase* Dest)
+{
+    CLog::PrintLog("CollisionEnd");
 }

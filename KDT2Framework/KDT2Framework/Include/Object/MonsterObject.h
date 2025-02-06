@@ -40,5 +40,6 @@ public:
 private:
     void CollisionMonster(const FVector3D& HitPoint,
         class CColliderBase* Dest);
+    void CollisionMonsterEnd(class CColliderBase* Dest);
 };
 

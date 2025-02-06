@@ -15,6 +15,9 @@ protected:
 	virtual ~CColliderBase();
 
 protected:
+	std::unordered_map<CColliderBase*, bool>	mCollisionObjects;
+
+protected:
 	EColliderType	mColliderType;
 	EColliderShape	mColliderShape;
 	FVector3D		mMin;
@@ -66,6 +69,9 @@ public:
 	void CallCollisionBegin(const FVector3D& HitPoint,
 		CColliderBase* Dest);
 	void CallCollisionEnd(CColliderBase* Dest);
+	bool CheckCollisionObject(CColliderBase* Collider);
+	void AddCollisionObject(CColliderBase* Collider);
+	void EraseCollisionObject(CColliderBase* Collider);
 
 public:
 	virtual bool Init();

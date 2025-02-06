@@ -126,7 +126,7 @@ void CScene::Update(float DeltaTime)
 	char	Text[64] = {};
 	sprintf_s(Text, "ObjCount : %d", Count);
 
-	CLog::PrintLog(Text, ELogPrintType::VisualOutput);
+	CLog::PrintLog(Text  );
 }
 
 void CScene::PostUpdate(float DeltaTime)

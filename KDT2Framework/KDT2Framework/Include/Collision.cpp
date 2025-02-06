@@ -353,17 +353,17 @@ FAABB2D CCollision::CreateAABB2D(const FOBB2D& Info)
 
     FVector2D   Pos[4];
 
-    Pos[0] = Info.Center - Info.Axis[0] * Info.HalfSize +
-        Info.Axis[1] * Info.HalfSize;
+    Pos[0] = Info.Center - Info.Axis[0] * Info.HalfSize.x +
+        Info.Axis[1] * Info.HalfSize.y;
 
-    Pos[1] = Info.Center - Info.Axis[0] * Info.HalfSize -
-        Info.Axis[1] * Info.HalfSize;
+    Pos[1] = Info.Center - Info.Axis[0] * Info.HalfSize.x -
+        Info.Axis[1] * Info.HalfSize.y;
 
-    Pos[2] = Info.Center + Info.Axis[0] * Info.HalfSize +
-        Info.Axis[1] * Info.HalfSize;
+    Pos[2] = Info.Center + Info.Axis[0] * Info.HalfSize.x +
+        Info.Axis[1] * Info.HalfSize.y;
 
-    Pos[3] = Info.Center + Info.Axis[0] * Info.HalfSize -
-        Info.Axis[1] * Info.HalfSize;
+    Pos[3] = Info.Center + Info.Axis[0] * Info.HalfSize.x -
+        Info.Axis[1] * Info.HalfSize.y;
 
     result.Min.x = Pos[0].x;
     result.Min.y = Pos[0].y;

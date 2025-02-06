@@ -40,7 +40,7 @@ float CTimer::Update()
 
 	sprintf_s(FPSText, "FPS : %.5f", mFPS);
 
-	CLog::PrintLog(FPSText, ELogPrintType::VisualOutput);
+	CLog::PrintLog(FPSText);
 
 	return mDeltaTime;
 }

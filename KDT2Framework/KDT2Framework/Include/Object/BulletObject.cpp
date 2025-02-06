@@ -71,7 +71,7 @@ void CBulletObject::Update(float DeltaTime)
 void CBulletObject::CollisionBullet(const FVector3D& HitPoint,
     CColliderBase* Dest)
 {
-    CLog::PrintLog("Collision");
+    //CLog::PrintLog("Collision");
 
     Dest->GetOwner()->Damage(1.f, this);
 

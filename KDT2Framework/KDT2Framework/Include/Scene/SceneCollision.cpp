@@ -33,6 +33,16 @@ bool CSceneCollision::Init()
 
 void CSceneCollision::Update(float DeltaTime)
 {
+    if (mInterval > 0.f)
+    {
+        mIntervalTime += DeltaTime;
+
+        if (mIntervalTime < mInterval)
+            return;
+
+        mIntervalTime -= mInterval;
+    }
+
     mQuadTree->Update(DeltaTime);
 
     size_t Size = mColliderList2D.size();

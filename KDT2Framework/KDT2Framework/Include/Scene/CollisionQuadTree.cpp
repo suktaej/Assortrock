@@ -236,12 +236,22 @@ void CCollisionQuadTreeNode::Collision(float DeltaTime)
 
 			if (Src->Collision(HitPoint, Dest))
 			{
-				Src->CallCollisionBegin(HitPoint, Dest);
-				Dest->CallCollisionBegin(HitPoint, Src);
+				// 두 충돌체가 이제 막 충돌되기 시작한
+				// 물체인지 판단한다.
+				if (!Src->CheckCollisionObject(Dest))
+				{
+					Src->CallCollisionBegin(HitPoint, Dest);
+					Dest->CallCollisionBegin(HitPoint, Src);
+				}
 			}
 
-			else
+			// 두 물체가 현재 충돌이 안되었을 경우
+			// 두 물체가 이전에 충돌되고 있던 물체인지를
+			// 판단한다.
+			else if (Src->CheckCollisionObject(Dest))
 			{
+				Src->CallCollisionEnd(Dest);
+				Dest->CallCollisionEnd(Src);
 			}
 
 			++j;

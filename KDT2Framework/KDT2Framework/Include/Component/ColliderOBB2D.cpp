@@ -91,17 +91,17 @@ void CColliderOBB2D::Update(float DeltaTime)
     // 사각혀을 구성하는 4개의 꼭지점을 구한다.
     FVector2D   Pos[4];
 
-    Pos[0] = mBoxInfo.Center - mBoxInfo.Axis[0] * mBoxInfo.HalfSize +
-        mBoxInfo.Axis[1] * mBoxInfo.HalfSize;
+    Pos[0] = mBoxInfo.Center - mBoxInfo.Axis[0] * mBoxInfo.HalfSize.x +
+        mBoxInfo.Axis[1] * mBoxInfo.HalfSize.y;
 
-    Pos[1] = mBoxInfo.Center - mBoxInfo.Axis[0] * mBoxInfo.HalfSize -
-        mBoxInfo.Axis[1] * mBoxInfo.HalfSize;
+    Pos[1] = mBoxInfo.Center - mBoxInfo.Axis[0] * mBoxInfo.HalfSize.x -
+        mBoxInfo.Axis[1] * mBoxInfo.HalfSize.y;
 
-    Pos[2] = mBoxInfo.Center + mBoxInfo.Axis[0] * mBoxInfo.HalfSize +
-        mBoxInfo.Axis[1] * mBoxInfo.HalfSize;
+    Pos[2] = mBoxInfo.Center + mBoxInfo.Axis[0] * mBoxInfo.HalfSize.x +
+        mBoxInfo.Axis[1] * mBoxInfo.HalfSize.x;
 
-    Pos[3] = mBoxInfo.Center + mBoxInfo.Axis[0] * mBoxInfo.HalfSize -
-        mBoxInfo.Axis[1] * mBoxInfo.HalfSize;
+    Pos[3] = mBoxInfo.Center + mBoxInfo.Axis[0] * mBoxInfo.HalfSize.x -
+        mBoxInfo.Axis[1] * mBoxInfo.HalfSize.y;
 
     // 4개의 꼭지점에서 x, y 값을 가장 작은값과 큰값을
     // 얻어와 Min, Max 정보를 구성한다.

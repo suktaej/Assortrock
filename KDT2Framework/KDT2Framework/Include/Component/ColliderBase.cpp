@@ -11,6 +11,10 @@
 
 CColliderBase::CColliderBase()
 {
+    // 리해싱이 자주 일어나지 않도록 미리 공간을 확보한다.
+    mCollisionObjects.reserve(100);
+    mCollisionObjects.max_load_factor(2.f);
+    //mCollisionObjects.rehash(200);
 }
 
 CColliderBase::CColliderBase(const CColliderBase& Com)  :
@@ -25,6 +29,14 @@ CColliderBase::CColliderBase(CColliderBase&& Com) :
 
 CColliderBase::~CColliderBase()
 {
+    auto    iter = mCollisionObjects.begin();
+    auto    iterEnd = mCollisionObjects.end();
+
+    for (; iter != iterEnd; ++iter)
+    {
+        iter->first->CallCollisionEnd(this);
+    }
+
 #ifdef _DEBUG
 
     SAFE_DELETE(mTransformCBuffer);
@@ -41,6 +53,10 @@ void CColliderBase::SetCollisionProfile(const std::string& Name)
 void CColliderBase::CallCollisionBegin(const FVector3D& HitPoint,
     CColliderBase* Dest)
 {
+    // 인자로 들어온 물체는 이제 막 충돌되기 시작한 물체
+    // 이므로 충돌목록에 추가한다.
+    AddCollisionObject(Dest);
+
     // 충돌상태 ON
     mCollision = true;
 
@@ -51,8 +67,44 @@ void CColliderBase::CallCollisionBegin(const FVector3D& HitPoint,
 
 void CColliderBase::CallCollisionEnd(CColliderBase* Dest)
 {
+    // 인자로 들어온 물체는 충돌되다가 떨어지는 물체이므로
+    // 제거한다.
+    EraseCollisionObject(Dest);
+
+    // 충돌이 떨어지면 이 함수가 무조건 호출되기 때문에
+    // 더이상 충돌되는 물체가 없다면 충돌상태를 false로
+    // 만들어준다.
+    if (mCollisionObjects.empty())
+        mCollision = false;
+
     if (mCollisionEndFunc)
         mCollisionEndFunc(Dest);
+}
+
+bool CColliderBase::CheckCollisionObject(
+    CColliderBase* Collider)
+{
+    auto    iter = mCollisionObjects.find(Collider);
+
+    if (iter == mCollisionObjects.end())
+        return false;
+
+    return true;
+}
+
+void CColliderBase::AddCollisionObject(
+    CColliderBase* Collider)
+{
+    // unordered_map은 랜덤액세스를 지원한다.
+    // 해당 키값이 없을 경우 노드를 하나 새로 만들어주고
+    // 있을 경우 해당 노드를 가져온다.
+    mCollisionObjects[Collider] = true;
+}
+
+void CColliderBase::EraseCollisionObject(
+    CColliderBase* Collider)
+{
+    mCollisionObjects.erase(Collider);
 }
 
 bool CColliderBase::Init()
@@ -169,9 +221,6 @@ void CColliderBase::Render()
     mMesh->Render();
 
 #endif // _DEBUG
-
-    mCollision = false;
-
 }
 
 void CColliderBase::PostRender()

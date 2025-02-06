@@ -15,6 +15,8 @@ private:
 	std::vector<CSharedPtr<class CColliderBase>>	mColliderList3D;
 	class CCollisionQuadTree* mQuadTree;
 	class CScene* mScene = nullptr;
+	float	mInterval = 0.f;
+	float	mIntervalTime = 0.f;
 
 public:
 	void AddCollider(class CColliderBase* Collider);
