@@ -152,6 +152,7 @@ __declspec(align(16)) union FMatrix
 
 	void Translation(const FVector3D& _v) { m = DirectX::XMMatrixTranslation(_v.x, _v.y, _v.z); }	//이동
 	void Translation(float x, float y, float z) { m = DirectX::XMMatrixTranslation(x, y, z); }
+	void Translation(const FVector2D& _v) { m = DirectX::XMMatrixTranslation(_v.x, _v.y, 0.f); }
 	void Translation(float x, float y) { m = DirectX::XMMatrixTranslation(x, y, 0.f); }
 
 	//static 함수화

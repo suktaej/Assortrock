@@ -106,6 +106,9 @@
     <Filter Include="05.Scene\Collision">
       <UniqueIdentifier>{fb9d9fbb-af19-4ceb-89e9-7aa841b53a37}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04.Shader\ShaderClass\FrameMesh">
+      <UniqueIdentifier>{9e98cc61-0dcd-4956-8caa-daeb85454e0d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -273,6 +276,9 @@
     <ClInclude Include="Collision.h">
       <Filter>01.GameManager</Filter>
     </ClInclude>
+    <ClInclude Include="Shader\FrameMeshShader.h">
+      <Filter>04.Shader\ShaderClass\FrameMesh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -421,6 +427,9 @@
     </ClCompile>
     <ClCompile Include="Collision.cpp">
       <Filter>01.GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\FrameMeshShader.cpp">
+      <Filter>04.Shader\ShaderClass\FrameMesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -19,6 +19,7 @@ protected:
     ~CPlayerObject() override;
 protected:
     CSharedPtr<class CStaticMeshComponent> mRoot;
+    CSharedPtr<class CColliderAABB2D> mBody;
     CSharedPtr<class CStaticMeshComponent> mSub;
     CSharedPtr<class CSceneComponent> mRotationPivot;
     CSharedPtr<class CCameraComponent> mCamera;
@@ -27,6 +28,9 @@ protected:
     CSharedPtr<class CRotationComponent> mRotation;
 
     CSharedPtr<class CBulletObject> mSkill1Object;
+private:
+    float m_PlayerX = 100.f;
+    float m_PlayerY = 100.f;
 protected:
     float mPivotRotationSpeed = 180.f;
     

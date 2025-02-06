@@ -16,7 +16,6 @@ CCollisionQuadTreeNode::CCollisionQuadTreeNode()
 {
 #ifdef _DEBUG
 	mTransformCBuffer = new CTransformCBuffer;
-
 	mTransformCBuffer->Init();
 #endif
 }
@@ -254,6 +253,7 @@ void CCollisionQuadTreeNode::Collision(float DeltaTime)
 void CCollisionQuadTreeNode::ReturnNodePool(
 	std::vector<CCollisionQuadTreeNode*>& NodePool)
 {
+	//노드를 수거하면서 충돌리스트를 초기화
 	mColliderList.clear();
 
 	if (mChild[0])
@@ -263,7 +263,6 @@ void CCollisionQuadTreeNode::ReturnNodePool(
 			NodePool.emplace_back(mChild[i]);
 
 			mChild[i]->ReturnNodePool(NodePool);
-
 			mChild[i] = nullptr;
 		}
 	}
@@ -272,7 +271,6 @@ void CCollisionQuadTreeNode::ReturnNodePool(
 void CCollisionQuadTreeNode::Render(CMesh* Mesh, CShader* Shader)
 {
 #ifdef _DEBUG
-
 	FMatrix	matScale, matTranslate, matWorld;
 	matScale.Scaling(mSize);
 	matTranslate.Translation(mCenter);
@@ -293,7 +291,6 @@ void CCollisionQuadTreeNode::Render(CMesh* Mesh, CShader* Shader)
 	Shader->SetShader();
 
 	Mesh->Render();
-
 #endif // _DEBUG
 
 	if (mChild[0])
@@ -376,17 +373,13 @@ void CCollisionQuadTree::EraseCollisionNodeList(
 bool CCollisionQuadTree::Init()
 {
 #ifdef _DEBUG
-
 	mMesh = CAssetManager::GetInst()->GetMeshManager()->FindMesh("FrameCenterRect");
 	mShader = CShaderManager::GetInst()->FindShader("FrameMeshShader");
 	mColliderCBuffer = new CColliderCBuffer;
 
 	mColliderCBuffer->Init();
-
 	mColliderCBuffer->SetColor(1.f, 1.f, 1.f, 1.f);
-
 #endif // _DEBUG
-
 
 	mRoot = new CCollisionQuadTreeNode;
 
@@ -437,14 +430,11 @@ void CCollisionQuadTree::Collision(float DeltaTime)
 void CCollisionQuadTree::Render()
 {
 #ifdef _DEBUG
-
 	mColliderCBuffer->UpdateBuffer();
 
 	// Shader도 여기에서 SetShader 한번만 해줘도 모든 노드가
 	// 출력할 때 해당 Shader를 이용하여 출력한다.
-
 	mRoot->Render(mMesh, mShader);
-
 #endif // _DEBUG
 }
 

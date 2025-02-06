@@ -1,5 +1,10 @@
 #include "Share.fx"
 
+cbuffer Collider : register(b1)
+{
+    float4 ColliderColor;
+};
+
 struct VS_Input_Color
 {
     float3 Pos : POSITION;  //position 0번 reg
@@ -45,6 +50,26 @@ PS_Output_Single ColorMeshPS(VS_Output_Color input)
 {
     PS_Output_Single output = (PS_Output_Single)0;
     output.Color = input.Color;
+    
+    return output;
+}
+
+//구조체를 생성하지 않을 경우 인자로 들어오는 값에 시멘틱 설정이 가능
+//함수 자체에도 시멘틱 지정가능
+//리턴값이 여러 개일 경우 사용불가
+float4 FrameMeshVS(float3 Pos : POSITION) : SV_POSITION
+{
+    float4 output = (float) 0;
+    output = mul(float4(Pos, 1.f), gmatWVP);
+
+    return output;
+}
+
+PS_Output_Single FrameMeshPS(float4 Pos : SV_POSITION)
+{
+    PS_Output_Single output = (PS_Output_Single) 0;
+
+    output.Color = ColliderColor;
     
     return output;
 }

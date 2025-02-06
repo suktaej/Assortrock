@@ -23,6 +23,7 @@ void CSceneCollision::AddCollider(CColliderBase* Collider)
 bool CSceneCollision::Init()
 {
     mQuadTree = new CCollisionQuadTree;
+    //Init 전 가지고 있는 Scene을 전달
     //쿼드트리에서 루트노드는 무조건 필요하므로 씬을 전달
     mQuadTree->mScene = mScene;
     mQuadTree->Init();

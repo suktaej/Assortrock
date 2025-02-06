@@ -9,6 +9,7 @@
 #include "../Component/MovementComponent.h"
 #include "../Component/RotationComponent.h"
 #include "../Component/CameraComponent.h"
+#include "../Component/ColliderAABB2D.h"
 
 CPlayerObject::CPlayerObject()
 {
@@ -32,8 +33,10 @@ bool CPlayerObject::Init()
 {
     //CStaticMeshComponent* Root = CreateComponent<CStaticMeshComponent>();
     mRoot = CreateComponent<CStaticMeshComponent>();
+    mBody = CreateComponent<CColliderAABB2D>();
     mSub = CreateComponent<CStaticMeshComponent>();
     mRotationPivot = CreateComponent<CSceneComponent>();
+
     mMovement = CreateComponent<CMovementComponent>();
     mRotation = CreateComponent<CRotationComponent>();
     mCamera = CreateComponent<CCameraComponent>();
@@ -43,9 +46,13 @@ bool CPlayerObject::Init()
     mRoot->SetShader("ColorMeshShader");
     
     mRoot->SetWorldPos(0.f, 0.f, 0.f);
-    mRoot->SetWorldScale(100.f,100.f,1.f);
+    mRoot->SetWorldScale(m_PlayerX,m_PlayerY,1.f);
     //생성한 mRoot를 씬오브젝트의 루트로 지정 
     SetRootComponent(mRoot);
+
+    //충돌체 할당
+    mRoot->AddChild(mBody);
+    mBody->SetBoxSize(m_PlayerX, m_PlayerY);
 
     //무브번트가 루트를 움직이기 위해서 update함수를 호출하여 사용
     mMovement->SetUpdateComponent(mRoot);

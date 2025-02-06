@@ -181,33 +181,46 @@ bool CMeshManager::Init()
 		6,
 		DXGI_FORMAT_R16_UINT))
 		return false;
+	
+	//Frame
+	unsigned short FrameRectIdx[5] = { 0,1,3,2,0 };
+	
+	FVector3D FrameCenterRect[4] =
+	{
+		FVector3D(-0.5f, 0.5f, 0.f),
+		FVector3D(0.5f, 0.5f, 0.f),
+		FVector3D(-0.5f, -0.5f, 0.f),
+		FVector3D(0.5f, -0.5f, 0.f)
+	};
 
-	//Circle
-	//float Circle2DAngle = 12;
-	//FVector3D Circle2DPoint[30];
+	if (!CreateMesh(
+		"FrameCenterRect",
+		FrameCenterRect,
+		sizeof(FVector3D),
+		4,
+		D3D11_USAGE_DEFAULT,
+		D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP,
+		FrameRectIdx,
+		sizeof(unsigned short),
+		5,
+		DXGI_FORMAT_R16_UINT))
+		return false;
 
-	////360도와 0도의 위치값은 동일하나 라인 연결을 위해 모든 점+1
-	////라인 스트립의 경우 인덱스버퍼를 구성하지 않아도 무관
-	//for (int i = 0;i < 360;i += Circle2DAngle)
-	//{
-	//	float Angle = DirectX::XMConvertToRadians(i * Circle2DAngle);
-	//	//점의 위치는 -0.5~0.5
-	//	//지름은 1
-	//	Circle2DPoint[i].x = cosf(Angle) * 0.5f;
-	//	Circle2DPoint[i].x = sinf(Angle) * 0.5f;
-	//}
+	FVector3D   Sphere2DPoint[37];
 
-	//if (!CreateMesh(
-	//	"FrameSphere2D",
-	//	BulletRect,
-	//	sizeof(FVertexColor),
-	//	30,
-	//	D3D11_USAGE_DEFAULT,
-	//	D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP,
-	//	RectIdx,
-	//	sizeof(unsigned short),
-	//	6,
-	//	DXGI_FORMAT_R16_UINT))
-	//	return false;
+	for (int i = 0; i < 37; ++i)
+	{
+		float Angle = DirectX::XMConvertToRadians(i * 10.f);
+
+		Sphere2DPoint[i].x = cosf(Angle) * 0.5f;
+		Sphere2DPoint[i].y = sinf(Angle) * 0.5f;
+	}
+
+	if (!CreateMesh("FrameSphere2D", Sphere2DPoint,
+		sizeof(FVector3D),
+		37, D3D11_USAGE_DEFAULT,
+		D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP))
+		return false;
+
 	return true;
 }

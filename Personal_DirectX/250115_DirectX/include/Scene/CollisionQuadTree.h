@@ -28,7 +28,6 @@ private:
 	class CTransformCBuffer* mTransformCBuffer;
 #endif // _DEBUG
 
-
 public:
 	void AddCollider(class CColliderBase* Collider,
 		std::vector<CCollisionQuadTreeNode*>& NodePool);
@@ -56,12 +55,14 @@ private:
 	std::vector<CCollisionQuadTreeNode*>	mCollisionNodeList;
 
 #ifdef _DEBUG
-
+	//쿼드트리의 메쉬와 쉐이더는 고정
+	//메쉬와 쉐이더를 트리노드에서 할당 받아와 사용
+	//디버그 모드일 때만 활성화
 	CSharedPtr<class CMesh>		mMesh;
 	CSharedPtr<class CShader>	mShader;
 	class CColliderCBuffer* mColliderCBuffer;
-
 #endif // _DEBUG
+
 public:
 	void SetDivisionCount(int Count);
 	void AddCollisionNodeList(CCollisionQuadTreeNode* Node) { mCollisionNodeList.emplace_back(Node); }

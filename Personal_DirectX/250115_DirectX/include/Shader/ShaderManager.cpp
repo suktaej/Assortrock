@@ -1,5 +1,6 @@
 #include "ShaderManager.h"
 #include "ColorMeshShader.h"
+#include "FrameMeshShader.h"
 #include "ConstantBuffer.h"
 
 DEFINITION_SINGLE(CShaderManager)
@@ -22,6 +23,10 @@ bool CShaderManager::Init()
 		sizeof(FTransformCBufferInfo),
 		0,	
 		EShaderBufferType::Vertex);
+
+#ifdef _DEBUG
+	CreateShader<CColorMeshShader>("FrameMeshShader");
+#endif //_DEBUG
 
 	return true;
 }

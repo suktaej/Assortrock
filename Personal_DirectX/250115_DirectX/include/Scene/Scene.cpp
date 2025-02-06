@@ -52,6 +52,8 @@ bool CScene::Init(const char* FileName)
 
 	mCollision = new CSceneCollision;
 
+	mCollision->mScene = this;
+
 	if (!mCollision->Init())
 		return false;
 
@@ -175,6 +177,14 @@ void CScene::PreRender()
 
 void CScene::Render()
 {
+	//다른 물체를 출력하기 전 쿼드트리 영역을 출력
+#ifdef _DEBUG
+	if(mDebugQuadTree)
+		mCollision->Render();
+#endif //_DEBUG
+
+	mCollision->ReturnNodePool();
+
 	std::list<CSharedPtr<CSceneObject>>::iterator	iter;
 	std::list<CSharedPtr<CSceneObject>>::iterator	iterEnd = mObjList.end();
 
@@ -186,15 +196,12 @@ void CScene::Render()
 			iterEnd = mObjList.end();
 			continue;
 		}
-
 		else if (!(*iter)->IsEnable())
 		{
 			++iter;
 			continue;
 		}
-
 		(*iter)->Render();
-
 		++iter;
 	}
 }

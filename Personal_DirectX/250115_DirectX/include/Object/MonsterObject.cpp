@@ -2,7 +2,7 @@
 #include "../Component/StaticMeshComponent.h"
 #include "../Scene/Scene.h"
 #include "BulletObject.h"
-//#include "../Component/ColliderAABB2D.h"
+#include "../Component/ColliderAABB2D.h"
 
 CMonsterObject::CMonsterObject()
 {
@@ -25,7 +25,7 @@ CMonsterObject::~CMonsterObject()
 bool CMonsterObject::Init()
 {
     mRoot = CreateComponent<CStaticMeshComponent>();
-    //mBody = CreateComponent<CColliderAABB2D>();
+    mBody = CreateComponent<CColliderAABB2D>();
 
     mRoot->SetMesh("EnemyRect");
     mRoot->SetShader("ColorMeshShader");
@@ -35,9 +35,9 @@ bool CMonsterObject::Init()
     SetRootComponent(mRoot);
 
     //mBody->SetCollisionProfile("Monster");
-    //mBody->SetBoxSize(100.f, 100.f);
+    mBody->SetBoxSize(100.f, 100.f);
 
-    //mRoot->AddChild(mBody);
+    mRoot->AddChild(mBody);
 
     return true;
 }

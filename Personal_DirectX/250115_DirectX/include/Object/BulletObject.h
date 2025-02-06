@@ -13,6 +13,7 @@ protected:
     virtual ~CBulletObject();
 protected:
     CSharedPtr<class CStaticMeshComponent>  mRoot;
+    CSharedPtr<class CColliderAABB2D> mBody;
     CSharedPtr<class CMovementComponent>  mMovement;
     float   mSpeed = 400.f;
 public:

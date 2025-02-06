@@ -16,6 +16,8 @@ protected:
 	class CInput* mInput = nullptr;
 	class CCameraManager* mCameraManager = nullptr;
 	class CSceneCollision* mCollision = nullptr;
+	//쿼드트리 Debug on/off용 변수
+	bool mDebugQuadTree = true;
 public:
 	CInput* GetInput() const { return mInput; }
 	CCameraManager* GetCameraManager() const { return mCameraManager; }
