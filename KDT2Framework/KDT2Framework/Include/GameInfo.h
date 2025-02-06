@@ -143,13 +143,21 @@ enum class EColliderType : unsigned char
 enum class EColliderShape : unsigned char
 {
 	AABB2D,
-	Sphere2D
+	Sphere2D,
+	OBB2D
 };
 
 struct FAABB2D
 {
 	FVector2D	Min;
 	FVector2D	Max;
+};
+
+struct FOBB2D
+{
+	FVector2D	Center;
+	FVector2D	Axis[2];
+	FVector2D	HalfSize;
 };
 
 namespace ECollisionChannel

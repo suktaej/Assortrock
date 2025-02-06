@@ -423,7 +423,7 @@ void CSceneComponent::SetWorldRotation(const FVector3D& Rot)
     FMatrix matRot;
     matRot.Rotation(m_WorldRot);
 
-    // 회전된 축을 구한다.
+    //월드 공간에서의 회전된 축을 구한다.
     mAxis[(int)EAxis::X] = Axis[(int)EAxis::X].TransformNormal(matRot);
     mAxis[(int)EAxis::Y] = Axis[(int)EAxis::Y].TransformNormal(matRot);
     mAxis[(int)EAxis::Z] = Axis[(int)EAxis::Z].TransformNormal(matRot);

@@ -3,6 +3,7 @@
 #include "Input.h"
 #include "CameraManager.h"
 #include "SceneCollision.h"
+#include "../Share/Log.h"
 
 CScene::CScene()
 {
@@ -119,6 +120,13 @@ void CScene::Update(float DeltaTime)
 	}
 
 	mCameraManager->Update(DeltaTime);
+
+	int	Count = (int)mObjList.size();
+	
+	char	Text[64] = {};
+	sprintf_s(Text, "ObjCount : %d", Count);
+
+	CLog::PrintLog(Text, ELogPrintType::VisualOutput);
 }
 
 void CScene::PostUpdate(float DeltaTime)

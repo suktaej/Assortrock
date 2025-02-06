@@ -142,12 +142,17 @@ void CColliderBase::Render()
 
 #ifdef _DEBUG
 
-    FMatrix  matScale, matTranslate, matWorld;
+    FMatrix matRot, matScale, matTranslate, matWorld;
+    //OBB는 회전을 적용시킬 수 있어야 함
+    if (mEnableRotation)
+        //회전행렬 생성
+        matRot.Rotation(m_WorldRot);
 
-    matScale.Scaling(mWorldScale);
-    matTranslate.Translation(mWorldPos);
-
-    matWorld = matScale * matTranslate;
+    matScale.Scaling(m_WorldScale);
+    matTranslate.Translation(m_WorldPos);
+    //mEnableRotation이 false일 경우 항등행렬이 유지
+    //곱 연산을 하더라도 현재값이 도출
+    matWorld = matScale * matTranslate * matRot;
 
     mTransformCBuffer->SetWorldMatrix(matWorld);
     mTransformCBuffer->SetViewMatrix(mScene->GetCameraManager()->GetViewMatrix());

@@ -11,6 +11,7 @@
 #include "../Component/CameraComponent.h"
 #include "../Component/ColliderAABB2D.h"
 #include "../Component/ColliderSphere2D.h"
+#include "../Component/ColliderOBB2D.h"
 
 CPlayerObject::CPlayerObject()
 {
@@ -34,7 +35,8 @@ bool CPlayerObject::Init()
 {
     mRoot = CreateComponent<CStaticMeshComponent>();
     //mBody = CreateComponent<CColliderAABB2D>();
-    mBody = CreateComponent<CColliderSphere2D>();
+    //mBody = CreateComponent<CColliderSphere2D>();
+    mBody = CreateComponent<CColliderOBB2D>();
     mRotationPivot = CreateComponent<CSceneComponent>();
     mSub = CreateComponent<CStaticMeshComponent>();
     mSub2 = CreateComponent<CStaticMeshComponent>();
@@ -53,8 +55,8 @@ bool CPlayerObject::Init()
     SetRootComponent(mRoot);
     
     mBody->SetCollisionProfile("Player");
-    //mBody->SetBoxSize(100.f, 100.f);
-    mBody->SetRadius(50.f);
+    mBody->SetBoxSize(100.f, 100.f);
+    //mBody->SetRadius(50.f);
 
     mRoot->AddChild(mBody);
 
@@ -120,7 +122,7 @@ bool CPlayerObject::Init()
         EInputType::Hold, this, &CPlayerObject::RotationZInv);
 
     mScene->GetInput()->AddBindFunction<CPlayerObject>("Fire",
-        EInputType::Down, this, &CPlayerObject::Fire);
+        EInputType::Hold, this, &CPlayerObject::Fire);
 
     mScene->GetInput()->AddBindFunction<CPlayerObject>("Skill1",
         EInputType::Hold, this, &CPlayerObject::Skill1);

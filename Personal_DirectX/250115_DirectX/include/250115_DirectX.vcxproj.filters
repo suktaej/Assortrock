@@ -264,6 +264,15 @@
     <ClInclude Include="Scene\CollisionQuadTree.h">
       <Filter>05.Scene\Collision</Filter>
     </ClInclude>
+    <ClInclude Include="Component\ColliderOBB2D.h">
+      <Filter>07.Component\SceneComponent\Collider\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\ColliderSphere2D.h">
+      <Filter>07.Component\SceneComponent\Collider\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>01.GameManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -403,6 +412,15 @@
     </ClCompile>
     <ClCompile Include="Scene\CollisionQuadTree.cpp">
       <Filter>05.Scene\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\ColliderOBB2D.cpp">
+      <Filter>07.Component\SceneComponent\Collider\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\ColliderSphere2D.cpp">
+      <Filter>07.Component\SceneComponent\Collider\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>01.GameManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -25,12 +25,11 @@ protected:
 	std::function<void(CColliderBase*)>	mCollisionEndFunc;
 
 #ifdef _DEBUG
-
 	class CTransformCBuffer* mTransformCBuffer = nullptr;
 	class CColliderCBuffer* mCBuffer = nullptr;
 	CSharedPtr<class CMesh> mMesh;
 	CSharedPtr<class CShader> mShader;
-
+	bool mEnableRotation = false;
 #endif // _DEBUG
 
 public:

@@ -478,10 +478,15 @@ DirectX::XMVECTOR FVector3D::Convert()	const
 
 FVector3D FVector3D::TransformNormal(FMatrix& mat)	const
 {
-	// XMVector3TransformNormal : w를 0으로 하여 4x4 행렬과 곱하고 그 결과를
-	// 반환해준다.
-	DirectX::XMVECTOR result = DirectX::XMVector3TransformNormal(Convert(),
-		mat.m);
+	// 선형 변환은 좌표계를 선형으로 변환하는 변환
+	// 아핀변환은 선형변환에 이동변환을 결합한 변환
+	// 벡터를 나타내는 동차좌표는 (x,y,z,0)
+	// 점을 나타내는 동차좌표는 (x,y,z,1)
+	
+	// XMVector3TransformNormal : 벡터 대 행렬 곱으로 벡터변환을 위해 w는 0
+	// 4x4 행렬과 곱하고 그 결과를 반환
+	// 법선 벡터는 평면이 바라보는 방향
+	DirectX::XMVECTOR result = DirectX::XMVector3TransformNormal(Convert(), mat.m);
 
 	return result;
 }

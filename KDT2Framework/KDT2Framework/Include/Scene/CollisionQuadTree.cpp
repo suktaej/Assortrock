@@ -340,7 +340,11 @@ CCollisionQuadTree::CCollisionQuadTree()
 
 CCollisionQuadTree::~CCollisionQuadTree()
 {
+#ifdef _DEBUG
+
 	SAFE_DELETE(mColliderCBuffer);
+
+#endif // _DEBUG
 
 	size_t	Size = mNodePool.size();
 

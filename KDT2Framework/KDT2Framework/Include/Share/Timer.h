@@ -11,6 +11,10 @@ private:
 	static LARGE_INTEGER	mTime;
 	static float	mDeltaTime;
 
+	static float	mFPS;
+	static float	mFPSTime;
+	static int		mFPSTick;
+
 private:
 	static void Init();
 	static float Update();

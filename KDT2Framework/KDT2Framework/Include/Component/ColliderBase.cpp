@@ -139,12 +139,16 @@ void CColliderBase::Render()
 
 #ifdef _DEBUG
 
-    FMatrix  matScale, matTranslate, matWorld;
-
+    FMatrix  matScale, matRot, matTranslate, matWorld;
+        
     matScale.Scaling(mWorldScale);
+
+    if (mEnableRotation)
+        matRot.Rotation(mWorldRot);
+
     matTranslate.Translation(mWorldPos);
 
-    matWorld = matScale * matTranslate;
+    matWorld = matScale * matRot * matTranslate;
 
     mTransformCBuffer->SetWorldMatrix(matWorld);
     mTransformCBuffer->SetViewMatrix(mScene->GetCameraManager()->GetViewMatrix());

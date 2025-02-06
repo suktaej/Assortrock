@@ -144,11 +144,19 @@ enum class EColliderType : unsigned char
 enum class EColliderShape : unsigned char
 {
 	AABB2D,
-	Sphere2D
+	Sphere2D,
+	OBB2D
 };
 
 struct FAABB2D
 {
 	FVector2D	Min;
 	FVector2D	Max;
+};
+
+struct FOBB2D
+{
+	FVector2D Center;			//중점
+	FVector2D Axis[2];			//x,y축
+	FVector2D HalfSize;			//x,y축 상자크기의 절반
 };

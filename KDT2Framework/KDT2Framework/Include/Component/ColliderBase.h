@@ -30,6 +30,7 @@ protected:
 	class CColliderCBuffer* mCBuffer = nullptr;
 	CSharedPtr<class CMesh> mMesh;
 	CSharedPtr<class CShader> mShader;
+	bool		mEnableRotation = false;
 
 #endif // _DEBUG
 
