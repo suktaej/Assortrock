@@ -19,7 +19,7 @@ protected:
 	EColliderShape	mColliderShape;
 	FVector3D		mMin;
 	FVector3D		mMax;
-	//FCollisionProfile* mProfile = nullptr;
+	FCollisionProfile* mProfile = nullptr;
 	bool			mCollision = false;
 	std::function<void(const FVector3D&, CColliderBase*)>	mCollisionBeginFunc;
 	std::function<void(CColliderBase*)>	mCollisionEndFunc;
@@ -33,7 +33,7 @@ protected:
 #endif // _DEBUG
 
 public:
-	//FCollisionProfile* GetProfile()	const { return mProfile; }
+	FCollisionProfile* GetProfile()	const { return mProfile; }
 	EColliderShape GetColliderShape()	const { return mColliderShape; }
 	EColliderType GetColliderType()	const { return mColliderType; }
 	const FVector3D& GetMin() { return mMin; }
@@ -43,16 +43,16 @@ public:
 	void CallCollisionEnd(CColliderBase* Dest);
 
 public:
-	virtual bool Init();
-	virtual bool Init(const char* FileName);
-	virtual void PreUpdate(float DeltaTime);
-	virtual void Update(float DeltaTime);
-	virtual void PostUpdate(float DeltaTime);
-	virtual void Collision(float DeltaTime);
-	virtual void PreRender();
-	virtual void Render();
-	virtual void PostRender();
-	virtual CColliderBase* Clone();
+	bool Init() override;
+	bool Init(const char* FileName) override;
+	void PreUpdate(float DeltaTime) override;
+	void Update(float DeltaTime) override;
+	void PostUpdate(float DeltaTime) override;
+	void Collision(float DeltaTime) override;
+	void PreRender() override;
+	void Render() override;
+	void PostRender() override;
+	CColliderBase* Clone() override;
 	virtual bool Collision(FVector3D& HitPoint, CColliderBase* Dest) = 0;
 
 

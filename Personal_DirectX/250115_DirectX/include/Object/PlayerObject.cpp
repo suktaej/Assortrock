@@ -52,6 +52,7 @@ bool CPlayerObject::Init()
 
     //충돌체 할당
     mRoot->AddChild(mBody);
+    mBody->SetCollisionProfile("Player");
     mBody->SetBoxSize(m_PlayerX, m_PlayerY);
 
     //무브번트가 루트를 움직이기 위해서 update함수를 호출하여 사용
@@ -241,7 +242,7 @@ void CPlayerObject::Fire(float DeltaTime)
     CBulletObject* Bullet = mScene->CreateObj<CBulletObject>("Bullet");
     //씬에서 탄환오브젝트 생성 후 init 진행
     //staticmesh 컴포넌트를 생성하고 mRoot에 대입
-    // 
+    Bullet->SetBulletCollisionProfile("PlayerBullet");
     //staticmesh 컴포넌트를 불러와서 Root에 저장
     CSceneComponent* Root = Bullet->GetRootComponent();
 

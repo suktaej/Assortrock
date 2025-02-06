@@ -183,7 +183,7 @@ void CCollisionQuadTreeNode::Collision(float DeltaTime)
 			++i;
 			continue;
 		}
-
+	
 		FCollisionProfile* SrcProfile = mColliderList[i]->GetProfile();
 
 		if (!SrcProfile->Enable)
@@ -223,8 +223,8 @@ void CCollisionQuadTreeNode::Collision(float DeltaTime)
 
 			// Src와 Dest가 상호간에 Collision으로 되어 있는지를
 			// 판단한다.
-			else if (SrcProfile->Interaction[DestProfile->Channel] == ECollisionInteraction::Ignore ||
-				DestProfile->Interaction[SrcProfile->Channel] == ECollisionInteraction::Ignore)
+			else if (SrcProfile->Interaction[(int)DestProfile->Channel] == ECollisionInteraction::Ignore ||
+				DestProfile->Interaction[(int)SrcProfile->Channel] == ECollisionInteraction::Ignore)
 			{
 				++j;
 				continue;

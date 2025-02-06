@@ -67,11 +67,9 @@ bool CColliderBase::Init()
     mShader = CShaderManager::GetInst()->FindShader("FrameMeshShader");
 
     mCBuffer = new CColliderCBuffer;
-
     mCBuffer->Init();
 
     mTransformCBuffer = new CTransformCBuffer;
-
     mTransformCBuffer->Init();
 
 #endif // _DEBUG

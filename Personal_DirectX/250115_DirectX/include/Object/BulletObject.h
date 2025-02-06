@@ -18,6 +18,7 @@ protected:
     float   mSpeed = 400.f;
 public:
     void SetSpeed(float Speed) { mSpeed = Speed; }
+    void SetBulletCollisionProfile(const std::string& Name);
 public:
     bool Init() override;
     void Update(float DeltaTime) override;

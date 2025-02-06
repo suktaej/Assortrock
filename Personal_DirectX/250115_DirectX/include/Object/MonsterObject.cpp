@@ -34,7 +34,7 @@ bool CMonsterObject::Init()
 
     SetRootComponent(mRoot);
 
-    //mBody->SetCollisionProfile("Monster");
+    mBody->SetCollisionProfile("Monster");
     mBody->SetBoxSize(100.f, 100.f);
 
     mRoot->AddChild(mBody);

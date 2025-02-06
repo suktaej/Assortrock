@@ -22,6 +22,7 @@ private:
 	FVector2D		mSize;
 	int				mDepth = 0;
 	int				mDivisionCount = QUADTREE_DIVISION_COUNT;
+	//자식노드의 충돌체 분할을 저장하기 위한 목록
 	std::vector<CSharedPtr<class CColliderBase>>	mColliderList;
 
 #ifdef _DEBUG

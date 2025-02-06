@@ -13,6 +13,8 @@
 
 #include "Share/Log.h"
 
+#include "ProfileManager.h"
+
 DEFINITION_SINGLE(CGameManager)
 bool CGameManager::m_Loop = true;
 
@@ -26,6 +28,7 @@ CGameManager::~CGameManager()
     CDevice::DestroyInst();
     CShaderManager::DestroyInst();
     CSceneManager::DestroyInst();
+    CProfileManager::DestroyInst();
 
     ReleaseDC(m_hWnd, m_hdc);
 
@@ -63,6 +66,10 @@ bool CGameManager::Init(HINSTANCE hInst)
     //장면 관리자 초기화
     if (!CSceneManager::GetInst()->Init())
         return false;
+    //프로파일 관리자 초기화
+    if (!CProfileManager::GetInst()->Init())
+        return false;
+
     //타이머 초기화
     CTimer::Init();
 
