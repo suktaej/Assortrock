@@ -50,6 +50,11 @@ bool CScene::Init(const char* FileName)
 	if (!mCameraManager->Init())
 		return false;
 
+	mCollision = new CSceneCollision;
+
+	if (!mCollision->Init())
+		return false;
+
     return true;
 }
 

@@ -98,7 +98,7 @@ void CColliderOBB2D::Update(float DeltaTime)
         mBoxInfo.Axis[1] * mBoxInfo.HalfSize.y;
 
     Pos[2] = mBoxInfo.Center + mBoxInfo.Axis[0] * mBoxInfo.HalfSize.x +
-        mBoxInfo.Axis[1] * mBoxInfo.HalfSize.x;
+        mBoxInfo.Axis[1] * mBoxInfo.HalfSize.y;
 
     Pos[3] = mBoxInfo.Center + mBoxInfo.Axis[0] * mBoxInfo.HalfSize.x -
         mBoxInfo.Axis[1] * mBoxInfo.HalfSize.y;

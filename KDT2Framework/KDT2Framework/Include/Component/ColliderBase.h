@@ -25,7 +25,9 @@ protected:
 	FCollisionProfile* mProfile = nullptr;
 	bool			mCollision = false;
 	std::function<void(const FVector3D&, CColliderBase*)>	mCollisionBeginFunc;
+	class CSceneObject*		mBeginObj;
 	std::function<void(CColliderBase*)>	mCollisionEndFunc;
+	class CSceneObject*		mEndObj;
 
 #ifdef _DEBUG
 
@@ -84,6 +86,7 @@ public:
 	virtual void Render();
 	virtual void PostRender();
 	virtual CColliderBase* Clone();
+	virtual void EraseOwner();
 	virtual bool Collision(FVector3D& HitPoint, CColliderBase* Dest) = 0;
 
 
@@ -92,16 +95,28 @@ public:
 	void SetCollisionBeginFunc(T* Obj,
 		void (T::* Func)(const FVector3D&, CColliderBase*))
 	{
+		mBeginObj = Obj;
 		mCollisionBeginFunc = std::bind(Func, Obj,
 			std::placeholders::_1, std::placeholders::_2);
+	}
+
+	void ClearBeginFunction()
+	{
+		mCollisionBeginFunc = nullptr;
 	}
 
 	template <typename T>
 	void SetCollisionEndFunc(T* Obj,
 		void (T::* Func)(CColliderBase*))
 	{
+		mEndObj = Obj;
 		mCollisionEndFunc = std::bind(Func, Obj,
 			std::placeholders::_1);
+	}
+
+	void ClearEndFunction()
+	{
+		mCollisionEndFunc = nullptr;
 	}
 };
 

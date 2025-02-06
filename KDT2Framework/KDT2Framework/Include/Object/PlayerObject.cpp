@@ -12,6 +12,7 @@
 #include "../Component/ColliderAABB2D.h"
 #include "../Component/ColliderSphere2D.h"
 #include "../Component/ColliderOBB2D.h"
+#include "BulletDot.h"
 
 CPlayerObject::CPlayerObject()
 {
@@ -108,6 +109,7 @@ bool CPlayerObject::Init()
     mScene->GetInput()->AddBindKey("Skill5", '5');
     mScene->GetInput()->AddBindKey("Skill6", '6');
     mScene->GetInput()->AddBindKey("Skill7", '7');
+    mScene->GetInput()->AddBindKey("Skill8", '8');
 
     mScene->GetInput()->AddBindFunction<CPlayerObject>("MoveUp",
         EInputType::Hold, this, &CPlayerObject::MoveUp);
@@ -149,6 +151,9 @@ bool CPlayerObject::Init()
 
     mScene->GetInput()->AddBindFunction<CPlayerObject>("Skill7",
         EInputType::Down, this, &CPlayerObject::Skill7);
+
+    mScene->GetInput()->AddBindFunction<CPlayerObject>("Skill8",
+        EInputType::Down, this, &CPlayerObject::Skill8);
 
     return true;
 }
@@ -350,6 +355,24 @@ void CPlayerObject::Skill7(float DeltaTime)
     Bullet->SetWorldScale(50.f, 50.f);
     Bullet->SetWorldRotation(mRoot->GetWorldRotation());
     Bullet->SetWorldPos(Pos + Dir * 75.f);
+}
+
+void CPlayerObject::Skill8(float DeltaTime)
+{
+    CBulletDot* Bullet = mScene->CreateObj<CBulletDot>("Bullet");
+
+    Bullet->SetBulletCollisionProfile("PlayerAttack");
+
+    CSceneComponent* Root = Bullet->GetRootComponent();
+
+    FVector3D Pos = mRoot->GetWorldPosition();
+    FVector3D Dir = mRoot->GetAxis(EAxis::Y);
+
+    Root->SetWorldScale(300.f, 300.f);
+    Root->SetWorldRotation(mRoot->GetWorldRotation());
+    Root->SetWorldPos(Pos + Dir * 75.f);
+
+    Bullet->SetBoxSize(300.f, 300.f);
 }
 
 void CPlayerObject::UpdateSkill2(float DeltaTime)

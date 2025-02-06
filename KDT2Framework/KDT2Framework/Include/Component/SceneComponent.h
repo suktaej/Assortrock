@@ -32,6 +32,7 @@ public:
 	virtual void Render();
 	virtual void PostRender();
 	virtual CSceneComponent* Clone();
+	virtual void EraseOwner();
 
 protected:
 	FVector3D	mRelativeScale = FVector3D(1.f, 1.f, 1.f);

@@ -228,6 +228,19 @@ void CColliderBase::PostRender()
     CSceneComponent::PostRender();
 }
 
+void CColliderBase::EraseOwner()
+{
+    CSceneComponent::EraseOwner();
+
+    // 이 함수는 오너 오브젝트가 지워질때 호출되는 함수인데
+    // End함수가 오너 오브젝트의 함수로 지정되어 있을 경우
+    // End함수를 제거한다.
+    if (mCollisionEndFunc && mEndObj == GetOwner())
+    {
+        mCollisionEndFunc = nullptr;
+    }
+}
+
 CColliderBase* CColliderBase::Clone()
 {
     return nullptr;

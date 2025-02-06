@@ -81,6 +81,8 @@ private:
 
     void Skill7(float DeltaTime);
 
+    void Skill8(float DeltaTime);
+
 
 private:
     void UpdateSkill2(float DeltaTime);

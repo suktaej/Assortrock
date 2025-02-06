@@ -264,6 +264,17 @@ CSceneComponent* CSceneComponent::Clone()
     return new CSceneComponent(*this);
 }
 
+void CSceneComponent::EraseOwner()
+{
+    std::vector<CSharedPtr<CSceneComponent>>::iterator  iter;
+    std::vector<CSharedPtr<CSceneComponent>>::iterator  iterEnd = mChildList.end();
+
+    for (iter = mChildList.begin(); iter != iterEnd; ++iter)
+    {
+        (*iter)->EraseOwner();
+    }
+}
+
 void CSceneComponent::SetRelativeScale(const FVector3D& Scale)
 {
     mRelativeScale = Scale;

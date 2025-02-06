@@ -279,6 +279,9 @@
     <ClCompile Include="Component\ColliderOBB2D.cpp">
       <Filter>07. Component\01. SceneComponent\03. Collider\01. 2D</Filter>
     </ClCompile>
+    <ClCompile Include="Object\BulletDot.cpp">
+      <Filter>06. Object\02. Bullet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -457,6 +460,9 @@
     </ClInclude>
     <ClInclude Include="Component\ColliderOBB2D.h">
       <Filter>07. Component\01. SceneComponent\03. Collider\01. 2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BulletDot.h">
+      <Filter>06. Object\02. Bullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
