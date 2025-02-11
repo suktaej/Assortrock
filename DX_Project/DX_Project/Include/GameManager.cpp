@@ -2,8 +2,15 @@
 #include "resource.h"
 #include "Share/Timer.h"
 #include "Device.h"
-
+#include "Asset/AssetManager.h"
+//#include "Shader/ShaderManager.h"
+#include "Asset/Mesh/MeshManager.h"
+#include "Asset/Mesh/Mesh.h"
+//#include "Shader/Shader.h"
+//#include "Shader/TransformCBuffer.h"
+//#include "Scene/SceneManager.h"
 #include "Share/Log.h"
+//#include "ProfileManager.h"
 
 TCHAR   gRootPath[MAX_PATH];
 
@@ -19,7 +26,7 @@ CGameManager::~CGameManager()
 {
     //CProfileManager::DestroyInst();
     //CSceneManager::DestroyInst();
-    //CAssetManager::DestroyInst();
+    CAssetManager::DestroyInst();
     //CShaderManager::DestroyInst();
     CDevice::DestroyInst();
 
@@ -32,8 +39,8 @@ bool CGameManager::Init(HINSTANCE hInst)
 {
     mhInst = hInst;
 
-    lstrcpy(mClassName, TEXT("KDT2Framework"));
-    lstrcpy(mTitleName, TEXT("KDT2Framework"));
+    lstrcpy(mClassName, TEXT("DX_Project"));
+    lstrcpy(mTitleName, TEXT("DX_Project"));
 
     RegisterWindowClass();
 
@@ -54,9 +61,9 @@ bool CGameManager::Init(HINSTANCE hInst)
     //if (!CShaderManager::GetInst()->Init())
     //    return false;
 
-    //// 애셋 관리자 초기화
-    //if (!CAssetManager::GetInst()->Init())
-    //    return false;
+    // 애셋 관리자 초기화
+    if (!CAssetManager::GetInst()->Init())
+        return false;
 
     //// Profile 관리자 초기화
     //if (!CProfileManager::GetInst()->Init())

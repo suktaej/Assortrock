@@ -103,3 +103,44 @@ struct FIndexBuffer
 		SAFE_DELETE_ARRAY(Data);
 	}
 };
+
+// Vertex(색상정보를 가지는 타입)
+struct FVertexColor
+{
+	FVector3D	Pos;	//좌표
+	FVector4D	Color;	//색상
+
+	FVertexColor()
+	{
+	}
+
+	FVertexColor(const FVector3D& _Pos, const FVector4D& _Color) :
+		Pos(_Pos),
+		Color(_Color)
+	{
+	}
+
+	FVertexColor(float x, float y, float z, float r, float g, float b, float a) :
+		Pos(x, y, z),
+		Color(r, g, b, a)
+	{
+	}
+};
+
+enum class EAssetType
+{
+	Mesh,
+	Texture
+};
+
+enum class EShaderBufferType
+{
+	Vertex = 0x1,
+	Pixel = 0x2,
+	Hull = 0x4,
+	Domain = 0x8,
+	Geometry = 0x10,
+	Compute = 0x20,
+	Graphic = Vertex | Pixel | Hull | Domain | Geometry,
+	All = Graphic | Compute
+};

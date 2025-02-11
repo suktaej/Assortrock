@@ -40,6 +40,18 @@
     <Filter Include="3.Asset\Mesh">
       <UniqueIdentifier>{a9f90855-4af4-4dfd-8aae-66de9895a0b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="4.Shader">
+      <UniqueIdentifier>{7111dd80-38a3-4723-9cdc-7674d7481d25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4.Shader\HLSL">
+      <UniqueIdentifier>{46902dbe-3d05-4130-a662-277fc9d250e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4.Shader\Class">
+      <UniqueIdentifier>{6f37d9c7-ba7f-4835-bb95-db14fe9e6fcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4.Shader\Class\ColorMesh">
+      <UniqueIdentifier>{74186217-c502-47ec-8a4c-770343c6ac8a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX_Project.rc">
@@ -97,6 +109,27 @@
     <ClInclude Include="Asset\Mesh\Mesh.h">
       <Filter>3.Asset\Mesh</Filter>
     </ClInclude>
+    <ClInclude Include="Asset\Mesh\StaticMesh.h">
+      <Filter>3.Asset\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Mesh\MeshManager.h">
+      <Filter>3.Asset\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\Shader.h">
+      <Filter>4.Shader\Class</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\ShaderManager.h">
+      <Filter>4.Shader\Class</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\GraphicShader.h">
+      <Filter>4.Shader\Class\ColorMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\ColorMeshShader.h">
+      <Filter>4.Shader\Class\ColorMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\ComputeShader.h">
+      <Filter>4.Shader\Class</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameManager.cpp">
@@ -132,5 +165,37 @@
     <ClCompile Include="Asset\Mesh\Mesh.cpp">
       <Filter>3.Asset\Mesh</Filter>
     </ClCompile>
+    <ClCompile Include="Asset\Mesh\StaticMesh.cpp">
+      <Filter>3.Asset\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Mesh\MeshManager.cpp">
+      <Filter>3.Asset\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\Shader.cpp">
+      <Filter>4.Shader\Class</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\ShaderManager.cpp">
+      <Filter>4.Shader\Class</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\ColorMeshShader.cpp">
+      <Filter>4.Shader\Class\ColorMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\GraphicShader.cpp">
+      <Filter>4.Shader\Class\ColorMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\ComputeShader.cpp">
+      <Filter>4.Shader\Class</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Bin\Shader\ColorMesh.fx">
+      <Filter>4.Shader\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\Shader\Mesh.fx">
+      <Filter>4.Shader\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\Shader\Share.fx">
+      <Filter>4.Shader\HLSL</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

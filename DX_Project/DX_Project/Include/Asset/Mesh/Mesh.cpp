@@ -51,11 +51,12 @@ struct FVector3D {
 */
 	//정점 정보는 Vector3D struct type
 	//크기만큼 동적할당
+	//QUE:동적할당 한 메모리 제거 필요여부
 	mVertexBuffer.Data = new char[Size * Count];
 	//할당된 메모리에 데이터를 복사
 	memcpy(mVertexBuffer.Data, VertexData, Size * Count);
 	
-	//입력받은 정보로 버퍼를 생성
+	//입력받은 정보로 버퍼를 생성하기 위해 값을 넘겨줌
 	if (!CreateBuffer(
 		&mVertexBuffer.Buffer,
 		D3D11_BIND_VERTEX_BUFFER,
@@ -79,7 +80,7 @@ struct FVector3D {
 		Slot->IndexBuffer.Fmt = Fmt;
 		memcpy(Slot->IndexBuffer.Data, IndexData, IndexSize * IndexCount);
 	
-		//Index Buffer 생성
+		//Index Buffer 생성을 위해 값을 넘겨줌
 		if (!CreateBuffer(
 			&Slot->IndexBuffer.Buffer,
 			D3D11_BIND_INDEX_BUFFER,
