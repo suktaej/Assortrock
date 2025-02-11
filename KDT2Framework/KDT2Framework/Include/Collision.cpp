@@ -2,6 +2,7 @@
 #include "Component/ColliderAABB2D.h"
 #include "Component/ColliderSphere2D.h"
 #include "Component/ColliderOBB2D.h"
+#include "Component/ColliderLine2D.h"
 
 bool CCollision::CollisionAABB2DToAABB2D(FVector3D& HitPoint,
     CColliderAABB2D* Src, CColliderAABB2D* Dest)
@@ -69,6 +70,51 @@ bool CCollision::CollisionSphere2DToOBB2D(
         Src->GetWorldPosition(),
         Src->GetRadius(),
         Dest->GetBox()))
+        return true;
+
+    return false;
+}
+
+bool CCollision::CollisionLine2DToLine2D(
+    FVector3D& HitPoint, CColliderLine2D* Src,
+    CColliderLine2D* Dest)
+{
+    if (CollisionLine2DToLine2D(HitPoint, Src->GetLine(),
+        Dest->GetLine()))
+        return true;
+
+    return false;
+}
+
+bool CCollision::CollisionLine2DToAABB2D(
+    FVector3D& HitPoint, CColliderLine2D* Src, 
+    CColliderAABB2D* Dest)
+{
+    if (CollisionLine2DToAABB2D(HitPoint, Src->GetLine(),
+        Dest->GetBox()))
+        return true;
+
+    return false;
+}
+
+bool CCollision::CollisionLine2DToOBB2D(
+    FVector3D& HitPoint, CColliderLine2D* Src, 
+    CColliderOBB2D* Dest)
+{
+    if (CollisionLine2DToOBB2D(HitPoint, Src->GetLine(),
+        Dest->GetBox()))
+        return true;
+
+    return false;
+}
+
+bool CCollision::CollisionLine2DToSphere2D(
+    FVector3D& HitPoint, CColliderLine2D* Src,
+    CColliderSphere2D* Dest)
+{
+    if (CollisionLine2DToSphere2D(HitPoint, Src->GetLine(),
+        Dest->GetWorldPosition(),
+        Dest->GetRadius()))
         return true;
 
     return false;
@@ -321,6 +367,325 @@ bool CCollision::CollisionSphere2DToOBB2D(
     return true;
 }
 
+bool CCollision::CollisionLine2DToLine2D(
+    FVector3D& HitPoint, const FLine2D& Src, 
+    const FLine2D& Dest)
+{
+    // Src 시작점 : A Src 도착점 : B
+    // Dest 시작점 : C Dest 도착점 : D
+    // 선분 A, B   선분 C, D
+    // 선이 서로 교차하는지 판단해야 한다.
+    // CCW(A, B, C) * CCW(A, B, D) < 0
+    // CCW(C, D, A) * CCW(C, D, B) < 0
+    FVector2D   A = Src.Start;
+    FVector2D   B = Src.End;
+    FVector2D   C = Dest.Start;
+    FVector2D   D = Dest.End;
+
+    int ccw1 = CCW2D(A, B, C);
+    int ccw2 = CCW2D(A, B, D);
+    int ccw3 = CCW2D(C, D, A);
+    int ccw4 = CCW2D(C, D, B);
+
+    if (ccw1 * ccw2 < 0 && ccw3 * ccw4 < 0)
+    {
+        float   x1 = B.x - A.x;
+        float   y1 = B.y - A.y;
+        float   SrcResult = y1 * A.x + x1 * A.y;
+
+        float   x2 = D.x - C.x;
+        float   y2 = D.y - C.y;
+        float   DestResult = y2 * C.x + x2 * C.y;
+
+        float   Determinant = y1 * x2 - x1 * y2;
+
+        HitPoint.x = (x2 * SrcResult - y2 * DestResult) / Determinant;
+        HitPoint.y = (y1 * DestResult - x1 * SrcResult) / Determinant;
+
+        return true;
+    }
+
+    // 직선이 일직선 상에 있는 경우
+    // 점 C가 직선 A, B 위에 있는지 판단한다.
+    if (ccw1 == 0 && PointOnLine2D(A, B, C))
+    {
+        HitPoint.x = C.x;
+        HitPoint.y = C.y;
+        return true;
+    }
+
+    if (ccw2 == 0 && PointOnLine2D(A, B, D))
+    {
+        HitPoint.x = D.x;
+        HitPoint.y = D.y;
+        return true;
+    }
+
+    if (ccw3 == 0 && PointOnLine2D(C, D, A))
+    {
+        HitPoint.x = A.x;
+        HitPoint.y = A.y;
+        return true;
+    }
+
+    if (ccw4 == 0 && PointOnLine2D(C, D, B))
+    {
+        HitPoint.x = B.x;
+        HitPoint.y = B.y;
+        return true;
+    }
+
+    return false;
+}
+
+bool CCollision::CollisionLine2DToAABB2D(
+    FVector3D& HitPoint, const FLine2D& Src,
+    const FAABB2D& Dest)
+{
+    // 선을 구성하는 두 점중 하나라도 사각형 안에 들어오면
+    // 충돌이다.
+    if (CollisionPointToAABB2D(Src.Start, Dest))
+    {
+        HitPoint.x = Src.Start.x;
+        HitPoint.y = Src.Start.y;
+
+        return true;
+    }
+
+    else if (CollisionPointToAABB2D(Src.End, Dest))
+    {
+        HitPoint.x = Src.End.x;
+        HitPoint.y = Src.End.y;
+
+        return true;
+    }
+
+    // 사각형을 구성하는 4개의 변과 선이 충돌하는지 판단한다.
+    FLine2D AABBLine[4];
+
+    AABBLine[0].Start = Dest.Min;
+    AABBLine[0].End.x = Dest.Min.x;
+    AABBLine[0].End.y = Dest.Max.y;
+
+    AABBLine[1].Start.x = Dest.Min.x;
+    AABBLine[1].Start.y = Dest.Max.y;
+    AABBLine[1].End = Dest.Max;
+
+    AABBLine[2].Start = Dest.Max;
+    AABBLine[2].End.x = Dest.Max.x;
+    AABBLine[2].End.y = Dest.Min.y;
+
+    AABBLine[3].Start.x = Dest.Max.x;
+    AABBLine[3].Start.y = Dest.Min.y;
+    AABBLine[3].End = Dest.Min;
+
+    bool    Result = false;
+    float   Dist = -1.f;
+
+    FVector2D   HitResult;
+
+    for (int i = 0; i < 4; ++i)
+    {
+        if (CollisionLine2DToLine2D(HitPoint, Src,
+            AABBLine[i]))
+        {
+            Result = true;
+
+            FVector2D   v;
+            v.x = HitPoint.x;
+            v.y = HitPoint.y;
+
+            float   Dist1 = Src.Start.Distance(v);
+
+            if (Dist == -1.f)
+            {
+                HitResult = v;
+                Dist = Dist1;
+            }
+
+            else if (Dist1 < Dist)
+            {
+                HitResult = v;
+                Dist = Dist1;
+            }
+        }
+    }
+
+    if (Result)
+    {
+        HitPoint.x = HitResult.x;
+        HitPoint.y = HitResult.y;
+    }
+
+    return Result;
+}
+
+bool CCollision::CollisionLine2DToOBB2D(
+    FVector3D& HitPoint, const FLine2D& Src, 
+    const FOBB2D& Dest)
+{
+    // 선을 구성하는 두 점중 하나라도 사각형 안에 들어오면
+    // 충돌이다.
+    if (CollisionPointToOBB2D(Src.Start, Dest))
+    {
+        HitPoint.x = Src.Start.x;
+        HitPoint.y = Src.Start.y;
+
+        return true;
+    }
+
+    else if (CollisionPointToOBB2D(Src.End, Dest))
+    {
+        HitPoint.x = Src.End.x;
+        HitPoint.y = Src.End.y;
+
+        return true;
+    }
+
+    // 사각형을 구성하는 점 4개를 만들어준다.
+    FVector2D   Pos[4];
+
+    Pos[0] = Dest.Center - Dest.Axis[0] * Dest.HalfSize.x +
+        Dest.Axis[1] * Dest.HalfSize.y;
+
+    Pos[1] = Dest.Center - Dest.Axis[0] * Dest.HalfSize.x -
+        Dest.Axis[1] * Dest.HalfSize.y;
+
+    Pos[2] = Dest.Center + Dest.Axis[0] * Dest.HalfSize.x +
+        Dest.Axis[1] * Dest.HalfSize.y;
+
+    Pos[3] = Dest.Center + Dest.Axis[0] * Dest.HalfSize.x -
+        Dest.Axis[1] * Dest.HalfSize.y;
+
+    // 사각형을 구성하는 4개의 변과 선이 충돌하는지 판단한다.
+    FLine2D OBBLine[4];
+
+    OBBLine[0].Start = Pos[0];
+    OBBLine[0].End = Pos[2];
+
+    OBBLine[1].Start = Pos[2];
+    OBBLine[1].End = Pos[3];
+
+    OBBLine[2].Start = Pos[1];
+    OBBLine[2].End = Pos[3];
+
+    OBBLine[3].Start = Pos[0];
+    OBBLine[3].End = Pos[1];
+
+    bool    Result = false;
+    float   Dist = -1.f;
+
+    FVector2D   HitResult;
+
+    for (int i = 0; i < 4; ++i)
+    {
+        if (CollisionLine2DToLine2D(HitPoint, Src,
+            OBBLine[i]))
+        {
+            Result = true;
+
+            FVector2D   v;
+            v.x = HitPoint.x;
+            v.y = HitPoint.y;
+
+            float   Dist1 = Src.Start.Distance(v);
+
+            if (Dist == -1.f)
+            {
+                HitResult = v;
+                Dist = Dist1;
+            }
+
+            else if (Dist1 < Dist)
+            {
+                HitResult = v;
+                Dist = Dist1;
+            }
+        }
+    }
+
+    if (Result)
+    {
+        HitPoint.x = HitResult.x;
+        HitPoint.y = HitResult.y;
+    }
+
+    return Result;
+}
+
+bool CCollision::CollisionLine2DToSphere2D(
+    FVector3D& HitPoint, const FLine2D& Src, 
+    const FVector3D& Center, float Radius)
+{
+    // 임의의점 P가 있을 경우
+    // 중점 : C 점 : P 반지름 : r
+    // || P - C || - r = 0
+    // 직선의방향 : D, 임의의 거리 : t
+    // 직선 : S + D * t
+    // 직선의 시작점에서 D 방향으로 t만큼 이동한 위치를
+    // 구할 수 있다.
+    // || S - C + Dt || - r = 0
+    // 루트((S - C + Dt) * (S - C + Dt)) - r = 0
+    // S - C : M
+    // 루트((Dt + M) * (Dt + M)) - r = 0
+    // (Dt + M) * (Dt + M) - r * r = 0
+    // Dt^2 + 2MDt + M^2 - r^2 = 0
+    // Ax^2 + Bx + C = 0
+    // A는 방향벡터 D이기 때문에 제곱을 해도 크기인 1이
+    // 나오게 된다.
+    // (-B +- 루트(B^2 - 4AC)) / 2A
+    // (-B +- 루트(B^2 - 4C)) / 2
+    FVector2D   Dir = Src.End - Src.Start;
+
+    // 선의 길이
+    float   LineLength = Dir.Length();
+
+    Dir.Normalize();
+
+    FVector2D   Center2D;
+    Center2D.x = Center.x;
+    Center2D.y = Center.y;
+    FVector2D   M = Src.Start - Center2D;
+    float   b = 2.f * M.Dot(Dir);
+    float   c = M.Dot(M) - Radius * Radius;
+
+    float   Det = b * b - 4.f * c;
+
+    if (Det < 0.f)
+        return false;
+
+    // 루트
+    Det = sqrtf(Det);
+
+    // (-B +- 루트(B^2 - 4C)) / 2
+    float   t1, t2;
+    t1 = (-b + Det) / 2.f;
+    t2 = (-b - Det) / 2.f;
+
+    if (t1 < 0.f && t2 < 0.f)
+        return false;
+
+    // 2개의 길이중 하나라도 선의 길이보다 짧아야 한다.
+    // 단, 음수는 처리 X.
+    bool    result = false;
+    if (t1 > 0.f && t1 < LineLength ||
+        t2 > 0.f && t2 < LineLength)
+        result = true;
+
+    if (result)
+    {
+        float   HitDist = t1 < t2 ? t1 : t2;
+
+        if (HitDist < 0.f)
+            HitDist = t1 > t2 ? t1 : t2;
+
+        HitPoint.x = Src.Start.x + Dir.x * HitDist;
+        HitPoint.y = Src.Start.y + Dir.y * HitDist;
+    }
+
+    return result;
+}
+
 bool CCollision::ComputeAxisProjection(
     const FVector2D& CenterLine, 
     const FVector2D& SeparationAxis,
@@ -409,4 +774,144 @@ FOBB2D CCollision::CreateOBB2D(const FAABB2D& Info)
     result.HalfSize = (Info.Max - Info.Min) * 0.5f;
 
     return result;
+}
+
+bool CCollision::CollisionPointToAABB2D(
+    const FVector2D& Point, const FAABB2D& Info)
+{
+    if (Point.x < Info.Min.x)
+        return false;
+
+    else if (Point.y < Info.Min.y)
+        return false;
+
+    else if (Point.x > Info.Max.x)
+        return false;
+
+    else if (Point.y > Info.Max.y)
+        return false;
+
+    return true;
+}
+
+bool CCollision::CollisionPointToOBB2D(
+    const FVector2D& Point, const FOBB2D& Info)
+{
+    FVector2D   CenterLine = Point - Info.Center;
+
+    float   Dist = abs(CenterLine.Dot(Info.Axis[EAxis::X]));
+
+    if (Dist > Info.HalfSize.x)
+        return false;
+
+    Dist = abs(CenterLine.Dot(Info.Axis[EAxis::Y]));
+
+    if (Dist > Info.HalfSize.y)
+        return false;
+
+    return true;
+}
+
+bool CCollision::CollisionPointToSphere2D(
+    const FVector2D& Point, const FVector2D& Center, 
+    float Radius)
+{
+    float   Dist = Center.Distance(Point);
+
+    return Dist <= Radius;
+}
+
+bool CCollision::CollisionPointToLine2D(
+    const FVector2D& Point, const FLine2D& Info)
+{
+    // 점 p(x, y)가 있을 경우 직선의 방향 (A, B)
+    // Ax + By + C = 0
+    
+    // 방향 내적 점 을 하면 코사인세타가 나온다.
+    FVector2D   LineDir = Info.End - Info.Start;
+    LineDir.Normalize();
+
+    FVector2D   LineDir1 = Point - Info.Start;
+    LineDir1.Normalize();
+
+    float   Dot = LineDir.Dot(LineDir1);
+
+    if (Dot < 1.f)
+        return false;
+
+    float Dist = Info.Start.Distance(Info.End);
+    float Dist1 = Info.Start.Distance(Point);
+
+    return Dist >= Dist1;
+}
+
+ECCWResult::Type CCollision::CCW2D(const FVector2D& P1, 
+    const FVector2D& P2, const FVector2D& P3)
+{
+    // CCW(Counter Clockwise) 알고리즘
+    // 점 3개가 이루는 방향을 계산하는 알고리즘.
+    // 점 A, B, C 가 있을 경우 세 점이 이루는 방향을 계산
+    // CCW(A, B, C) = (Bx - Ax) * (Cy - Ay) - (By - Ay) * (Cx - Ax)
+    // CCW(A, C, B) = (Cx - Ax) * (By - Ay) - (Cy - Ay) * (Bx - Ax)
+    // A : 1, 1 B : 4, 4 C : 3, 3
+    // (3 - 1) * (4 - 1) - (3 - 1) * (4 - 1)
+    // 2 * 3 - 2 * 3 = 0
+    // A, B, C가 차례로 들어갔을 경우
+    // 결과가 음수면 A, B, C는 시계방향이다.
+    // 결과가 양수면 A, B, C는 반시계방향.
+    // 결과가 0이면 세 점은 일직선상에 존재한다.
+    float   Cross = (P2.x - P1.x) * (P3.y - P1.y) -
+        (P2.y - P1.y) * (P3.x - P1.x);
+
+    if (Cross < 0)
+        return ECCWResult::CCW;
+
+    else if (Cross > 0)
+        return ECCWResult::CW;
+
+    return ECCWResult::Line;
+}
+
+bool CCollision::PointOnLine2D(const FVector2D& LineStart, 
+    const FVector2D& LineEnd, const FVector2D& Point)
+{
+    float MinX, MinY, MaxX, MaxY;
+
+    if (LineStart.x < LineEnd.x)
+    {
+        MinX = LineStart.x;
+        MaxX = LineEnd.x;
+    }
+
+    else
+    {
+        MinX = LineEnd.x;
+        MaxX = LineStart.x;
+    }
+
+    if (LineStart.y < LineEnd.y)
+    {
+        MinY = LineStart.y;
+        MaxY = LineEnd.y;
+    }
+
+    else
+    {
+        MinY = LineEnd.y;
+        MaxY = LineStart.y;
+    }
+
+    if (MinX > Point.x)
+        return false;
+
+    else if (MaxX < Point.x)
+        return false;
+
+    else if (MinY > Point.y)
+        return false;
+
+    else if (MaxY < Point.y)
+        return false;
+
+    return true;
 }

@@ -15,6 +15,7 @@ protected:
 	class CInput* mInput = nullptr;
 	class CCameraManager* mCameraManager = nullptr;
 	class CSceneCollision* mCollision = nullptr;
+	class CSceneAssetManager* mAssetManager = nullptr;
 	std::list<CSharedPtr<class CSceneObject>>	mObjList;
 	bool	mDebugQuadTree = true;
 
@@ -32,6 +33,11 @@ public:
 	class CSceneCollision* GetCollision()	const
 	{
 		return mCollision;
+	}
+
+	class CSceneAssetManager* GetAssetManager()	const
+	{
+		return mAssetManager;
 	}
 
 public:

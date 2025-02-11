@@ -5,6 +5,7 @@
 #include "../Asset/Mesh/MeshManager.h"
 #include "ColliderAABB2D.h"
 #include "ColliderOBB2D.h"
+#include "ColliderLine2D.h"
 
 CColliderSphere2D::CColliderSphere2D()
 {
@@ -120,6 +121,9 @@ bool CColliderSphere2D::Collision(FVector3D& HitPoint,
         return CCollision::CollisionSphere2DToOBB2D(
             HitPoint, this,
             (CColliderOBB2D*)Dest);
+    case EColliderShape::Line2D:
+        return CCollision::CollisionLine2DToSphere2D(HitPoint,
+            (CColliderLine2D*)Dest, this);
     }
 
     return false;

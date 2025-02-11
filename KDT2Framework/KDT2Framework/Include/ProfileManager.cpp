@@ -34,6 +34,8 @@ bool CProfileManager::Init()
 	CreateProfile("MonsterAttack", ECollisionChannel::MonsterAttack, true,
 		ECollisionInteraction::Ignore);
 
+	SetInteraction("Player", ECollisionChannel::Player,
+		ECollisionInteraction::Ignore);
 	SetInteraction("Player", ECollisionChannel::PlayerAttack,
 		ECollisionInteraction::Ignore);
 

@@ -88,6 +88,31 @@ bool CMeshManager::Init()
         D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP))
         return false;
 
+    FVector3D   LineUp[2] =
+    {
+        FVector3D(0.f, 0.f, 0.f),
+        FVector3D(0.f, 1.f, 0.f)
+    };
+
+    if (!CreateMesh("LineUp2D", LineUp,
+        sizeof(FVector3D),
+        2, D3D11_USAGE_DEFAULT,
+        D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP))
+        return false;
+
+
+    FVector3D   LineRight[2] =
+    {
+        FVector3D(0.f, 0.f, 0.f),
+        FVector3D(1.f, 0.f, 0.f)
+    };
+
+    if (!CreateMesh("LineRight2D", LineRight,
+        sizeof(FVector3D),
+        2, D3D11_USAGE_DEFAULT,
+        D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP))
+        return false;
+
     return true;
 }
 
@@ -105,6 +130,8 @@ bool CMeshManager::CreateMesh(const std::string& Name, void* VertexData,
         return true;
 
     Mesh = new CStaticMesh;
+
+    Mesh->SetName(Name);
 
     if (!Mesh->CreateMesh(VertexData, Size, Count, VertexUsage,
         Primitive, IndexData, IndexSize, IndexCount, Fmt,
@@ -126,5 +153,19 @@ CMesh* CMeshManager::FindMesh(const std::string& Name)
     if (iter == mMeshMap.end())
         return nullptr;
 
-    return (CMesh*)iter->second.Get();
+    return iter->second;
+}
+
+void CMeshManager::ReleaseMesh(CAsset* Mesh)
+{
+    auto    iter = mMeshMap.find(Mesh->GetName());
+
+    if (iter != mMeshMap.end())
+    {
+        // 다른곳에서 가지고 있는게 없기 때문에 제거한다.
+        if (iter->second->GetRefCount() == 1)
+        {
+            mMeshMap.erase(iter);
+        }
+    }
 }

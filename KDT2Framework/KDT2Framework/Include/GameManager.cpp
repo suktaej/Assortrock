@@ -12,6 +12,8 @@
 #include "Share/Log.h"
 #include "ProfileManager.h"
 
+TCHAR   gRootPath[MAX_PATH];
+
 DEFINITION_SINGLE(CGameManager)
 
 bool CGameManager::mLoop = true;

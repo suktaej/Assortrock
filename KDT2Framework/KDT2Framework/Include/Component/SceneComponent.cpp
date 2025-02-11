@@ -329,6 +329,27 @@ void CSceneComponent::SetRelativeRotation(const FVector3D& Rot)
         mWorldRot = mRelativeRot;
     }
 
+
+
+    FVector3D   Axis[EAxis::End] =
+    {
+        FVector3D(1.f, 0.f, 0.f),
+        FVector3D(0.f, 1.f, 0.f),
+        FVector3D(0.f, 0.f, 1.f)
+    };
+
+    FMatrix matRot;
+    matRot.Rotation(mWorldRot);
+
+    // 회전된 축을 구한다.
+    mAxis[EAxis::X] = Axis[EAxis::X].TransformNormal(matRot);
+    mAxis[EAxis::Y] = Axis[EAxis::Y].TransformNormal(matRot);
+    mAxis[EAxis::Z] = Axis[EAxis::Z].TransformNormal(matRot);
+
+    mAxis[EAxis::X].Normalize();
+    mAxis[EAxis::Y].Normalize();
+    mAxis[EAxis::Z].Normalize();
+
     size_t  Size = mChildList.size();
 
     for (size_t i = 0; i < Size; ++i)

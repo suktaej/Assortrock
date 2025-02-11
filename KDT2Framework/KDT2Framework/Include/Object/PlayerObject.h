@@ -23,7 +23,8 @@ protected:
 protected:
     CSharedPtr<class CStaticMeshComponent>  mRoot;
     //CSharedPtr<class CColliderSphere2D>       mBody;
-    CSharedPtr<class CColliderOBB2D>       mBody;
+    CSharedPtr<class CColliderOBB2D>        mBody;
+    CSharedPtr<class CColliderLine2D>       mLine;
     CSharedPtr<class CSceneComponent>       mRotationPivot;
     CSharedPtr<class CStaticMeshComponent>  mSub;
     CSharedPtr<class CStaticMeshComponent>  mSub2;
@@ -82,6 +83,8 @@ private:
     void Skill7(float DeltaTime);
 
     void Skill8(float DeltaTime);
+
+    void Skill9(float DeltaTime);
 
 
 private:

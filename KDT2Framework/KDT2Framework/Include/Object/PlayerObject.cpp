@@ -12,7 +12,9 @@
 #include "../Component/ColliderAABB2D.h"
 #include "../Component/ColliderSphere2D.h"
 #include "../Component/ColliderOBB2D.h"
+#include "../Component/ColliderLine2D.h"
 #include "BulletDot.h"
+#include "PenetrationBullet.h"
 
 CPlayerObject::CPlayerObject()
 {
@@ -38,6 +40,7 @@ bool CPlayerObject::Init()
     //mBody = CreateComponent<CColliderAABB2D>();
     //mBody = CreateComponent<CColliderSphere2D>();
     mBody = CreateComponent<CColliderOBB2D>();
+    mLine = CreateComponent<CColliderLine2D>();
     mRotationPivot = CreateComponent<CSceneComponent>();
     mSub = CreateComponent<CStaticMeshComponent>();
     mSub2 = CreateComponent<CStaticMeshComponent>();
@@ -60,6 +63,12 @@ bool CPlayerObject::Init()
     //mBody->SetRadius(50.f);
 
     mRoot->AddChild(mBody);
+
+    mRoot->AddChild(mLine);
+
+    mLine->SetCollisionProfile("Player");
+    mLine->SetRelativePos(0.f, 50.f);
+    mLine->SetLineDistance(300.f);
 
     mCamera->SetProjectionType(ECameraProjectionType::Ortho);
 
@@ -110,6 +119,7 @@ bool CPlayerObject::Init()
     mScene->GetInput()->AddBindKey("Skill6", '6');
     mScene->GetInput()->AddBindKey("Skill7", '7');
     mScene->GetInput()->AddBindKey("Skill8", '8');
+    mScene->GetInput()->AddBindKey("Skill9", '9');
 
     mScene->GetInput()->AddBindFunction<CPlayerObject>("MoveUp",
         EInputType::Hold, this, &CPlayerObject::MoveUp);
@@ -154,6 +164,9 @@ bool CPlayerObject::Init()
 
     mScene->GetInput()->AddBindFunction<CPlayerObject>("Skill8",
         EInputType::Down, this, &CPlayerObject::Skill8);
+
+    mScene->GetInput()->AddBindFunction<CPlayerObject>("Skill9",
+        EInputType::Down, this, &CPlayerObject::Skill9);
 
     return true;
 }
@@ -373,6 +386,23 @@ void CPlayerObject::Skill8(float DeltaTime)
     Root->SetWorldPos(Pos + Dir * 75.f);
 
     Bullet->SetBoxSize(300.f, 300.f);
+}
+
+void CPlayerObject::Skill9(float DeltaTime)
+{
+    CPenetrationBullet* Bullet =
+        mScene->CreateObj<CPenetrationBullet>("Bullet");
+
+    Bullet->SetBulletCollisionProfile("PlayerAttack");
+
+    CSceneComponent* Root = Bullet->GetRootComponent();
+
+    FVector3D Pos = mRoot->GetWorldPosition();
+    FVector3D Dir = mRoot->GetAxis(EAxis::Y);
+
+    Root->SetWorldScale(50.f, 50.f);
+    Root->SetWorldRotation(mRoot->GetWorldRotation());
+    Root->SetWorldPos(Pos + Dir * 75.f);
 }
 
 void CPlayerObject::UpdateSkill2(float DeltaTime)

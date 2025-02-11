@@ -4,6 +4,8 @@
 #include "../Shader/ShaderManager.h"
 #include "../Asset/AssetManager.h"
 #include "../Asset/Mesh/MeshManager.h"
+#include "../Scene/Scene.h"
+#include "../Scene/SceneAssetManager.h"
 
 CStaticMeshComponent::CStaticMeshComponent()
 {
@@ -35,7 +37,7 @@ void CStaticMeshComponent::SetShader(CShader* Shader)
 
 void CStaticMeshComponent::SetMesh(const std::string& Name)
 {
-    mMesh = (CStaticMesh*)CAssetManager::GetInst()->GetMeshManager()->FindMesh(Name);
+    mMesh = (CStaticMesh*)mScene->GetAssetManager()->FindMesh(Name);
 }
 
 void CStaticMeshComponent::SetMesh(CMesh* Mesh)

@@ -19,6 +19,10 @@
 
 #include "Share/SharedPtr.h"
 
+// extern 은 선언된 전역변수를 다른곳에서 사용할 수 있게
+// 해주는 기능이다.
+extern TCHAR   gRootPath[MAX_PATH];
+
 // .lib 를 링크 걸어주는 기능이다.
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
@@ -144,7 +148,8 @@ enum class EColliderShape : unsigned char
 {
 	AABB2D,
 	Sphere2D,
-	OBB2D
+	OBB2D,
+	Line2D
 };
 
 struct FAABB2D
@@ -158,6 +163,12 @@ struct FOBB2D
 	FVector2D	Center;
 	FVector2D	Axis[2];
 	FVector2D	HalfSize;
+};
+
+struct FLine2D
+{
+	FVector2D	Start;
+	FVector2D	End;
 };
 
 namespace ECollisionChannel
@@ -216,3 +227,8 @@ struct FCollisionProfile
 	ECollisionInteraction::Type	Interaction[ECollisionChannel::End];
 };
 
+enum class EAssetType
+{
+	Mesh,
+	Texture
+};

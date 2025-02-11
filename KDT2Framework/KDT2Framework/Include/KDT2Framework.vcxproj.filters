@@ -118,6 +118,15 @@
     <Filter Include="04. Shader\03. ConstantBuffer\02. Collider">
       <UniqueIdentifier>{7b4ab8dd-c923-4392-948d-cbc5d1cc75bb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Asset\02. Texture">
+      <UniqueIdentifier>{6ab75bfe-d675-4f7b-be48-b1212665eaa4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Scene\04. Asset">
+      <UniqueIdentifier>{f44d1195-75c8-4f18-bfe3-005d8d14297e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Asset\03. Material">
+      <UniqueIdentifier>{50eac7b0-2f65-4a9c-b03d-46d05cb65916}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -281,6 +290,27 @@
     </ClCompile>
     <ClCompile Include="Object\BulletDot.cpp">
       <Filter>06. Object\02. Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\PenetrationBullet.cpp">
+      <Filter>06. Object\02. Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\ColliderLine2D.cpp">
+      <Filter>07. Component\01. SceneComponent\03. Collider\01. 2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Texture\TextureManager.cpp">
+      <Filter>03. Asset\02. Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Texture\Texture.cpp">
+      <Filter>03. Asset\02. Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SceneAssetManager.cpp">
+      <Filter>05. Scene\04. Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Material\Material.cpp">
+      <Filter>03. Asset\03. Material</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Material\MaterialManager.cpp">
+      <Filter>03. Asset\03. Material</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -464,6 +494,30 @@
     <ClInclude Include="Object\BulletDot.h">
       <Filter>06. Object\02. Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="Object\PenetrationBullet.h">
+      <Filter>06. Object\02. Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\ColliderLine2D.h">
+      <Filter>07. Component\01. SceneComponent\03. Collider\01. 2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Texture\Texture.h">
+      <Filter>03. Asset\02. Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Texture\TextureManager.h">
+      <Filter>03. Asset\02. Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Texture\DirectXTex.h">
+      <Filter>03. Asset\02. Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneAssetManager.h">
+      <Filter>05. Scene\04. Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Material\Material.h">
+      <Filter>03. Asset\03. Material</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Material\MaterialManager.h">
+      <Filter>03. Asset\03. Material</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="KDT2Framework.rc">
@@ -485,5 +539,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="Asset\Texture\DirectXTex.inl">
+      <Filter>03. Asset\02. Texture</Filter>
+    </None>
   </ItemGroup>
 </Project>
