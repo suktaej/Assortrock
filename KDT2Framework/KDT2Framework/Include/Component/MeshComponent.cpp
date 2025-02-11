@@ -2,6 +2,7 @@
 #include "../Shader/TransformCBuffer.h"
 #include "../Scene/Scene.h"
 #include "../Scene/CameraManager.h"
+#include "../Asset/Material/Material.h"
 
 CMeshComponent::CMeshComponent()
 {

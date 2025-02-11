@@ -49,7 +49,7 @@ public:
 	{
 		T* Component = new T;
 		
-		Component->m_Scene = mScene;
+		Component->mScene = mScene;
 		Component->m_OwnerObject = this;
 
 		if (!Component->Init())

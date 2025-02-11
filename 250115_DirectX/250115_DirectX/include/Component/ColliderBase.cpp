@@ -2,7 +2,7 @@
 #include "../Scene/Scene.h"
 #include "../Scene/SceneCollision.h"
 #include "../ProfileManager.h"
-#include "../Shader/ColliderCBuffer.h"
+//#include "../Shader/ColliderCBuffer.h"
 #include "../Shader/TransformCBuffer.h"
 #include "../Shader/Shader.h"
 #include "../Shader/ShaderManager.h"

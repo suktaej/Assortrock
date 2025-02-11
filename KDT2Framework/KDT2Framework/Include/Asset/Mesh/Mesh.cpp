@@ -1,5 +1,10 @@
 #include "Mesh.h"
 #include "../../Device.h"
+#include "../Material/Material.h"
+#include "../Material/MaterialManager.h"
+#include "../../Asset/AssetManager.h"
+#include "../../Scene/Scene.h"
+#include "../../Scene/SceneAssetManager.h"
 
 CMesh::CMesh()
 {
@@ -49,6 +54,8 @@ bool CMesh::CreateMesh(void* VertexData, int Size, int Count, D3D11_USAGE Vertex
 			return false;
 		}
 
+		Slot->Material = CAssetManager::GetInst()->GetMaterialManager()->FindMaterial("DefaultMaterial");
+
 		mMeshSlot.push_back(Slot);
 	}
 
@@ -84,6 +91,24 @@ bool CMesh::CreateBuffer(ID3D11Buffer** Buffer, D3D11_BIND_FLAG Flag, void* Data
 	return true;
 }
 
+void CMesh::SetMaterial(int SlotIndex, const std::string& Name)
+{
+	CMaterial* Material = nullptr;
+
+	if (mScene)
+		Material = mScene->GetAssetManager()->FindMaterial(Name);
+
+	else
+		Material = CAssetManager::GetInst()->GetMaterialManager()->FindMaterial(Name);
+
+	mMeshSlot[SlotIndex]->Material = Material;
+}
+
+void CMesh::SetMaterial(int SlotIndex, CMaterial* Material)
+{
+	mMeshSlot[SlotIndex]->Material = Material;
+}
+
 void CMesh::Render()
 {
 	unsigned int Stride = mVertexBuffer.Size;
@@ -111,6 +136,41 @@ void CMesh::Render()
 			CDevice::GetInst()->GetContext()->DrawIndexed(mMeshSlot[i]->IndexBuffer.Count,
 				0, 0);
 		}
+	}
+
+	else
+	{
+		CDevice::GetInst()->GetContext()->IASetIndexBuffer(nullptr,
+			DXGI_FORMAT_UNKNOWN, 0);
+		CDevice::GetInst()->GetContext()->Draw(mVertexBuffer.Count,
+			0);
+	}
+}
+
+void CMesh::Render(int SlotIndex)
+{
+	unsigned int Stride = mVertexBuffer.Size;
+	unsigned int Offset = 0;
+
+	// 그려줄 도형 타입을 지정한다.
+	CDevice::GetInst()->GetContext()->IASetPrimitiveTopology(mPrimitive);
+	// 버텍스버퍼를 지정한다.
+	CDevice::GetInst()->GetContext()->IASetVertexBuffers(0, 1,
+		&mVertexBuffer.Buffer, &Stride, &Offset);
+
+	size_t	SlotCount = mMeshSlot.size();
+
+	// 인덱스버퍼가 있을 경우 없을 경우로 나누어서 출력한다.
+
+	if (SlotCount > 0)
+	{
+		// 출력에 사용할 인덱스버퍼를 지정한다.
+		CDevice::GetInst()->GetContext()->IASetIndexBuffer(mMeshSlot[SlotIndex]->IndexBuffer.Buffer,
+			mMeshSlot[SlotIndex]->IndexBuffer.Fmt, 0);
+
+		// 인덱스를 참고하여 화면에 도형을 그린다.
+		CDevice::GetInst()->GetContext()->DrawIndexed(mMeshSlot[SlotIndex]->IndexBuffer.Count,
+			0, 0);
 	}
 
 	else

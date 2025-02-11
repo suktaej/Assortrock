@@ -127,6 +127,12 @@
     <Filter Include="03. Asset\03. Material">
       <UniqueIdentifier>{50eac7b0-2f65-4a9c-b03d-46d05cb65916}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Shader\03. ConstantBuffer\03. Material">
+      <UniqueIdentifier>{557a3dfa-8a14-42e3-ba24-f8006400de40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Shader\02. Shader Class\03. StaticMesh">
+      <UniqueIdentifier>{175218db-e3be-4422-9198-8f7767a6584e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -311,6 +317,12 @@
     </ClCompile>
     <ClCompile Include="Asset\Material\MaterialManager.cpp">
       <Filter>03. Asset\03. Material</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\MaterialCBuffer.cpp">
+      <Filter>04. Shader\03. ConstantBuffer\03. Material</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\StaticMeshShader.cpp">
+      <Filter>04. Shader\02. Shader Class\03. StaticMesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -518,6 +530,12 @@
     <ClInclude Include="Asset\Material\MaterialManager.h">
       <Filter>03. Asset\03. Material</Filter>
     </ClInclude>
+    <ClInclude Include="Shader\MaterialCBuffer.h">
+      <Filter>04. Shader\03. ConstantBuffer\03. Material</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\StaticMeshShader.h">
+      <Filter>04. Shader\02. Shader Class\03. StaticMesh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="KDT2Framework.rc">
@@ -534,6 +552,9 @@
       <Filter>04. Shader\01. HLSL</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\Shader\ColorMesh.fx">
+      <Filter>04. Shader\01. HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\Shader\Mesh.fx">
       <Filter>04. Shader\01. HLSL</Filter>
     </FxCompile>
   </ItemGroup>

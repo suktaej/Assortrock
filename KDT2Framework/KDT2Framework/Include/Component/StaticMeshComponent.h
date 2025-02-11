@@ -23,6 +23,21 @@ public:
 	void SetShader(class CShader* Shader);
 	void SetMesh(const std::string& Name);
 	void SetMesh(class CMesh* Mesh);
+	void SetMaterial(int SlotIndex, const std::string& Name);
+	void SetMaterial(int SlotIndex, class CMaterial* Material);
+	void AddTexture(int SlotIndex, const std::string& Name,
+		int Register, int ShaderBufferType = EShaderBufferType::Pixel,
+		int TextureIndex = 0);
+	void AddTexture(int SlotIndex, const std::string& Name,
+		const TCHAR* FileName, int Register,
+		int ShaderBufferType = EShaderBufferType::Pixel,
+		int TextureIndex = 0);
+	void AddTexture(int SlotIndex, class CTexture* Texture,
+		int Register,
+		int ShaderBufferType = EShaderBufferType::Pixel,
+		int TextureIndex = 0);
+	void SetBaseColor(int SlotIndex, float r, float g,
+		float b, float a);
 
 public:
 	virtual bool Init();

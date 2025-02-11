@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="1.GameManager">
+      <UniqueIdentifier>{b67bf671-2c7a-4ba9-9e92-902beb2beb73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Share">
+      <UniqueIdentifier>{77feb394-8eff-4c23-9b02-76ec1d59b4ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Share\Timer">
+      <UniqueIdentifier>{5fadd34e-8fad-452d-b04f-549809fe7c3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Share\Object">
+      <UniqueIdentifier>{35ccddef-0810-47ff-b29d-caed218f735d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Share\SharedPtr">
+      <UniqueIdentifier>{0bfaaa0d-8adc-4a25-9902-f15cd95c29fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Share\Log">
+      <UniqueIdentifier>{c29888a0-827b-4887-ad39-f518c24780ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1.GameManager\Device">
+      <UniqueIdentifier>{d91381fb-e84d-49a9-b474-8a99c9a70e52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3.Asset">
+      <UniqueIdentifier>{a0f62de8-ae95-4fd2-a9ce-02a21b2b96de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3.Asset\Mesh">
+      <UniqueIdentifier>{a9f90855-4af4-4dfd-8aae-66de9895a0b9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DX_Project.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameManager.h">
+      <Filter>1.GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Share\Log.h">
+      <Filter>2.Share\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="Share\Object.h">
+      <Filter>2.Share\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Share\SharedPtr.h">
+      <Filter>2.Share\SharedPtr</Filter>
+    </ClInclude>
+    <ClInclude Include="Share\Timer.h">
+      <Filter>2.Share\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="GameInfo.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineMath.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2D.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3D.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector4D.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Device.h">
+      <Filter>1.GameManager\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Asset.h">
+      <Filter>3.Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\AssetManager.h">
+      <Filter>3.Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Mesh\Mesh.h">
+      <Filter>3.Asset\Mesh</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>1.GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Share\Log.cpp">
+      <Filter>2.Share\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="Share\Object.cpp">
+      <Filter>2.Share\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Share\Timer.cpp">
+      <Filter>2.Share\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3D.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector4D.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Device.cpp">
+      <Filter>1.GameManager\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Asset.cpp">
+      <Filter>3.Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\AssetManager.cpp">
+      <Filter>3.Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Mesh\Mesh.cpp">
+      <Filter>3.Asset\Mesh</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

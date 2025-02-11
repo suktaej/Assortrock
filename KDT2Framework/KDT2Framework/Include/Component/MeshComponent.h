@@ -16,6 +16,7 @@ protected:
 
 protected:
 	class CTransformCBuffer* mTransformCBuffer;
+	std::vector<CSharedPtr<class CMaterial>>	mMaterialSlots;
 
 public:
 	virtual bool Init();

@@ -50,8 +50,10 @@ bool CPlayerObject::Init()
     mMovement = CreateComponent<CMovementComponent>();
     mRotation = CreateComponent<CRotationComponent>();
 
-    mRoot->SetMesh("CenterRect");
-    mRoot->SetShader("ColorMeshShader");
+    mRoot->SetMesh("CenterTexRect");
+    mRoot->AddTexture(0, "Teemo", TEXT("Texture/teemo.png"), 0);
+    //mRoot->SetBaseColor(0, 1.f, 0.f, 0.f, 1.f);
+    //mRoot->SetShader("ColorMeshShader");
 
     mRoot->SetWorldPos(0.f, 0.f, 0.f);
     mRoot->SetWorldScale(100.f, 100.f, 1.f);

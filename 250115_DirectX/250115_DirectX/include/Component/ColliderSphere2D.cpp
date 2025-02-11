@@ -62,11 +62,11 @@ void CColliderSphere2D::Update(float DeltaTime)
 {
     CColliderBase::Update(DeltaTime);
 
-    mMin.x = mWorldPos.x - mRadius;
-    mMin.y = mWorldPos.y - mRadius;
+    mMin.x = m_WorldPos.x - mRadius;
+    mMin.y = m_WorldPos.y - mRadius;
 
-    mMax.x = mWorldPos.x + mRadius;
-    mMax.y = mWorldPos.y + mRadius;
+    mMax.x = m_WorldPos.x + mRadius;
+    mMax.y = m_WorldPos.y + mRadius;
 
     SetWorldScale(FVector2D(mRadius * 2.f, mRadius * 2.f));
 }

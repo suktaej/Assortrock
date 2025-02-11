@@ -1,7 +1,7 @@
 
 #include "Share.fx"
 
-cbuffer Collider : register(b1)
+cbuffer Collider : register(b2)
 {
     float4 ColliderColor;
 };

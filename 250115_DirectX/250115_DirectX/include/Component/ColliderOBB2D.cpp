@@ -75,14 +75,14 @@ void CColliderOBB2D::Update(float DeltaTime)
 {
     CColliderBase::Update(DeltaTime);
 
-    mBoxInfo.Center.x = mWorldPos.x;
-    mBoxInfo.Center.y = mWorldPos.y;
+    mBoxInfo.Center.x = m_WorldPos.x;
+    mBoxInfo.Center.y = m_WorldPos.y;
 
-    mBoxInfo.Axis[0].x = mAxis[EAxis::X].x;
-    mBoxInfo.Axis[0].y = mAxis[EAxis::X].y;
+    mBoxInfo.Axis[0].x = mAxis[(int)EAxis::X].x;
+    mBoxInfo.Axis[0].y = mAxis[(int)EAxis::X].y;
 
-    mBoxInfo.Axis[1].x = mAxis[EAxis::Y].x;
-    mBoxInfo.Axis[1].y = mAxis[EAxis::Y].y;
+    mBoxInfo.Axis[1].x = mAxis[(int)EAxis::Y].x;
+    mBoxInfo.Axis[1].y = mAxis[(int)EAxis::Y].y;
 
     mBoxInfo.HalfSize = mBoxSize * 0.5f;
 

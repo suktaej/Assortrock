@@ -138,6 +138,23 @@ struct FVertexColor
 	}
 };
 
+struct FVertexTexture
+{
+	FVector3D	Pos;
+	FVector2D	UV;
+
+	FVertexTexture()
+	{
+	}
+
+	FVertexTexture(float x, float y, float z, float u,
+		float v) :
+		Pos(x, y, z),
+		UV(u, v)
+	{
+	}
+};
+
 enum class EColliderType : unsigned char
 {
 	Colider2D,

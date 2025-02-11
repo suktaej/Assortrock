@@ -80,8 +80,8 @@ void CMeshComponent::Render()
     //m_TransformCBuffer->SetProjMatrix(matProj);
 
     //카메라 메니져 적용
-    FMatrix matView = m_Scene->GetCameraManager()->GetViewMatrix();
-    FMatrix matProj = m_Scene->GetCameraManager()->GetProjMatrix();
+    FMatrix matView = mScene->GetCameraManager()->GetViewMatrix();
+    FMatrix matProj = mScene->GetCameraManager()->GetProjMatrix();
 
     m_TransformCBuffer->SetViewMatrix(matView);
     m_TransformCBuffer->SetProjMatrix(matProj);

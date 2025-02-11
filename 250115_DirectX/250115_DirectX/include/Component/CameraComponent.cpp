@@ -77,8 +77,8 @@ bool CCameraComponent::Init()
 	//초기화 시 투영을 생성
 	SetProjectionType(ECameraProjectionType::Prespective);
 
-	if (!m_Scene->GetCameraManager()->GetViewTarget())
-		m_Scene->GetCameraManager()->SetViewTarget(this);
+	if (!mScene->GetCameraManager()->GetViewTarget())
+		mScene->GetCameraManager()->SetViewTarget(this);
 
 	return true;
 }
@@ -90,8 +90,8 @@ bool CCameraComponent::Init(const char* FileName)
 
 	SetProjectionType(ECameraProjectionType::Prespective);
 
-	if (!m_Scene->GetCameraManager()->GetViewTarget())
-		m_Scene->GetCameraManager()->SetViewTarget(this);
+	if (!mScene->GetCameraManager()->GetViewTarget())
+		mScene->GetCameraManager()->SetViewTarget(this);
 
 	return true;
 }

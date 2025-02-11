@@ -14,6 +14,15 @@ struct FTransformCBufferInfo
     FMatrix matWVP;
 };
 
+struct FMaterialCBufferInfo
+{
+    FVector4D BaseColor;
+    float Opacity;
+    int TextureWidth;
+    int TextureHeight;
+    float Empty;
+};
+
 struct FColliderCBufferInfo
 {
     FVector4D   Color;

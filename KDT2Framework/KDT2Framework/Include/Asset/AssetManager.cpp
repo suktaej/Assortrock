@@ -1,6 +1,7 @@
 #include "AssetManager.h"
 #include "Mesh/MeshManager.h"
 #include "Texture/TextureManager.h"
+#include "Material/MaterialManager.h"
 #include "Asset.h"
 
 DEFINITION_SINGLE(CAssetManager)
@@ -11,6 +12,7 @@ CAssetManager::CAssetManager()
 
 CAssetManager::~CAssetManager()
 {
+	SAFE_DELETE(mMaterialManager);
 	SAFE_DELETE(mTextureManager);
 	SAFE_DELETE(mMeshManager);
 }
@@ -34,6 +36,11 @@ bool CAssetManager::Init()
 			break;
 		}
 	}
+
+	mMaterialManager = new CMaterialManager;
+
+	if (!mMaterialManager->Init())
+		return false;
 
 	mMeshManager = new CMeshManager;
 

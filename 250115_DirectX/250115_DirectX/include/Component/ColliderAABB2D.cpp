@@ -69,11 +69,11 @@ void CColliderAABB2D::Update(float DeltaTime)
 {
     CColliderBase::Update(DeltaTime);
 
-    mAABB.Min.x = mWorldPos.x - mBoxSize.x * 0.5f;
-    mAABB.Min.y = mWorldPos.y - mBoxSize.y * 0.5f;
+    mAABB.Min.x = m_WorldPos.x - mBoxSize.x * 0.5f;
+    mAABB.Min.y = m_WorldPos.y - mBoxSize.y * 0.5f;
 
-    mAABB.Max.x = mWorldPos.x + mBoxSize.x * 0.5f;
-    mAABB.Max.y = mWorldPos.y + mBoxSize.y * 0.5f;
+    mAABB.Max.x = m_WorldPos.x + mBoxSize.x * 0.5f;
+    mAABB.Max.y = m_WorldPos.y + mBoxSize.y * 0.5f;
 
     mMin.x = mAABB.Min.x;
     mMin.y = mAABB.Min.y;
