@@ -8,6 +8,7 @@
 #include "../Shader/ShaderManager.h"
 #include "../Scene/CameraManager.h"
 #include "../Asset/Mesh/Mesh.h"
+#include "ColliderSphere2D.h"
 
 CColliderBase::CColliderBase()
 {
@@ -63,6 +64,7 @@ void CColliderBase::CallCollisionBegin(const FVector3D& HitPoint,
     // 충돌 시작 시 호출해야 할 함수가 있을 경우 호출해준다.
     if (mCollisionBeginFunc)
         mCollisionBeginFunc(HitPoint, Dest);
+    
 }
 
 void CColliderBase::CallCollisionEnd(CColliderBase* Dest)

@@ -149,9 +149,7 @@ void CMaterial::AddTexture(const std::string& Name,
 	mTextureList.emplace_back(TexInfo);
 }
 
-void CMaterial::AddTexture(const std::string& Name,
-	const TCHAR* FileName, 
-	int Register, int ShaderBufferType, int TextureIndex)
+void CMaterial::AddTexture(const std::string& Name, const TCHAR* FileName, int Register, int ShaderBufferType, int TextureIndex)
 {
 	FMaterialTextureInfo* TexInfo = new FMaterialTextureInfo;
 

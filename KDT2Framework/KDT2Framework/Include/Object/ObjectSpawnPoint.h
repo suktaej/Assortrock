@@ -11,7 +11,8 @@ enum class EObjectSpawnType : unsigned char
     TalonR,
     TornadoBullet,
     GunnerMonster,
-    NearingMonster
+    NearingMonster,
+    Ball
 };
 
 enum class EObjectSpawnLoopType : unsigned char
@@ -41,17 +42,13 @@ protected:
 protected:
     CSharedPtr<class CSceneComponent>  mRoot;
     EObjectSpawnType    mSpawnType = EObjectSpawnType::None;
-    EObjectSpawnLoopType    mSpawnLoopType = 
-        EObjectSpawnLoopType::Once;
-    EObjectSpawnCountType   mSpawnCountType =
-        EObjectSpawnCountType::Loop;
+    EObjectSpawnLoopType    mSpawnLoopType = EObjectSpawnLoopType::Once;
+    EObjectSpawnCountType   mSpawnCountType = EObjectSpawnCountType::Loop;
     // 실제 스폰된 오브젝트
     CSceneObject* mSpawnObject = nullptr;
     float       mSpawnTime = 0.f;
     float       mTime = 0.f;
-
     int         mDestroySpawnCount = 0;
-
     bool        mImmediateSpawn = true;
 
 public:

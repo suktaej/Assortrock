@@ -170,6 +170,10 @@
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Object\ArkBall.cpp" />
+    <ClCompile Include="Object\ArkPlayer.cpp" />
+    <ClCompile Include="Object\ArkBlock.cpp" />
+    <ClCompile Include="Object\ArkWall.cpp" />
     <ClCompile Include="Object\BulletDot.cpp" />
     <ClCompile Include="Object\BulletObject.cpp" />
     <ClCompile Include="Object\GravityBullet.cpp" />
@@ -187,6 +191,7 @@
     <ClCompile Include="Render\RenderManager.cpp" />
     <ClCompile Include="Render\RenderState.cpp" />
     <ClCompile Include="Render\RenderStateManager.cpp" />
+    <ClCompile Include="Scene\Arkanoid.cpp" />
     <ClCompile Include="Scene\CameraManager.cpp" />
     <ClCompile Include="Scene\CollisionQuadTree.cpp" />
     <ClCompile Include="Scene\Input.cpp" />
@@ -242,6 +247,10 @@
     <ClInclude Include="GameInfo.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Matrix.h" />
+    <ClInclude Include="Object\ArkBall.h" />
+    <ClInclude Include="Object\ArkPlayer.h" />
+    <ClInclude Include="Object\ArkBlock.h" />
+    <ClInclude Include="Object\ArkWall.h" />
     <ClInclude Include="Object\BulletDot.h" />
     <ClInclude Include="Object\BulletObject.h" />
     <ClInclude Include="Object\GravityBullet.h" />
@@ -260,6 +269,7 @@
     <ClInclude Include="Render\RenderState.h" />
     <ClInclude Include="Render\RenderStateManager.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Scene\Arkanoid.h" />
     <ClInclude Include="Scene\CameraManager.h" />
     <ClInclude Include="Scene\CollisionQuadTree.h" />
     <ClInclude Include="Scene\Input.h" />

@@ -1,5 +1,6 @@
 #include "SceneManager.h"
 #include "SceneMain.h"
+#include "Arkanoid.h"
 
 DEFINITION_SINGLE(CSceneManager)
 
@@ -14,7 +15,8 @@ CSceneManager::~CSceneManager()
 
 bool CSceneManager::Init()
 {
-	mCurrentScene = CreateScene<CSceneMain>();
+	//mCurrentScene = CreateScene<CSceneMain>();
+	mCurrentScene = CreateScene<CArkanoid>();
 
 	return true;
 }

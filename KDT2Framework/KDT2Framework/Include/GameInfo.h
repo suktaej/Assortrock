@@ -197,6 +197,10 @@ namespace ECollisionChannel
 		Monster,
 		PlayerAttack,
 		MonsterAttack,
+		Ball,
+		Block,
+		Wall,
+		Pit,
 		End
 	};
 }
@@ -259,3 +263,4 @@ namespace ERenderStateType
 		DepthStencil
 	};
 }
+
