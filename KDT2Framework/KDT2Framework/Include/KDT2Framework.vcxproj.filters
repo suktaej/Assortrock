@@ -133,6 +133,12 @@
     <Filter Include="04. Shader\02. Shader Class\03. StaticMesh">
       <UniqueIdentifier>{175218db-e3be-4422-9198-8f7767a6584e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="08. Render">
+      <UniqueIdentifier>{cc007bf7-81d7-41f5-b7bd-b9962c61856d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="08. Render\01. RenderState">
+      <UniqueIdentifier>{86ed9d02-ffed-4b56-bce0-e6b3e6ae593a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -323,6 +329,18 @@
     </ClCompile>
     <ClCompile Include="Shader\StaticMeshShader.cpp">
       <Filter>04. Shader\02. Shader Class\03. StaticMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\RenderManager.cpp">
+      <Filter>08. Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\RenderStateManager.cpp">
+      <Filter>08. Render\01. RenderState</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\RenderState.cpp">
+      <Filter>08. Render\01. RenderState</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\BlendState.cpp">
+      <Filter>08. Render\01. RenderState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -535,6 +553,18 @@
     </ClInclude>
     <ClInclude Include="Shader\StaticMeshShader.h">
       <Filter>04. Shader\02. Shader Class\03. StaticMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\RenderManager.h">
+      <Filter>08. Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\RenderState.h">
+      <Filter>08. Render\01. RenderState</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\RenderStateManager.h">
+      <Filter>08. Render\01. RenderState</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\BlendState.h">
+      <Filter>08. Render\01. RenderState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

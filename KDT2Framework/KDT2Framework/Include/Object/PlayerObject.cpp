@@ -52,6 +52,7 @@ bool CPlayerObject::Init()
 
     mRoot->SetMesh("CenterTexRect");
     mRoot->AddTexture(0, "Teemo", TEXT("Texture/teemo.png"), 0);
+    mRoot->SetOpacity(0, 0.5f);
     //mRoot->SetBaseColor(0, 1.f, 0.f, 0.f, 1.f);
     //mRoot->SetShader("ColorMeshShader");
 

@@ -132,6 +132,12 @@ void CStaticMeshComponent::SetBaseColor(int SlotIndex,
     mMaterialSlots[SlotIndex]->SetBaseColor(r, g, b, a);
 }
 
+void CStaticMeshComponent::SetOpacity(int SlotIndex,
+    float Opacity)
+{
+    mMaterialSlots[SlotIndex]->SetOpacity(Opacity);
+}
+
 bool CStaticMeshComponent::Init()
 {
     CMeshComponent::Init();

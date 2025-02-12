@@ -38,6 +38,7 @@ public:
 		int TextureIndex = 0);
 	void SetBaseColor(int SlotIndex, float r, float g,
 		float b, float a);
+	void SetOpacity(int SlotIndex, float Opacity);
 
 public:
 	virtual bool Init();

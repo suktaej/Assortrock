@@ -11,6 +11,9 @@
 #include "Scene/SceneManager.h"
 #include "Share/Log.h"
 #include "ProfileManager.h"
+#include "Render/RenderManager.h"
+#include "Render/RenderStateManager.h"
+#include "Render/RenderState.h"
 
 TCHAR   gRootPath[MAX_PATH];
 
@@ -24,9 +27,11 @@ CGameManager::CGameManager()
 
 CGameManager::~CGameManager()
 {
-    CProfileManager::DestroyInst();
-
     CSceneManager::DestroyInst();
+
+    CRenderManager::DestroyInst();
+
+    CProfileManager::DestroyInst();
 
     CAssetManager::DestroyInst();
 
@@ -64,6 +69,10 @@ bool CGameManager::Init(HINSTANCE hInst)
 
     // Shader 관리자 초기화
     if (!CShaderManager::GetInst()->Init())
+        return false;
+
+    // Render 관리자 초기화
+    if (!CRenderManager::GetInst()->Init())
         return false;
 
     // 애셋 관리자 초기화
@@ -161,8 +170,15 @@ void CGameManager::Render(float DeltaTime)
     CDevice::GetInst()->ClearDepthStencil(1.f, 0);
     CDevice::GetInst()->SetTarget();
 
+    //CRenderManager::GetInst()->Render();
+
+    CRenderState* AlphaBlend = CRenderManager::GetInst()->GetStateManager()->FindState("AlphaBlend");
+
+    AlphaBlend->SetState();
+
     CSceneManager::GetInst()->Render();
 
+    AlphaBlend->ResetState();
 
     CDevice::GetInst()->Render();
 }

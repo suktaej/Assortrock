@@ -183,6 +183,10 @@
     <ClCompile Include="Object\TalonR.cpp" />
     <ClCompile Include="Object\TornadoBullet.cpp" />
     <ClCompile Include="ProfileManager.cpp" />
+    <ClCompile Include="Render\BlendState.cpp" />
+    <ClCompile Include="Render\RenderManager.cpp" />
+    <ClCompile Include="Render\RenderState.cpp" />
+    <ClCompile Include="Render\RenderStateManager.cpp" />
     <ClCompile Include="Scene\CameraManager.cpp" />
     <ClCompile Include="Scene\CollisionQuadTree.cpp" />
     <ClCompile Include="Scene\Input.cpp" />
@@ -251,6 +255,10 @@
     <ClInclude Include="Object\TalonR.h" />
     <ClInclude Include="Object\TornadoBullet.h" />
     <ClInclude Include="ProfileManager.h" />
+    <ClInclude Include="Render\BlendState.h" />
+    <ClInclude Include="Render\RenderManager.h" />
+    <ClInclude Include="Render\RenderState.h" />
+    <ClInclude Include="Render\RenderStateManager.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scene\CameraManager.h" />
     <ClInclude Include="Scene\CollisionQuadTree.h" />

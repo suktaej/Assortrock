@@ -249,3 +249,13 @@ enum class EAssetType
 	Mesh,
 	Texture
 };
+
+namespace ERenderStateType
+{
+	enum Type
+	{
+		Blend,
+		Rasterizer,
+		DepthStencil
+	};
+}

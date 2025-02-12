@@ -135,7 +135,7 @@ bool CSceneAssetManager::CreateMaterial(
 
 	auto	iter = mAssetMap.find(Name);
 
-	if (iter != mAssetMap.end())
+	if (iter == mAssetMap.end())
 	{
 		mAssetMap.insert(std::make_pair(Name, iter->second));
 	}
