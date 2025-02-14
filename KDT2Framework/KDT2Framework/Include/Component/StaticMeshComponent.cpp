@@ -109,9 +109,13 @@ void CStaticMeshComponent::AddTexture(int SlotIndex,
         Register, ShaderBufferType, TextureIndex);
 }
 
-void CStaticMeshComponent::AddTexture(int SlotIndex, const std::string& Name, const TCHAR* FileName, int Register, int ShaderBufferType, int TextureIndex)
+void CStaticMeshComponent::AddTexture(int SlotIndex,
+    const std::string& Name, const TCHAR* FileName,
+    int Register, int ShaderBufferType, 
+    int TextureIndex)
 {
-    mMaterialSlots[SlotIndex]->AddTexture(Name, FileName, Register, ShaderBufferType, TextureIndex);
+    mMaterialSlots[SlotIndex]->AddTexture(Name,
+        FileName, Register, ShaderBufferType, TextureIndex);
 }
 
 void CStaticMeshComponent::AddTexture(int SlotIndex,

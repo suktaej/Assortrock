@@ -8,10 +8,14 @@
 #include "../Shader/ShaderManager.h"
 #include "../Scene/CameraManager.h"
 #include "../Asset/Mesh/Mesh.h"
-#include "ColliderSphere2D.h"
 
 CColliderBase::CColliderBase()
 {
+#ifdef _DEBUG
+
+    mRenderType = EComponentRender::Render;
+
+#endif // _DEBUG
     // 리해싱이 자주 일어나지 않도록 미리 공간을 확보한다.
     mCollisionObjects.reserve(100);
     mCollisionObjects.max_load_factor(2.f);
@@ -64,7 +68,6 @@ void CColliderBase::CallCollisionBegin(const FVector3D& HitPoint,
     // 충돌 시작 시 호출해야 할 함수가 있을 경우 호출해준다.
     if (mCollisionBeginFunc)
         mCollisionBeginFunc(HitPoint, Dest);
-    
 }
 
 void CColliderBase::CallCollisionEnd(CColliderBase* Dest)

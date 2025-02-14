@@ -14,8 +14,8 @@ protected:
     virtual ~CArkBlock();
 
 protected:
-    CSharedPtr<class CStaticMeshComponent>  mRoot;
-    CSharedPtr<class CColliderAABB2D>       mBody;
+    CSharedPtr<class CSpriteComponent>  mRoot;
+    CSharedPtr<class CColliderOBB2D>       mBody;
     int mHP = 2;
 
 public:

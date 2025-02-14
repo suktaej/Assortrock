@@ -3,6 +3,7 @@
 #include "../Component/MovementComponent.h"
 #include "MonsterObject.h"
 #include "../Scene/Scene.h"
+#include "../Component/SpriteComponent.h"
 
 CGravityBullet::CGravityBullet()
 {
@@ -24,12 +25,14 @@ CGravityBullet::~CGravityBullet()
 
 bool CGravityBullet::Init()
 {
-    mRoot = CreateComponent<CStaticMeshComponent>();
+    mRoot = CreateComponent<CSpriteComponent>();
 
     mMovement = CreateComponent<CMovementComponent>();
 
-    mRoot->SetMesh("CenterRect");
-    mRoot->SetShader("ColorMeshShader");
+    mRoot->SetTexture("Bullet", TEXT("Texture/block_ball.png"));
+    mRoot->SetPivot(0.5f, 0.5f);
+    /*mRoot->SetMesh("CenterRect");
+    mRoot->SetShader("ColorMeshShader");*/
 
     mRoot->SetWorldScale(50.f, 50.f, 1.f);
 

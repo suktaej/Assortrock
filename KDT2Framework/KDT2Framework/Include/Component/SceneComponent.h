@@ -16,6 +16,7 @@ protected:
 
 protected:
 	CSceneComponent* mParent = nullptr;
+	EComponentRender	mRenderType = EComponentRender::None;
 	std::vector<CSharedPtr<CSceneComponent>>	mChildList;
 
 public:
@@ -35,6 +36,7 @@ public:
 	virtual void EraseOwner();
 
 protected:
+	class CTransformCBuffer* mTransformCBuffer;
 	FVector3D	mRelativeScale = FVector3D(1.f, 1.f, 1.f);
 	FVector3D	mRelativeRot;
 	FVector3D	mRelativePos;
@@ -42,6 +44,7 @@ protected:
 	FVector3D	mWorldScale = FVector3D(1.f, 1.f, 1.f);
 	FVector3D	mWorldRot;
 	FVector3D	mWorldPos;
+	FVector3D	mPivot;
 
 	FVector3D	mAxis[EAxis::End] =
 	{
@@ -110,6 +113,37 @@ public:
 	{
 		return mWorldPos;
 	}
+
+	const FVector3D& GetPivot()	const
+	{
+		return mPivot;
+	}
+
+public:
+	void SetPivot(const FVector3D& Pivot)
+	{
+		mPivot = Pivot;
+	}
+
+	void SetPivot(const FVector2D& Pivot)
+	{
+		mPivot.x = Pivot.x;
+		mPivot.y = Pivot.y;
+	}
+
+	void SetPivot(float x, float y, float z)
+	{
+		mPivot.x = x;
+		mPivot.y = y;
+		mPivot.z = z;
+	}
+
+	void SetPivot(float x, float y)
+	{
+		mPivot.x = x;
+		mPivot.y = y;
+	}
+
 
 public:
 	void SetRelativeScale(const FVector3D& Scale);

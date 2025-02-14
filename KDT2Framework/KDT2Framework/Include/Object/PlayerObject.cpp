@@ -15,6 +15,7 @@
 #include "../Component/ColliderLine2D.h"
 #include "BulletDot.h"
 #include "PenetrationBullet.h"
+#include "../Component/SpriteComponent.h"
 
 CPlayerObject::CPlayerObject()
 {
@@ -36,23 +37,27 @@ CPlayerObject::~CPlayerObject()
 
 bool CPlayerObject::Init()
 {
-    mRoot = CreateComponent<CStaticMeshComponent>();
+    //mRoot = CreateComponent<CStaticMeshComponent>();
+    mRoot = CreateComponent<CSpriteComponent>();
     //mBody = CreateComponent<CColliderAABB2D>();
     //mBody = CreateComponent<CColliderSphere2D>();
     mBody = CreateComponent<CColliderOBB2D>();
     mLine = CreateComponent<CColliderLine2D>();
     mRotationPivot = CreateComponent<CSceneComponent>();
-    mSub = CreateComponent<CStaticMeshComponent>();
-    mSub2 = CreateComponent<CStaticMeshComponent>();
+    mSub = CreateComponent<CSpriteComponent>();
+    mSub2 = CreateComponent<CSpriteComponent>();
     mCamera = CreateComponent<CCameraComponent>();
 
 
     mMovement = CreateComponent<CMovementComponent>();
     mRotation = CreateComponent<CRotationComponent>();
 
-    mRoot->SetMesh("CenterTexRect");
-    mRoot->AddTexture(0, "Teemo", TEXT("Texture/teemo.png"), 0);
-    mRoot->SetOpacity(0, 0.5f);
+    mRoot->SetTexture("Teemo", TEXT("Texture/teemo.png"));
+    mRoot->SetPivot(0.5f, 0.5f);
+    //mRoot->SetTint(1.f, 0.f, 0.f);
+    //mRoot->SetMesh("CenterTexRect");
+    //mRoot->AddTexture(0, "Teemo", TEXT("Texture/teemo.png"), 0);
+    //mRoot->SetOpacity(0, 0.5f);
     //mRoot->SetBaseColor(0, 1.f, 0.f, 0.f, 1.f);
     //mRoot->SetShader("ColorMeshShader");
 
@@ -90,15 +95,19 @@ bool CPlayerObject::Init()
     mRotationPivot->AddChild(mSub);
     mRotationPivot->AddChild(mSub2);
 
-    mSub->SetMesh("CenterRect");
-    mSub->SetShader("ColorMeshShader");
+    /*mSub->SetMesh("CenterRect");
+    mSub->SetShader("ColorMeshShader");*/
+    mSub->SetTexture("Teemo", TEXT("Texture/teemo.png"));
+    mSub->SetPivot(0.5f, 0.5f);
 
     //mSub->SetRelativeScale(0.5f, 0.5f, 1.f);
     mSub->SetWorldScale(50.f, 50.f, 1.f);
     mSub->SetRelativePos(-mSkill4Range, 0.f, 0.f);
 
-    mSub2->SetMesh("CenterRect");
-    mSub2->SetShader("ColorMeshShader");
+    mSub2->SetTexture("Teemo", TEXT("Texture/teemo.png"));
+    mSub2->SetPivot(0.5f, 0.5f);
+    /*mSub2->SetMesh("CenterRect");
+    mSub2->SetShader("ColorMeshShader");*/
 
     mSub2->SetRelativeScale(0.5f, 0.5f, 1.f);
     mSub2->SetRelativePos(mSkill4Range, 0.f, 0.f);

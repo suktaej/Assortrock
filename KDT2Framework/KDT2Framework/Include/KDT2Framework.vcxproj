@@ -145,6 +145,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Animation\Animation2D.cpp" />
+    <ClCompile Include="Animation\Animation2DSequence.cpp" />
+    <ClCompile Include="Asset\Animation\Animation2DData.cpp" />
+    <ClCompile Include="Asset\Animation\Animation2DManager.cpp" />
     <ClCompile Include="Asset\Asset.cpp" />
     <ClCompile Include="Asset\AssetManager.cpp" />
     <ClCompile Include="Asset\Material\Material.cpp" />
@@ -166,13 +170,14 @@
     <ClCompile Include="Component\MovementComponent.cpp" />
     <ClCompile Include="Component\RotationComponent.cpp" />
     <ClCompile Include="Component\SceneComponent.cpp" />
+    <ClCompile Include="Component\SpriteComponent.cpp" />
     <ClCompile Include="Component\StaticMeshComponent.cpp" />
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object\ArkBall.cpp" />
-    <ClCompile Include="Object\ArkPlayer.cpp" />
     <ClCompile Include="Object\ArkBlock.cpp" />
+    <ClCompile Include="Object\ArkPlayer.cpp" />
     <ClCompile Include="Object\ArkWall.cpp" />
     <ClCompile Include="Object\BulletDot.cpp" />
     <ClCompile Include="Object\BulletObject.cpp" />
@@ -210,6 +215,8 @@
     <ClCompile Include="Shader\MaterialCBuffer.cpp" />
     <ClCompile Include="Shader\Shader.cpp" />
     <ClCompile Include="Shader\ShaderManager.cpp" />
+    <ClCompile Include="Shader\SpriteCBuffer.cpp" />
+    <ClCompile Include="Shader\SpriteShader.cpp" />
     <ClCompile Include="Shader\StaticMeshShader.cpp" />
     <ClCompile Include="Shader\TransformCBuffer.cpp" />
     <ClCompile Include="Share\Log.cpp" />
@@ -219,6 +226,10 @@
     <ClCompile Include="Vector4D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation\Animation2D.h" />
+    <ClInclude Include="Animation\Animation2DSequence.h" />
+    <ClInclude Include="Asset\Animation\Animation2DData.h" />
+    <ClInclude Include="Asset\Animation\Animation2DManager.h" />
     <ClInclude Include="Asset\Asset.h" />
     <ClInclude Include="Asset\AssetManager.h" />
     <ClInclude Include="Asset\Material\Material.h" />
@@ -241,6 +252,7 @@
     <ClInclude Include="Component\MovementComponent.h" />
     <ClInclude Include="Component\RotationComponent.h" />
     <ClInclude Include="Component\SceneComponent.h" />
+    <ClInclude Include="Component\SpriteComponent.h" />
     <ClInclude Include="Component\StaticMeshComponent.h" />
     <ClInclude Include="Device.h" />
     <ClInclude Include="EngineMath.h" />
@@ -248,8 +260,8 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Object\ArkBall.h" />
-    <ClInclude Include="Object\ArkPlayer.h" />
     <ClInclude Include="Object\ArkBlock.h" />
+    <ClInclude Include="Object\ArkPlayer.h" />
     <ClInclude Include="Object\ArkWall.h" />
     <ClInclude Include="Object\BulletDot.h" />
     <ClInclude Include="Object\BulletObject.h" />
@@ -289,6 +301,8 @@
     <ClInclude Include="Shader\MaterialCBuffer.h" />
     <ClInclude Include="Shader\Shader.h" />
     <ClInclude Include="Shader\ShaderManager.h" />
+    <ClInclude Include="Shader\SpriteCBuffer.h" />
+    <ClInclude Include="Shader\SpriteShader.h" />
     <ClInclude Include="Shader\StaticMeshShader.h" />
     <ClInclude Include="Shader\TransformCBuffer.h" />
     <ClInclude Include="Share\Log.h" />
@@ -339,6 +353,20 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\Bin\Shader\Sprite.fx">
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">SpriteVS</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">SpriteVS</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">SpriteVS</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">SpriteVS</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

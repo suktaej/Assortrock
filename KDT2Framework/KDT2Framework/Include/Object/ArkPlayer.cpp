@@ -5,7 +5,8 @@
 #include "../Component/MovementComponent.h"
 #include "../Component/RotationComponent.h"
 #include "../Component/CameraComponent.h"
-#include "../Component/ColliderAABB2D.h"
+#include "../Component/ColliderOBB2D.h"
+#include "../Component/SpriteComponent.h"
 #include "ArkBall.h"
 
 CArkPlayer::CArkPlayer()
@@ -28,17 +29,18 @@ CArkPlayer::~CArkPlayer()
 
 bool CArkPlayer::Init()
 {
-    mRoot = CreateComponent<CStaticMeshComponent>();
+    mRoot = CreateComponent<CSpriteComponent>();
     //mSub = CreateComponent<CStaticMeshComponent>();
-    mBody = CreateComponent<CColliderAABB2D>();
+    mBody = CreateComponent<CColliderOBB2D>();
     //mLine = CreateComponent<CColliderLine2D>();
     mCamera = CreateComponent<CCameraComponent>();
 
     mMovement = CreateComponent<CMovementComponent>();
     //mRotation = CreateComponent<CRotationComponent>();
 
-    mRoot->SetMesh("CenterTexRect");
-    //mRoot->AddTexture(0, "Bar", TEXT("Texture/block_bar.png"), 0);
+    //mRoot->SetMesh("CenterTexRect");
+    mRoot->SetTexture("Bar", TEXT("Texture/block_bar.png"));
+    mRoot->SetPivot(0.5f, 0.5f);
     //mRoot->SetOpacity(0, 0.5f);
     //mRoot->SetBaseColor(0, 1.f, 0.f, 0.f, 1.f);
     //mRoot->SetShader("ColorMeshShader");
@@ -77,6 +79,22 @@ bool CArkPlayer::Init()
     //mRotation->SetVelocityInit(false);
     //mRotation->SetMoveZ(360.f);
 
+    mScene->GetInput()->AddBindKey("MoveUp", 'W');
+    mScene->GetInput()->AddBindKey("MoveDown", 'S');
+    mScene->GetInput()->AddBindKey("RotationZ", 'E');
+    mScene->GetInput()->AddBindKey("RotationZInv", 'Q');
+
+    mScene->GetInput()->AddBindFunction<CArkPlayer>("MoveUp",
+        EInputType::Hold, this, &CArkPlayer::MoveUp);
+
+    mScene->GetInput()->AddBindFunction<CArkPlayer>("MoveDown",
+        EInputType::Hold, this, &CArkPlayer::MoveDown);
+
+    mScene->GetInput()->AddBindFunction<CArkPlayer>("RotationZ",
+        EInputType::Hold, this, &CArkPlayer::RotationZ);
+
+    mScene->GetInput()->AddBindFunction<CArkPlayer>("RotationZInv",
+        EInputType::Hold, this, &CArkPlayer::RotationZInv);
     mScene->GetInput()->AddBindKey("MoveLeft", 'A');
     mScene->GetInput()->AddBindKey("MoveRight", 'D');
 
@@ -95,6 +113,15 @@ void CArkPlayer::Update(float DeltaTime)
     CSceneObject::Update(DeltaTime);
 }
 
+void CArkPlayer::SetMoveStart()
+{
+}
+
+void CArkPlayer::SetMoveStop()
+{
+    mMovement->SetMove(mRootComponent->GetAxis(EAxis::X));
+}
+
 void CArkPlayer::MoveLeft(float DeltaTime)
 {
     mMovement->AddMove(mRootComponent->GetAxis(EAxis::X) * -1.f);
@@ -104,27 +131,27 @@ void CArkPlayer::MoveRight(float DeltaTime)
     mMovement->AddMove(mRootComponent->GetAxis(EAxis::X));
 }
 
-//void CArkPlayer::MoveUp(float DeltaTime)
-//{
-//    mMovement->AddMove(mRootComponent->GetAxis(EAxis::Y));
-//}
-//
-//void CArkPlayer::MoveDown(float DeltaTime)
-//{
-//    mMovement->AddMove(mRootComponent->GetAxis(EAxis::Y) * -1.f);
-//}
-//
-//void CArkPlayer::RotationZ(float DeltaTime)
-//{
-//    FVector3D   Rot = mRootComponent->GetWorldRotation();
-//    mRootComponent->SetWorldRotationZ(Rot.z + DeltaTime * -90.f);
-//}
-//
-//void CArkPlayer::RotationZInv(float DeltaTime)
-//{
-//    FVector3D   Rot = mRootComponent->GetWorldRotation();
-//    mRootComponent->SetWorldRotationZ(Rot.z + DeltaTime * 90.f);
-//}
+void CArkPlayer::MoveUp(float DeltaTime)
+{
+    mMovement->AddMove(mRootComponent->GetAxis(EAxis::Y));
+}
+
+void CArkPlayer::MoveDown(float DeltaTime)
+{
+    mMovement->AddMove(mRootComponent->GetAxis(EAxis::Y) * -1.f);
+}
+
+void CArkPlayer::RotationZ(float DeltaTime)
+{
+    FVector3D   Rot = mRootComponent->GetWorldRotation();
+    mRootComponent->SetWorldRotationZ(Rot.z + DeltaTime * -90.f);
+}
+
+void CArkPlayer::RotationZInv(float DeltaTime)
+{
+    FVector3D   Rot = mRootComponent->GetWorldRotation();
+    mRootComponent->SetWorldRotationZ(Rot.z + DeltaTime * 90.f);
+}
 
 void CArkPlayer::Fire(float DeltaTime)
 {
@@ -138,7 +165,7 @@ void CArkPlayer::Fire(float DeltaTime)
 	FVector3D Dir = mRoot->GetAxis(EAxis::Y);
 
 	Root->SetWorldScale(14.f, 14.f);
-	//Root->SetWorldRotation(mRoot->GetWorldRotation());
+	Root->SetWorldRotation(mRoot->GetWorldRotation());
 	Root->SetWorldPos(Pos + Dir * 30.f);
 }
 

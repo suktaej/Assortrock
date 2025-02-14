@@ -16,7 +16,7 @@ protected:
 protected:
     CSharedPtr<class CSceneComponent>  mRoot;
     CSharedPtr<class CSceneComponent>  mPivot;
-    CSharedPtr<class CStaticMeshComponent>  mMesh;
+    CSharedPtr<class CSpriteComponent>  mMesh;
     float   mSpeed = 400.f;
 
 public:

@@ -18,6 +18,7 @@ protected:
 	std::string		mName;
 	CSharedPtr<class CSceneComponent>	mRootComponent;
 	std::vector<CSharedPtr<class CComponent>>	mNonComponentList;
+	std::vector<CSharedPtr<class CComponent>>	mSceneComponentList;
 	float			mLifeTime = 0.f;
 	bool			mDamageEnable = true;
 	CSharedPtr<class CObjectSpawnPoint> mSpawnPoint;
@@ -69,6 +70,7 @@ public:
 	virtual void Render();
 	virtual void PostRender();
 	virtual CSceneObject* Clone();
+	virtual void Destroy();
 
 public:
 	virtual float Damage(float Attack, CSceneObject* Obj);
@@ -92,6 +94,9 @@ public:
 
 		if (!Com)
 			mNonComponentList.emplace_back(Component);
+
+		else
+			mSceneComponentList.emplace_back(Component);
 
 		return Component;
 	}

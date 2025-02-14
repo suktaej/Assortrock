@@ -39,6 +39,13 @@ public:
 		const TCHAR* FileName);
 	bool LoadTextureFullPath(const std::string& Name,
 		const TCHAR* FullPath);
+	bool LoadTexture(const std::string& Name,
+		const std::vector<const TCHAR*>& FileName);
+	bool LoadTextureFullPath(const std::string& Name,
+		const std::vector<const TCHAR*>& FullPath);
+	bool LoadTexture(const std::string& Name,
+		const TCHAR* FileName, const TCHAR* Ext,
+		int Count);
 
 	class CTexture* FindTexture(const std::string& Name);
 
@@ -51,5 +58,46 @@ public:
 	class CMaterial* FindMaterial(const std::string& Name);
 
 #pragma endregion Material
+
+#pragma region Animation
+
+    bool CreateAnimation(const std::string& Name);
+
+    bool SetAnimationTextureType(const std::string& Name,
+        EAnimationTextureType Type);
+    bool SetAnimationTexture(const std::string& Name,
+        class CTexture* Texture);
+    bool SetAnimationTexture(const std::string& Name,
+        const std::string& TextureName,
+        const TCHAR* FileName);
+    bool SetAnimationTexture(const std::string& Name,
+        const std::string& TextureName,
+        std::vector<const TCHAR*> FileName);
+    bool SetAnimationTexture(const std::string& Name,
+        const std::string& TextureName,
+        const TCHAR* FileName, const TCHAR* Ext,
+        int Count);
+    bool SetAnimationTextureFullPath(const std::string& Name,
+        const std::string& TextureName,
+        const TCHAR* FullPath);
+    bool SetAnimationTextureFullPath(const std::string& Name,
+        const std::string& TextureName,
+        std::vector<const TCHAR*> FullPath);
+    bool AddAnimationFrame(const std::string& Name,
+        const FVector2D& Start,
+        const FVector2D& Size);
+    bool AddAnimationFrame(const std::string& Name,
+        float StartX, float StartY,
+        float SizeX, float SizeY);
+    bool AddAnimationFrameCount(const std::string& Name,
+        int Count, const FVector2D& Start,
+        const FVector2D& Size);
+    bool AddAnimationFrameCount(const std::string& Name,
+        int Count, float StartX, float StartY,
+        float SizeX, float SizeY);
+
+    class CAnimation2DData* FindAnimation(const std::string& Name);
+
+#pragma endregion Animation
 };
 

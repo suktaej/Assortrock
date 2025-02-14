@@ -2,6 +2,7 @@
 #include "Mesh/MeshManager.h"
 #include "Texture/TextureManager.h"
 #include "Material/MaterialManager.h"
+#include "Animation/Animation2DManager.h"
 #include "Asset.h"
 
 DEFINITION_SINGLE(CAssetManager)
@@ -12,6 +13,7 @@ CAssetManager::CAssetManager()
 
 CAssetManager::~CAssetManager()
 {
+	SAFE_DELETE(mAnimation2DManager);
 	SAFE_DELETE(mMaterialManager);
 	SAFE_DELETE(mTextureManager);
 	SAFE_DELETE(mMeshManager);
@@ -52,6 +54,11 @@ bool CAssetManager::Init()
 	if (!mTextureManager->Init())
 		return false;
 
+	mAnimation2DManager = new CAnimation2DManager;
+
+	if (!mAnimation2DManager->Init())
+		return false;
+
 	return true;
 }
 
@@ -64,6 +71,12 @@ void CAssetManager::ReleaseAsset(CAsset* Asset)
 		break;
 	case EAssetType::Texture:
 		mTextureManager->ReleaseTexture(Asset);
+		break;
+	case EAssetType::Material:
+		mMaterialManager->ReleaseMaterial(Asset);
+		break;
+	case EAssetType::Animation2D:
+		mAnimation2DManager->ReleaseAnimation(Asset);
 		break;
 	}
 }

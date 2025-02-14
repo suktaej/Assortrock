@@ -6,9 +6,6 @@ class CArkWall:
     public CSceneObject
 {
     friend class CScene;
-private:
-    float xSize = 32.f;
-    float ySize = 1280.f;
 
 protected:
     CArkWall();
@@ -17,7 +14,7 @@ protected:
     virtual ~CArkWall();
 
 protected:
-    CSharedPtr<class CStaticMeshComponent>  mRoot;
+    CSharedPtr<class CSpriteComponent>  mRoot;
     CSharedPtr<class CColliderOBB2D>       mBody;
 
 public:

@@ -21,7 +21,7 @@ protected:
     virtual ~CTalonR();
 
 protected:
-    CSharedPtr<class CStaticMeshComponent>  mMesh;
+    CSharedPtr<class CSpriteComponent>  mMesh;
 
     CSharedPtr<class CMovementComponent>    mMovement;
     CSharedPtr<class CRotationComponent>    mRotation;

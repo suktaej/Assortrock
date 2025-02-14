@@ -6,6 +6,7 @@
 #include "../Component/ColliderOBB2D.h"
 #include "../Component/ColliderSphere2D.h"
 #include "../Share/Log.h"
+#include "../Component/SpriteComponent.h"
 
 CMonsterObject::CMonsterObject()
 {
@@ -27,13 +28,14 @@ CMonsterObject::~CMonsterObject()
 
 bool CMonsterObject::Init()
 {
-    mRoot = CreateComponent<CStaticMeshComponent>();
+    //mRoot = CreateComponent<CStaticMeshComponent>();
+    mRoot = CreateComponent<CSpriteComponent>();
     //mBody = CreateComponent<CColliderAABB2D>();
     mBody = CreateComponent<CColliderSphere2D>();
     //mBody = CreateComponent<CColliderOBB2D>();
 
-    mRoot->SetMesh("CenterRect");
-    mRoot->SetShader("ColorMeshShader");
+    //mRoot->SetMesh("CenterRect");
+    //mRoot->SetShader("ColorMeshShader");
 
     mRoot->SetWorldScale(100.f, 100.f, 1.f);
 

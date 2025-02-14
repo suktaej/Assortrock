@@ -139,6 +139,21 @@
     <Filter Include="08. Render\01. RenderState">
       <UniqueIdentifier>{86ed9d02-ffed-4b56-bce0-e6b3e6ae593a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="07. Component\01. SceneComponent\04. Sprite">
+      <UniqueIdentifier>{3480fcd7-4b25-4298-86cf-1ab27af51b70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Shader\02. Shader Class\04. Sprite">
+      <UniqueIdentifier>{dd36ebb7-6323-4493-adf1-340387108ee6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Shader\03. ConstantBuffer\04. Sprite">
+      <UniqueIdentifier>{9a534fe5-2698-4f6c-a9e8-22b8b92f04d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Asset\04. Animation">
+      <UniqueIdentifier>{a9fbaa50-f5ce-4eee-ab4a-bcf1070aaeeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="09. Animation">
+      <UniqueIdentifier>{c433429b-4d33-46cc-97b7-0f77754c1f7c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -342,6 +357,46 @@
     <ClCompile Include="Render\BlendState.cpp">
       <Filter>08. Render\01. RenderState</Filter>
     </ClCompile>
+    <ClCompile Include="Component\SpriteComponent.cpp">
+      <Filter>07. Component\01. SceneComponent\04. Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\SpriteShader.cpp">
+      <Filter>04. Shader\02. Shader Class\04. Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\SpriteCBuffer.cpp">
+      <Filter>04. Shader\03. ConstantBuffer\04. Sprite</Filter>
+    </ClCompile>
+<<<<<<< .mine
+    <ClCompile Include="Object\ArkBall.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\ArkBlock.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\ArkPlayer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\ArkWall.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Arkanoid.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+||||||| .r55
+=======
+    <ClCompile Include="Asset\Animation\Animation2DData.cpp">
+      <Filter>03. Asset\04. Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Animation\Animation2DManager.cpp">
+      <Filter>03. Asset\04. Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation\Animation2D.cpp">
+      <Filter>09. Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation\Animation2DSequence.cpp">
+      <Filter>09. Animation</Filter>
+    </ClCompile>
+>>>>>>> .r57
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -566,6 +621,46 @@
     <ClInclude Include="Render\BlendState.h">
       <Filter>08. Render\01. RenderState</Filter>
     </ClInclude>
+    <ClInclude Include="Component\SpriteComponent.h">
+      <Filter>07. Component\01. SceneComponent\04. Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\SpriteShader.h">
+      <Filter>04. Shader\02. Shader Class\04. Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\SpriteCBuffer.h">
+      <Filter>04. Shader\03. ConstantBuffer\04. Sprite</Filter>
+    </ClInclude>
+<<<<<<< .mine
+    <ClInclude Include="Object\ArkWall.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\ArkBall.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\ArkBlock.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\ArkPlayer.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Arkanoid.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+||||||| .r55
+=======
+    <ClInclude Include="Asset\Animation\Animation2DData.h">
+      <Filter>03. Asset\04. Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Animation\Animation2DManager.h">
+      <Filter>03. Asset\04. Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\Animation2D.h">
+      <Filter>09. Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\Animation2DSequence.h">
+      <Filter>09. Animation</Filter>
+    </ClInclude>
+>>>>>>> .r57
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="KDT2Framework.rc">
@@ -585,6 +680,9 @@
       <Filter>04. Shader\01. HLSL</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\Shader\Mesh.fx">
+      <Filter>04. Shader\01. HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\Shader\Sprite.fx">
       <Filter>04. Shader\01. HLSL</Filter>
     </FxCompile>
   </ItemGroup>

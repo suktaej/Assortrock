@@ -1,5 +1,6 @@
 #include "NearingMonster.h"
 #include "../Component/StaticMeshComponent.h"
+#include "../Component/SpriteComponent.h"
 #include "../Scene/Scene.h"
 #include "BulletObject.h"
 #include "PlayerObject.h"
@@ -25,6 +26,9 @@ CNearingMonster::~CNearingMonster()
 bool CNearingMonster::Init()
 {
     CMonsterObject::Init();
+
+    mRoot->SetTexture("Monster1Tex", TEXT("Texture/block_wall.png"));
+    mRoot->SetPivot(0.5f, 0.5f);
 
     SetTarget(mScene->FindObjectFromType<CPlayerObject>());
 

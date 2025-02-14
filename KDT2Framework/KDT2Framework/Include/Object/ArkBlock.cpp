@@ -2,7 +2,8 @@
 #include "../Component/StaticMeshComponent.h"
 #include "../Scene/Scene.h"
 #include "BulletObject.h"
-#include "../Component/ColliderAABB2D.h"
+#include "../Component/ColliderOBB2D.h"
+#include "../Component/SpriteComponent.h"
 #include "../Share/Log.h"
 
 CArkBlock::CArkBlock()
@@ -25,11 +26,12 @@ CArkBlock::~CArkBlock()
 
 bool CArkBlock::Init()
 {
-    mRoot = CreateComponent<CStaticMeshComponent>();
-    mBody = CreateComponent<CColliderAABB2D>();
+    mRoot = CreateComponent<CSpriteComponent>();
+    mBody = CreateComponent<CColliderOBB2D>();
 
-    mRoot->SetMesh("CenterRect");
-    //mRoot->AddTexture(0, "Block", TEXT("Texture/block_blue.png"), 0);
+    //mRoot->SetMesh("CenterRect");
+    mRoot->SetTexture("Block", TEXT("Texture/block_blue.png"));
+    mRoot->SetPivot(0.5f, 0.5f);
     //mRoot->SetShader("ColorMeshShader");
 
     mRoot->SetWorldScale(64.f, 32.f, 1.f);

@@ -207,7 +207,7 @@ void CSceneObject::PreRender()
         ++iter;
     }
 
-	mRootComponent->PreRender();
+	//mRootComponent->PreRender();
 }
 
 void CSceneObject::Render()
@@ -234,7 +234,7 @@ void CSceneObject::Render()
         ++iter;
     }
 
-	mRootComponent->Render();
+	//mRootComponent->Render();
 }
 
 void CSceneObject::PostRender()
@@ -261,12 +261,41 @@ void CSceneObject::PostRender()
         ++iter;
     }
 
-	mRootComponent->PostRender();
+	//mRootComponent->PostRender();
 }
 
 CSceneObject* CSceneObject::Clone()
 {
 	return nullptr;
+}
+
+void CSceneObject::Destroy()
+{
+    CObject::Destroy();
+
+    {
+        auto    iter = mNonComponentList.begin();
+        auto    iterEnd = mNonComponentList.end();
+
+        for (; iter != iterEnd; ++iter)
+        {
+            (*iter)->Destroy();
+        }
+
+        mNonComponentList.clear();
+    }
+
+    {
+        auto    iter = mSceneComponentList.begin();
+        auto    iterEnd = mSceneComponentList.end();
+
+        for (; iter != iterEnd; ++iter)
+        {
+            (*iter)->Destroy();
+        }
+
+        mSceneComponentList.clear();
+    }
 }
 
 float CSceneObject::Damage(float Attack, CSceneObject* Obj)

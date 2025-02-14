@@ -3,6 +3,7 @@
 #include "../Component/MovementComponent.h"
 #include "../Component/ColliderOBB2D.h"
 #include "../Share/Log.h"
+#include "../Component/SpriteComponent.h"
 
 CBulletDot::CBulletDot()
 {
@@ -36,15 +37,17 @@ void CBulletDot::SetBoxSize(float x, float y)
 
 bool CBulletDot::Init()
 {
-    mRoot = CreateComponent<CStaticMeshComponent>();
+    mRoot = CreateComponent<CSpriteComponent>();
     mBody = CreateComponent<CColliderOBB2D>();
 
     mBody->SetEnable(false);
 
     mMovement = CreateComponent<CMovementComponent>();
 
-    mRoot->SetMesh("CenterRect");
-    mRoot->SetShader("ColorMeshShader");
+    mRoot->SetTexture("Bullet", TEXT("Texture/block_ball.png"));
+    mRoot->SetPivot(0.5f, 0.5f);
+    /*mRoot->SetMesh("CenterRect");
+    mRoot->SetShader("ColorMeshShader");*/
 
     mRoot->SetWorldScale(0.5f, 0.5f, 1.f);
 

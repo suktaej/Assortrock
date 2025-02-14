@@ -170,15 +170,17 @@ void CGameManager::Render(float DeltaTime)
     CDevice::GetInst()->ClearDepthStencil(1.f, 0);
     CDevice::GetInst()->SetTarget();
 
-    //CRenderManager::GetInst()->Render();
+    //CRenderState* AlphaBlend = CRenderManager::GetInst()->GetStateManager()->FindState("AlphaBlend");
 
-    CRenderState* AlphaBlend = CRenderManager::GetInst()->GetStateManager()->FindState("AlphaBlend");
+    //AlphaBlend->SetState();
 
-    AlphaBlend->SetState();
-
+    // 출력이 아닌 Component들의 Render 관련 함수를
+    // 호출하기 위한 용도.
     CSceneManager::GetInst()->Render();
 
-    AlphaBlend->ResetState();
+    CRenderManager::GetInst()->Render();
+
+    //AlphaBlend->ResetState();
 
     CDevice::GetInst()->Render();
 }

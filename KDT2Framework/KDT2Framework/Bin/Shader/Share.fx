@@ -13,6 +13,8 @@ cbuffer Transform : register(b0)
     matrix gmatProj;
     matrix gmatWV;
     matrix gmatWVP;
+    float3 gPivot;
+    float gTransformEmpty;
 };
 
 cbuffer Material : register(b1)

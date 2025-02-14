@@ -4,6 +4,8 @@
 #include "../Object/NearingMonster.h"
 #include "../Object/ObjectSpawnPoint.h"
 #include "../Component/StaticMeshComponent.h"
+#include "SceneAssetManager.h"
+#include "../Asset/Material/Material.h"
 
 CSceneMain::CSceneMain()
 {
@@ -17,6 +19,17 @@ bool CSceneMain::Init()
 {
     if (!CScene::Init())
         return false;
+
+    mAssetManager->CreateMaterial("Monster1");
+
+    CMaterial* Material = 
+        mAssetManager->FindMaterial("Monster1");
+
+    Material->SetPixelShader("DefaultMaterialShader");
+    Material->SetSamplerType(ETextureSamplerType::Linear);
+    Material->AddTexture("Monster1", TEXT("Texture/block_wall.png"),
+        0);
+
 
     CPlayerObject* Player = CreateObj<CPlayerObject>("Player");
 

@@ -41,6 +41,7 @@ public:
 	{
 		mSpeed = Speed;
 	}
+	float GetSpeed() { return mSpeed; }
 
 	void AddMove(const FVector3D& Dir)
 	{

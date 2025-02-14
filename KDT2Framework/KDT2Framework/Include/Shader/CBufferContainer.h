@@ -12,6 +12,8 @@ struct FTransformCBufferInfo
     FMatrix matProj;
     FMatrix matWV;
     FMatrix matWVP;
+    FVector3D   Pivot;
+    float       Empty;
 };
 
 struct FMaterialCBufferInfo
@@ -26,4 +28,9 @@ struct FMaterialCBufferInfo
 struct FColliderCBufferInfo
 {
     FVector4D   Color;
+};
+
+struct FSpriteCBufferInfo
+{
+    FVector4D   Tint;
 };

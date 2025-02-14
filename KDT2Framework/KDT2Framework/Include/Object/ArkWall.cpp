@@ -3,7 +3,9 @@
 #include "../Scene/Scene.h"
 #include "BulletObject.h"
 #include "../Component/ColliderOBB2D.h"
+#include "../Component/SpriteComponent.h"
 #include "../Share/Log.h"
+#include "../Object/ArkPlayer.h"
 
 CArkWall::CArkWall()
 {
@@ -25,23 +27,25 @@ CArkWall::~CArkWall()
 
 bool CArkWall::Init()
 {
-    mRoot = CreateComponent<CStaticMeshComponent>();
+    mRoot = CreateComponent<CSpriteComponent>();
     mBody = CreateComponent<CColliderOBB2D>();
 
-    mRoot->SetMesh("CenterTexRect");
-    //mRoot->AddTexture(0, "Wall", TEXT("Texture/ball_blue.png"), 1);
+    //mRoot->SetMesh("CenterTexRect");
+    mRoot->SetTexture("Wall", TEXT("Texture/block_wall.png"));
+    mRoot->SetPivot(0.5f, 0.5f);
     //mRoot->SetShader("ColorMeshShader");
 
-    mRoot->SetWorldScale(xSize, ySize, 1.f);
+    mRoot->SetWorldScale(32, 700, 1.f);
 
     SetRootComponent(mRoot);
+    
+    mRoot->AddChild(mBody);
 
     mBody->SetCollisionProfile("Wall");
-    mBody->SetBoxSize(xSize, ySize);
+    mBody->SetBoxSize(32, 500);
     mBody->SetCollisionBeginFunc<CArkWall>(this, &CArkWall::CollisionWall);
     mBody->SetCollisionEndFunc<CArkWall>(this, &CArkWall::CollisionWallEnd);
 
-    mRoot->AddChild(mBody);
 
     return true;
 }
@@ -53,12 +57,16 @@ void CArkWall::Update(float DeltaTime)
 
 void CArkWall::CollisionWall( const FVector3D& HitPoint, CColliderBase* Dest)
 {
-    CLog::PrintLog("Collision");
+    CArkPlayer* Player = dynamic_cast<CArkPlayer*>(Dest);
+
+    if (!strcmp(Dest->GetOwner()->GetName(), "Player"))
+    {
+        //Player->SetMoveStop();
+    }
 }
 
 void CArkWall::CollisionWallEnd( CColliderBase* Dest)
 {
-    CLog::PrintLog("CollisionEnd");
 }
 
 

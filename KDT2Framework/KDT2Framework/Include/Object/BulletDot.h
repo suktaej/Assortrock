@@ -14,7 +14,7 @@ protected:
     virtual ~CBulletDot();
 
 protected:
-    CSharedPtr<class CStaticMeshComponent>  mRoot;
+    CSharedPtr<class CSpriteComponent>  mRoot;
     CSharedPtr<class CColliderOBB2D>       mBody;
     CSharedPtr<class CMovementComponent>    mMovement;
     float       mMoveDist = 200.f;

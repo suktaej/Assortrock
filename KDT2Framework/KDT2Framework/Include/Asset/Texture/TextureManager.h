@@ -20,6 +20,13 @@ public:
 		const TCHAR* FileName);
 	bool LoadTextureFullPath(const std::string& Name,
 		const TCHAR* FullPath);
+	bool LoadTexture(const std::string& Name, 
+		const std::vector<const TCHAR*>& FileName);
+	bool LoadTextureFullPath(const std::string& Name, 
+		const std::vector<const TCHAR*>& FullPath);
+	bool LoadTexture(const std::string& Name, 
+		const TCHAR* FileName, const TCHAR* Ext,
+		int Count);
 
 	class CTexture* FindTexture(const std::string& Name);
 

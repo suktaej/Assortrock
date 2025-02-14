@@ -128,6 +128,21 @@ bool CMeshManager::Init()
         sizeof(unsigned short), 6, DXGI_FORMAT_R16_UINT))
         return false;
 
+    FVertexTexture    SpriteRect[4] =
+    {
+        FVertexTexture(0.f, 1.f, 0.f, 0.f, 0.f),
+        FVertexTexture(1.f, 1.f, 0.f, 1.f, 0.f),
+        FVertexTexture(0.f, 0.f, 0.f, 0.f, 1.f),
+        FVertexTexture(1.f, 0.f, 0.f, 1.f, 1.f),
+    };
+
+    if (!CreateMesh("SpriteRect", SpriteRect,
+        sizeof(FVertexTexture),
+        4, D3D11_USAGE_DEFAULT,
+        D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST, RectIdx,
+        sizeof(unsigned short), 6, DXGI_FORMAT_R16_UINT))
+        return false;
+
     return true;
 }
 

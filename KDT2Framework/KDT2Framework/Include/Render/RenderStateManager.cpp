@@ -92,7 +92,6 @@ bool CRenderStateManager::CreateBlendState(
 {
     CBlendState* State = (CBlendState*)FindState(Name);
 
-    // 없을 경우 새로 생성해서 추가해준다.
     if (!State)
         return false;
 

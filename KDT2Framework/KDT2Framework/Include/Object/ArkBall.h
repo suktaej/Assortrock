@@ -13,7 +13,7 @@ protected:
     virtual ~CArkBall();
 
 protected:
-    CSharedPtr<class CStaticMeshComponent>  mRoot;
+    CSharedPtr<class CSpriteComponent>  mRoot;
     CSharedPtr<class CColliderSphere2D>      mBody;
     CSharedPtr<class CMovementComponent>    mMovement;
     CSharedPtr<class CRotationComponent>    mRotation;
@@ -32,5 +32,6 @@ private:
     void CollisionBall(const FVector3D& HitPoint, class CColliderBase* Dest);
     void CollisionBallEnd(class CColliderBase* Dest);
     void ReflectionFunc(const FVector3D& BallAxis, const FVector3D& NormalLine);
+    FVector2D& NormalLineCal(const FVector3D& HitPoint, CColliderBase* Dest);
 };
 

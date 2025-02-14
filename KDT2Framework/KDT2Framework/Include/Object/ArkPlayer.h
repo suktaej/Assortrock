@@ -12,23 +12,25 @@ protected:
     virtual ~CArkPlayer();
 
 protected:
-    CSharedPtr<class CStaticMeshComponent>  mRoot;
-    //CSharedPtr<class CStaticMeshComponent>  mSub;
-    CSharedPtr<class CColliderAABB2D>       mBody;
-    //CSharedPtr<class CColliderLine2D>       mLine;
+    CSharedPtr<class CSpriteComponent>  mRoot;
+    CSharedPtr<class CColliderOBB2D>       mBody;
     CSharedPtr<class CCameraComponent>      mCamera;
-
     CSharedPtr<class CMovementComponent>    mMovement;
     int mBallCount = 1;
 
 public:
     virtual bool Init();
     virtual void Update(float DeltaTime);
-    void SetBallCount() { mBallCount = 1; }
+    void SetMoveStop();
+    void SetMoveStart();
 
 private:
     void MoveLeft(float DeltaTime);
     void MoveRight(float DeltaTime);
     void Fire(float DeltaTime);
+    void RotationZ(float DeltaTime);
+    void RotationZInv(float DeltaTime);
+    void MoveDown(float DeltaTime);
+    void MoveUp(float DeltaTime);
 };
 

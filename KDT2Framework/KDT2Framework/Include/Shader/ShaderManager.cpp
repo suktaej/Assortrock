@@ -4,6 +4,7 @@
 #include "ConstantBuffer.h"
 #include "StaticMeshShader.h"
 #include "../Device.h"
+#include "SpriteShader.h"
 
 DEFINITION_SINGLE(CShaderManager)
 
@@ -30,6 +31,8 @@ bool CShaderManager::Init()
 
 	CreateShader<CStaticMeshShader>("StaticMeshShader");
 
+	CreateShader<CSpriteShader>("SpriteShader");
+
 
 
 	if (!LoadPixelShader("DefaultMaterialShader",
@@ -47,6 +50,10 @@ bool CShaderManager::Init()
 
 	CreateConstantBuffer("Collider",
 		sizeof(FColliderCBufferInfo),
+		2, EShaderBufferType::Pixel);
+
+	CreateConstantBuffer("Sprite",
+		sizeof(FSpriteCBufferInfo),
 		2, EShaderBufferType::Pixel);
 
 	return true;

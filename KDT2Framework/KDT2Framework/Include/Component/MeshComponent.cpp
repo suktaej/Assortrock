@@ -6,27 +6,21 @@
 
 CMeshComponent::CMeshComponent()
 {
-    mTransformCBuffer = new CTransformCBuffer;
-
-    mTransformCBuffer->Init();
+    mRenderType = EComponentRender::Render;
 }
 
 CMeshComponent::CMeshComponent(const CMeshComponent& Com)   :
     CSceneComponent(Com)
 {
-    mTransformCBuffer = Com.mTransformCBuffer->Clone();
 }
 
 CMeshComponent::CMeshComponent(CMeshComponent&& Com) :
     CSceneComponent(Com)
 {
-    mTransformCBuffer = Com.mTransformCBuffer;
-    Com.mTransformCBuffer = nullptr;
 }
 
 CMeshComponent::~CMeshComponent()
 {
-    SAFE_DELETE(mTransformCBuffer);
 }
 
 bool CMeshComponent::Init()

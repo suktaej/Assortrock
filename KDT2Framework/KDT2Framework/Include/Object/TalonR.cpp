@@ -2,6 +2,7 @@
 #include "../Component/StaticMeshComponent.h"
 #include "../Component/MovementComponent.h"
 #include "../Component/RotationComponent.h"
+#include "../Component/SpriteComponent.h"
 
 CTalonR::CTalonR()
 {
@@ -23,7 +24,7 @@ CTalonR::~CTalonR()
 
 bool CTalonR::Init()
 {
-    mMesh = CreateComponent<CStaticMeshComponent>();
+    mMesh = CreateComponent<CSpriteComponent>();
 
     mMovement = CreateComponent<CMovementComponent>();
     mRotation = CreateComponent<CRotationComponent>();
@@ -40,8 +41,10 @@ bool CTalonR::Init()
 
     mMovement->SetMoveSpeed(mMaxRange / mReadyTime);
 
-    mMesh->SetMesh("CenterRect");
-    mMesh->SetShader("ColorMeshShader");
+    mMesh->SetTexture("Bullet", TEXT("Texture/block_ball.png"));
+    mMesh->SetPivot(0.5f, 0.5f);
+    /*mMesh->SetMesh("CenterRect");
+    mMesh->SetShader("ColorMeshShader");*/
 
     mMesh->SetWorldScale(50.f, 50.f, 1.f);
 

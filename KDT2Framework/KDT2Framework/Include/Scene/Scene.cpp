@@ -5,6 +5,7 @@
 #include "SceneCollision.h"
 #include "../Share/Log.h"
 #include "SceneAssetManager.h"
+#include "../Render/RenderManager.h"
 
 CScene::CScene()
 {
@@ -12,6 +13,7 @@ CScene::CScene()
 
 CScene::~CScene()
 {
+	CRenderManager::GetInst()->ClearRenderList();
 	mObjList.clear();
 	SAFE_DELETE(mAssetManager);
 	SAFE_DELETE(mCollision);

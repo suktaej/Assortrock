@@ -1,5 +1,6 @@
 #include "TornadoBullet.h"
 #include "../Component/StaticMeshComponent.h"
+#include "../Component/SpriteComponent.h"
 
 CTornadoBullet::CTornadoBullet()
 {
@@ -23,10 +24,12 @@ bool CTornadoBullet::Init()
 {
     mRoot = CreateComponent<CSceneComponent>();
     mPivot = CreateComponent<CSceneComponent>();
-    mMesh = CreateComponent<CStaticMeshComponent>();
+    mMesh = CreateComponent<CSpriteComponent>();
 
-    mMesh->SetMesh("CenterRect");
-    mMesh->SetShader("ColorMeshShader");
+    mMesh->SetTexture("Bullet", TEXT("Texture/block_ball.png"));
+    mMesh->SetPivot(0.5f, 0.5f);
+    /*mMesh->SetMesh("CenterRect");
+    mMesh->SetShader("ColorMeshShader");*/
 
     mMesh->SetWorldScale(0.5f, 0.5f, 1.f);
     mMesh->SetRelativePos(-1.5f, 0.f);

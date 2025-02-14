@@ -15,7 +15,6 @@ protected:
 	virtual ~CMeshComponent();
 
 protected:
-	class CTransformCBuffer* mTransformCBuffer;
 	std::vector<CSharedPtr<class CMaterial>>	mMaterialSlots;
 
 public:

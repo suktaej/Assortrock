@@ -3,6 +3,7 @@
 #include "../Component/MovementComponent.h"
 #include "../Component/ColliderAABB2D.h"
 #include "../Share/Log.h"
+#include "../Component/SpriteComponent.h"
 
 CBulletObject::CBulletObject()
 {
@@ -30,13 +31,16 @@ void CBulletObject::SetBulletCollisionProfile(
 
 bool CBulletObject::Init()
 {
-    mRoot = CreateComponent<CStaticMeshComponent>();
+    mRoot = CreateComponent<CSpriteComponent>();
     mBody = CreateComponent<CColliderAABB2D>();
 
     mMovement = CreateComponent<CMovementComponent>();
 
-    mRoot->SetMesh("CenterRect");
-    mRoot->SetShader("ColorMeshShader");
+    /*mRoot->SetMesh("CenterRect");
+    mRoot->SetShader("ColorMeshShader");*/
+
+    mRoot->SetTexture("Bullet", TEXT("Texture/block_ball.png"));
+    mRoot->SetPivot(0.5f, 0.5f);
 
     mRoot->SetWorldScale(0.5f, 0.5f, 1.f);
 

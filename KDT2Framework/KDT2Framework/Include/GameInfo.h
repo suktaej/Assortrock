@@ -251,7 +251,9 @@ struct FCollisionProfile
 enum class EAssetType
 {
 	Mesh,
-	Texture
+	Texture,
+	Material,
+	Animation2D
 };
 
 namespace ERenderStateType
@@ -264,3 +266,21 @@ namespace ERenderStateType
 	};
 }
 
+enum class EComponentRender
+{
+	None,
+	Render
+};
+
+enum class ERenderSortType
+{
+	None,
+	Y,
+	Alpha
+};
+
+enum class EAnimationTextureType
+{
+	SpriteSheet,
+	Frame
+};

@@ -44,6 +44,10 @@ public:
 public:
     bool LoadTexture(const TCHAR* FileName);
     bool LoadTextureFullPath(const TCHAR* FullPath);
+    bool LoadTexture(const std::vector<const TCHAR*>& FileName);
+    bool LoadTextureFullPath(const std::vector<const TCHAR*>& FullPath);
+    bool LoadTexture(const TCHAR* FileName, const TCHAR* Ext,
+        int Count);
 
 public:
     void SetShader(int Register, int ShaderBufferType,

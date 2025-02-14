@@ -20,7 +20,7 @@ protected:
     virtual ~CGravityBullet();
 
 protected:
-    CSharedPtr<class CStaticMeshComponent>  mRoot;
+    CSharedPtr<class CSpriteComponent>  mRoot;
     CSharedPtr<class CMovementComponent>    mMovement;
     EGravityType       mGravityType = EGravityType::Pull;
     float   mSpeed = 400.f;
