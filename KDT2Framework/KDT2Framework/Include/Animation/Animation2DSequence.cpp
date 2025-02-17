@@ -58,11 +58,17 @@ void CAnimation2DSequence::Update(float DeltaTime)
 
 			if (mFrame < 0)
 			{
-				if (mEndFunction)
+				if (mEndFunction && mEndFunctionEnable)
+				{
+					mEndFunctionEnable = false;
 					mEndFunction();
+				}
 
 				if (mLoop)
+				{
+					mEndFunctionEnable = true;
 					mFrame = mAsset->GetFrameCount() - 1;
+				}
 
 				else
 					mFrame = 0;
@@ -75,11 +81,17 @@ void CAnimation2DSequence::Update(float DeltaTime)
 
 			if (mFrame == mAsset->GetFrameCount())
 			{
-				if (mEndFunction)
+				if (mEndFunction && mEndFunctionEnable)
+				{
+					mEndFunctionEnable = false;
 					mEndFunction();
+				}
 
 				if (mLoop)
+				{
+					mEndFunctionEnable = true;
 					mFrame = 0;
+				}
 
 				else
 					mFrame = mAsset->GetFrameCount() - 1;

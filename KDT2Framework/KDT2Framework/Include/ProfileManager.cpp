@@ -34,28 +34,33 @@ bool CProfileManager::Init()
 	CreateProfile("MonsterAttack", ECollisionChannel::MonsterAttack, true,
 		ECollisionInteraction::Ignore);
 
-	SetInteraction("Player", ECollisionChannel::Player, ECollisionInteraction::Ignore);
-	SetInteraction("Player", ECollisionChannel::PlayerAttack, ECollisionInteraction::Ignore);
+	CreateProfile("MonsterDetect", ECollisionChannel::MonsterDetect, true,
+		ECollisionInteraction::Ignore);
 
-	SetInteraction("Monster", ECollisionChannel::Monster, ECollisionInteraction::Ignore);
-	SetInteraction("Monster", ECollisionChannel::MonsterAttack, ECollisionInteraction::Ignore);
+	SetInteraction("Player", ECollisionChannel::Player,
+		ECollisionInteraction::Ignore);
+	SetInteraction("Player", ECollisionChannel::PlayerAttack,
+		ECollisionInteraction::Ignore);
+	/*SetInteraction("Player", ECollisionChannel::Default,
+		ECollisionInteraction::Ignore);*/
 
-	SetInteraction("PlayerAttack", ECollisionChannel::Default, ECollisionInteraction::Collision);
-	SetInteraction("PlayerAttack", ECollisionChannel::Monster, ECollisionInteraction::Collision);
+	SetInteraction("Monster", ECollisionChannel::Monster,
+		ECollisionInteraction::Ignore);
+	SetInteraction("Monster", ECollisionChannel::MonsterAttack,
+		ECollisionInteraction::Ignore);
 
-	SetInteraction("MonsterAttack", ECollisionChannel::Default, ECollisionInteraction::Collision);
-	SetInteraction("MonsterAttack", ECollisionChannel::Player, ECollisionInteraction::Collision);
+	SetInteraction("PlayerAttack", ECollisionChannel::Default,
+		ECollisionInteraction::Collision);
+	SetInteraction("PlayerAttack", ECollisionChannel::Monster,
+		ECollisionInteraction::Collision);
 
-	//Arkanoid
-	CreateProfile("Ball", ECollisionChannel::Ball, true, ECollisionInteraction::Collision);
-	CreateProfile("Block", ECollisionChannel::Block, true, ECollisionInteraction::Collision);
-	CreateProfile("Wall", ECollisionChannel::Wall, true, ECollisionInteraction::Collision);
-	CreateProfile("Pit", ECollisionChannel::Pit, true, ECollisionInteraction::Collision);
+	SetInteraction("MonsterAttack", ECollisionChannel::Default,
+		ECollisionInteraction::Collision);
+	SetInteraction("MonsterAttack", ECollisionChannel::Player,
+		ECollisionInteraction::Collision);
 
-	SetInteraction("Ball", ECollisionChannel::Ball, ECollisionInteraction::Ignore);
-	SetInteraction("Block", ECollisionChannel::Block, ECollisionInteraction::Ignore);
-	SetInteraction("Wall", ECollisionChannel::Wall, ECollisionInteraction::Ignore);
-	SetInteraction("Pit", ECollisionChannel::Pit, ECollisionInteraction::Ignore);
+	SetInteraction("MonsterDetect", ECollisionChannel::Player,
+		ECollisionInteraction::Collision);
 
 	return true;
 }

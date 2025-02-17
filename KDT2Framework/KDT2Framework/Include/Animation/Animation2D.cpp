@@ -1,5 +1,4 @@
 #include "Animation2D.h"
-#include "Animation2DSequence.h"
 #include "../Asset/Animation/Animation2DData.h"
 #include "../Asset/Animation/Animation2DManager.h"
 #include "../Asset/AssetManager.h"
@@ -180,7 +179,10 @@ void CAnimation2D::SetReverse(const std::string& Name,
 
 void CAnimation2D::ChangeAnimation(const std::string& Name)
 {
-	if (!mCurrentSequence)
+	if (Name.empty())
+		return;
+
+	else if (!mCurrentSequence)
 		return;
 
 	else if (mCurrentSequence->GetName() == Name)
@@ -188,11 +190,14 @@ void CAnimation2D::ChangeAnimation(const std::string& Name)
 
 	mCurrentSequence->mFrame = 0;
 	mCurrentSequence->mTime = 0.f;
+	mCurrentSequence->mEndFunctionEnable = true;
 
-	mCurrentSequence = FindSequence(Name);
+	CAnimation2DSequence* Sequence = FindSequence(Name);
 
-	if (!mCurrentSequence)
+	if (!Sequence)
 		return;
+
+	mCurrentSequence = Sequence;
 
 	mCurrentSequence->mFrame = 0;
 	mCurrentSequence->mTime = 0.f;

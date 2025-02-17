@@ -98,16 +98,8 @@ bool CTexture::LoadTextureFullPath(const TCHAR* FullPath)
 
 	else
 	{
-	/*	if (FAILED(DirectX::LoadFromWICFile(FullPath,
-			DirectX::WIC_FLAGS_NONE, nullptr,
-			*Image)))
-		{
-			SAFE_DELETE(Texture);
-			SAFE_DELETE(Image);
-			return false;
-		}*/
 		if (FAILED(DirectX::LoadFromWICFile(FullPath,
-			DirectX::WIC_FLAGS_IGNORE_SRGB, nullptr,
+			DirectX::WIC_FLAGS_NONE, nullptr,
 			*Image)))
 		{
 			SAFE_DELETE(Texture);

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../GameInfo.h"
+#include "Animation2DSequence.h"
 #include "../Shader/Animation2DCBuffer.h"
 
 class CAnimation2D
@@ -23,8 +24,8 @@ private:
 private:
 	class CScene* mScene = nullptr;
 	class CSpriteComponent* mOwner = nullptr;
-	std::unordered_map<std::string, class CAnimation2DSequence*>	mSequenceMap;
-	class CAnimation2DSequence* mCurrentSequence = nullptr;
+	std::unordered_map<std::string, CAnimation2DSequence*>	mSequenceMap;
+	CAnimation2DSequence* mCurrentSequence = nullptr;
 
 public:
 	bool Init();
@@ -48,7 +49,31 @@ public:
 	void SetShader();
 	
 private:
-	class CAnimation2DSequence* FindSequence(
+	CAnimation2DSequence* FindSequence(
 		const std::string& Name);
+
+public:
+	template <typename T>
+	void SetEndFunction(const std::string& Name, T* Obj, void(T::* Func)())
+	{
+		CAnimation2DSequence* Sequence = FindSequence(Name);
+
+		if (!Sequence)
+			return;
+
+		Sequence->SetEndFunction<T>(Obj, Func);
+	}
+
+	template <typename T>
+	void AddNotify(const std::string& Name,
+		int Frame, T* Obj, void(T::* Func)())
+	{
+		CAnimation2DSequence* Sequence = FindSequence(Name);
+
+		if (!Sequence)
+			return;
+
+		Sequence->AddNotify<T>(Name, Frame, Obj, Func);
+	}
 };
 

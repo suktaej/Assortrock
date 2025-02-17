@@ -30,7 +30,7 @@ bool CNearingMonster::Init()
     mRoot->SetTexture("Monster1Tex", TEXT("Texture/block_wall.png"));
     mRoot->SetPivot(0.5f, 0.5f);
 
-    SetTarget(mScene->FindObjectFromType<CPlayerObject>());
+    //SetTarget(mScene->FindObjectFromType<CPlayerObject>());
 
     mDetectDistance = 400.f;
 

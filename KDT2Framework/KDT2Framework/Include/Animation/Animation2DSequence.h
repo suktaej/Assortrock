@@ -39,6 +39,7 @@ private:
 	// 역재생인지 아닌지.
 	bool	mReverse = false;
 	// 이 모션이 1번 재생을 완료할때마다 호출되는 함수
+	bool					mEndFunctionEnable = true;
 	std::function<void()>	mEndFunction;
 	std::vector<FAnimation2DNotify*>	mNotifyList;
 

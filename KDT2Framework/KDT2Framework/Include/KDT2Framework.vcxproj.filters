@@ -154,6 +154,9 @@
     <Filter Include="09. Animation">
       <UniqueIdentifier>{c433429b-4d33-46cc-97b7-0f77754c1f7c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Shader\03. ConstantBuffer\05. Animation2D">
+      <UniqueIdentifier>{6573566e-2faa-43b7-b766-2ae030cdb878}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -366,24 +369,6 @@
     <ClCompile Include="Shader\SpriteCBuffer.cpp">
       <Filter>04. Shader\03. ConstantBuffer\04. Sprite</Filter>
     </ClCompile>
-<<<<<<< .mine
-    <ClCompile Include="Object\ArkBall.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\ArkBlock.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\ArkPlayer.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\ArkWall.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\Arkanoid.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-||||||| .r55
-=======
     <ClCompile Include="Asset\Animation\Animation2DData.cpp">
       <Filter>03. Asset\04. Animation</Filter>
     </ClCompile>
@@ -396,7 +381,9 @@
     <ClCompile Include="Animation\Animation2DSequence.cpp">
       <Filter>09. Animation</Filter>
     </ClCompile>
->>>>>>> .r57
+    <ClCompile Include="Shader\Animation2DCBuffer.cpp">
+      <Filter>04. Shader\03. ConstantBuffer\05. Animation2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -630,24 +617,6 @@
     <ClInclude Include="Shader\SpriteCBuffer.h">
       <Filter>04. Shader\03. ConstantBuffer\04. Sprite</Filter>
     </ClInclude>
-<<<<<<< .mine
-    <ClInclude Include="Object\ArkWall.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\ArkBall.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\ArkBlock.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\ArkPlayer.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\Arkanoid.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-||||||| .r55
-=======
     <ClInclude Include="Asset\Animation\Animation2DData.h">
       <Filter>03. Asset\04. Animation</Filter>
     </ClInclude>
@@ -660,7 +629,9 @@
     <ClInclude Include="Animation\Animation2DSequence.h">
       <Filter>09. Animation</Filter>
     </ClInclude>
->>>>>>> .r57
+    <ClInclude Include="Shader\Animation2DCBuffer.h">
+      <Filter>04. Shader\03. ConstantBuffer\05. Animation2D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="KDT2Framework.rc">

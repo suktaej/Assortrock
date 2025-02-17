@@ -56,6 +56,57 @@ bool CAnimation2DManager::Init()
         FileNames);
     AddFrameCount("PlayerWalk", 6, 0.f, 0.f, 1.f, 1.f);
 
+    // adventurer-punch-00, 6개
+    CreateAnimation("PlayerAttack");
+    SetAnimationTextureType("PlayerAttack",
+        EAnimationTextureType::Frame);
+
+    FileNames.clear();
+    FileNames.emplace_back(TEXT("Texture\\Player\\PlayerFrame\\adventurer-punch-00.png"));
+    FileNames.emplace_back(TEXT("Texture\\Player\\PlayerFrame\\adventurer-punch-01.png"));
+    FileNames.emplace_back(TEXT("Texture\\Player\\PlayerFrame\\adventurer-punch-02.png"));
+    FileNames.emplace_back(TEXT("Texture\\Player\\PlayerFrame\\adventurer-punch-03.png"));
+    FileNames.emplace_back(TEXT("Texture\\Player\\PlayerFrame\\adventurer-punch-04.png"));
+    FileNames.emplace_back(TEXT("Texture\\Player\\PlayerFrame\\adventurer-punch-05.png"));
+    SetTexture("PlayerAttack", "PlayerAttack",
+        FileNames);
+    AddFrameCount("PlayerAttack", 6, 0.f, 0.f, 1.f, 1.f);
+
+
+    CreateAnimation("GunnerIdle");
+    SetAnimationTextureType("GunnerIdle",
+        EAnimationTextureType::SpriteSheet);
+    SetTexture("GunnerIdle", "GunnerSprite",
+        TEXT("Texture\\Monster.png"));
+    
+    for (int i = 0; i < 14; ++i)
+    {
+        AddFrame("GunnerIdle", i * 45.f, 60.f,
+            45.f, 60.f);
+    }
+
+    CreateAnimation("GunnerAttack");
+    SetAnimationTextureType("GunnerAttack",
+        EAnimationTextureType::SpriteSheet);
+    SetTexture("GunnerAttack", "GunnerSprite");
+
+    for (int i = 0; i < 21; ++i)
+    {
+        AddFrame("GunnerAttack", i * 45.f, 180.f,
+            45.f, 60.f);
+    }
+
+    CreateAnimation("GunnerSkill");
+    SetAnimationTextureType("GunnerSkill",
+        EAnimationTextureType::SpriteSheet);
+    SetTexture("GunnerSkill", "GunnerSprite");
+
+    for (int i = 0; i < 5; ++i)
+    {
+        AddFrame("GunnerSkill", i * 45.f, 120.f,
+            45.f, 60.f);
+    }
+
     return true;
 }
 

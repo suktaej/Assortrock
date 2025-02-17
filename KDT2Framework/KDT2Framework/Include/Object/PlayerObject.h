@@ -37,6 +37,7 @@ protected:
     CSharedPtr<class CBulletObject> mSkill1Object;
 
     class CAnimation2D* mAnimation = nullptr;
+    bool                mAutoBasePose = true;
 
     bool            mSkill2Enable = false;
     float           mSkill2Time = 3.f;
@@ -93,5 +94,9 @@ private:
 private:
     void UpdateSkill2(float DeltaTime);
     void UpdateSkill4(float DeltaTime);
+
+public:
+    void AttackEnd();
+    void AttackNotify();
 };
 

@@ -672,6 +672,16 @@ bool CCollision::CollisionLine2DToSphere2D(
         t2 > 0.f && t2 < LineLength)
         result = true;
 
+    else
+    {
+        // 시작점과 도착점이 둘다 원 안에 있는지 판단한다.
+        float   Length1 = Src.Start.Distance(Center2D);
+        float   Length2 = Src.End.Distance(Center2D);
+
+        if (Radius >= Length1 && Radius >= Length2)
+            result = true;
+    }
+
     if (result)
     {
         float   HitDist = t1 < t2 ? t1 : t2;

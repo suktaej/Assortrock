@@ -9,6 +9,7 @@ private:
 	std::list<CSharedPtr<class CSceneComponent>>	mRenderList;
 	ERenderSortType	mRenderSortType = ERenderSortType::Y;
 	ID3D11SamplerState* mSampler = nullptr;
+	class CRenderState* mAlphaBlend = nullptr;
 
 public:
 	class CRenderStateManager* GetStateManager()

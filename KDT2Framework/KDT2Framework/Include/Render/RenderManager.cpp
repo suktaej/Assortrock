@@ -49,6 +49,8 @@ bool CRenderManager::Init()
 		&Desc, &mSampler)))
 		return false;
 
+	mAlphaBlend = mStateManager->FindState("AlphaBlend");
+
 	return true;
 }
 
@@ -70,6 +72,8 @@ void CRenderManager::Render()
 
 	CDevice::GetInst()->GetContext()->PSSetSamplers(0,
 		1, &mSampler);
+
+	mAlphaBlend->SetState();
 
 	auto	iter = mRenderList.begin();
 	auto	iterEnd = mRenderList.end();
@@ -97,6 +101,8 @@ void CRenderManager::Render()
 
 		++iter;
 	}
+
+	mAlphaBlend->ResetState();
 }
 
 bool CRenderManager::SortY(

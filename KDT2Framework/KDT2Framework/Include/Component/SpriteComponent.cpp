@@ -29,6 +29,7 @@ CSpriteComponent::CSpriteComponent(CSpriteComponent&& Com) :
 
 CSpriteComponent::~CSpriteComponent()
 {
+    SAFE_DELETE(mAnimation);
     SAFE_DELETE(mSpriteCBuffer);
 }
 

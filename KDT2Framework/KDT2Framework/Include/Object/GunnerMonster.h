@@ -18,5 +18,17 @@ protected:
 public:
     virtual bool Init();
     virtual void Update(float DeltaTime);
+
+protected:
+    virtual void DetectTarget();
+
+protected:
+    virtual void AIAttack();
+
+protected:
+    void AttackNotify();
+    void AttackEnd();
+    void SkillNotify();
+    void SkillEnd();
 };
 

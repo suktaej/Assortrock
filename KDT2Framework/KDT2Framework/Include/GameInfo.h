@@ -197,10 +197,7 @@ namespace ECollisionChannel
 		Monster,
 		PlayerAttack,
 		MonsterAttack,
-		Ball,
-		Block,
-		Wall,
-		Pit,
+		MonsterDetect,
 		End
 	};
 }
