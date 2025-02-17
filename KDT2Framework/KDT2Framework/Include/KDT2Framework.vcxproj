@@ -205,6 +205,7 @@
     <ClCompile Include="Scene\SceneCollision.cpp" />
     <ClCompile Include="Scene\SceneMain.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
+    <ClCompile Include="Shader\Animation2DCBuffer.cpp" />
     <ClCompile Include="Shader\ColliderCBuffer.cpp" />
     <ClCompile Include="Shader\ColorMeshShader.cpp" />
     <ClCompile Include="Shader\ComputeShader.cpp" />
@@ -290,6 +291,7 @@
     <ClInclude Include="Scene\SceneCollision.h" />
     <ClInclude Include="Scene\SceneMain.h" />
     <ClInclude Include="Scene\SceneManager.h" />
+    <ClInclude Include="Shader\Animation2DCBuffer.h" />
     <ClInclude Include="Shader\CBufferContainer.h" />
     <ClInclude Include="Shader\ColliderCBuffer.h" />
     <ClInclude Include="Shader\ColorMeshShader.h" />

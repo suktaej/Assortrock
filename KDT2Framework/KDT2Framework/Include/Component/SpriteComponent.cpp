@@ -100,6 +100,11 @@ void CSpriteComponent::SetOpacity(float Opacity)
     mTint.w = Opacity;
 }
 
+void CSpriteComponent::SetTextureIndex(int Index)
+{
+    mTextureIndex = Index;
+}
+
 bool CSpriteComponent::Init()
 {
     CSceneComponent::Init();
@@ -146,6 +151,9 @@ void CSpriteComponent::PreUpdate(float DeltaTime)
 void CSpriteComponent::Update(float DeltaTime)
 {
     CSceneComponent::Update(DeltaTime);
+
+    if (mAnimation)
+        mAnimation->Update(DeltaTime);
 }
 
 void CSpriteComponent::PostUpdate(float DeltaTime)
@@ -166,6 +174,16 @@ void CSpriteComponent::PreRender()
 void CSpriteComponent::Render()
 {
     CSceneComponent::Render();
+
+    if (mAnimation)
+    {
+        mAnimation->SetShader();
+    }
+
+    else
+    {
+        CAnimation2D::DisableAnimation();
+    }
 
     mSpriteCBuffer->SetTint(mTint);
 

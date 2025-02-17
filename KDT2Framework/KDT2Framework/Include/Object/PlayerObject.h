@@ -36,6 +36,8 @@ protected:
 
     CSharedPtr<class CBulletObject> mSkill1Object;
 
+    class CAnimation2D* mAnimation = nullptr;
+
     bool            mSkill2Enable = false;
     float           mSkill2Time = 3.f;
     float           mSkill2TimeAcc = 0.f;

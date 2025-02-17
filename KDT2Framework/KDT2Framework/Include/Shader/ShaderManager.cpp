@@ -48,13 +48,17 @@ bool CShaderManager::Init()
 		sizeof(FMaterialCBufferInfo),
 		1, EShaderBufferType::Pixel);
 
+	CreateConstantBuffer("Animation2D",
+		sizeof(FAnimation2DCBufferInfo),
+		2, EShaderBufferType::Vertex);
+
 	CreateConstantBuffer("Collider",
 		sizeof(FColliderCBufferInfo),
-		2, EShaderBufferType::Pixel);
+		3, EShaderBufferType::Pixel);
 
 	CreateConstantBuffer("Sprite",
 		sizeof(FSpriteCBufferInfo),
-		2, EShaderBufferType::Pixel);
+		3, EShaderBufferType::Pixel);
 
 	return true;
 }

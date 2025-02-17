@@ -34,3 +34,11 @@ struct FSpriteCBufferInfo
 {
     FVector4D   Tint;
 };
+
+struct FAnimation2DCBufferInfo
+{
+    FVector2D   LTUV;
+    FVector2D   RBUV;
+    int         AnimEnable;
+    FVector3D   Empty;
+};

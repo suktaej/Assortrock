@@ -50,6 +50,7 @@ public:
     }
 
     void SetTexture(class CTexture* Texture);
+    void SetTexture(const std::string& TextureName);
     void SetTexture(const std::string& Name,
         const TCHAR* FileName);
     void SetTexture(const std::string& Name,

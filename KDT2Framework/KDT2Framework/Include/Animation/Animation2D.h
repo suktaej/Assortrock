@@ -1,15 +1,24 @@
 #pragma once
 
 #include "../GameInfo.h"
+#include "../Shader/Animation2DCBuffer.h"
 
 class CAnimation2D
 {
 	friend class CSpriteComponent;
 
 private:
+	static CAnimation2DCBuffer* mAnimCBuffer;
+
+public:
+	static void CreateCBuffer();
+	static void DestroyCBuffer();
+	static void DisableAnimation();
+
+private:
 	CAnimation2D();
 	CAnimation2D(const CAnimation2D& Anim);
-	~CAnimation2D();
+	virtual ~CAnimation2D();
 
 private:
 	class CScene* mScene = nullptr;

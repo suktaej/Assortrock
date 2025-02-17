@@ -23,6 +23,8 @@ public:
     bool SetTexture(const std::string& Name,
         class CTexture* Texture);
     bool SetTexture(const std::string& Name,
+        const std::string& TextureName);
+    bool SetTexture(const std::string& Name,
         const std::string& TextureName,
         const TCHAR* FileName);
     bool SetTexture(const std::string& Name,

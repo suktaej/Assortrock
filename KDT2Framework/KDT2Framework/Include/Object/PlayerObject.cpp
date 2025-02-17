@@ -16,6 +16,7 @@
 #include "BulletDot.h"
 #include "PenetrationBullet.h"
 #include "../Component/SpriteComponent.h"
+#include "../Animation/Animation2D.h"
 
 CPlayerObject::CPlayerObject()
 {
@@ -60,6 +61,12 @@ bool CPlayerObject::Init()
     //mRoot->SetOpacity(0, 0.5f);
     //mRoot->SetBaseColor(0, 1.f, 0.f, 0.f, 1.f);
     //mRoot->SetShader("ColorMeshShader");
+
+    mAnimation = mRoot->CreateAnimation2D<CAnimation2D>();
+
+    mAnimation->AddSequence("PlayerIdle", 1.f, 1.f, true, false);
+    mAnimation->AddSequence("PlayerRun", 0.7f, 1.f, true, false);
+    mAnimation->AddSequence("PlayerWalk", 0.7f, 1.f, true, false);
 
     mRoot->SetWorldPos(0.f, 0.f, 0.f);
     mRoot->SetWorldScale(100.f, 100.f, 1.f);
@@ -202,6 +209,9 @@ void CPlayerObject::Update(float DeltaTime)
     {
         UpdateSkill4(DeltaTime);
     }
+
+    if (mMovement->GetVelocityLength() == 0.f)
+        mAnimation->ChangeAnimation("PlayerIdle");
 }
 
 void CPlayerObject::Damage(int Dmg)
@@ -212,11 +222,15 @@ void CPlayerObject::Damage(int Dmg)
 void CPlayerObject::MoveUp(float DeltaTime)
 {
     mMovement->AddMove(mRootComponent->GetAxis(EAxis::Y));
+
+    mAnimation->ChangeAnimation("PlayerWalk");
 }
 
 void CPlayerObject::MoveDown(float DeltaTime)
 {
     mMovement->AddMove(mRootComponent->GetAxis(EAxis::Y) * -1.f);
+
+    mAnimation->ChangeAnimation("PlayerWalk");
 }
 
 void CPlayerObject::RotationZ(float DeltaTime)

@@ -18,6 +18,19 @@ void CAnimation2DData::SetTexture(CTexture* Texture)
 	mTexture = Texture;
 }
 
+void CAnimation2DData::SetTexture(const std::string& TextureName)
+{
+	if (mScene)
+	{
+		mTexture = mScene->GetAssetManager()->FindTexture(TextureName);
+	}
+
+	else
+	{
+		mTexture = CAssetManager::GetInst()->GetTextureManager()->FindTexture(TextureName);
+	}
+}
+
 void CAnimation2DData::SetTexture(const std::string& Name,
 	const TCHAR* FileName)
 {

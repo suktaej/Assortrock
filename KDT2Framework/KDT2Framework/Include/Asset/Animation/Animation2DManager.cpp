@@ -1,5 +1,6 @@
 #include "Animation2DManager.h"
 #include "Animation2DData.h"
+#include "../../Animation/Animation2D.h"
 
 CAnimation2DManager::CAnimation2DManager()
 {
@@ -7,10 +8,54 @@ CAnimation2DManager::CAnimation2DManager()
 
 CAnimation2DManager::~CAnimation2DManager()
 {
+    CAnimation2D::DestroyCBuffer();
 }
 
 bool CAnimation2DManager::Init()
 {
+    CAnimation2D::CreateCBuffer();
+
+    CreateAnimation("PlayerIdle");
+    SetAnimationTextureType("PlayerIdle",
+        EAnimationTextureType::SpriteSheet);
+    SetTexture("PlayerIdle", "PlayerSprite",
+        TEXT("Texture\\Player\\Player.png"));
+
+    for (int i = 0; i < 2; ++i)
+    {
+        for (int j = 0; j < 7; ++j)
+        {
+            AddFrame("PlayerIdle", j * 50.f, 185.f + i * 37.f, 
+                50.f, 37.f);
+        }
+    }
+
+    CreateAnimation("PlayerRun");
+    SetAnimationTextureType("PlayerRun",
+        EAnimationTextureType::SpriteSheet);
+    SetTexture("PlayerRun", "PlayerSprite");
+    // 2, 8
+    for (int i = 0; i < 5; ++i)
+    {
+        AddFrame("PlayerRun", (2 + i) * 50.f, 8 * 37.f,
+            50.f, 37.f);
+    }
+
+    CreateAnimation("PlayerWalk");
+    SetAnimationTextureType("PlayerWalk",
+        EAnimationTextureType::Frame);
+
+    std::vector<const TCHAR*>   FileNames;
+    FileNames.emplace_back(TEXT("Texture\\Player\\PlayerFrame\\adventurer-walk-00.png"));
+    FileNames.emplace_back(TEXT("Texture\\Player\\PlayerFrame\\adventurer-walk-01.png"));
+    FileNames.emplace_back(TEXT("Texture\\Player\\PlayerFrame\\adventurer-walk-02.png"));
+    FileNames.emplace_back(TEXT("Texture\\Player\\PlayerFrame\\adventurer-walk-03.png"));
+    FileNames.emplace_back(TEXT("Texture\\Player\\PlayerFrame\\adventurer-walk-04.png"));
+    FileNames.emplace_back(TEXT("Texture\\Player\\PlayerFrame\\adventurer-walk-05.png"));
+    SetTexture("PlayerWalk", "PlayerWalk",
+        FileNames);
+    AddFrameCount("PlayerWalk", 6, 0.f, 0.f, 1.f, 1.f);
+
     return true;
 }
 
@@ -52,6 +97,19 @@ bool CAnimation2DManager::SetTexture(
         return false;
 
     Animation->SetTexture(Texture);
+
+    return true;
+}
+
+bool CAnimation2DManager::SetTexture(const std::string& Name, 
+    const std::string& TextureName)
+{
+    CAnimation2DData* Animation = FindAnimation(Name);
+
+    if (!Animation)
+        return false;
+
+    Animation->SetTexture(TextureName);
 
     return true;
 }

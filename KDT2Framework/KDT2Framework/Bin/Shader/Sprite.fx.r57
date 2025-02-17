@@ -13,19 +13,10 @@ struct VS_Output_Tex
     float2 UV : TEXCOORD;
 };
 
-<<<<<<< .mine
-cbuffer Sprite : register(b2) { float4 gSpriteTint; }
-||||||| .r57
 cbuffer Sprite : register(b2)
 {
     float4 gSpriteTint;
 }
-=======
-cbuffer Sprite : register(b3)
-{
-    float4 gSpriteTint;
-}
->>>>>>> .r58
 
 VS_Output_Tex SpriteVS(VS_Input_Tex input)
 {
@@ -34,8 +25,8 @@ VS_Output_Tex SpriteVS(VS_Input_Tex input)
     float3 Pos = input.Pos - gPivot;
         
     // output.Pos의 x, y, z 에는 input.Pos의 x, y, z 가 대입되고 w에는 1이 대입된다.
-    output.Pos = mul(float4(Pos, 1.0f), gmatWVP);
-    output.UV = UpdateAnimation2D(input.UV);
+    output.Pos = mul(float4(Pos, 1.f), gmatWVP);
+    output.UV = input.UV;
     
     return output;
 }
@@ -48,10 +39,5 @@ PS_Output_Single SpritePS(VS_Output_Tex input)
     
     output.Color = Color * gSpriteTint;
     
-    if (input.UV.x < 0.5f)
-    {
-        output.Color.rgb = (float3) 0.f;
-    }
-    
     return output;
-} 
+}

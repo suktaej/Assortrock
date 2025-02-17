@@ -63,6 +63,9 @@ void CAnimation2DSequence::Update(float DeltaTime)
 
 				if (mLoop)
 					mFrame = mAsset->GetFrameCount() - 1;
+
+				else
+					mFrame = 0;
 			}
 		}
 
@@ -77,6 +80,9 @@ void CAnimation2DSequence::Update(float DeltaTime)
 
 				if (mLoop)
 					mFrame = 0;
+
+				else
+					mFrame = mAsset->GetFrameCount() - 1;
 			}
 		}
 
