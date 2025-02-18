@@ -157,6 +157,15 @@
     <Filter Include="04. Shader\03. ConstantBuffer\05. Animation2D">
       <UniqueIdentifier>{6573566e-2faa-43b7-b766-2ae030cdb878}</UniqueIdentifier>
     </Filter>
+    <Filter Include="06. Object\04. Effect">
+      <UniqueIdentifier>{324b654a-6b0a-4865-aaf5-0c5e40b82f42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Asset\05. Sound">
+      <UniqueIdentifier>{19182c37-64b2-4fc1-b3d4-7a026032fbf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Asset\05. Sound\01. FMOD">
+      <UniqueIdentifier>{958a1f8a-9e7e-42bc-8dc9-23347c632f08}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -383,6 +392,9 @@
     </ClCompile>
     <ClCompile Include="Shader\Animation2DCBuffer.cpp">
       <Filter>04. Shader\03. ConstantBuffer\05. Animation2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\SpriteEffect.cpp">
+      <Filter>06. Object\04. Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -632,6 +644,33 @@
     <ClInclude Include="Shader\Animation2DCBuffer.h">
       <Filter>04. Shader\03. ConstantBuffer\05. Animation2D</Filter>
     </ClInclude>
+    <ClInclude Include="Object\SpriteEffect.h">
+      <Filter>06. Object\04. Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Sound\fmod.h">
+      <Filter>03. Asset\05. Sound\01. FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Sound\fmod.hpp">
+      <Filter>03. Asset\05. Sound\01. FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Sound\fmod_codec.h">
+      <Filter>03. Asset\05. Sound\01. FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Sound\fmod_common.h">
+      <Filter>03. Asset\05. Sound\01. FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Sound\fmod_dsp.h">
+      <Filter>03. Asset\05. Sound\01. FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Sound\fmod_dsp_effects.h">
+      <Filter>03. Asset\05. Sound\01. FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Sound\fmod_errors.h">
+      <Filter>03. Asset\05. Sound\01. FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Sound\fmod_output.h">
+      <Filter>03. Asset\05. Sound\01. FMOD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="KDT2Framework.rc">
@@ -661,6 +700,15 @@
     <None Include="ClassDiagram.cd" />
     <None Include="Asset\Texture\DirectXTex.inl">
       <Filter>03. Asset\02. Texture</Filter>
+    </None>
+    <None Include="Asset\Sound\fmod_dsp.cs">
+      <Filter>03. Asset\05. Sound\01. FMOD</Filter>
+    </None>
+    <None Include="Asset\Sound\fmod_errors.cs">
+      <Filter>03. Asset\05. Sound\01. FMOD</Filter>
+    </None>
+    <None Include="Asset\Sound\fmod.cs">
+      <Filter>03. Asset\05. Sound\01. FMOD</Filter>
     </None>
   </ItemGroup>
 </Project>

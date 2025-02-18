@@ -26,39 +26,18 @@ CShaderManager::~CShaderManager()
 bool CShaderManager::Init()
 {
 	CreateShader<CColorMeshShader>("ColorMeshShader");
-
 	CreateShader<CFrameMeshShader>("FrameMeshShader");
-
 	CreateShader<CStaticMeshShader>("StaticMeshShader");
-
 	CreateShader<CSpriteShader>("SpriteShader");
 
-
-
-	if (!LoadPixelShader("DefaultMaterialShader",
-		"DefaultMaterialPS", TEXT("Mesh.fx")))
-		return false;
-
-
-	CreateConstantBuffer("Transform",
-		sizeof(FTransformCBufferInfo),
+	if (!LoadPixelShader("DefaultMaterialShader", "DefaultMaterialPS", TEXT("Mesh.fx"))) return false;
+	CreateConstantBuffer("Transform", sizeof(FTransformCBufferInfo),
 		0, EShaderBufferType::Vertex);
-
-	CreateConstantBuffer("Material",
-		sizeof(FMaterialCBufferInfo),
+	CreateConstantBuffer("Material", sizeof(FMaterialCBufferInfo),
 		1, EShaderBufferType::Pixel);
-
-	CreateConstantBuffer("Animation2D",
-		sizeof(FAnimation2DCBufferInfo),
-		2, EShaderBufferType::Vertex);
-
-	CreateConstantBuffer("Collider",
-		sizeof(FColliderCBufferInfo),
-		3, EShaderBufferType::Pixel);
-
-	CreateConstantBuffer("Sprite",
-		sizeof(FSpriteCBufferInfo),
-		3, EShaderBufferType::Pixel);
+	CreateConstantBuffer("Animation2D", sizeof(FAnimation2DCBufferInfo), 2, EShaderBufferType::Vertex);
+	CreateConstantBuffer("Collider", sizeof(FColliderCBufferInfo), 3, EShaderBufferType::Pixel);
+	CreateConstantBuffer("Sprite", sizeof(FSpriteCBufferInfo), 3, EShaderBufferType::Pixel);
 
 	return true;
 }
@@ -82,7 +61,6 @@ bool CShaderManager::LoadPixelShader(
 #endif // _DEBUG
 
 	FMaterialPixelShader*	mps = new FMaterialPixelShader;
-
 
 	ID3DBlob* ErrorBlob = nullptr;
 

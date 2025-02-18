@@ -5,8 +5,7 @@ CTransformCBuffer::CTransformCBuffer()
 }
 
 CTransformCBuffer::CTransformCBuffer(const CTransformCBuffer& Data) :
-    CConstantBufferData(Data),
-    mData(Data.mData)
+    CConstantBufferData(Data), mData(Data.mData)
 {
 }
 

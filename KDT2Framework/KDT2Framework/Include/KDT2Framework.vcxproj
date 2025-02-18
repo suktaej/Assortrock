@@ -185,6 +185,7 @@
     <ClCompile Include="Object\PenetrationBullet.cpp" />
     <ClCompile Include="Object\PlayerObject.cpp" />
     <ClCompile Include="Object\SceneObject.cpp" />
+    <ClCompile Include="Object\SpriteEffect.cpp" />
     <ClCompile Include="Object\TalonR.cpp" />
     <ClCompile Include="Object\TornadoBullet.cpp" />
     <ClCompile Include="ProfileManager.cpp" />
@@ -233,6 +234,14 @@
     <ClInclude Include="Asset\Mesh\Mesh.h" />
     <ClInclude Include="Asset\Mesh\MeshManager.h" />
     <ClInclude Include="Asset\Mesh\StaticMesh.h" />
+    <ClInclude Include="Asset\Sound\fmod.h" />
+    <ClInclude Include="Asset\Sound\fmod.hpp" />
+    <ClInclude Include="Asset\Sound\fmod_codec.h" />
+    <ClInclude Include="Asset\Sound\fmod_common.h" />
+    <ClInclude Include="Asset\Sound\fmod_dsp.h" />
+    <ClInclude Include="Asset\Sound\fmod_dsp_effects.h" />
+    <ClInclude Include="Asset\Sound\fmod_errors.h" />
+    <ClInclude Include="Asset\Sound\fmod_output.h" />
     <ClInclude Include="Asset\Texture\DirectXTex.h" />
     <ClInclude Include="Asset\Texture\Texture.h" />
     <ClInclude Include="Asset\Texture\TextureManager.h" />
@@ -265,6 +274,7 @@
     <ClInclude Include="Object\PenetrationBullet.h" />
     <ClInclude Include="Object\PlayerObject.h" />
     <ClInclude Include="Object\SceneObject.h" />
+    <ClInclude Include="Object\SpriteEffect.h" />
     <ClInclude Include="Object\TalonR.h" />
     <ClInclude Include="Object\TornadoBullet.h" />
     <ClInclude Include="ProfileManager.h" />
@@ -362,6 +372,9 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Asset\Sound\fmod.cs" />
+    <None Include="Asset\Sound\fmod_dsp.cs" />
+    <None Include="Asset\Sound\fmod_errors.cs" />
     <None Include="Asset\Texture\DirectXTex.inl" />
     <None Include="ClassDiagram.cd" />
   </ItemGroup>

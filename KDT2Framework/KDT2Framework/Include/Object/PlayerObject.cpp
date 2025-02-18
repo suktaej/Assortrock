@@ -18,6 +18,7 @@
 #include "../Component/SpriteComponent.h"
 #include "../Animation/Animation2D.h"
 #include "../Share/Log.h"
+#include "SpriteEffect.h"
 
 CPlayerObject::CPlayerObject()
 {
@@ -225,6 +226,15 @@ void CPlayerObject::Update(float DeltaTime)
 void CPlayerObject::Damage(int Dmg)
 {
     mHP -= Dmg;
+}
+
+float CPlayerObject::Damage(float Attack, CSceneObject* Obj)
+{
+    Attack = CSceneObject::Damage(Attack, Obj);
+
+    mHP -= Attack;
+
+    return Attack;
 }
 
 void CPlayerObject::MoveUp(float DeltaTime)

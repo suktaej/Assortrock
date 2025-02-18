@@ -107,6 +107,24 @@ bool CAnimation2DManager::Init()
             45.f, 60.f);
     }
 
+    CreateAnimation("Explosion");
+    SetAnimationTextureType("Explosion",
+        EAnimationTextureType::Frame);
+
+    FileNames.clear();
+
+    TCHAR   Path[89][MAX_PATH] = {};
+
+    for (int i = 1; i <= 89; ++i)
+    {
+        wsprintf(Path[i - 1], TEXT("Texture\\Explosion\\Explosion%d.png"), i);
+        FileNames.emplace_back(Path[i - 1]);
+    }
+
+    SetTexture("Explosion", "Explosion",
+        FileNames);
+    AddFrameCount("Explosion", 89, 0.f, 0.f, 1.f, 1.f);
+
     return true;
 }
 

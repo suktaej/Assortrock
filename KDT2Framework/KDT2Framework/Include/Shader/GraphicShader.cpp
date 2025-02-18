@@ -32,6 +32,8 @@ bool CGraphicShader::Init()
 
 void CGraphicShader::SetShader()
 {
+    // ID3D11VertexShader* mVS
+    // Vertex Shader 객체
     CDevice::GetInst()->GetContext()->VSSetShader(mVS, nullptr, 0);
     CDevice::GetInst()->GetContext()->PSSetShader(mPS, nullptr, 0);
     CDevice::GetInst()->GetContext()->HSSetShader(mHS, nullptr, 0);
@@ -41,6 +43,10 @@ void CGraphicShader::SetShader()
     CDevice::GetInst()->GetContext()->IASetInputLayout(mInputLayout);
 }
 
+// AddInputLayoutDesc("POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0);
+// AddInputLayoutDesc("COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 16, D3D11_INPUT_PER_VERTEX_DATA, 0);
+// GraphicShader의 경우 입력되는 값이 Position, Color값으로 입력됨
+// 각 Sementic별로 Desc를 생성해서 mvecDesc에 push
 void CGraphicShader::AddInputLayoutDesc(const char* Semantic,
     unsigned int SemanticIndex, DXGI_FORMAT Fmt, unsigned int InputSlot, 
     unsigned int Size, D3D11_INPUT_CLASSIFICATION InputSlotClass, 
@@ -70,11 +76,15 @@ bool CGraphicShader::CreateInputLayout()
 
     return true;
 }
-
+/*
+    LoadVertexShader("ColorMeshVS", TEXT("ColorMesh.fx"))
+    LoadPixelShader("ColorMeshPS", TEXT("ColorMesh.fx"))
+    HLSL에서 호출할 함수명과 파일명을 삽입해서 Shader를 불러옴
+*/
 bool CGraphicShader::LoadVertexShader(const char* EntryName, const TCHAR* FileName)
 {
     TCHAR   FullPath[MAX_PATH] = {};
-
+    //shader파일 경로 지정
     lstrcpy(FullPath, TEXT("../Bin/Shader/"));
     lstrcat(FullPath, FileName);
 
@@ -84,7 +94,7 @@ bool CGraphicShader::LoadVertexShader(const char* EntryName, const TCHAR* FileNa
     Flag = D3DCOMPILE_DEBUG;
 #endif // _DEBUG
 
-
+    
     ID3DBlob* ErrorBlob = nullptr;
 
     if (FAILED(D3DCompileFromFile(FullPath, nullptr,
