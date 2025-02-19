@@ -30,6 +30,8 @@ bool CSceneMain::Init()
     Material->AddTexture("Monster1", TEXT("Texture/block_wall.png"),
         0);
 
+    mAssetManager->LoadSound("Hit", "Effect", false, "Sound/Fire1.wav");
+
 
     CPlayerObject* Player = CreateObj<CPlayerObject>("Player");
 

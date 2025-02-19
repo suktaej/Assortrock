@@ -166,6 +166,15 @@
     <Filter Include="03. Asset\05. Sound\01. FMOD">
       <UniqueIdentifier>{958a1f8a-9e7e-42bc-8dc9-23347c632f08}</UniqueIdentifier>
     </Filter>
+    <Filter Include="07. Component\01. SceneComponent\05. Audio">
+      <UniqueIdentifier>{7cc52044-012e-4edd-9b51-bf796b3d7972}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10. UI">
+      <UniqueIdentifier>{9b94c38c-21df-4067-9d1f-cffe60b879ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10. UI\01. Common">
+      <UniqueIdentifier>{221f27e4-0f07-428c-a356-91fa645a7db2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -395,6 +404,24 @@
     </ClCompile>
     <ClCompile Include="Object\SpriteEffect.cpp">
       <Filter>06. Object\04. Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Sound\SoundManager.cpp">
+      <Filter>03. Asset\05. Sound\01. FMOD</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Sound\Sound.cpp">
+      <Filter>03. Asset\05. Sound\01. FMOD</Filter>
+    </ClCompile>
+    <ClCompile Include="GameInfo.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\AudioComponent.cpp">
+      <Filter>07. Component\01. SceneComponent\05. Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Widget.cpp">
+      <Filter>10. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Common\Button.cpp">
+      <Filter>10. UI\01. Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -670,6 +697,24 @@
     </ClInclude>
     <ClInclude Include="Asset\Sound\fmod_output.h">
       <Filter>03. Asset\05. Sound\01. FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Sound\Sound.h">
+      <Filter>03. Asset\05. Sound\01. FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Sound\SoundManager.h">
+      <Filter>03. Asset\05. Sound\01. FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\AudioComponent.h">
+      <Filter>07. Component\01. SceneComponent\05. Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Widget.h">
+      <Filter>10. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Common\Button.h">
+      <Filter>10. UI\01. Common</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UIInfo.h">
+      <Filter>10. UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

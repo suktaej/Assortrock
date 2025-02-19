@@ -14,8 +14,10 @@
 #include "Render/RenderManager.h"
 #include "Render/RenderStateManager.h"
 #include "Render/RenderState.h"
+#include "Asset/Sound/SoundManager.h"
 
 TCHAR   gRootPath[MAX_PATH];
+char   gRootPathMultibyte[MAX_PATH];
 
 DEFINITION_SINGLE(CGameManager)
 
@@ -131,6 +133,8 @@ void CGameManager::Logic()
     Collision(DeltaTime);
 
     Render(DeltaTime);
+
+    CAssetManager::GetInst()->GetSoundManager()->Update();
 }
 
 void CGameManager::Input(float DeltaTime)

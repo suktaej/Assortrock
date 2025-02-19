@@ -3,6 +3,7 @@
 #include "Texture/TextureManager.h"
 #include "Material/MaterialManager.h"
 #include "Animation/Animation2DManager.h"
+#include "Sound/SoundManager.h"
 #include "Asset.h"
 
 DEFINITION_SINGLE(CAssetManager)
@@ -13,6 +14,7 @@ CAssetManager::CAssetManager()
 
 CAssetManager::~CAssetManager()
 {
+	SAFE_DELETE(mSoundManager);
 	SAFE_DELETE(mAnimation2DManager);
 	SAFE_DELETE(mMaterialManager);
 	SAFE_DELETE(mTextureManager);
@@ -39,6 +41,12 @@ bool CAssetManager::Init()
 		}
 	}
 
+	// TCHAR -> char
+	Length = WideCharToMultiByte(CP_ACP, 0, gRootPath, -1, nullptr, 0,
+		nullptr, nullptr);
+	WideCharToMultiByte(CP_ACP, 0, gRootPath, -1, 
+		gRootPathMultibyte, Length,	nullptr, nullptr);
+
 	mMaterialManager = new CMaterialManager;
 
 	if (!mMaterialManager->Init())
@@ -59,6 +67,11 @@ bool CAssetManager::Init()
 	if (!mAnimation2DManager->Init())
 		return false;
 
+	mSoundManager = new CSoundManager;
+
+	if (!mSoundManager->Init())
+		return false;
+
 	return true;
 }
 
@@ -77,6 +90,9 @@ void CAssetManager::ReleaseAsset(CAsset* Asset)
 		break;
 	case EAssetType::Animation2D:
 		mAnimation2DManager->ReleaseAnimation(Asset);
+		break;
+	case EAssetType::Sound:
+		mSoundManager->ReleaseSound(Asset);
 		break;
 	}
 }

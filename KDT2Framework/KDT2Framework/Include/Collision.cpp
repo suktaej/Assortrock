@@ -668,6 +668,8 @@ bool CCollision::CollisionLine2DToSphere2D(
     // 2개의 길이중 하나라도 선의 길이보다 짧아야 한다.
     // 단, 음수는 처리 X.
     bool    result = false;
+    bool    Pair = false;
+
     if (t1 > 0.f && t1 < LineLength ||
         t2 > 0.f && t2 < LineLength)
         result = true;
@@ -679,10 +681,15 @@ bool CCollision::CollisionLine2DToSphere2D(
         float   Length2 = Src.End.Distance(Center2D);
 
         if (Radius >= Length1 && Radius >= Length2)
+        {
+            Pair = true;
             result = true;
+            HitPoint.x = Src.End.x;
+            HitPoint.y = Src.End.y;
+        }
     }
 
-    if (result)
+    if (result && !Pair)
     {
         float   HitDist = t1 < t2 ? t1 : t2;
 

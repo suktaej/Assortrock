@@ -156,9 +156,12 @@
     <ClCompile Include="Asset\Mesh\Mesh.cpp" />
     <ClCompile Include="Asset\Mesh\MeshManager.cpp" />
     <ClCompile Include="Asset\Mesh\StaticMesh.cpp" />
+    <ClCompile Include="Asset\Sound\Sound.cpp" />
+    <ClCompile Include="Asset\Sound\SoundManager.cpp" />
     <ClCompile Include="Asset\Texture\Texture.cpp" />
     <ClCompile Include="Asset\Texture\TextureManager.cpp" />
     <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="Component\AudioComponent.cpp" />
     <ClCompile Include="Component\CameraComponent.cpp" />
     <ClCompile Include="Component\ColliderAABB2D.cpp" />
     <ClCompile Include="Component\ColliderBase.cpp" />
@@ -173,6 +176,7 @@
     <ClCompile Include="Component\SpriteComponent.cpp" />
     <ClCompile Include="Component\StaticMeshComponent.cpp" />
     <ClCompile Include="Device.cpp" />
+    <ClCompile Include="GameInfo.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object\BulletDot.cpp" />
@@ -219,6 +223,8 @@
     <ClCompile Include="Share\Log.cpp" />
     <ClCompile Include="Share\Object.cpp" />
     <ClCompile Include="Share\Timer.cpp" />
+    <ClCompile Include="UI\Common\Button.cpp" />
+    <ClCompile Include="UI\Widget.cpp" />
     <ClCompile Include="Vector3D.cpp" />
     <ClCompile Include="Vector4D.cpp" />
   </ItemGroup>
@@ -242,10 +248,13 @@
     <ClInclude Include="Asset\Sound\fmod_dsp_effects.h" />
     <ClInclude Include="Asset\Sound\fmod_errors.h" />
     <ClInclude Include="Asset\Sound\fmod_output.h" />
+    <ClInclude Include="Asset\Sound\Sound.h" />
+    <ClInclude Include="Asset\Sound\SoundManager.h" />
     <ClInclude Include="Asset\Texture\DirectXTex.h" />
     <ClInclude Include="Asset\Texture\Texture.h" />
     <ClInclude Include="Asset\Texture\TextureManager.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="Component\AudioComponent.h" />
     <ClInclude Include="Component\CameraComponent.h" />
     <ClInclude Include="Component\ColliderAABB2D.h" />
     <ClInclude Include="Component\ColliderBase.h" />
@@ -311,6 +320,9 @@
     <ClInclude Include="Share\Object.h" />
     <ClInclude Include="Share\SharedPtr.h" />
     <ClInclude Include="Share\Timer.h" />
+    <ClInclude Include="UI\Common\Button.h" />
+    <ClInclude Include="UI\UIInfo.h" />
+    <ClInclude Include="UI\Widget.h" />
     <ClInclude Include="Vector2D.h" />
     <ClInclude Include="Vector3D.h" />
     <ClInclude Include="Vector4D.h" />

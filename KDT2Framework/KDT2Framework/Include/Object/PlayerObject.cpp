@@ -232,7 +232,7 @@ float CPlayerObject::Damage(float Attack, CSceneObject* Obj)
 {
     Attack = CSceneObject::Damage(Attack, Obj);
 
-    mHP -= Attack;
+    mHP -= (int)Attack;
 
     return Attack;
 }

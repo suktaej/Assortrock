@@ -8,6 +8,8 @@
 #include "../Asset/Material/MaterialManager.h"
 #include "../Asset/Animation/Animation2DData.h"
 #include "../Asset/Animation/Animation2DManager.h"
+#include "../Asset/Sound/Sound.h"
+#include "../Asset/Sound/SoundManager.h"
 
 CSceneAssetManager::CSceneAssetManager()
 {
@@ -419,4 +421,60 @@ CAnimation2DData* CSceneAssetManager::FindAnimation(
 	}
 
 	return dynamic_cast<CAnimation2DData*>(iter->second.Get());
+}
+
+bool CSceneAssetManager::LoadSound(const std::string& Name, 
+	const std::string& GroupName, bool Loop, const char* FileName)
+{
+	if (!CAssetManager::GetInst()->GetSoundManager()->LoadSound(
+		Name, GroupName, Loop, FileName))
+		return false;
+
+	auto	iter = mAssetMap.find(Name);
+
+	if (iter == mAssetMap.end())
+	{
+		mAssetMap.insert(std::make_pair(Name,
+			CAssetManager::GetInst()->GetSoundManager()->FindSound(Name)));
+	}
+
+	return true;
+}
+
+bool CSceneAssetManager::LoadSoundFullPath(const std::string& Name,
+	const std::string& GroupName, bool Loop, const char* FullPath)
+{
+	if (!CAssetManager::GetInst()->GetSoundManager()->LoadSoundFullPath(
+		Name, GroupName, Loop, FullPath))
+		return false;
+
+	auto	iter = mAssetMap.find(Name);
+
+	if (iter == mAssetMap.end())
+	{
+		mAssetMap.insert(std::make_pair(Name,
+			CAssetManager::GetInst()->GetSoundManager()->FindSound(Name)));
+	}
+
+	return true;
+}
+
+CSound* CSceneAssetManager::FindSound(const std::string& Name)
+{
+	auto	iter = mAssetMap.find(Name);
+
+	if (iter == mAssetMap.end())
+	{
+		CSound* Sound =
+			CAssetManager::GetInst()->GetSoundManager()->FindSound(Name);
+
+		if (!Sound)
+			return nullptr;
+
+		mAssetMap.insert(std::make_pair(Name, Sound));
+
+		return Sound;
+	}
+
+	return dynamic_cast<CSound*>(iter->second.Get());
 }

@@ -99,5 +99,16 @@ public:
     class CAnimation2DData* FindAnimation(const std::string& Name);
 
 #pragma endregion Animation
+
+#pragma region Sound
+
+    bool LoadSound(const std::string& Name, const std::string& GroupName,
+        bool Loop, const char* FileName);
+    bool LoadSoundFullPath(const std::string& Name, const std::string& GroupName,
+        bool Loop, const char* FullPath);
+
+    class CSound* FindSound(const std::string& Name);
+
+#pragma endregion Sound
 };
 

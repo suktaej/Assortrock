@@ -2,12 +2,6 @@
 
 #include "../Asset.h"
 
-struct FAnimationFrame
-{
-    FVector2D   Start;
-    FVector2D   Size;
-};
-
 class CAnimation2DData :
     public CAsset
 {
