@@ -76,8 +76,22 @@ bool CWidget::CollisionMouse(const FVector2D& MousePos)
     Axis[1].x = OriginAxis[1].x;
     Axis[1].y = OriginAxis[1].y;
 
+    Axis[0].Normalize();
+    Axis[1].Normalize();
+
     // 위에서 준비한 OBB 정보를 이용해서 마우스 위치와 충돌처리를 한다.
     // 분리축 후보는 상자 축의 X, Y 축이다.
+    FVector2D   CenterLine = Center - MousePos;
+
+    float CenterProjectionDist = abs(CenterLine.Dot(Axis[0]));
+
+    if (CenterProjectionDist > HalfSize.x)
+        return false;
+
+    CenterProjectionDist = abs(CenterLine.Dot(Axis[1]));
+
+    if (CenterProjectionDist > HalfSize.y)
+        return false;
 
     return true;
 }

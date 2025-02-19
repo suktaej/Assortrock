@@ -19,6 +19,8 @@ public:
 		return mViewTarget;
 	}
 
+	const FVector3D& GetCameraWorldPos()	const;
+
 	const FMatrix& GetViewMatrix()	const;
 
 	const FMatrix& GetProjMatrix()	const;

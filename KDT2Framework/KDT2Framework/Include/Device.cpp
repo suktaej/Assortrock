@@ -21,6 +21,19 @@ CDevice::~CDevice()
 	SAFE_RELEASE(mDevice);
 }
 
+FVector2D CDevice::GetResolutionRatio() const
+{
+	// 윈도우 클라이언트 영역의 크기를 얻어온다.
+	RECT	WindowRC;
+
+	GetClientRect(mhWnd, &WindowRC);
+
+	float Width = (float)WindowRC.right - WindowRC.left;
+	float Height = (float)WindowRC.bottom - WindowRC.top;
+
+	return FVector2D(mRS.Width / Width, mRS.Height / Height);
+}
+
 bool CDevice::Init(HWND hWnd, unsigned int Width, unsigned int Height, bool WindowMode)
 {
 	mhWnd = hWnd;

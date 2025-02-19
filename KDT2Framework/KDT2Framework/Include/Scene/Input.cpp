@@ -1,6 +1,8 @@
 #include "Input.h"
 #include "../GameManager.h"
 #include "../Device.h"
+#include "Scene.h"
+#include "CameraManager.h"
 
 CInput::CInput()
 {
@@ -238,10 +240,57 @@ void CInput::Update(float DeltaTime)
         UpdateMouse();
     }
 
+	UpdateMousePos(DeltaTime);
 
     UpdateInput(DeltaTime);
 
 	UpdateBind(DeltaTime);
+}
+
+void CInput::UpdateMousePos(float DeltaTime)
+{
+	// 윈도우 창에서의 마우스 위치를 구한다.
+	// GetCursorPos 함수는 스크린 좌표를 구해준다.
+	// 스크린 좌표는 모니터상에서의 좌표를 구해준다.
+	POINT	MousePT;
+	GetCursorPos(&MousePT);
+
+	// 스크린 좌표를 클라이언트 좌표로 변환한다.
+	ScreenToClient(mhWnd, &MousePT);
+
+	// 디바이스로부터 다이렉트 해상도와 윈도우 창 크기의 비율을 얻어온다.
+	FVector2D	Ratio = CDevice::GetInst()->GetResolutionRatio();
+	FResolution	ViewportRS = CDevice::GetInst()->GetResolution();
+
+	FVector2D	MousePos;
+
+	// 윈도우 창에서의 마우스 위치를 해상도 비율을 곱하여 DirectX Viewport
+	// 상에서의 위치를 구한다.
+	MousePos.x = MousePT.x * Ratio.x;
+	MousePos.y = MousePT.y * Ratio.y;
+
+	// 윈도우는 Y좌표가 아래로 Y+ 방향이 되고
+	// DirectX에서는 Y좌표가 위로 Y+ 방향이 된다.
+	// 그러므로 뷰포트 해상도를 이용하여 Y좌표를 반전시킨다.
+	MousePos.y = ViewportRS.Height - MousePos.y;
+
+	if (mMouseCompute)
+	{
+
+		mMouseMove = MousePos - mMousePos;
+	}
+
+	else
+	{
+		mMouseCompute = true;
+	}
+
+	mMousePos = MousePos;
+
+	FVector3D WorldPos = mScene->GetCameraManager()->GetCameraWorldPos();
+
+	mMouseWorldPos2D.x = WorldPos.x + mMousePos.x - ViewportRS.Width * 0.5f;
+	mMouseWorldPos2D.y = WorldPos.y + mMousePos.y - ViewportRS.Height * 0.5f;
 }
 
 void CInput::UpdateInput(float DeltaTime)

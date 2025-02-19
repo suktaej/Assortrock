@@ -25,6 +25,8 @@ bool CScene::Init()
 {
 	mInput = new CInput;
 
+	mInput->mScene = this;
+
 	if (!mInput->Init())
 		return false;
 

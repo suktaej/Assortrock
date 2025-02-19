@@ -73,6 +73,7 @@ private:
 	~CInput();
 
 private:
+	class CScene* mScene = nullptr;
 	HINSTANCE	mhInst;
 	HWND		mhWnd;
 	IDirectInput8* mInput = nullptr;
@@ -94,6 +95,13 @@ private:
 	bool				mMouseHold[EMouseButtonType::End] = {};
 	bool				mMouseUp[EMouseButtonType::End] = {};
 
+	FVector2D	mMousePos;
+	FVector2D	mMouseWorldPos2D;
+	FVector2D	mMouseMove;
+	// 첫번째 프레임은 이전 마우스 위치가 의미가 없으므로
+	// 2번째 프레임부터 마우스 이동을 계산한다.
+	bool		mMouseCompute = false;
+
 public:
 	bool GetMouseDown(EMouseButtonType::Type Type)
 	{
@@ -108,6 +116,16 @@ public:
 	bool GetMouseUp(EMouseButtonType::Type Type)
 	{
 		return mMouseUp[Type];
+	}
+
+	const FVector2D& GetMousePos()	const
+	{
+		return mMousePos;
+	}
+
+	const FVector2D& GetMouseWorldPos2D()	const
+	{
+		return mMouseWorldPos2D;
 	}
 
 private:
@@ -129,6 +147,7 @@ public:
 	void Update(float DeltaTime);
 
 private:
+	void UpdateMousePos(float DeltaTime);
 	void UpdateInput(float DeltaTime);
 	void UpdateBind(float DeltaTime);
 

@@ -194,6 +194,7 @@
     <ClCompile Include="Object\TornadoBullet.cpp" />
     <ClCompile Include="ProfileManager.cpp" />
     <ClCompile Include="Render\BlendState.cpp" />
+    <ClCompile Include="Render\DepthStencilState.cpp" />
     <ClCompile Include="Render\RenderManager.cpp" />
     <ClCompile Include="Render\RenderState.cpp" />
     <ClCompile Include="Render\RenderStateManager.cpp" />
@@ -288,6 +289,7 @@
     <ClInclude Include="Object\TornadoBullet.h" />
     <ClInclude Include="ProfileManager.h" />
     <ClInclude Include="Render\BlendState.h" />
+    <ClInclude Include="Render\DepthStencilState.h" />
     <ClInclude Include="Render\RenderManager.h" />
     <ClInclude Include="Render\RenderState.h" />
     <ClInclude Include="Render\RenderStateManager.h" />

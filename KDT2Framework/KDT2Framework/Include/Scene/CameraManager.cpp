@@ -9,6 +9,11 @@ CCameraManager::~CCameraManager()
 {
 }
 
+const FVector3D& CCameraManager::GetCameraWorldPos() const
+{
+	return mViewTarget->GetWorldPosition();
+}
+
 const FMatrix& CCameraManager::GetViewMatrix() const
 {
 	return mViewTarget->GetViewMatrix();

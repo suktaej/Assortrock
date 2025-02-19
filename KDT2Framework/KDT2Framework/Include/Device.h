@@ -45,6 +45,8 @@ public:
 		return mWindowMode;
 	}
 
+	FVector2D GetResolutionRatio()	const;
+
 public:
 	bool Init(HWND hWnd, unsigned int Width, unsigned int Height, bool WindowMode);
 	void ClearBackBuffer(float ClearColor[4]);

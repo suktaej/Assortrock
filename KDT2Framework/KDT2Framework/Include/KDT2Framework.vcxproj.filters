@@ -423,6 +423,9 @@
     <ClCompile Include="UI\Common\Button.cpp">
       <Filter>10. UI\01. Common</Filter>
     </ClCompile>
+    <ClCompile Include="Render\DepthStencilState.cpp">
+      <Filter>08. Render\01. RenderState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -715,6 +718,9 @@
     </ClInclude>
     <ClInclude Include="UI\UIInfo.h">
       <Filter>10. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\DepthStencilState.h">
+      <Filter>08. Render\01. RenderState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
