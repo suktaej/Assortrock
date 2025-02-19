@@ -27,7 +27,7 @@ namespace EButtonEventState
 class CButton :
     public CWidget
 {
-	friend class CScene;
+	friend class CSceneUIManager;
 
 protected:
 	CButton();

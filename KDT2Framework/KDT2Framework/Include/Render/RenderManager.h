@@ -10,6 +10,7 @@ private:
 	ERenderSortType	mRenderSortType = ERenderSortType::Y;
 	ID3D11SamplerState* mSampler = nullptr;
 	class CRenderState* mAlphaBlend = nullptr;
+	class CRenderState* mDepthDisable = nullptr;
 
 public:
 	class CRenderStateManager* GetStateManager()

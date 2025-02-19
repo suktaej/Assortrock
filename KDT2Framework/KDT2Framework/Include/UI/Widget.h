@@ -1,12 +1,13 @@
 #pragma once
 
 #include "../Share/Object.h"
+#include "../Object/SceneObject.h"
 #include "UIInfo.h"
 
 class CWidget abstract	:
 	public CObject
 {
-	friend class CScene;
+	friend class CSceneUIManager;
 
 protected:
 	CWidget();
@@ -14,13 +15,21 @@ protected:
 
 protected:
 	class CScene* mScene = nullptr;
+	CSharedPtr<CSceneObject>	mOwnerObject;
 	CSharedPtr<class CShader>	mShader;
+	std::string	mName;
 	FVector2D	mPos;
 	FVector2D	mSize;
 	FVector2D	mPivot;
 	float		mRotation = 0.f;
 
 	int			mZOrder = 0;
+
+public:
+	void SetOwnerObject(class CSceneObject* Object)
+	{
+		mOwnerObject = Object;
+	}
 
 public:
 	const FVector2D& GetPos()	const

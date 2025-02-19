@@ -6,6 +6,8 @@
 #include "../Component/StaticMeshComponent.h"
 #include "SceneAssetManager.h"
 #include "../Asset/Material/Material.h"
+#include "../UI/UserWidget/MainWidget.h"
+#include "SceneUIManager.h"
 
 CSceneMain::CSceneMain()
 {
@@ -86,6 +88,10 @@ bool CSceneMain::Init()
     Monster->SetTarget(Player);
 
     Monster->SetWorldPos(-400.f, 0.f);
+
+
+
+    CMainWidget* Widget = mUIManager->CreateWidget<CMainWidget>("Main");
 
     return true;
 }

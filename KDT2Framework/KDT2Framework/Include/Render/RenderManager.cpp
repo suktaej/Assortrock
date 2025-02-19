@@ -51,6 +51,8 @@ bool CRenderManager::Init()
 
 	mAlphaBlend = mStateManager->FindState("AlphaBlend");
 
+	mDepthDisable = mStateManager->FindState("DepthDisable");
+
 	return true;
 }
 
@@ -101,6 +103,13 @@ void CRenderManager::Render()
 
 		++iter;
 	}
+
+	mDepthDisable->SetState();
+
+	// UI 출력
+
+
+	mDepthDisable->ResetState();
 
 	mAlphaBlend->ResetState();
 }

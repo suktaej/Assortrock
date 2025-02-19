@@ -206,6 +206,7 @@
     <ClCompile Include="Scene\SceneCollision.cpp" />
     <ClCompile Include="Scene\SceneMain.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
+    <ClCompile Include="Scene\SceneUIManager.cpp" />
     <ClCompile Include="Shader\Animation2DCBuffer.cpp" />
     <ClCompile Include="Shader\ColliderCBuffer.cpp" />
     <ClCompile Include="Shader\ColorMeshShader.cpp" />
@@ -225,6 +226,9 @@
     <ClCompile Include="Share\Object.cpp" />
     <ClCompile Include="Share\Timer.cpp" />
     <ClCompile Include="UI\Common\Button.cpp" />
+    <ClCompile Include="UI\UserWidget\MainWidget.cpp" />
+    <ClCompile Include="UI\UserWidget\UserWidget.cpp" />
+    <ClCompile Include="UI\UserWidget\WindowWidget.cpp" />
     <ClCompile Include="UI\Widget.cpp" />
     <ClCompile Include="Vector3D.cpp" />
     <ClCompile Include="Vector4D.cpp" />
@@ -302,6 +306,7 @@
     <ClInclude Include="Scene\SceneCollision.h" />
     <ClInclude Include="Scene\SceneMain.h" />
     <ClInclude Include="Scene\SceneManager.h" />
+    <ClInclude Include="Scene\SceneUIManager.h" />
     <ClInclude Include="Shader\Animation2DCBuffer.h" />
     <ClInclude Include="Shader\CBufferContainer.h" />
     <ClInclude Include="Shader\ColliderCBuffer.h" />
@@ -324,6 +329,9 @@
     <ClInclude Include="Share\Timer.h" />
     <ClInclude Include="UI\Common\Button.h" />
     <ClInclude Include="UI\UIInfo.h" />
+    <ClInclude Include="UI\UserWidget\MainWidget.h" />
+    <ClInclude Include="UI\UserWidget\UserWidget.h" />
+    <ClInclude Include="UI\UserWidget\WindowWidget.h" />
     <ClInclude Include="UI\Widget.h" />
     <ClInclude Include="Vector2D.h" />
     <ClInclude Include="Vector3D.h" />

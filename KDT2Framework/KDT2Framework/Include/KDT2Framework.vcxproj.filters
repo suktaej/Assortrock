@@ -175,6 +175,15 @@
     <Filter Include="10. UI\01. Common">
       <UniqueIdentifier>{221f27e4-0f07-428c-a356-91fa645a7db2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="10. UI\02. UserWidget">
+      <UniqueIdentifier>{cbe1fd15-6a5f-4097-a424-7d141c15a111}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Scene\05. UI">
+      <UniqueIdentifier>{371255d4-6d07-45c8-8620-8a4e486dffb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10. UI\02. UserWidget\01. Main">
+      <UniqueIdentifier>{64b3b5fc-1019-47b5-b17d-ccd055a0d7de}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -425,6 +434,18 @@
     </ClCompile>
     <ClCompile Include="Render\DepthStencilState.cpp">
       <Filter>08. Render\01. RenderState</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UserWidget\UserWidget.cpp">
+      <Filter>10. UI\02. UserWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UserWidget\WindowWidget.cpp">
+      <Filter>10. UI\02. UserWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SceneUIManager.cpp">
+      <Filter>05. Scene\05. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UserWidget\MainWidget.cpp">
+      <Filter>10. UI\02. UserWidget\01. Main</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -721,6 +742,18 @@
     </ClInclude>
     <ClInclude Include="Render\DepthStencilState.h">
       <Filter>08. Render\01. RenderState</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UserWidget\UserWidget.h">
+      <Filter>10. UI\02. UserWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UserWidget\WindowWidget.h">
+      <Filter>10. UI\02. UserWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneUIManager.h">
+      <Filter>05. Scene\05. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UserWidget\MainWidget.h">
+      <Filter>10. UI\02. UserWidget\01. Main</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

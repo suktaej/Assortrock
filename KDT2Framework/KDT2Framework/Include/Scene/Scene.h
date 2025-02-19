@@ -16,10 +16,16 @@ protected:
 	class CCameraManager* mCameraManager = nullptr;
 	class CSceneCollision* mCollision = nullptr;
 	class CSceneAssetManager* mAssetManager = nullptr;
+	class CSceneUIManager* mUIManager = nullptr;
 	std::list<CSharedPtr<class CSceneObject>>	mObjList;
 	bool	mDebugQuadTree = true;
 
 public:
+	class CSceneUIManager* GetUIManager()	const
+	{
+		return mUIManager;
+	}
+
 	class CInput* GetInput()	const
 	{
 		return mInput;

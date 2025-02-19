@@ -27,6 +27,8 @@ bool CRenderStateManager::Init()
 
     CreateBlendState("AlphaBlend", true, false);
 
+    CreateDepthStencilState("DepthDisable", false);
+
     return true;
 }
 
@@ -117,6 +119,8 @@ bool CRenderStateManager::CreateDepthStencilState(const std::string& Name,
 
     if (State)
         return true;
+
+    State = new CDepthStencilState;
 
     if (!State->CreateState(DepthEnable, DepthWriteMask, DepthFunc,
         StencilEnable, StencilReadMask, StencilWriteMask, FrontFace,
