@@ -92,17 +92,17 @@ void CMovementComponent::PostUpdate(float DeltaTime)
     }
 }
 
-void CMovementComponent::PostRender()
+CMovementComponent* CMovementComponent::Clone()
 {
-    CComponent::PostRender();
+    return new CMovementComponent(*this);
+}
+
+void CMovementComponent::EndFrame()
+{
+    CComponent::EndFrame();
 
     if (mVelocityInit)
         mVelocity = FVector3D::Zero;
 
     mMoveStep = FVector3D::Zero;
-}
-
-CMovementComponent* CMovementComponent::Clone()
-{
-    return new CMovementComponent(*this);
 }

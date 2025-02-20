@@ -71,6 +71,7 @@ public:
 	virtual void PostRender();
 	virtual CSceneObject* Clone();
 	virtual void Destroy();
+	virtual void EndFrame();
 
 public:
 	virtual float Damage(float Attack, CSceneObject* Obj);

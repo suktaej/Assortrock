@@ -25,5 +25,13 @@ public:
 	virtual void Update(float DeltaTime);
 	virtual void Render();
 	virtual bool CollisionMouse(const FVector2D& MousePos);
+
+
+private:
+	static bool SortCollision(const CSharedPtr<CWidget>& Src,
+		const CSharedPtr<CWidget>& Dest);
+
+	static bool SortRender(const CSharedPtr<CWidget>& Src,
+		const CSharedPtr<CWidget>& Dest);
 };
 

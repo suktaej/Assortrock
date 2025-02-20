@@ -93,5 +93,7 @@ bool CSceneMain::Init()
 
     CMainWidget* Widget = mUIManager->CreateWidget<CMainWidget>("Main");
 
+    mUIManager->AddToViewport(Widget);
+
     return true;
 }

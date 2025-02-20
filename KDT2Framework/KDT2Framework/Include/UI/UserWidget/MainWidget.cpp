@@ -19,7 +19,9 @@ bool CMainWidget::Init()
 
     Button->SetPos(100.f, 100.f);
     Button->SetSize(100.f, 100.f);
-    //Button->SetTexture(EButtonState::Normal, "Button.png");
+    //Button->SetTint(EButtonState::Normal, 1.f, 0.f, 0.f);
+    Button->SetTexture(EButtonState::Normal, "StartButton", 
+        TEXT("Texture\\Start.png"));
 
     AddWidget(Button);
 

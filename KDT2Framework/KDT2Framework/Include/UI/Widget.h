@@ -14,9 +14,23 @@ protected:
 	virtual ~CWidget();
 
 protected:
+	static FMatrix	mUIProj;
+
+public:
+	static void CreateUIProjection(float Width, float Height, float ViewDist)
+	{
+		mUIProj = DirectX::XMMatrixOrthographicOffCenterLH(0.f,
+			Width, 0.f, Height,
+			0.f, ViewDist);
+	}
+
+protected:
 	class CScene* mScene = nullptr;
 	CSharedPtr<CSceneObject>	mOwnerObject;
 	CSharedPtr<class CShader>	mShader;
+	CSharedPtr<class CMesh>		mMesh;
+	class CUICBuffer* mUICBuffer = nullptr;
+	class CTransformCBuffer* mTransformCBuffer = nullptr;
 	std::string	mName;
 	FVector2D	mPos;
 	FVector2D	mSize;

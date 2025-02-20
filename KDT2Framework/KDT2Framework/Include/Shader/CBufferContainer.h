@@ -42,3 +42,13 @@ struct FAnimation2DCBufferInfo
     int         AnimEnable;
     FVector3D   Empty;
 };
+
+struct FUICBufferInfo
+{
+    FVector4D   BrushTint;
+    FVector2D   LTUV;
+    FVector2D   RBUV;
+    int         BrushAnimEnable;
+    int         BrushTextureEnable;
+    FVector2D   BrushEmpty;
+};

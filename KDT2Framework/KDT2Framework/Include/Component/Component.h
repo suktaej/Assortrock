@@ -53,5 +53,6 @@ public:
 	virtual void PostRender();
 	virtual CComponent* Clone();
 	virtual void EraseOwner();
+	virtual void EndFrame();
 };
 

@@ -78,8 +78,8 @@ public:
 	virtual void PreUpdate(float DeltaTime);
 	virtual void Update(float DeltaTime);
 	virtual void PostUpdate(float DeltaTime);
-	virtual void PostRender();
 	virtual CMovementComponent* Clone();
+	virtual void EndFrame();
 };
 
 

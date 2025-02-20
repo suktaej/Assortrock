@@ -6,6 +6,10 @@
 #include "../../Asset/Texture/TextureManager.h"
 #include "../../Asset/Sound/Sound.h"
 #include "../../Asset/Sound/SoundManager.h"
+#include "../../Asset/Mesh/Mesh.h"
+#include "../../Shader/UICBuffer.h"
+#include "../../Shader/TransformCBuffer.h"
+#include "../../Shader/Shader.h"
 
 CButton::CButton()
 {
@@ -164,4 +168,52 @@ void CButton::Update(float DeltaTime)
 void CButton::Render()
 {
     CWidget::Render();
+
+    FMatrix matScale, matTranslate, matWorld;
+
+    matScale.Scaling(mSize);
+    matTranslate.Translation(mPos);
+
+    matWorld = matScale * matTranslate;
+
+    mTransformCBuffer->SetWorldMatrix(matWorld);
+    mTransformCBuffer->SetProjMatrix(mUIProj);
+    mTransformCBuffer->SetPivot(mPivot);
+
+    mTransformCBuffer->UpdateBuffer();
+
+    mUICBuffer->SetTint(mBrush[mState].Tint);
+
+    if (mBrush[mState].Texture)
+    {
+        mUICBuffer->SetTextureEnable(true);
+
+        mBrush[mState].Texture->SetShader(0, EShaderBufferType::Pixel,
+            0);
+    }
+
+    else
+        mUICBuffer->SetTextureEnable(false);
+
+    if (mBrush[mState].AnimationEnable)
+    {
+        mUICBuffer->SetAnimationEnable(true);
+
+        int Frame = mBrush[mState].Frame;
+
+        FAnimationFrame FrameInfo = mBrush[mState].Frames[Frame];
+        mUICBuffer->SetUV(FrameInfo.Start.x, FrameInfo.Start.y,
+            FrameInfo.Start.x + FrameInfo.Size.x,
+            FrameInfo.Start.y + FrameInfo.Size.y);
+    }
+
+    else
+        mUICBuffer->SetAnimationEnable(false);
+
+
+    mUICBuffer->UpdateBuffer();
+
+    mShader->SetShader();
+
+    mMesh->Render();
 }

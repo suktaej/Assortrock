@@ -291,6 +291,19 @@ void CSceneComponent::EraseOwner()
     }
 }
 
+void CSceneComponent::EndFrame()
+{
+    CComponent::EndFrame();
+
+    std::vector<CSharedPtr<CSceneComponent>>::iterator  iter;
+    std::vector<CSharedPtr<CSceneComponent>>::iterator  iterEnd = mChildList.end();
+
+    for (iter = mChildList.begin(); iter != iterEnd; ++iter)
+    {
+        (*iter)->EndFrame();
+    }
+}
+
 void CSceneComponent::SetRelativeScale(const FVector3D& Scale)
 {
     mRelativeScale = Scale;

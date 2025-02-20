@@ -15,6 +15,7 @@
 #include "Render/RenderStateManager.h"
 #include "Render/RenderState.h"
 #include "Asset/Sound/SoundManager.h"
+#include "UI/Widget.h"
 
 TCHAR   gRootPath[MAX_PATH];
 char   gRootPathMultibyte[MAX_PATH];
@@ -91,6 +92,11 @@ bool CGameManager::Init(HINSTANCE hInst)
     // 장면관리자 초기화
     if (!CSceneManager::GetInst()->Init())
         return false;
+
+    FResolution RS = CDevice::GetInst()->GetResolution();
+
+    CWidget::CreateUIProjection((float)RS.Width, (float)RS.Height,
+        1000.f);
 
 	return true;
 }
@@ -183,6 +189,8 @@ void CGameManager::Render(float DeltaTime)
     CSceneManager::GetInst()->Render();
 
     CRenderManager::GetInst()->Render();
+
+    CSceneManager::GetInst()->EndFrame();
 
     //AlphaBlend->ResetState();
 

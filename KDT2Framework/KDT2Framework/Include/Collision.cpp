@@ -389,7 +389,16 @@ bool CCollision::CollisionLine2DToLine2D(
 
     if (ccw1 * ccw2 < 0 && ccw3 * ccw4 < 0)
     {
-        float   x1 = B.x - A.x;
+        // P = A * t(B - A)
+        // Q = C + s(D - C)
+        // A * t(B - A) = C + s(D - C)
+        float Det = (A.x - B.x) * (C.y - D.y) - (A.y - B.y) * (C.x - D.x);
+
+        HitPoint.x = ((A.x * B.y - A.y * B.x) * (C.x - D.x) -
+            (A.x - B.x) * (C.x * D.y - C.y * D.x)) / Det;
+        HitPoint.y = ((A.x * B.y - A.y * B.x) * (C.y - D.y) -
+            (A.y - B.y) * (C.x * D.y - C.y * D.x)) / Det;
+        /*float   x1 = B.x - A.x;
         float   y1 = B.y - A.y;
         float   SrcResult = y1 * A.x + x1 * A.y;
 
@@ -400,7 +409,7 @@ bool CCollision::CollisionLine2DToLine2D(
         float   Determinant = y1 * x2 - x1 * y2;
 
         HitPoint.x = (x2 * SrcResult - y2 * DestResult) / Determinant;
-        HitPoint.y = (y1 * DestResult - x1 * SrcResult) / Determinant;
+        HitPoint.y = (y1 * DestResult - x1 * SrcResult) / Determinant;*/
 
         return true;
     }

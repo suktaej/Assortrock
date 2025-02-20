@@ -86,6 +86,13 @@ bool CScene::Init(const char* FileName)
 
 	if (!mAssetManager->Init())
 		return false;
+
+	mUIManager = new CSceneUIManager;
+
+	mUIManager->mScene = this;
+
+	if (!mUIManager->Init())
+		return false;
 	
 	return true;
 }
@@ -150,12 +157,14 @@ void CScene::Update(float DeltaTime)
 
 	mCameraManager->Update(DeltaTime);
 
+	mUIManager->Update(DeltaTime);
+
 	int	Count = (int)mObjList.size();
 	
 	char	Text[64] = {};
 	sprintf_s(Text, "ObjCount : %d", Count);
 
-	//CLog::PrintLog(Text  );
+	//CLog::PrintLog(Text);
 }
 
 void CScene::PostUpdate(float DeltaTime)
@@ -187,34 +196,8 @@ void CScene::PostUpdate(float DeltaTime)
 
 void CScene::Collision(float DeltaTime)
 {
+	// UI와의 충돌도 Collision 안쪽에서 처리한다.
 	mCollision->Update(DeltaTime);
-}
-
-void CScene::PreRender()
-{
-	std::list<CSharedPtr<CSceneObject>>::iterator	iter;
-	std::list<CSharedPtr<CSceneObject>>::iterator	iterEnd = mObjList.end();
-
-	for (iter = mObjList.begin(); iter != iterEnd;)
-	{
-		if (!(*iter)->IsActive())
-		{
-			// erase를 하면 지운 iterator의 다음 iterator를 반환한다.
-			iter = mObjList.erase(iter);
-			iterEnd = mObjList.end();
-			continue;
-		}
-
-		else if (!(*iter)->IsEnable())
-		{
-			++iter;
-			continue;
-		}
-
-		(*iter)->PreRender();
-
-		++iter;
-	}
 }
 
 void CScene::Render()
@@ -228,54 +211,44 @@ void CScene::Render()
 
 	mCollision->ReturnNodePool();
 
-	std::list<CSharedPtr<CSceneObject>>::iterator	iter;
-	std::list<CSharedPtr<CSceneObject>>::iterator	iterEnd = mObjList.end();
+	//std::list<CSharedPtr<CSceneObject>>::iterator	iter;
+	//std::list<CSharedPtr<CSceneObject>>::iterator	iterEnd = mObjList.end();
 
-	for (iter = mObjList.begin(); iter != iterEnd;)
-	{
-		if (!(*iter)->IsActive())
-		{
-			// erase를 하면 지운 iterator의 다음 iterator를 반환한다.
-			iter = mObjList.erase(iter);
-			iterEnd = mObjList.end();
-			continue;
-		}
+	//for (iter = mObjList.begin(); iter != iterEnd;)
+	//{
+	//	if (!(*iter)->IsActive())
+	//	{
+	//		// erase를 하면 지운 iterator의 다음 iterator를 반환한다.
+	//		iter = mObjList.erase(iter);
+	//		iterEnd = mObjList.end();
+	//		continue;
+	//	}
 
-		else if (!(*iter)->IsEnable())
-		{
-			++iter;
-			continue;
-		}
+	//	else if (!(*iter)->IsEnable())
+	//	{
+	//		++iter;
+	//		continue;
+	//	}
 
-		(*iter)->Render();
+	//	(*iter)->Render();
 
-		++iter;
-	}
+	//	++iter;
+	//}
+
 }
 
-void CScene::PostRender()
+void CScene::RenderUI()
+{
+	mUIManager->Render();
+}
+
+void CScene::EndFrame()
 {
 	std::list<CSharedPtr<CSceneObject>>::iterator	iter;
 	std::list<CSharedPtr<CSceneObject>>::iterator	iterEnd = mObjList.end();
 
-	for (iter = mObjList.begin(); iter != iterEnd;)
+	for (iter = mObjList.begin(); iter != iterEnd; ++iter)
 	{
-		if (!(*iter)->IsActive())
-		{
-			// erase를 하면 지운 iterator의 다음 iterator를 반환한다.
-			iter = mObjList.erase(iter);
-			iterEnd = mObjList.end();
-			continue;
-		}
-
-		else if (!(*iter)->IsEnable())
-		{
-			++iter;
-			continue;
-		}
-
-		(*iter)->PostRender();
-
-		++iter;
+		(*iter)->EndFrame();
 	}
 }

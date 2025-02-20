@@ -184,6 +184,12 @@
     <Filter Include="10. UI\02. UserWidget\01. Main">
       <UniqueIdentifier>{64b3b5fc-1019-47b5-b17d-ccd055a0d7de}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Shader\02. Shader Class\05. UI">
+      <UniqueIdentifier>{783444bc-7cc5-455d-922a-a8f81707e94c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Shader\03. ConstantBuffer\06. UI">
+      <UniqueIdentifier>{a323992d-184b-47dd-84aa-165d6423b522}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -446,6 +452,12 @@
     </ClCompile>
     <ClCompile Include="UI\UserWidget\MainWidget.cpp">
       <Filter>10. UI\02. UserWidget\01. Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\UIShader.cpp">
+      <Filter>04. Shader\02. Shader Class\05. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\UICBuffer.cpp">
+      <Filter>04. Shader\03. ConstantBuffer\06. UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -755,6 +767,12 @@
     <ClInclude Include="UI\UserWidget\MainWidget.h">
       <Filter>10. UI\02. UserWidget\01. Main</Filter>
     </ClInclude>
+    <ClInclude Include="Shader\UIShader.h">
+      <Filter>04. Shader\02. Shader Class\05. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\UICBuffer.h">
+      <Filter>04. Shader\03. ConstantBuffer\06. UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="KDT2Framework.rc">
@@ -777,6 +795,9 @@
       <Filter>04. Shader\01. HLSL</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\Shader\Sprite.fx">
+      <Filter>04. Shader\01. HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\Shader\UI.fx">
       <Filter>04. Shader\01. HLSL</Filter>
     </FxCompile>
   </ItemGroup>

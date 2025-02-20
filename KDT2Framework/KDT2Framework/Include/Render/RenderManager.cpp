@@ -3,6 +3,8 @@
 #include "RenderState.h"
 #include "../Component/SceneComponent.h"
 #include "../Device.h"
+#include "../Scene/Scene.h"
+#include "../Scene/SceneManager.h"
 
 DEFINITION_SINGLE(CRenderManager)
 
@@ -107,7 +109,7 @@ void CRenderManager::Render()
 	mDepthDisable->SetState();
 
 	// UI 출력
-
+	CSceneManager::GetInst()->RenderUI();
 
 	mDepthDisable->ResetState();
 

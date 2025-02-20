@@ -35,10 +35,20 @@ public:
 		return iter->second;
 	}
 
+	void AddToViewport(CWidget* Widget);
+
 public:
 	bool Init();
 	void Update(float DeltaTime);
+	void Collision(float DeltaTime);
 	void Render();
+
+private:
+	static bool SortCollision(const CSharedPtr<CWidget>& Src,
+		const CSharedPtr<CWidget>& Dest);
+
+	static bool SortRender(const CSharedPtr<CWidget>& Src,
+		const CSharedPtr<CWidget>& Dest);
 
 public:
 	template <typename T>
@@ -49,14 +59,13 @@ public:
 
 		Widget->mScene = mScene;
 		Widget->mOwnerObject = Owner;
+		Widget->mName = Name;
 
 		if (!Widget->Init())
 		{
 			SAFE_DELETE(Widget);
 			return nullptr;
 		}
-
-		mWidgetList.emplace_back(Widget);
 
 		return Widget;
 	}

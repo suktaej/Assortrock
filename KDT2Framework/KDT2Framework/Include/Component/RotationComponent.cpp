@@ -86,18 +86,18 @@ void CRotationComponent::PostUpdate(float DeltaTime)
     }
 }
 
-void CRotationComponent::PostRender()
+CRotationComponent* CRotationComponent::Clone()
 {
-    CComponent::PostRender();
+    return new CRotationComponent(*this);
+}
+
+void CRotationComponent::EndFrame()
+{
+    CComponent::EndFrame();
 
     if (mVelocityInit)
         mVelocity = FVector3D::Zero;
 
     mRotationStep = FVector3D::Zero;
-}
-
-CRotationComponent* CRotationComponent::Clone()
-{
-    return new CRotationComponent(*this);
 }
 

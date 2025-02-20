@@ -34,6 +34,7 @@ public:
 	virtual void PostRender();
 	virtual CSceneComponent* Clone();
 	virtual void EraseOwner();
+	virtual void EndFrame();
 
 protected:
 	class CTransformCBuffer* mTransformCBuffer;

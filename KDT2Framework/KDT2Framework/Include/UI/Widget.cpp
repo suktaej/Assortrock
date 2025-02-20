@@ -1,6 +1,15 @@
 #include "Widget.h"
 #include "../Shader/ShaderManager.h"
 #include "../Shader/Shader.h"
+#include "../Shader/UICBuffer.h"
+#include "../Scene/Scene.h"
+#include "../Scene/SceneAssetManager.h"
+#include "../Asset/AssetManager.h"
+#include "../Asset/Mesh/MeshManager.h"
+#include "../Asset/Mesh/Mesh.h"
+#include "../Shader/TransformCBuffer.h"
+
+FMatrix CWidget::mUIProj;
 
 CWidget::CWidget()
 {
@@ -8,6 +17,8 @@ CWidget::CWidget()
 
 CWidget::~CWidget()
 {
+    SAFE_DELETE(mTransformCBuffer);
+    SAFE_DELETE(mUICBuffer);
 }
 
 void CWidget::SetShader(const std::string& Name)
@@ -22,6 +33,22 @@ void CWidget::SetShader(CShader* Shader)
 
 bool CWidget::Init()
 {
+    SetShader("UIShader");
+
+    if (mScene)
+        mMesh = mScene->GetAssetManager()->FindMesh("SpriteRect");
+
+    else
+        mMesh = CAssetManager::GetInst()->GetMeshManager()->FindMesh("SpriteRect");
+
+    mUICBuffer = new CUICBuffer;
+
+    mUICBuffer->Init();
+
+    mTransformCBuffer = new CTransformCBuffer;
+
+    mTransformCBuffer->Init();
+
     return true;
 }
 
