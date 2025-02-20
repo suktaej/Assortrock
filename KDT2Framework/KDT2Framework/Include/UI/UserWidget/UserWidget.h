@@ -24,7 +24,7 @@ public:
 	virtual bool Init();
 	virtual void Update(float DeltaTime);
 	virtual void Render();
-	virtual bool CollisionMouse(const FVector2D& MousePos);
+	virtual bool CollisionMouse(CWidget** Result, const FVector2D& MousePos);
 
 
 private:

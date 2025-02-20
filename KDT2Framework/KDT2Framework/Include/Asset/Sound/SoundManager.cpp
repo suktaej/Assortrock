@@ -60,6 +60,7 @@ bool CSoundManager::Init()
 	Play("Effect1");*/
 	SetGroupVolume("BGM", 30);
 	SetGroupVolume("Effect", 5);
+	SetGroupVolume("UI", 5);
 
 	return true;
 }

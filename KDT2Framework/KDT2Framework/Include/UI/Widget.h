@@ -38,6 +38,7 @@ protected:
 	float		mRotation = 0.f;
 
 	int			mZOrder = 0;
+	bool		mMouseOn = false;
 
 public:
 	void SetOwnerObject(class CSceneObject* Object)
@@ -149,7 +150,9 @@ public:
 	virtual bool Init();
 	virtual void Update(float DeltaTime);
 	virtual void Render();
-	virtual bool CollisionMouse(const FVector2D& MousePos);
-
+	virtual bool CollisionMouse(CWidget** Result, const FVector2D& MousePos);
+	virtual void EndFrame();
+	virtual void MouseHovered();
+	virtual void MouseUnHovered();
 };
 

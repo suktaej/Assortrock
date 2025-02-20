@@ -1,6 +1,8 @@
 #include "SceneCollision.h"
 #include "../Component/ColliderBase.h"
 #include "CollisionQuadTree.h"
+#include "SceneUIManager.h"
+#include "Input.h"
 
 CSceneCollision::CSceneCollision()
 {
@@ -31,7 +33,8 @@ bool CSceneCollision::Init()
     return true;
 }
 
-void CSceneCollision::Update(float DeltaTime)
+void CSceneCollision::Update(float DeltaTime, CSceneUIManager* UIManager,
+    CInput* Input)
 {
     if (mInterval > 0.f)
     {
@@ -74,6 +77,16 @@ void CSceneCollision::Update(float DeltaTime)
 
         ++i;
     }
+
+    // 마우스와 UI의 충돌을 진행한다.
+    FVector2D   MousePos = Input->GetMousePos();
+
+    bool Result = UIManager->CollisionMouse(DeltaTime, MousePos);
+
+
+
+
+    FVector2D   MouseWorldPos = Input->GetMouseWorldPos2D();
 
     // 모든 충돌체가 쿼드트리의 노드에 추가되었기 때문에
     // 충돌처리를 진행한다.

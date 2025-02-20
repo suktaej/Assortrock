@@ -197,7 +197,7 @@ void CScene::PostUpdate(float DeltaTime)
 void CScene::Collision(float DeltaTime)
 {
 	// UI와의 충돌도 Collision 안쪽에서 처리한다.
-	mCollision->Update(DeltaTime);
+	mCollision->Update(DeltaTime, mUIManager, mInput);
 }
 
 void CScene::Render()

@@ -75,42 +75,40 @@ void CUserWidget::Render()
     }
 }
 
-bool CUserWidget::CollisionMouse(const FVector2D& MousePos)
+bool CUserWidget::CollisionMouse(CWidget** Result, const FVector2D& MousePos)
 {
-    bool Result = CWidget::CollisionMouse(MousePos);
-
     if (mWidgetList.size() >= 2)
     {
         std::sort(mWidgetList.begin(), mWidgetList.end(),
             CUserWidget::SortCollision);
-
-        auto    iter = mWidgetList.begin();
-        auto    iterEnd = mWidgetList.end();
-
-        for (; iter != iterEnd;)
-        {
-            if (!(*iter)->IsActive())
-            {
-                iter = mWidgetList.erase(iter);
-                iterEnd = mWidgetList.end();
-                continue;
-            }
-
-            else if (!(*iter)->IsEnable())
-            {
-                ++iter;
-                continue;
-            }
-
-            if ((*iter)->CollisionMouse(MousePos))
-            {
-                return true;
-            }
-            ++iter;
-        }
     }
 
-    return Result;
+    auto    iter = mWidgetList.begin();
+    auto    iterEnd = mWidgetList.end();
+
+    for (; iter != iterEnd;)
+    {
+        if (!(*iter)->IsActive())
+        {
+            iter = mWidgetList.erase(iter);
+            iterEnd = mWidgetList.end();
+            continue;
+        }
+
+        else if (!(*iter)->IsEnable())
+        {
+            ++iter;
+            continue;
+        }
+
+        if ((*iter)->CollisionMouse(Result, MousePos))
+        {
+            return true;
+        }
+        ++iter;
+    }
+
+    return false;
 }
 
 bool CUserWidget::SortCollision(const CSharedPtr<CWidget>& Src,

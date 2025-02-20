@@ -10,6 +10,7 @@
 #include "../../Shader/UICBuffer.h"
 #include "../../Shader/TransformCBuffer.h"
 #include "../../Shader/Shader.h"
+#include "../../Scene/Input.h"
 
 CButton::CButton()
 {
@@ -163,24 +164,55 @@ bool CButton::Init()
 void CButton::Update(float DeltaTime)
 {
     CWidget::Update(DeltaTime);
+
+    if (mState != EButtonState::Disable)
+    {
+        if (mMouseOn)
+        {
+            if (mScene->GetInput()->GetMouseDown(EMouseButtonType::LButton))
+            {
+                mState = EButtonState::Click;
+            }
+
+            else if (mState == EButtonState::Click &&
+                mScene->GetInput()->GetMouseUp(EMouseButtonType::LButton))
+            {
+                if (mSound[EButtonEventState::Click])
+                    mSound[EButtonEventState::Click]->Play();
+
+                if (mEventCallback[EButtonEventState::Click])
+                    mEventCallback[EButtonEventState::Click]();
+
+                mState = EButtonState::Hovered;
+            }
+
+            else if (mScene->GetInput()->GetMouseHold(EMouseButtonType::LButton))
+            {
+                mState = EButtonState::Click;
+            }
+        }
+    }
 }
 
 void CButton::Render()
 {
     CWidget::Render();
 
-    FMatrix matScale, matTranslate, matWorld;
+    FMatrix matScale, matRot, matTranslate, matWorld;
 
     matScale.Scaling(mSize);
+    matRot.RotationZ(mRotation);
     matTranslate.Translation(mPos);
 
-    matWorld = matScale * matTranslate;
+    matWorld = matScale * matRot * matTranslate;
 
     mTransformCBuffer->SetWorldMatrix(matWorld);
     mTransformCBuffer->SetProjMatrix(mUIProj);
     mTransformCBuffer->SetPivot(mPivot);
 
     mTransformCBuffer->UpdateBuffer();
+
+    mUICBuffer->SetWidgetColor(mColor);
 
     mUICBuffer->SetTint(mBrush[mState].Tint);
 
@@ -216,4 +248,24 @@ void CButton::Render()
     mShader->SetShader();
 
     mMesh->Render();
+}
+
+void CButton::MouseHovered()
+{
+    if (mState == EButtonState::Normal)
+    {
+        if (mSound[EButtonEventState::Hovered])
+            mSound[EButtonEventState::Hovered]->Play();
+
+        if (mEventCallback[EButtonEventState::Hovered])
+            mEventCallback[EButtonEventState::Hovered]();
+
+        mState = EButtonState::Hovered;
+    }
+}
+
+void CButton::MouseUnHovered()
+{
+    if (mState != EButtonState::Disable)
+        mState = EButtonState::Normal;
 }

@@ -41,7 +41,7 @@ protected:
 	CSharedPtr<class CSound>	mSound[EButtonEventState::End];
 	std::function<void()>		mEventCallback[EButtonEventState::End];
 
-	FVector4D		mColor;
+	FVector4D		mColor = FVector4D::White;
 
 public:
 	void ButtonEnable(bool Enable)
@@ -102,6 +102,8 @@ public:
 	virtual bool Init();
 	virtual void Update(float DeltaTime);
 	virtual void Render();
+	virtual void MouseHovered();
+	virtual void MouseUnHovered();
 
 public:
 	template <typename T>

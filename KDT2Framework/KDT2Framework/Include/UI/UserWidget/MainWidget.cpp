@@ -22,6 +22,19 @@ bool CMainWidget::Init()
     //Button->SetTint(EButtonState::Normal, 1.f, 0.f, 0.f);
     Button->SetTexture(EButtonState::Normal, "StartButton", 
         TEXT("Texture\\Start.png"));
+    Button->SetTexture(EButtonState::Hovered, "StartButton",
+        TEXT("Texture\\Start.png"));
+    Button->SetTexture(EButtonState::Click, "StartButton",
+        TEXT("Texture\\Start.png"));
+
+    Button->SetTint(EButtonState::Normal, 0.8f, 0.8f, 0.8f);
+    Button->SetTint(EButtonState::Hovered, 1.f, 1.f, 1.f);
+    Button->SetTint(EButtonState::Click, 0.6f, 0.6f, 0.6f);
+
+    Button->SetSound(EButtonEventState::Hovered, "ButtonHovered",
+        "Sound\\TeemoSmile.mp3");
+    Button->SetSound(EButtonEventState::Click, "ButtonClick",
+        "Sound\\TeemoStartClicck.mp3");
 
     AddWidget(Button);
 

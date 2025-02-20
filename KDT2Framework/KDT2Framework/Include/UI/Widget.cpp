@@ -60,7 +60,7 @@ void CWidget::Render()
 {
 }
 
-bool CWidget::CollisionMouse(const FVector2D& MousePos)
+bool CWidget::CollisionMouse(CWidget** Result, const FVector2D& MousePos)
 {
     if (mRotation == 0.f || mRotation == 360.f)
     {
@@ -69,16 +69,52 @@ bool CWidget::CollisionMouse(const FVector2D& MousePos)
         FVector2D   Max = Min + mSize;
 
         if (MousePos.x < Min.x)
+        {
+            if (mMouseOn)
+            {
+                mMouseOn = false;
+                MouseUnHovered();
+            }
+
             return false;
+        }
 
         else if (MousePos.x > Max.x)
+        {
+            if (mMouseOn)
+            {
+                mMouseOn = false;
+                MouseUnHovered();
+            }
+
             return false;
+        }
 
         else if (MousePos.y < Min.y)
+        {
+            if (mMouseOn)
+            {
+                mMouseOn = false;
+                MouseUnHovered();
+            }
+
             return false;
+        }
 
         else if (MousePos.y > Max.y)
+        {
+            if (mMouseOn)
+            {
+                mMouseOn = false;
+                MouseUnHovered();
+            }
+
             return false;
+        }
+
+        *Result = this;
+        mMouseOn = true;
+        MouseHovered();
 
         return true;
     }
@@ -113,12 +149,44 @@ bool CWidget::CollisionMouse(const FVector2D& MousePos)
     float CenterProjectionDist = abs(CenterLine.Dot(Axis[0]));
 
     if (CenterProjectionDist > HalfSize.x)
+    {
+        if (mMouseOn)
+        {
+            mMouseOn = false;
+            MouseUnHovered();
+        }
+
         return false;
+    }
 
     CenterProjectionDist = abs(CenterLine.Dot(Axis[1]));
 
     if (CenterProjectionDist > HalfSize.y)
+    {
+        if (mMouseOn)
+        {
+            mMouseOn = false;
+            MouseUnHovered();
+        }
+
         return false;
+    }
+
+    *Result = this;
+    mMouseOn = true;
+    MouseHovered();
 
     return true;
+}
+
+void CWidget::EndFrame()
+{
+}
+
+void CWidget::MouseHovered()
+{
+}
+
+void CWidget::MouseUnHovered()
+{
 }

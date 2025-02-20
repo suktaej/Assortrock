@@ -25,6 +25,11 @@ public:
 		mData.BrushTint = Color;
 	}
 
+	void SetWidgetColor(const FVector4D& Color)
+	{
+		mData.Color = Color;
+	}
+
 	void SetTextureEnable(bool Enable)
 	{
 		mData.BrushTextureEnable = Enable ? 1 : 0;

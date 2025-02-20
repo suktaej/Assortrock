@@ -16,6 +16,7 @@ struct VS_Output_Tex
 cbuffer UI : register(b3)
 {
     float4 gBrushTint;
+    float4 gWidgetColor;
     float2 gBrushAnimLTUV;
     float2 gBrushAnimRBUV;
     int gBrushAnimEnable;
@@ -34,11 +35,11 @@ float2 UpdateAnimationUI(float2 UV)
     if (UV.x == 0.f)
         Result.x = gBrushAnimLTUV.x;
     else
-        Result.x = gBrushAnimLTUV.x;
+        Result.x = gBrushAnimRBUV.x;
     
     // 위쪽 점일 경우
     if (UV.y == 0.f)
-        Result.y = gBrushAnimRBUV.y;
+        Result.y = gBrushAnimLTUV.y;
     else
         Result.y = gBrushAnimRBUV.y;
     
@@ -67,7 +68,7 @@ PS_Output_Single UIPS(VS_Output_Tex input)
     if (gBrushTextureEnable)
         Color = gBaseTexture.Sample(gBaseSampler, input.UV);
     
-    output.Color = Color * gBrushTint;
+    output.Color = Color * gBrushTint * gWidgetColor;
     
     return output;
 }
