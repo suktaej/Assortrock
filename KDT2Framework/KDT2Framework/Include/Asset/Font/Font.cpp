@@ -22,3 +22,15 @@ bool CFont::LoadFont(IDWriteFactory5* Factory, const TCHAR* FontName,
 
     return true;
 }
+
+IDWriteTextLayout* CFont::CreateLayout(const TCHAR* Text, int Length,
+    float Width, float Height)
+{
+    IDWriteTextLayout* Layout = nullptr;
+
+    if (FAILED(mFactory->CreateTextLayout(Text, Length, mFormat,
+        Width, Height, &Layout)))
+        return nullptr;
+
+    return Layout;
+}

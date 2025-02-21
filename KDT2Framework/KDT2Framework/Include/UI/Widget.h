@@ -84,12 +84,12 @@ public:
 		mPos.y = y;
 	}
 
-	void SetSize(const FVector2D& Size)
+	virtual void SetSize(const FVector2D& Size)
 	{
 		mSize = Size;
 	}
 
-	void SetSize(float x, float y)
+	virtual void SetSize(float x, float y)
 	{
 		mSize.x = x;
 		mSize.y = y;

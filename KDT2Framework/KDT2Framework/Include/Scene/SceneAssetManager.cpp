@@ -10,6 +10,9 @@
 #include "../Asset/Animation/Animation2DManager.h"
 #include "../Asset/Sound/Sound.h"
 #include "../Asset/Sound/SoundManager.h"
+#include "../Asset/Font/Font.h"
+#include "../Asset/Font/FontCollection.h"
+#include "../Asset/Font/FontManager.h"
 
 CSceneAssetManager::CSceneAssetManager()
 {
@@ -477,4 +480,107 @@ CSound* CSceneAssetManager::FindSound(const std::string& Name)
 	}
 
 	return dynamic_cast<CSound*>(iter->second.Get());
+}
+
+bool CSceneAssetManager::LoadFont(const std::string& Name, 
+	const TCHAR* FontName, int Weight, float FontSize, 
+	const TCHAR* LocalName, int Stretch)
+{
+	if (!CAssetManager::GetInst()->GetFontManager()->LoadFont(
+		Name, FontName, Weight, FontSize, LocalName, Stretch))
+		return false;
+
+	auto	iter = mAssetMap.find(Name);
+
+	if (iter == mAssetMap.end())
+	{
+		mAssetMap.insert(std::make_pair(Name,
+			CAssetManager::GetInst()->GetFontManager()->FindFont(Name)));
+	}
+
+	return true;
+}
+
+bool CSceneAssetManager::LoadFontCollection(const std::string& Name, 
+	const TCHAR* FileName)
+{
+	if (!CAssetManager::GetInst()->GetFontManager()->LoadFontCollection(
+		Name, FileName))
+		return false;
+
+	auto	iter = mAssetMap.find(Name);
+
+	if (iter == mAssetMap.end())
+	{
+		mAssetMap.insert(std::make_pair(Name,
+			CAssetManager::GetInst()->GetFontManager()->FindFontCollection(Name)));
+	}
+
+	return true;
+}
+
+const TCHAR* CSceneAssetManager::GetFontFaceName(const std::string& CollectionName)
+{
+	return CAssetManager::GetInst()->GetFontManager()->GetFontFaceName(CollectionName);
+}
+
+bool CSceneAssetManager::CreateFontColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+{
+	return CAssetManager::GetInst()->GetFontManager()->CreateFontColor(r, g, b, a);
+}
+
+bool CSceneAssetManager::CreateFontColor(const FVector4D& Color)
+{
+	return CAssetManager::GetInst()->GetFontManager()->CreateFontColor(Color);
+}
+
+CFont* CSceneAssetManager::FindFont(const std::string& Name)
+{
+	auto	iter = mAssetMap.find(Name);
+
+	if (iter == mAssetMap.end())
+	{
+		CFont* Font = CAssetManager::GetInst()->GetFontManager()->FindFont(Name);
+
+		if (!Font)
+			return nullptr;
+
+		mAssetMap.insert(std::make_pair(Name, Font));
+
+		return Font;
+	}
+
+	return dynamic_cast<CFont*>(iter->second.Get());
+}
+
+CFontCollection* CSceneAssetManager::FindFontCollection(
+	const std::string& Name)
+{
+	auto	iter = mAssetMap.find(Name);
+
+	if (iter == mAssetMap.end())
+	{
+		CFontCollection* Font = CAssetManager::GetInst()->GetFontManager()->FindFontCollection(Name);
+
+		if (!Font)
+			return nullptr;
+
+		mAssetMap.insert(std::make_pair(Name, Font));
+
+		return Font;
+	}
+
+	return dynamic_cast<CFontCollection*>(iter->second.Get());
+}
+
+ID2D1SolidColorBrush* CSceneAssetManager::FindFontColor(
+	unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+{
+	return CAssetManager::GetInst()->GetFontManager()->FindFontColor(r, g, b, a);
+}
+
+ID2D1SolidColorBrush* CSceneAssetManager::FindFontColor(
+	const FVector4D& Color)
+{
+	return CAssetManager::GetInst()->GetFontManager()->FindFontColor(Color);
 }

@@ -231,6 +231,7 @@
     <ClCompile Include="Share\Object.cpp" />
     <ClCompile Include="Share\Timer.cpp" />
     <ClCompile Include="UI\Common\Button.cpp" />
+    <ClCompile Include="UI\Common\TextBlock.cpp" />
     <ClCompile Include="UI\UserWidget\MainWidget.cpp" />
     <ClCompile Include="UI\UserWidget\UserWidget.cpp" />
     <ClCompile Include="UI\UserWidget\WindowWidget.cpp" />
@@ -338,6 +339,7 @@
     <ClInclude Include="Share\SharedPtr.h" />
     <ClInclude Include="Share\Timer.h" />
     <ClInclude Include="UI\Common\Button.h" />
+    <ClInclude Include="UI\Common\TextBlock.h" />
     <ClInclude Include="UI\UIInfo.h" />
     <ClInclude Include="UI\UserWidget\MainWidget.h" />
     <ClInclude Include="UI\UserWidget\UserWidget.h" />

@@ -471,6 +471,9 @@
     <ClCompile Include="Asset\Font\FontCollection.cpp">
       <Filter>03. Asset\06. Font</Filter>
     </ClCompile>
+    <ClCompile Include="UI\Common\TextBlock.cpp">
+      <Filter>10. UI\01. Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -793,6 +796,9 @@
     </ClInclude>
     <ClInclude Include="Asset\Font\FontCollection.h">
       <Filter>03. Asset\06. Font</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Common\TextBlock.h">
+      <Filter>10. UI\01. Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

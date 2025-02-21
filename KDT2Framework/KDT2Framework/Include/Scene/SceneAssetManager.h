@@ -110,5 +110,26 @@ public:
     class CSound* FindSound(const std::string& Name);
 
 #pragma endregion Sound
+
+
+#pragma region Font
+
+    bool LoadFont(const std::string& Name, const TCHAR* FontName,
+        int Weight, float FontSize, const TCHAR* LocalName,
+        int Stretch = DWRITE_FONT_STRETCH_NORMAL);
+    bool LoadFontCollection(const std::string& Name,
+        const TCHAR* FileName);
+    const TCHAR* GetFontFaceName(const std::string& CollectionName);
+    bool CreateFontColor(unsigned char r, unsigned char g, unsigned char b,
+        unsigned char a);
+    bool CreateFontColor(const FVector4D& Color);
+
+    class CFont* FindFont(const std::string& Name);
+    class CFontCollection* FindFontCollection(const std::string& Name);
+    ID2D1SolidColorBrush* FindFontColor(unsigned char r, unsigned char g,
+        unsigned char b, unsigned char a);
+    ID2D1SolidColorBrush* FindFontColor(const FVector4D& Color);
+
+#pragma endregion Font
 };
 

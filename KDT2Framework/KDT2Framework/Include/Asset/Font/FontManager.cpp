@@ -33,6 +33,15 @@ bool CFontManager::Init()
     // FontFaceName을 얻어온다.
     LoadFont("Default", GetFontFaceName("Default"), 600, 20.f, TEXT("ko"));
 
+    CreateFontColor(0, 0, 0, 255);
+    CreateFontColor(255, 255, 255, 255);
+    CreateFontColor(255, 0, 0, 255);
+    CreateFontColor(0, 255, 0, 255);
+    CreateFontColor(0, 0, 255, 255);
+    CreateFontColor(255, 0, 255, 255);
+    CreateFontColor(255, 255, 0, 255);
+    CreateFontColor(0, 255, 255, 255);
+
     return true;
 }
 

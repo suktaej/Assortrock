@@ -1,5 +1,6 @@
 #include "MainWidget.h"
 #include "../Common/Button.h"
+#include "../Common/TextBlock.h"
 #include "../../Scene/Scene.h"
 #include "../../Scene/SceneUIManager.h"
 
@@ -37,6 +38,19 @@ bool CMainWidget::Init()
         "Sound\\TeemoStartClicck.mp3");
 
     AddWidget(Button);
+
+    CSharedPtr<CTextBlock>    Text = 
+        mScene->GetUIManager()->CreateWidget<CTextBlock>("TestButtonText");
+
+    Text->SetText(TEXT("Button"));
+    Text->SetTextColor(255, 0, 0, 255);
+    Text->SetPos(100.f, 100.f);
+    Text->SetSize(100.f, 100.f);
+    Text->SetAlignH(ETextAlignH::Center);
+    Text->SetFontSize(40.f);
+
+    Button->SetChild(Text);
+
 
     return true;
 }

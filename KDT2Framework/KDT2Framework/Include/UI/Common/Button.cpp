@@ -248,6 +248,9 @@ void CButton::Render()
     mShader->SetShader();
 
     mMesh->Render();
+
+    if (mChild)
+        mChild->Render();
 }
 
 void CButton::MouseHovered()
