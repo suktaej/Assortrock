@@ -193,6 +193,9 @@
     <Filter Include="03. Asset\06. Font">
       <UniqueIdentifier>{0621169d-ca98-40ef-a902-197d94b6c9fa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="07. Component\01. SceneComponent\06. Widget">
+      <UniqueIdentifier>{b2fa8e8c-ee06-42ac-a4b3-4a8035ed6363}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -473,6 +476,15 @@
     </ClCompile>
     <ClCompile Include="UI\Common\TextBlock.cpp">
       <Filter>10. UI\01. Common</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Common\ProgressBar.cpp">
+      <Filter>10. UI\01. Common</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Common\Image.cpp">
+      <Filter>10. UI\01. Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\WidgetComponent.cpp">
+      <Filter>07. Component\01. SceneComponent\06. Widget</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -799,6 +811,15 @@
     </ClInclude>
     <ClInclude Include="UI\Common\TextBlock.h">
       <Filter>10. UI\01. Common</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Common\ProgressBar.h">
+      <Filter>10. UI\01. Common</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Common\Image.h">
+      <Filter>10. UI\01. Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\WidgetComponent.h">
+      <Filter>07. Component\01. SceneComponent\06. Widget</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -26,13 +26,15 @@ public:
 
 protected:
 	class CScene* mScene = nullptr;
+	class CWidget* mParent = nullptr;
 	CSharedPtr<CSceneObject>	mOwnerObject;
 	CSharedPtr<class CShader>	mShader;
 	CSharedPtr<class CMesh>		mMesh;
 	class CUICBuffer* mUICBuffer = nullptr;
 	class CTransformCBuffer* mTransformCBuffer = nullptr;
 	std::string	mName;
-	FVector2D	mPos;
+	FVector2D	mPos;		// 상대적인 위치
+	FVector2D	mRenderPos;	// 최종 출력 위치
 	FVector2D	mSize;
 	FVector2D	mPivot;
 	float		mRotation = 0.f;
@@ -46,10 +48,20 @@ public:
 		mOwnerObject = Object;
 	}
 
+	void SetParent(CWidget* Widget)
+	{
+		mParent = Widget;
+	}
+
 public:
 	const FVector2D& GetPos()	const
 	{
 		return mPos;
+	}
+
+	const FVector2D& GetRenderPos()	const
+	{
+		return mRenderPos;
 	}
 
 	const FVector2D& GetSize()	const
@@ -82,6 +94,11 @@ public:
 	{
 		mPos.x = x;
 		mPos.y = y;
+	}
+
+	void SetRenderPos(const FVector2D& Pos)
+	{
+		mRenderPos = mPos + Pos;
 	}
 
 	virtual void SetSize(const FVector2D& Size)
@@ -150,6 +167,7 @@ public:
 	virtual bool Init();
 	virtual void Update(float DeltaTime);
 	virtual void Render();
+	virtual void Render(const FVector3D& Pos);
 	virtual bool CollisionMouse(CWidget** Result, const FVector2D& MousePos);
 	virtual void EndFrame();
 	virtual void MouseHovered();

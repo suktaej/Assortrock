@@ -178,6 +178,7 @@
     <ClCompile Include="Component\SceneComponent.cpp" />
     <ClCompile Include="Component\SpriteComponent.cpp" />
     <ClCompile Include="Component\StaticMeshComponent.cpp" />
+    <ClCompile Include="Component\WidgetComponent.cpp" />
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="GameInfo.cpp" />
     <ClCompile Include="GameManager.cpp" />
@@ -231,6 +232,8 @@
     <ClCompile Include="Share\Object.cpp" />
     <ClCompile Include="Share\Timer.cpp" />
     <ClCompile Include="UI\Common\Button.cpp" />
+    <ClCompile Include="UI\Common\Image.cpp" />
+    <ClCompile Include="UI\Common\ProgressBar.cpp" />
     <ClCompile Include="UI\Common\TextBlock.cpp" />
     <ClCompile Include="UI\UserWidget\MainWidget.cpp" />
     <ClCompile Include="UI\UserWidget\UserWidget.cpp" />
@@ -282,6 +285,7 @@
     <ClInclude Include="Component\SceneComponent.h" />
     <ClInclude Include="Component\SpriteComponent.h" />
     <ClInclude Include="Component\StaticMeshComponent.h" />
+    <ClInclude Include="Component\WidgetComponent.h" />
     <ClInclude Include="Device.h" />
     <ClInclude Include="EngineMath.h" />
     <ClInclude Include="GameInfo.h" />
@@ -339,6 +343,8 @@
     <ClInclude Include="Share\SharedPtr.h" />
     <ClInclude Include="Share\Timer.h" />
     <ClInclude Include="UI\Common\Button.h" />
+    <ClInclude Include="UI\Common\Image.h" />
+    <ClInclude Include="UI\Common\ProgressBar.h" />
     <ClInclude Include="UI\Common\TextBlock.h" />
     <ClInclude Include="UI\UIInfo.h" />
     <ClInclude Include="UI\UserWidget\MainWidget.h" />

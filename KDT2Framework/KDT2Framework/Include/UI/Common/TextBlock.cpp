@@ -159,6 +159,42 @@ void CTextBlock::SetAlignV(ETextAlignV Align)
     }
 }
 
+void CTextBlock::SetShadowEnable(bool Shadow)
+{
+    mShadow = Shadow;
+}
+
+void CTextBlock::SetShadowTransparent(bool Transparency)
+{
+    mShadowTransparency = Transparency;
+}
+
+void CTextBlock::SetTextShadowColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+{
+    mTextShadowColor = CAssetManager::GetInst()->GetFontManager()->FindFontColor(r, g, b, a);
+}
+
+void CTextBlock::SetTextShadowColor(const FVector4D& Color)
+{
+    mTextShadowColor = CAssetManager::GetInst()->GetFontManager()->FindFontColor(Color);
+}
+
+void CTextBlock::SetShadowOpacity(float Opacity)
+{
+    mShadowOpacity = Opacity;
+}
+
+void CTextBlock::SetShadowOffset(const FVector2D& Offset)
+{
+    mShadowOffset = Offset;
+}
+
+void CTextBlock::SetShadowOffset(float x, float y)
+{
+    mShadowOffset.x = x;
+    mShadowOffset.y = y;
+}
+
 void CTextBlock::CreateTextLayout()
 {
     SAFE_RELEASE(mLayout);
@@ -209,7 +245,8 @@ bool CTextBlock::Init()
     mTarget = CDevice::GetInst()->Get2DTarget();
 
     SetFont("Default");
-    SetTextColor(FVector4D::Black);
+    SetTextColor(FVector4D::White);
+    SetTextShadowColor(FVector4D::Black);
 
     CreateTextLayout();
 
@@ -231,9 +268,25 @@ void CTextBlock::Render()
 
     D2D1_POINT_2F   Point;
 
-    Point.x = mPos.x;
-    Point.y = RS.Height - mPos.y - mSize.y;
-    //Point.y = mPos.y;
+    Point.x = mRenderPos.x;
+    Point.y = RS.Height - mRenderPos.y - mSize.y;
+
+    if (mShadow)
+    {
+        D2D1_POINT_2F   ShadowPoint = Point;
+
+        ShadowPoint.x += mShadowOffset.x;
+        ShadowPoint.y += mShadowOffset.y;
+
+        if (mShadowTransparency)
+            mTextColor->SetOpacity(mShadowOpacity);
+
+        else
+            mTextColor->SetOpacity(1.f);
+
+        mTarget->DrawTextLayout(ShadowPoint, mLayout, mTextShadowColor,
+            D2D1_DRAW_TEXT_OPTIONS_NONE);
+    }
 
     if (mTransparency)
         mTextColor->SetOpacity(mOpacity);
@@ -245,6 +298,11 @@ void CTextBlock::Render()
         D2D1_DRAW_TEXT_OPTIONS_NONE);
 
     mTarget->EndDraw();
+}
+
+void CTextBlock::Render(const FVector3D& Pos)
+{
+    CWidget::Render(Pos);
 }
 
 bool CTextBlock::CollisionMouse(CWidget** Result, 

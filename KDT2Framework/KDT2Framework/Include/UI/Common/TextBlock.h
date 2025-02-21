@@ -35,6 +35,12 @@ protected:
 	bool				mTransparency = false;
 	float				mOpacity = 1.f;
 
+	bool				mShadow = false;
+	ID2D1SolidColorBrush* mTextShadowColor = nullptr;
+	bool				mShadowTransparency = false;
+	float				mShadowOpacity = 1.f;
+	FVector2D			mShadowOffset = { 1.f, 1.f };
+
 	float				mFontSize = 20.f;
 	ETextAlignH			mAlignH = ETextAlignH::Left;
 	ETextAlignV			mAlignV = ETextAlignV::Middle;
@@ -82,6 +88,14 @@ public:
 	void SetFontSize(float Size);
 	void SetAlignH(ETextAlignH Align);
 	void SetAlignV(ETextAlignV Align);
+	void SetShadowEnable(bool Shadow);
+	void SetShadowTransparent(bool Transparency);
+	void SetTextShadowColor(unsigned char r, unsigned char g, unsigned char b,
+		unsigned char a);
+	void SetTextShadowColor(const FVector4D& Color);
+	void SetShadowOpacity(float Opacity);
+	void SetShadowOffset(const FVector2D& Offset);
+	void SetShadowOffset(float x, float y);
 
 private:
 	void CreateTextLayout();
@@ -90,6 +104,7 @@ public:
 	virtual bool Init();
 	virtual void Update(float DeltaTime);
 	virtual void Render();
+	virtual void Render(const FVector3D& Pos);
 	virtual bool CollisionMouse(CWidget** Result, const FVector2D& MousePos);
 };
 

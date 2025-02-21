@@ -46,7 +46,7 @@ struct FAnimation2DCBufferInfo
 struct FUICBufferInfo
 {
     FVector4D   BrushTint;
-    FVector4D   Color;
+    FVector4D   Color = FVector4D::White;
     FVector2D   LTUV;
     FVector2D   RBUV;
     int         BrushAnimEnable;

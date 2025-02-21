@@ -75,6 +75,39 @@ void CUserWidget::Render()
     }
 }
 
+void CUserWidget::Render(const FVector3D& Pos)
+{
+    CWidget::Render(Pos);
+
+    if (mWidgetList.size() >= 2)
+    {
+        std::sort(mWidgetList.begin(), mWidgetList.end(),
+            CUserWidget::SortRender);
+    }
+
+    auto    iter = mWidgetList.begin();
+    auto    iterEnd = mWidgetList.end();
+
+    for (; iter != iterEnd;)
+    {
+        if (!(*iter)->IsActive())
+        {
+            iter = mWidgetList.erase(iter);
+            iterEnd = mWidgetList.end();
+            continue;
+        }
+
+        else if (!(*iter)->IsEnable())
+        {
+            ++iter;
+            continue;
+        }
+
+        (*iter)->Render(Pos);
+        ++iter;
+    }
+}
+
 bool CUserWidget::CollisionMouse(CWidget** Result, const FVector2D& MousePos)
 {
     if (mWidgetList.size() >= 2)

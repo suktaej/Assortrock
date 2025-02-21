@@ -30,6 +30,7 @@ protected:
     CSharedPtr<class CSpriteComponent>  mSub;
     CSharedPtr<class CSpriteComponent>  mSub2;
     CSharedPtr<class CCameraComponent>      mCamera;
+    CSharedPtr<class CWidgetComponent>    mHPBar;
 
     CSharedPtr<class CMovementComponent>    mMovement;
     CSharedPtr<class CRotationComponent>    mRotation;

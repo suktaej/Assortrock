@@ -1,8 +1,10 @@
 #include "MainWidget.h"
 #include "../Common/Button.h"
 #include "../Common/TextBlock.h"
+#include "../Common/ProgressBar.h"
 #include "../../Scene/Scene.h"
 #include "../../Scene/SceneUIManager.h"
+#include "../../Device.h"
 
 CMainWidget::CMainWidget()
 {
@@ -16,10 +18,12 @@ bool CMainWidget::Init()
 {
     CUserWidget::Init();
 
+    FResolution RS = CDevice::GetInst()->GetResolution();
+
     CSharedPtr<CButton>    Button = mScene->GetUIManager()->CreateWidget<CButton>("TestButton");
 
-    Button->SetPos(100.f, 100.f);
-    Button->SetSize(100.f, 100.f);
+    Button->SetPos(400.f, 100.f);
+    Button->SetSize(200.f, 100.f);
     //Button->SetTint(EButtonState::Normal, 1.f, 0.f, 0.f);
     Button->SetTexture(EButtonState::Normal, "StartButton", 
         TEXT("Texture\\Start.png"));
@@ -44,13 +48,30 @@ bool CMainWidget::Init()
 
     Text->SetText(TEXT("Button"));
     Text->SetTextColor(255, 0, 0, 255);
-    Text->SetPos(100.f, 100.f);
-    Text->SetSize(100.f, 100.f);
+    //Text->SetPos(100.f, 100.f);
+    //Text->SetSize(100.f, 100.f);
     Text->SetAlignH(ETextAlignH::Center);
-    Text->SetFontSize(40.f);
+    Text->SetFontSize(60.f);
+    Text->SetShadowEnable(true);
+    Text->SetShadowOffset(3.f, 3.f);
 
     Button->SetChild(Text);
 
+    CSharedPtr<CProgressBar>    HPBar =
+        mScene->GetUIManager()->CreateWidget<CProgressBar>("HPBar");
+
+    HPBar->SetPos(50.f, RS.Height - 300.f);
+    //HPBar->SetSize(50.f, 200.f);
+    HPBar->SetSize(200.f, 50.f);
+    HPBar->SetTint(EProgressBarImageType::Back, 0.3f, 0.3f, 0.3f);
+    //HPBar->SetOpacity(EProgressBarImageType::Fill, 0.4f);
+    HPBar->SetTexture(EProgressBarImageType::Fill, "HPBar",
+        TEXT("Texture\\HPBar.png"));
+    //HPBar->SetBarDir(EProgressBarDir::TopToBottom);
+
+    HPBar->SetPercent(0.7f);
+
+    AddWidget(HPBar);
 
     return true;
 }
