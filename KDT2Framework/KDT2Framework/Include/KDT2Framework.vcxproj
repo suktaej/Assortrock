@@ -151,6 +151,9 @@
     <ClCompile Include="Asset\Animation\Animation2DManager.cpp" />
     <ClCompile Include="Asset\Asset.cpp" />
     <ClCompile Include="Asset\AssetManager.cpp" />
+    <ClCompile Include="Asset\Font\Font.cpp" />
+    <ClCompile Include="Asset\Font\FontCollection.cpp" />
+    <ClCompile Include="Asset\Font\FontManager.cpp" />
     <ClCompile Include="Asset\Material\Material.cpp" />
     <ClCompile Include="Asset\Material\MaterialManager.cpp" />
     <ClCompile Include="Asset\Mesh\Mesh.cpp" />
@@ -242,6 +245,9 @@
     <ClInclude Include="Asset\Animation\Animation2DManager.h" />
     <ClInclude Include="Asset\Asset.h" />
     <ClInclude Include="Asset\AssetManager.h" />
+    <ClInclude Include="Asset\Font\Font.h" />
+    <ClInclude Include="Asset\Font\FontCollection.h" />
+    <ClInclude Include="Asset\Font\FontManager.h" />
     <ClInclude Include="Asset\Material\Material.h" />
     <ClInclude Include="Asset\Material\MaterialManager.h" />
     <ClInclude Include="Asset\Mesh\Mesh.h" />

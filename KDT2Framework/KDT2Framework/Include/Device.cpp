@@ -8,6 +8,9 @@ CDevice::CDevice()
 
 CDevice::~CDevice()
 {
+	SAFE_RELEASE(m2DTarget);
+	SAFE_RELEASE(m2DFacotry);
+
 	SAFE_RELEASE(mTargetView);
 	SAFE_RELEASE(mDepthView);
 
@@ -187,6 +190,37 @@ bool CDevice::Init(HWND hWnd, unsigned int Width, unsigned int Height, bool Wind
 	VP.MaxDepth = 1.f;
 
 	mContext->RSSetViewports(1, &VP);
+
+	// Font 출력을 위한 2D 초기화
+	// D2D1_FACTORY_TYPE_SINGLE_THREADED : 싱글스레드 환경
+	// D2D1_FACTORY_TYPE_MULTI_THREADED : 멀티스레드 환경
+	if (FAILED(D2D1CreateFactory(D2D1_FACTORY_TYPE_MULTI_THREADED,
+		&m2DFacotry)))
+		return false;
+
+	// 위에서 생성한 3D Backbuffer와 2D BackBuffer를 연결한다.
+	// 픽셀을 저장하는 모든 객체는 Surface라는것을 들고 있다.
+	// 3D BackBuffer의 Surface를 얻어온다.
+	IDXGISurface* BackSurface = nullptr;
+
+	mSwapChain->GetBuffer(0, IID_PPV_ARGS(&BackSurface));
+
+	// 렌더타겟을 생성한다. 이 렌더타겟이 출력하는 Surface를 위의 Surface로
+	// 지정하면 2D 출력 시 지정된 Surface에 출력하게 되어
+	// BackBuffer에 출력을 하게 된다.
+	D2D1_RENDER_TARGET_PROPERTIES	prop =
+		D2D1::RenderTargetProperties(D2D1_RENDER_TARGET_TYPE_HARDWARE,
+			D2D1::PixelFormat(DXGI_FORMAT_UNKNOWN, 
+				D2D1_ALPHA_MODE_PREMULTIPLIED));
+
+	if (FAILED(m2DFacotry->CreateDxgiSurfaceRenderTarget(BackSurface,
+		prop, &m2DTarget)))
+	{
+		SAFE_RELEASE(BackSurface);
+		return false;
+	}
+
+	SAFE_RELEASE(BackSurface);
 
 	return true;
 }

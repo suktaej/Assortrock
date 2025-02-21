@@ -19,6 +19,16 @@ private:
 
 	bool			mWindowMode = true;
 
+private:
+	ID2D1RenderTarget* m2DTarget = nullptr;
+	ID2D1Factory* m2DFacotry = nullptr;
+
+public:
+	ID2D1RenderTarget* Get2DTarget()	const
+	{
+		return m2DTarget;
+	}
+
 public:
 	ID3D11Device* GetDevice()	const
 	{

@@ -10,6 +10,7 @@ private:
 	class CMaterialManager* mMaterialManager = nullptr;
 	class CAnimation2DManager* mAnimation2DManager = nullptr;
 	class CSoundManager* mSoundManager = nullptr;
+	class CFontManager* mFontManager = nullptr;
 
 public:
 	class CMeshManager* GetMeshManager()	const
@@ -35,6 +36,11 @@ public:
 	class CSoundManager* GetSoundManager()	const
 	{
 		return mSoundManager;
+	}
+
+	class CFontManager* GetFontManager()	const
+	{
+		return mFontManager;
 	}
 
 public:

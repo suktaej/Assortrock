@@ -13,6 +13,12 @@
 #include <d3d11.h>
 #include <d3dcompiler.h>
 
+//#include <dwrite.h> // Window7 이상 지원
+//#include <dwrite_1.h>	// 위의 기능에 Window8 기능 추가 
+//#include <dwrite_2.h> // 위의 기능에 Window8.1 기능 추가
+#include <dwrite_3.h>	// 위의 기능에 Window10 기능 추가
+#include <d2d1.h>
+
 #include "Vector2D.h"
 #include "Vector3D.h"
 #include "Vector4D.h"
@@ -29,6 +35,8 @@ extern char   gRootPathMultibyte[MAX_PATH];
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "dxguid.lib")
+#pragma comment(lib, "dwrite.lib")
+#pragma comment(lib, "d2d1.lib")
 
 #define	SAFE_DELETE(p)	if(p)	{ delete p; p = nullptr; }
 #define	SAFE_DELETE_ARRAY(p)	if(p)	{ delete[] p; p = nullptr; }

@@ -190,6 +190,9 @@
     <Filter Include="04. Shader\03. ConstantBuffer\06. UI">
       <UniqueIdentifier>{a323992d-184b-47dd-84aa-165d6423b522}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Asset\06. Font">
+      <UniqueIdentifier>{0621169d-ca98-40ef-a902-197d94b6c9fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -458,6 +461,15 @@
     </ClCompile>
     <ClCompile Include="Shader\UICBuffer.cpp">
       <Filter>04. Shader\03. ConstantBuffer\06. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Font\FontManager.cpp">
+      <Filter>03. Asset\06. Font</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Font\Font.cpp">
+      <Filter>03. Asset\06. Font</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Font\FontCollection.cpp">
+      <Filter>03. Asset\06. Font</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -772,6 +784,15 @@
     </ClInclude>
     <ClInclude Include="Shader\UICBuffer.h">
       <Filter>04. Shader\03. ConstantBuffer\06. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Font\FontManager.h">
+      <Filter>03. Asset\06. Font</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Font\Font.h">
+      <Filter>03. Asset\06. Font</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Font\FontCollection.h">
+      <Filter>03. Asset\06. Font</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

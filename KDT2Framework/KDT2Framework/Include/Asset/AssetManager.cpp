@@ -4,6 +4,7 @@
 #include "Material/MaterialManager.h"
 #include "Animation/Animation2DManager.h"
 #include "Sound/SoundManager.h"
+#include "Font/FontManager.h"
 #include "Asset.h"
 
 DEFINITION_SINGLE(CAssetManager)
@@ -14,6 +15,7 @@ CAssetManager::CAssetManager()
 
 CAssetManager::~CAssetManager()
 {
+	SAFE_DELETE(mFontManager);
 	SAFE_DELETE(mSoundManager);
 	SAFE_DELETE(mAnimation2DManager);
 	SAFE_DELETE(mMaterialManager);
@@ -70,6 +72,11 @@ bool CAssetManager::Init()
 	mSoundManager = new CSoundManager;
 
 	if (!mSoundManager->Init())
+		return false;
+
+	mFontManager = new CFontManager;
+
+	if (!mFontManager->Init())
 		return false;
 
 	return true;

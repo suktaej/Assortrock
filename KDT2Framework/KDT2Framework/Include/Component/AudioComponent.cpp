@@ -21,8 +21,8 @@ CAudioComponent::CAudioComponent(CAudioComponent&& Com) :
 
 CAudioComponent::~CAudioComponent()
 {
-    if (mSound)
-        mSound->Stop();
+    /*if (mSound)
+        mSound->Stop();*/
 }
 
 void CAudioComponent::SetSound(const std::string& Name)
