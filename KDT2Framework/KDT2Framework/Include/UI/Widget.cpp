@@ -84,10 +84,20 @@ void CWidget::Render(const FVector3D& Pos)
 
 bool CWidget::CollisionMouse(CWidget** Result, const FVector2D& MousePos)
 {
+    if (mParent)
+    {
+        mRenderPos = mParent->GetRenderPos() + mPos;
+    }
+
+    else
+    {
+        mRenderPos = mPos;
+    }
+
     if (mRotation == 0.f || mRotation == 360.f)
     {
         // 사각형 정보를 만든다.
-        FVector2D   Min = mPos - mSize * mPivot;
+        FVector2D   Min = mRenderPos - mSize * mPivot;
         FVector2D   Max = Min + mSize;
 
         if (MousePos.x < Min.x)
@@ -145,7 +155,7 @@ bool CWidget::CollisionMouse(CWidget** Result, const FVector2D& MousePos)
     FVector3D   OriginAxis[2];
     FVector2D   Axis[2];
     FVector2D   HalfSize = mSize * 0.5f;
-    FVector2D   Center = mPos - mSize * mPivot + HalfSize;
+    FVector2D   Center = mRenderPos - mSize * mPivot + HalfSize;
 
     FMatrix matRot;
     matRot.RotationZ(mRotation);

@@ -22,6 +22,7 @@
 #include "../Component/WidgetComponent.h"
 #include "../Scene/SceneUIManager.h"
 #include "../UI/Common/ProgressBar.h"
+#include "../UI/UserWidget/HeadInfo.h"
 
 CPlayerObject::CPlayerObject()
 {
@@ -55,22 +56,25 @@ bool CPlayerObject::Init()
     mCamera = CreateComponent<CCameraComponent>();
     mHPBar = CreateComponent<CWidgetComponent>();
 
-    mHPBar->SetRelativePos(0.f, 100.f);
+    mHPBar->SetRelativePos(-50.f, 50.f);
 
-    CProgressBar* HPBar = mScene->GetUIManager()->CreateWidget<CProgressBar>("HPBar");
+    //CProgressBar* HPBar = mScene->GetUIManager()->CreateWidget<CProgressBar>("HPBar");
 
-    //HPBar->SetPos(0.f, 100.f);
-    //HPBar->SetSize(50.f, 200.f);
-    HPBar->SetSize(200.f, 50.f);
-    HPBar->SetTint(EProgressBarImageType::Back, 0.3f, 0.3f, 0.3f);
-    //HPBar->SetOpacity(EProgressBarImageType::Fill, 0.4f);
-    HPBar->SetTexture(EProgressBarImageType::Fill, "HPBar",
-        TEXT("Texture\\HPBar.png"));
-    //HPBar->SetBarDir(EProgressBarDir::TopToBottom);
+    ////HPBar->SetPos(0.f, 100.f);
+    ////HPBar->SetSize(50.f, 200.f);
+    //HPBar->SetSize(200.f, 50.f);
+    //HPBar->SetTint(EProgressBarImageType::Back, 0.3f, 0.3f, 0.3f);
+    ////HPBar->SetOpacity(EProgressBarImageType::Fill, 0.4f);
+    //HPBar->SetTexture(EProgressBarImageType::Fill, "HPBar",
+    //    TEXT("Texture\\HPBar.png"));
+    ////HPBar->SetBarDir(EProgressBarDir::TopToBottom);
 
-    HPBar->SetPercent(0.7f);
+    //HPBar->SetPercent(0.7f);
 
-    mHPBar->SetWidget(HPBar);
+    //mHPBar->SetWidget(HPBar);
+    CHeadInfo* HeadInfo = mScene->GetUIManager()->CreateWidget<CHeadInfo>("HeadInfo");
+
+    mHPBar->SetWidget(HeadInfo);
 
     mRoot->AddChild(mHPBar);
 

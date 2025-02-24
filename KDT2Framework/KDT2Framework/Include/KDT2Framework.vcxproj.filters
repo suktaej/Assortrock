@@ -486,6 +486,15 @@
     <ClCompile Include="Component\WidgetComponent.cpp">
       <Filter>07. Component\01. SceneComponent\06. Widget</Filter>
     </ClCompile>
+    <ClCompile Include="UI\UserWidget\HeadInfo.cpp">
+      <Filter>10. UI\02. UserWidget\01. Main</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Common\TitleBar.cpp">
+      <Filter>10. UI\01. Common</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UserWidget\Inventory.cpp">
+      <Filter>10. UI\02. UserWidget\01. Main</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -820,6 +829,15 @@
     </ClInclude>
     <ClInclude Include="Component\WidgetComponent.h">
       <Filter>07. Component\01. SceneComponent\06. Widget</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UserWidget\HeadInfo.h">
+      <Filter>10. UI\02. UserWidget\01. Main</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Common\TitleBar.h">
+      <Filter>10. UI\01. Common</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UserWidget\Inventory.h">
+      <Filter>10. UI\02. UserWidget\01. Main</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

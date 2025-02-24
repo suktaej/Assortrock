@@ -31,4 +31,5 @@ void CWindowWidget::Render()
 
 void CWindowWidget::Render(const FVector3D& Pos)
 {
+	CUserWidget::Render(Pos);
 }

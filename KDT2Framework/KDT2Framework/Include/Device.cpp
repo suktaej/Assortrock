@@ -70,6 +70,8 @@ bool CDevice::Init(HWND hWnd, unsigned int Width, unsigned int Height, bool Wind
 	if (Check < 1)
 		SampleCount = 1;
 
+	SampleCount = 1;
+
 	// SwapChain을 생성한다.
 	DXGI_SWAP_CHAIN_DESC	SwapDesc = {};
 

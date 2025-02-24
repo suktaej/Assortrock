@@ -5,6 +5,7 @@
 #include "../../Asset/Font/Font.h"
 #include "../../Asset/Font/FontManager.h"
 #include "../../Device.h"
+#include "../../Scene/CameraManager.h"
 
 CTextBlock::CTextBlock()
 {
@@ -303,6 +304,58 @@ void CTextBlock::Render()
 void CTextBlock::Render(const FVector3D& Pos)
 {
     CWidget::Render(Pos);
+
+    mTarget->BeginDraw();
+
+    FVector2D   RenderPos = mRenderPos;
+
+    RenderPos.x += Pos.x;
+    RenderPos.y += Pos.y;
+
+    // 월드위치를 카메라를 기준으로 한 위치로 변경한다.
+    FResolution RS = CDevice::GetInst()->GetResolution();
+
+    const FVector3D& CameraPos =
+        mScene->GetCameraManager()->GetCameraWorldPos();
+
+    RenderPos.x -= CameraPos.x;
+    RenderPos.y -= CameraPos.y;
+
+    RenderPos.x += (RS.Width * 0.5f);
+    RenderPos.y += (RS.Height * 0.5f);
+
+    D2D1_POINT_2F   Point;
+
+    Point.x = RenderPos.x;
+    Point.y = RS.Height - RenderPos.y - mSize.y;
+
+    if (mShadow)
+    {
+        D2D1_POINT_2F   ShadowPoint = Point;
+
+        ShadowPoint.x += mShadowOffset.x;
+        ShadowPoint.y += mShadowOffset.y;
+
+        if (mShadowTransparency)
+            mTextColor->SetOpacity(mShadowOpacity);
+
+        else
+            mTextColor->SetOpacity(1.f);
+
+        mTarget->DrawTextLayout(ShadowPoint, mLayout, mTextShadowColor,
+            D2D1_DRAW_TEXT_OPTIONS_NONE);
+    }
+
+    if (mTransparency)
+        mTextColor->SetOpacity(mOpacity);
+
+    else
+        mTextColor->SetOpacity(1.f);
+
+    mTarget->DrawTextLayout(Point, mLayout, mTextColor,
+        D2D1_DRAW_TEXT_OPTIONS_NONE);
+
+    mTarget->EndDraw();
 }
 
 bool CTextBlock::CollisionMouse(CWidget** Result, 

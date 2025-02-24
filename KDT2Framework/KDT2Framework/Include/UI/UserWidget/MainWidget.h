@@ -11,6 +11,9 @@ protected:
 	CMainWidget();
 	virtual ~CMainWidget();
 
+protected:
+	CSharedPtr<class CInventory>	mInventory;
+
 public:
 	virtual bool Init();
 	virtual void Update(float DeltaTime);

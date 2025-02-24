@@ -61,6 +61,8 @@ public:
 
 protected:
 	void RenderBrush(const FUIBrush& Brush,
+		const FVector2D& Size);
+	void RenderBrush(const FUIBrush& Brush,
 		const FVector2D& Pos, const FVector2D& Size);
 };
 

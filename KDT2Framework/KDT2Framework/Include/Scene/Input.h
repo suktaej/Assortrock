@@ -128,6 +128,11 @@ public:
 		return mMouseWorldPos2D;
 	}
 
+	const FVector2D& GetMouseMove()	const
+	{
+		return mMouseMove;
+	}
+
 private:
 	bool InitInput();
 	bool UpdateKeyboard();

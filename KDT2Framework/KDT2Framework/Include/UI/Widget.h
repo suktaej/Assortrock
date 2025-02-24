@@ -96,6 +96,17 @@ public:
 		mPos.y = y;
 	}
 
+	void AddPos(const FVector2D& Pos)
+	{
+		mPos += Pos;
+	}
+
+	void AddPos(float x, float y)
+	{
+		mPos.x += x;
+		mPos.y += y;
+	}
+
 	void SetRenderPos(const FVector2D& Pos)
 	{
 		mRenderPos = mPos + Pos;

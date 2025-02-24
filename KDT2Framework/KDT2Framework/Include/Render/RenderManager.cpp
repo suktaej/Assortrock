@@ -79,6 +79,8 @@ void CRenderManager::Render()
 
 	mAlphaBlend->SetState();
 
+	mDepthDisable->SetState();
+
 	auto	iter = mRenderList.begin();
 	auto	iterEnd = mRenderList.end();
 
@@ -106,8 +108,6 @@ void CRenderManager::Render()
 		++iter;
 	}
 
-	mDepthDisable->SetState();
-
 	// UI 출력
 	CSceneManager::GetInst()->RenderUI();
 
@@ -126,7 +126,7 @@ bool CRenderManager::SortY(
 	float DestY = Dest->GetWorldPosition().y -
 		Dest->GetWorldScale().y * Dest->GetPivot().y;
 
-	return SrcY < DestY;
+	return SrcY > DestY;
 }
 
 bool CRenderManager::SortAlpha(

@@ -235,6 +235,9 @@
     <ClCompile Include="UI\Common\Image.cpp" />
     <ClCompile Include="UI\Common\ProgressBar.cpp" />
     <ClCompile Include="UI\Common\TextBlock.cpp" />
+    <ClCompile Include="UI\Common\TitleBar.cpp" />
+    <ClCompile Include="UI\UserWidget\HeadInfo.cpp" />
+    <ClCompile Include="UI\UserWidget\Inventory.cpp" />
     <ClCompile Include="UI\UserWidget\MainWidget.cpp" />
     <ClCompile Include="UI\UserWidget\UserWidget.cpp" />
     <ClCompile Include="UI\UserWidget\WindowWidget.cpp" />
@@ -346,7 +349,10 @@
     <ClInclude Include="UI\Common\Image.h" />
     <ClInclude Include="UI\Common\ProgressBar.h" />
     <ClInclude Include="UI\Common\TextBlock.h" />
+    <ClInclude Include="UI\Common\TitleBar.h" />
     <ClInclude Include="UI\UIInfo.h" />
+    <ClInclude Include="UI\UserWidget\HeadInfo.h" />
+    <ClInclude Include="UI\UserWidget\Inventory.h" />
     <ClInclude Include="UI\UserWidget\MainWidget.h" />
     <ClInclude Include="UI\UserWidget\UserWidget.h" />
     <ClInclude Include="UI\UserWidget\WindowWidget.h" />

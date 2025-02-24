@@ -5,6 +5,7 @@
 #include "../../Scene/Scene.h"
 #include "../../Scene/SceneUIManager.h"
 #include "../../Device.h"
+#include "Inventory.h"
 
 CMainWidget::CMainWidget()
 {
@@ -19,6 +20,13 @@ bool CMainWidget::Init()
     CUserWidget::Init();
 
     FResolution RS = CDevice::GetInst()->GetResolution();
+
+    mInventory = mScene->GetUIManager()->CreateWidget<CInventory>("Inventory");
+
+    mInventory->SetZOrder(3);
+    mInventory->SetPos(100.f, 100.f);
+
+    AddWidget(mInventory);
 
     CSharedPtr<CButton>    Button = mScene->GetUIManager()->CreateWidget<CButton>("TestButton");
 

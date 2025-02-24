@@ -230,7 +230,7 @@ void CProgressBar::Render()
 {
     CWidget::Render();
 
-    RenderBrush(mBackBrush, mRenderPos, mSize);
+    RenderBrush(mBackBrush, mSize);
 
     FVector2D   Size = mSize;
 
@@ -244,7 +244,7 @@ void CProgressBar::Render()
         break;
     }
 
-    RenderBrush(mFillBrush, mRenderPos, Size);
+    RenderBrush(mFillBrush, Size);
 }
 
 void CProgressBar::Render(const FVector3D& Pos)
@@ -271,6 +271,61 @@ void CProgressBar::Render(const FVector3D& Pos)
     }
 
     RenderBrush(mFillBrush, RenderPos, Size);
+}
+
+void CProgressBar::RenderBrush(const FUIBrush& Brush, 
+    const FVector2D& Size)
+{
+    FMatrix matScale, matRot, matTranslate, matWorld;
+
+    matScale.Scaling(Size);
+    matRot.RotationZ(mRotation);
+    matTranslate.Translation(mRenderPos);
+
+    matWorld = matScale * matRot * matTranslate;
+
+    mTransformCBuffer->SetWorldMatrix(matWorld);
+    mTransformCBuffer->SetProjMatrix(mUIProj);
+    mTransformCBuffer->SetPivot(mPivot);
+
+    mTransformCBuffer->UpdateBuffer();
+
+    //mUICBuffer->SetWidgetColor(mColor);
+
+    mUICBuffer->SetTint(Brush.Tint);
+
+    if (Brush.Texture)
+    {
+        mUICBuffer->SetTextureEnable(true);
+
+        Brush.Texture->SetShader(0, EShaderBufferType::Pixel,
+            0);
+    }
+
+    else
+        mUICBuffer->SetTextureEnable(false);
+
+    if (Brush.AnimationEnable)
+    {
+        mUICBuffer->SetAnimationEnable(true);
+
+        int Frame = Brush.Frame;
+
+        FAnimationFrame FrameInfo = Brush.Frames[Frame];
+        mUICBuffer->SetUV(FrameInfo.Start.x, FrameInfo.Start.y,
+            FrameInfo.Start.x + FrameInfo.Size.x,
+            FrameInfo.Start.y + FrameInfo.Size.y);
+    }
+
+    else
+        mUICBuffer->SetAnimationEnable(false);
+
+
+    mUICBuffer->UpdateBuffer();
+
+    mShader->SetShader();
+
+    mMesh->Render();
 }
 
 void CProgressBar::RenderBrush(const FUIBrush& Brush,

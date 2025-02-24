@@ -25,7 +25,7 @@ bool CRenderStateManager::Init()
         D3D11_BLEND_ZERO, D3D11_BLEND_OP_ADD,
         D3D11_COLOR_WRITE_ENABLE_ALL);
 
-    CreateBlendState("AlphaBlend", true, false);
+    CreateBlendState("AlphaBlend", false, false);
 
     CreateDepthStencilState("DepthDisable", false);
 
