@@ -49,6 +49,9 @@ CGameManager::~CGameManager()
 
 bool CGameManager::Init(HINSTANCE hInst)
 {
+    srand(GetTickCount());
+    rand();
+
 	mhInst = hInst;
 
 	lstrcpy(mClassName, TEXT("KDT2Framework"));

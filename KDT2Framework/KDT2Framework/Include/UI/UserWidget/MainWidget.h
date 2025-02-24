@@ -18,5 +18,8 @@ public:
 	virtual bool Init();
 	virtual void Update(float DeltaTime);
 	virtual void Render();
+
+private:
+	void InventoryButton();
 };
 

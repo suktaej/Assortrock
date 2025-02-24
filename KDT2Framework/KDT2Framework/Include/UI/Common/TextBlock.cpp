@@ -286,7 +286,7 @@ void CTextBlock::Render()
             mTextColor->SetOpacity(1.f);
 
         mTarget->DrawTextLayout(ShadowPoint, mLayout, mTextShadowColor,
-            D2D1_DRAW_TEXT_OPTIONS_NONE);
+            D2D1_DRAW_TEXT_OPTIONS_CLIP);
     }
 
     if (mTransparency)
@@ -296,7 +296,7 @@ void CTextBlock::Render()
         mTextColor->SetOpacity(1.f);
 
     mTarget->DrawTextLayout(Point, mLayout, mTextColor,
-        D2D1_DRAW_TEXT_OPTIONS_NONE);
+        D2D1_DRAW_TEXT_OPTIONS_CLIP);
 
     mTarget->EndDraw();
 }
@@ -343,7 +343,7 @@ void CTextBlock::Render(const FVector3D& Pos)
             mTextColor->SetOpacity(1.f);
 
         mTarget->DrawTextLayout(ShadowPoint, mLayout, mTextShadowColor,
-            D2D1_DRAW_TEXT_OPTIONS_NONE);
+            D2D1_DRAW_TEXT_OPTIONS_CLIP);
     }
 
     if (mTransparency)
@@ -353,7 +353,7 @@ void CTextBlock::Render(const FVector3D& Pos)
         mTextColor->SetOpacity(1.f);
 
     mTarget->DrawTextLayout(Point, mLayout, mTextColor,
-        D2D1_DRAW_TEXT_OPTIONS_NONE);
+        D2D1_DRAW_TEXT_OPTIONS_CLIP);
 
     mTarget->EndDraw();
 }

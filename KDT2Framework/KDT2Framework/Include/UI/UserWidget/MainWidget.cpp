@@ -49,12 +49,15 @@ bool CMainWidget::Init()
     Button->SetSound(EButtonEventState::Click, "ButtonClick",
         "Sound\\TeemoStartClicck.mp3");
 
+    Button->SetEventCallback<CMainWidget>(EButtonEventState::Click,
+        this, &CMainWidget::InventoryButton);
+
     AddWidget(Button);
 
     CSharedPtr<CTextBlock>    Text = 
         mScene->GetUIManager()->CreateWidget<CTextBlock>("TestButtonText");
 
-    Text->SetText(TEXT("Button"));
+    Text->SetText(TEXT("Buttonspkjghlwkehrolih"));
     Text->SetTextColor(255, 0, 0, 255);
     //Text->SetPos(100.f, 100.f);
     //Text->SetSize(100.f, 100.f);
@@ -92,4 +95,13 @@ void CMainWidget::Update(float DeltaTime)
 void CMainWidget::Render()
 {
     CUserWidget::Render();
+}
+
+void CMainWidget::InventoryButton()
+{
+    if (mInventory->IsEnable())
+        mInventory->SetEnable(false);
+
+    else
+        mInventory->SetEnable(true);
 }
