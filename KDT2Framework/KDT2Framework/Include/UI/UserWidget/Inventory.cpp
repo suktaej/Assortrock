@@ -5,6 +5,7 @@
 #include "../../Scene/Scene.h"
 #include "../../Scene/SceneUIManager.h"
 #include "../../Scene/SceneAssetManager.h"
+#include "../../Asset/Texture/Texture.h"
 
 CInventory::CInventory()
 {
@@ -94,12 +95,12 @@ bool CInventory::Init()
         }
     }
 
-    for (int i = 0; i < 20; ++i)
+    /*for (int i = 0; i < 20; ++i)
     {
         int RandIndex = rand() % 2;
 
         mSlotList[i]->SetTextureIcon(NameArray[RandIndex]);
-    }
+    }*/
 
     return true;
 }
@@ -117,4 +118,13 @@ void CInventory::Render()
 void CInventory::CloseButton()
 {
     SetEnable(false);
+}
+
+void CInventory::InventoryChange(const FItemData* Item, int Index)
+{
+    if (!Item)
+        mSlotList[Index]->SetTextureIcon(nullptr);
+
+    else
+        mSlotList[Index]->SetTextureIcon(Item->Icon);
 }

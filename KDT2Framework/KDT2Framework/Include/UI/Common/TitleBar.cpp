@@ -109,7 +109,12 @@ void CTitleBar::Update(float DeltaTime)
 
     if (mMouseHovered && mUpdateWidget)
     {
-        if (mScene->GetInput()->GetMouseHold(EMouseButtonType::LButton))
+        if (mScene->GetInput()->GetMouseDown(EMouseButtonType::LButton))
+        {
+            mMouseDrag = true;
+        }
+
+        else if (mScene->GetInput()->GetMouseHold(EMouseButtonType::LButton))
         {
             if (mMouseDrag)
             {
@@ -117,14 +122,12 @@ void CTitleBar::Update(float DeltaTime)
 
                 mUpdateWidget->AddPos(MouseMove);
             }
-
-            mMouseDrag = true;
         }
 
         else if (mScene->GetInput()->GetMouseUp(EMouseButtonType::LButton))
         {
             mMouseDrag = false;
-            mMouseHovered = false;
+            //mMouseHovered = false;
         }
     }
 }
@@ -199,5 +202,6 @@ void CTitleBar::MouseHovered()
 
 void CTitleBar::MouseUnHovered()
 {
-    //mMouseHovered = false;
+    if (!mMouseDrag)
+        mMouseHovered = false;
 }

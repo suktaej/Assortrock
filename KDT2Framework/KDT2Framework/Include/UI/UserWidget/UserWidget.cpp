@@ -147,11 +147,11 @@ bool CUserWidget::CollisionMouse(CWidget** Result, const FVector2D& MousePos)
 bool CUserWidget::SortCollision(const CSharedPtr<CWidget>& Src,
     const CSharedPtr<CWidget>& Dest)
 {
-    return Src->GetZOrder() < Dest->GetZOrder();
+    return Src->GetZOrder() > Dest->GetZOrder();
 }
 
 bool CUserWidget::SortRender(const CSharedPtr<CWidget>& Src, 
     const CSharedPtr<CWidget>& Dest)
 {
-    return Src->GetZOrder() > Dest->GetZOrder();
+    return Src->GetZOrder() < Dest->GetZOrder();
 }

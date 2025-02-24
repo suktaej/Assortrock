@@ -58,6 +58,10 @@ bool CScene::Init()
 	if (!mUIManager->Init())
 		return false;
 
+	InitAsset();
+	InitWidget();
+	InitObject();
+
 	return true;
 }
 
@@ -93,6 +97,10 @@ bool CScene::Init(const char* FileName)
 
 	if (!mUIManager->Init())
 		return false;
+
+	InitAsset();
+	InitWidget();
+	InitObject();
 	
 	return true;
 }
@@ -251,4 +259,19 @@ void CScene::EndFrame()
 	{
 		(*iter)->EndFrame();
 	}
+}
+
+bool CScene::InitAsset()
+{
+	return false;
+}
+
+bool CScene::InitObject()
+{
+	return false;
+}
+
+bool CScene::InitWidget()
+{
+	return false;
 }

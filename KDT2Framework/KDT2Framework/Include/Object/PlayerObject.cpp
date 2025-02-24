@@ -23,6 +23,11 @@
 #include "../Scene/SceneUIManager.h"
 #include "../UI/Common/ProgressBar.h"
 #include "../UI/UserWidget/HeadInfo.h"
+#include "../Component/InventoryComponent.h"
+#include "../Scene/SceneAssetManager.h"
+#include "../Asset/AssetManager.h"
+#include "../Asset/Texture/Texture.h"
+#include "../Asset/Texture/TextureManager.h"
 
 CPlayerObject::CPlayerObject()
 {
@@ -81,6 +86,7 @@ bool CPlayerObject::Init()
 
     mMovement = CreateComponent<CMovementComponent>();
     mRotation = CreateComponent<CRotationComponent>();
+    mInventory = CreateComponent<CInventoryComponent>();
 
     mRoot->SetTexture("Teemo", TEXT("Texture/teemo.png"));
     mRoot->SetPivot(0.5f, 0.5f);
@@ -248,6 +254,57 @@ void CPlayerObject::Update(float DeltaTime)
 
     if (mMovement->GetVelocityLength() == 0.f && mAutoBasePose)
         mAnimation->ChangeAnimation("PlayerIdle");
+
+    static bool ItemTest = false;
+
+    if (GetAsyncKeyState(VK_RETURN) & 0x8000)
+    {
+        ItemTest = true;
+    }
+
+    else if (ItemTest)
+    {
+        ItemTest = false;
+        std::string NameArray[2] =
+        {
+            "IconSword",
+            "IconShield"
+        };
+
+        int RandIndex = rand() % 2;
+
+        FItemData* Data = new FItemData;
+
+        Data->Name = NameArray[RandIndex];
+
+        if (RandIndex == 0)
+            Data->Type = EItemType::Weapon;
+
+        else if (RandIndex == 1)
+            Data->Type = EItemType::Armor;
+
+        if (mScene)
+            Data->Icon = mScene->GetAssetManager()->FindTexture(NameArray[RandIndex]);
+
+        else
+            Data->Icon = CAssetManager::GetInst()->GetTextureManager()->FindTexture(NameArray[RandIndex]);
+
+        mInventory->AddItem(Data);
+    }
+
+    static bool ItemTest1 = false;
+
+    if (GetAsyncKeyState('0') & 0x8000)
+    {
+        ItemTest1 = true;
+    }
+
+    else if (ItemTest1)
+    {
+        ItemTest1 = false;
+
+        mInventory->RemoveItem(rand() % 10);
+    }
 }
 
 void CPlayerObject::Damage(int Dmg)

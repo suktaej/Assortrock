@@ -151,6 +151,13 @@ void CShaderManager::ReleaseShader(const std::string& Name)
 	}
 }
 
+/*
+	CreateConstantBuffer(
+		"Transform", 
+		sizeof(FTransformCBufferInfo), 
+		0, 
+		EShaderBufferType::Vertex);
+*/
 bool CShaderManager::CreateConstantBuffer(
 	const std::string& Name, int Size, 
 	int Register, int ShaderBufferType)

@@ -301,3 +301,18 @@ struct FAnimationFrame
 	FVector2D   Start;
 	FVector2D   Size;
 };
+
+enum class EItemType : unsigned char
+{
+	Weapon,
+	Armor,
+	Consume,
+	Other
+};
+
+struct FItemData
+{
+	std::string		Name;
+	EItemType		Type;
+	CSharedPtr<class CTexture>	Icon;
+};

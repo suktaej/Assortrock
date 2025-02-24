@@ -34,6 +34,7 @@ protected:
 
     CSharedPtr<class CMovementComponent>    mMovement;
     CSharedPtr<class CRotationComponent>    mRotation;
+    CSharedPtr<class CInventoryComponent>    mInventory;
 
     CSharedPtr<class CBulletObject> mSkill1Object;
 

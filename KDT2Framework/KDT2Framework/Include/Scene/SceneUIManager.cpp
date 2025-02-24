@@ -144,10 +144,10 @@ void CSceneUIManager::Render()
 bool CSceneUIManager::SortCollision(const CSharedPtr<CWidget>& Src, 
     const CSharedPtr<CWidget>& Dest)
 {
-    return Src->GetZOrder() < Dest->GetZOrder();
+    return Src->GetZOrder() > Dest->GetZOrder();
 }
 
 bool CSceneUIManager::SortRender(const CSharedPtr<CWidget>& Src, const CSharedPtr<CWidget>& Dest)
 {
-    return Src->GetZOrder() > Dest->GetZOrder();
+    return Src->GetZOrder() < Dest->GetZOrder();
 }

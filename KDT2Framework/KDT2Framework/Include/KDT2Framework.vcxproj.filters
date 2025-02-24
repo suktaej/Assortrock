@@ -196,6 +196,12 @@
     <Filter Include="07. Component\01. SceneComponent\06. Widget">
       <UniqueIdentifier>{b2fa8e8c-ee06-42ac-a4b3-4a8035ed6363}</UniqueIdentifier>
     </Filter>
+    <Filter Include="07. Component\02. NonSceneComponent\01. Movement">
+      <UniqueIdentifier>{5225b5ce-bc7e-44c6-96b2-ae5811f8f857}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Component\02. NonSceneComponent\02. Inventory">
+      <UniqueIdentifier>{1f2812e3-84d4-4530-9cc4-f251e59a22f7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -291,14 +297,8 @@
     <ClCompile Include="Object\TornadoBullet.cpp">
       <Filter>06. Object\02. Bullet</Filter>
     </ClCompile>
-    <ClCompile Include="Component\MovementComponent.cpp">
-      <Filter>07. Component\02. NonSceneComponent</Filter>
-    </ClCompile>
     <ClCompile Include="Scene\CameraManager.cpp">
       <Filter>05. Scene\02. Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="Component\RotationComponent.cpp">
-      <Filter>07. Component\02. NonSceneComponent</Filter>
     </ClCompile>
     <ClCompile Include="Object\MonsterObject.cpp">
       <Filter>06. Object\03. Monster</Filter>
@@ -498,6 +498,15 @@
     <ClCompile Include="UI\UserWidget\Slot.cpp">
       <Filter>10. UI\02. UserWidget\01. Main</Filter>
     </ClCompile>
+    <ClCompile Include="Component\MovementComponent.cpp">
+      <Filter>07. Component\02. NonSceneComponent\01. Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\RotationComponent.cpp">
+      <Filter>07. Component\02. NonSceneComponent\01. Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\InventoryComponent.cpp">
+      <Filter>07. Component\02. NonSceneComponent\02. Inventory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -611,14 +620,8 @@
     <ClInclude Include="Object\TornadoBullet.h">
       <Filter>06. Object\02. Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="Component\MovementComponent.h">
-      <Filter>07. Component\02. NonSceneComponent</Filter>
-    </ClInclude>
     <ClInclude Include="Scene\CameraManager.h">
       <Filter>05. Scene\02. Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="Component\RotationComponent.h">
-      <Filter>07. Component\02. NonSceneComponent</Filter>
     </ClInclude>
     <ClInclude Include="Object\MonsterObject.h">
       <Filter>06. Object\03. Monster</Filter>
@@ -844,6 +847,15 @@
     </ClInclude>
     <ClInclude Include="UI\UserWidget\Slot.h">
       <Filter>10. UI\02. UserWidget\01. Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\MovementComponent.h">
+      <Filter>07. Component\02. NonSceneComponent\01. Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\RotationComponent.h">
+      <Filter>07. Component\02. NonSceneComponent\01. Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\InventoryComponent.h">
+      <Filter>07. Component\02. NonSceneComponent\02. Inventory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

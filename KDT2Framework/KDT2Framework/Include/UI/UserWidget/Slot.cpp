@@ -65,7 +65,11 @@ void CSlot::SetTextureIcon(CTexture* Texture)
 {
     mIcon->SetTexture(Texture);
 
-    mIcon->SetOpacity(1.f);
+    if (Texture)
+        mIcon->SetOpacity(1.f);
+
+    else
+        mIcon->SetOpacity(0.f);
 }
 
 void CSlot::SetTintIcon(float r, float g, float b)

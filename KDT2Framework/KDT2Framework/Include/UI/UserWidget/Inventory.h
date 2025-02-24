@@ -22,5 +22,8 @@ public:
 
 private:
 	void CloseButton();
+
+public:
+	void InventoryChange(const FItemData* Item, int Index);
 };
 

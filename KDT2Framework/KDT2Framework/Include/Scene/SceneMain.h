@@ -11,7 +11,9 @@ private:
 	CSceneMain();
 	virtual ~CSceneMain();
 
-public:
-	virtual bool Init();
+protected:
+	virtual bool InitAsset();
+	virtual bool InitObject();
+	virtual bool InitWidget();
 };
 

@@ -58,6 +58,11 @@ public:
 	virtual void RenderUI();
 	virtual void EndFrame();
 
+protected:
+	virtual bool InitAsset() = 0;
+	virtual bool InitObject() = 0;
+	virtual bool InitWidget() = 0;
+
 public:
 	template <typename T>
 	T* CreateObj(const std::string& Name)

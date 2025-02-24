@@ -17,14 +17,11 @@ CSceneMain::~CSceneMain()
 {
 }
 
-bool CSceneMain::Init()
+bool CSceneMain::InitAsset()
 {
-    if (!CScene::Init())
-        return false;
-
     mAssetManager->CreateMaterial("Monster1");
 
-    CMaterial* Material = 
+    CMaterial* Material =
         mAssetManager->FindMaterial("Monster1");
 
     Material->SetPixelShader("DefaultMaterialShader");
@@ -34,7 +31,11 @@ bool CSceneMain::Init()
 
     mAssetManager->LoadSound("Hit", "Effect", false, "Sound/Fire1.wav");
 
+    return true;
+}
 
+bool CSceneMain::InitObject()
+{
     CPlayerObject* Player = CreateObj<CPlayerObject>("Player");
 
     CObjectSpawnPoint* MonsterPoint =
@@ -89,8 +90,11 @@ bool CSceneMain::Init()
 
     Monster->SetWorldPos(-400.f, 0.f);
 
+    return true;
+}
 
-
+bool CSceneMain::InitWidget()
+{
     CMainWidget* Widget = mUIManager->CreateWidget<CMainWidget>("Main");
 
     mUIManager->AddToViewport(Widget);
