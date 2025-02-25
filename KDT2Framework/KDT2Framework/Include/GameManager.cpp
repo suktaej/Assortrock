@@ -137,7 +137,8 @@ void CGameManager::Logic()
 
     Input(DeltaTime);
 
-    Update(DeltaTime);
+    if (Update(DeltaTime))
+        return;
 
     Collision(DeltaTime);
 
@@ -151,7 +152,7 @@ void CGameManager::Input(float DeltaTime)
     CSceneManager::GetInst()->Input(DeltaTime);
 }
 
-void CGameManager::Update(float DeltaTime)
+bool CGameManager::Update(float DeltaTime)
 {
     //CLog::PrintLog("Update");
 
@@ -169,7 +170,7 @@ void CGameManager::Update(float DeltaTime)
     }
 
 
-    CSceneManager::GetInst()->Update(DeltaTime);
+    return CSceneManager::GetInst()->Update(DeltaTime);
 }
 
 void CGameManager::Collision(float DeltaTime)

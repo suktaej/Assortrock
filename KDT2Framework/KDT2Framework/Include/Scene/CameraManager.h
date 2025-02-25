@@ -12,6 +12,7 @@ private:
 
 private:
 	CSharedPtr<class CCameraComponent>	mViewTarget;
+	FMatrix		mIdentity;
 
 public:
 	class CCameraComponent* GetViewTarget()	const

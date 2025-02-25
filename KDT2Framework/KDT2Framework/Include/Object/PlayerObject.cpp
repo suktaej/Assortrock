@@ -50,7 +50,7 @@ CPlayerObject::~CPlayerObject()
 bool CPlayerObject::Init()
 {
     //mRoot = CreateComponent<CStaticMeshComponent>();
-    mRoot = CreateComponent<CSpriteComponent>();
+    mRoot = CreateComponent<CSpriteComponent>("Player");
     //mBody = CreateComponent<CColliderAABB2D>();
     //mBody = CreateComponent<CColliderSphere2D>();
     mBody = CreateComponent<CColliderOBB2D>();
@@ -305,6 +305,11 @@ void CPlayerObject::Update(float DeltaTime)
 
         mInventory->RemoveItem(rand() % 10);
     }
+}
+
+void CPlayerObject::Render()
+{
+    CSceneObject::Render();
 }
 
 void CPlayerObject::Damage(int Dmg)

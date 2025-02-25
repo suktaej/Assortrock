@@ -78,10 +78,11 @@ public:
 
 public:
 	template <typename T>
-	T* CreateComponent()
+	T* CreateComponent(const std::string& Name = "Component")
 	{
 		T* Component = new T;
 
+		Component->SetName(Name);
 		Component->mScene = mScene;
 		Component->mOwnerObject = this;
 

@@ -61,6 +61,7 @@ protected:
 public:
     virtual bool Init();
     virtual void Update(float DeltaTime);
+    virtual void Render();
     virtual void Damage(int Dmg);
     virtual float Damage(float Attack, CSceneObject* Obj);
 

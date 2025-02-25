@@ -14,7 +14,15 @@ CScene::CScene()
 
 CScene::~CScene()
 {
-	CRenderManager::GetInst()->ClearRenderList();
+	//CRenderManager::GetInst()->ClearRenderList();
+	std::list<CSharedPtr<CSceneObject>>::iterator	iter;
+	std::list<CSharedPtr<CSceneObject>>::iterator	iterEnd = mObjList.end();
+
+	for (iter = mObjList.begin(); iter != iterEnd; ++iter)
+	{
+		(*iter)->Destroy();
+	}
+
 	mObjList.clear();
 	SAFE_DELETE(mUIManager);
 	SAFE_DELETE(mAssetManager);

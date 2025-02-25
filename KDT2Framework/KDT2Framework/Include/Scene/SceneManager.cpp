@@ -1,5 +1,5 @@
 #include "SceneManager.h"
-#include "SceneMain.h"
+#include "SceneStart.h"
 
 DEFINITION_SINGLE(CSceneManager)
 
@@ -14,7 +14,7 @@ CSceneManager::~CSceneManager()
 
 bool CSceneManager::Init()
 {
-	mCurrentScene = CreateScene<CSceneMain>();
+	mCurrentScene = CreateScene<CSceneStart>();
 
 	return true;
 }
@@ -24,13 +24,27 @@ void CSceneManager::Input(float DeltaTime)
 	mCurrentScene->Input(DeltaTime);
 }
 
-void CSceneManager::Update(float DeltaTime)
+bool CSceneManager::Update(float DeltaTime)
 {
 	mCurrentScene->PreUpdate(DeltaTime);
 
 	mCurrentScene->Update(DeltaTime);
 
 	mCurrentScene->PostUpdate(DeltaTime);
+
+	if (mLoadScene)
+	{
+		// 기존 장면을 제거한다.
+		SAFE_DELETE(mCurrentScene);
+
+		mCurrentScene = mLoadScene;
+
+		mLoadScene = nullptr;
+
+		return true;
+	}
+
+	return false;
 }
 
 void CSceneManager::Collision(float DeltaTime)

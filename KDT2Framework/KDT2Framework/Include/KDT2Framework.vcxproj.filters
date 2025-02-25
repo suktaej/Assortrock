@@ -202,6 +202,9 @@
     <Filter Include="07. Component\02. NonSceneComponent\02. Inventory">
       <UniqueIdentifier>{1f2812e3-84d4-4530-9cc4-f251e59a22f7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="10. UI\02. UserWidget\02. Start">
+      <UniqueIdentifier>{a909ac2a-d06f-427a-9b61-85d87fe726b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -506,6 +509,12 @@
     </ClCompile>
     <ClCompile Include="Component\InventoryComponent.cpp">
       <Filter>07. Component\02. NonSceneComponent\02. Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SceneStart.cpp">
+      <Filter>05. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UserWidget\StartWidget.cpp">
+      <Filter>10. UI\02. UserWidget\02. Start</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -856,6 +865,12 @@
     </ClInclude>
     <ClInclude Include="Component\InventoryComponent.h">
       <Filter>07. Component\02. NonSceneComponent\02. Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneStart.h">
+      <Filter>05. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UserWidget\StartWidget.h">
+      <Filter>10. UI\02. UserWidget\02. Start</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

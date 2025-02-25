@@ -127,18 +127,25 @@ bool CUserWidget::CollisionMouse(CWidget** Result, const FVector2D& MousePos)
             iterEnd = mWidgetList.end();
             continue;
         }
+        ++iter;
+    }
 
-        else if (!(*iter)->IsEnable())
+    auto    riter = mWidgetList.rbegin();
+    auto    riterEnd = mWidgetList.rend();
+
+    for (; riter != riterEnd;)
+    {
+        if (!(*riter)->IsEnable())
         {
-            ++iter;
+            ++riter;
             continue;
         }
 
-        if ((*iter)->CollisionMouse(Result, MousePos))
+        if ((*riter)->CollisionMouse(Result, MousePos))
         {
             return true;
         }
-        ++iter;
+        ++riter;
     }
 
     return false;
@@ -147,7 +154,7 @@ bool CUserWidget::CollisionMouse(CWidget** Result, const FVector2D& MousePos)
 bool CUserWidget::SortCollision(const CSharedPtr<CWidget>& Src,
     const CSharedPtr<CWidget>& Dest)
 {
-    return Src->GetZOrder() > Dest->GetZOrder();
+    return Src->GetZOrder() < Dest->GetZOrder();
 }
 
 bool CUserWidget::SortRender(const CSharedPtr<CWidget>& Src, 
