@@ -205,6 +205,9 @@
     <Filter Include="10. UI\02. UserWidget\02. Start">
       <UniqueIdentifier>{a909ac2a-d06f-427a-9b61-85d87fe726b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="07. Component\02. NonSceneComponent\03. TileMap">
+      <UniqueIdentifier>{57161331-24b5-4761-a438-f929fb0e214f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -515,6 +518,18 @@
     </ClCompile>
     <ClCompile Include="UI\UserWidget\StartWidget.cpp">
       <Filter>10. UI\02. UserWidget\02. Start</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UserWidget\MouseWidget.cpp">
+      <Filter>10. UI\02. UserWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SceneEditor.cpp">
+      <Filter>05. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\TileMapComponent.cpp">
+      <Filter>07. Component\02. NonSceneComponent\03. TileMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\Tile.cpp">
+      <Filter>07. Component\02. NonSceneComponent\03. TileMap</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -871,6 +886,18 @@
     </ClInclude>
     <ClInclude Include="UI\UserWidget\StartWidget.h">
       <Filter>10. UI\02. UserWidget\02. Start</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UserWidget\MouseWidget.h">
+      <Filter>10. UI\02. UserWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneEditor.h">
+      <Filter>05. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\TileMapComponent.h">
+      <Filter>07. Component\02. NonSceneComponent\03. TileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\Tile.h">
+      <Filter>07. Component\02. NonSceneComponent\03. TileMap</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -18,8 +18,20 @@ protected:
 	CSceneComponent* mParent = nullptr;
 	EComponentRender	mRenderType = EComponentRender::None;
 	std::vector<CSharedPtr<CSceneComponent>>	mChildList;
+	std::string			mRenderLayerName;
 
 public:
+	const std::string& GetRenderLayerName()	const
+	{
+		return mRenderLayerName;
+	}
+
+public:
+	void SetRenderLayerName(const std::string& Name)
+	{
+		mRenderLayerName = Name;
+	}
+
 	void AddChild(CSceneComponent* Child);
 
 public:

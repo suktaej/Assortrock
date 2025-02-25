@@ -71,5 +71,23 @@ public:
 
 		return Widget;
 	}
+
+
+public:
+	template <typename T>
+	static T* CreateWidgetStatic(const std::string& Name)
+	{
+		T* Widget = new T;
+
+		Widget->mName = Name;
+
+		if (!Widget->Init())
+		{
+			SAFE_DELETE(Widget);
+			return nullptr;
+		}
+
+		return Widget;
+	}
 };
 

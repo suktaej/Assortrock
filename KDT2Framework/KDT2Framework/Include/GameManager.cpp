@@ -77,16 +77,16 @@ bool CGameManager::Init(HINSTANCE hInst)
     if (!CShaderManager::GetInst()->Init())
         return false;
 
-    // Render 관리자 초기화
-    if (!CRenderManager::GetInst()->Init())
-        return false;
-
     // 애셋 관리자 초기화
     if (!CAssetManager::GetInst()->Init())
         return false;
 
     // Profile 관리자 초기화
     if (!CProfileManager::GetInst()->Init())
+        return false;
+
+    // Render 관리자 초기화
+    if (!CRenderManager::GetInst()->Init())
         return false;
 
     // 타이머 초기화
@@ -169,6 +169,7 @@ bool CGameManager::Update(float DeltaTime)
         CLog::SaveLog();
     }
 
+    CRenderManager::GetInst()->Update(DeltaTime);
 
     return CSceneManager::GetInst()->Update(DeltaTime);
 }

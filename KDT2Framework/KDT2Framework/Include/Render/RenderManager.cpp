@@ -5,6 +5,8 @@
 #include "../Device.h"
 #include "../Scene/Scene.h"
 #include "../Scene/SceneManager.h"
+#include "../Scene/SceneUIManager.h"
+#include "../UI/UserWidget/MouseWidget.h"
 
 DEFINITION_SINGLE(CRenderManager)
 
@@ -14,22 +16,55 @@ CRenderManager::CRenderManager()
 
 CRenderManager::~CRenderManager()
 {
+	auto	iter = mLayerList.begin();
+	auto	iterEnd = mLayerList.end();
+
+	for (; iter != iterEnd; ++iter)
+	{
+		SAFE_DELETE(iter->second);
+	}
+
 	SAFE_RELEASE(mSampler);
 	SAFE_DELETE(mStateManager);
 }
 
 void CRenderManager::AddRenderList(CSceneComponent* Component)
 {
-	mRenderList.emplace_back(Component);
+	FRenderLayer* Layer = FindLayer(Component->GetRenderLayerName());
+
+	if (!Layer)
+		return;
+
+	Layer->RenderList.emplace_back(Component);
 }
 
 void CRenderManager::ClearRenderList()
 {
-	mRenderList.clear();
+	auto	iter = mLayerList.begin();
+	auto	iterEnd = mLayerList.end();
+
+	for (; iter != iterEnd; ++iter)
+	{
+		iter->second->RenderList.clear();
+	}
+}
+
+void CRenderManager::SetMouseWidget(CWidget* Widget)
+{
+	mMouseWidget = Widget;
+
+	if (mMouseWidget)
+		ShowCursor(FALSE);
+
+	else
+		ShowCursor(TRUE);
 }
 
 bool CRenderManager::Init()
 {
+	CreateRenderLayer("BackGround", INT_MIN);
+	CreateRenderLayer("Object", 0);
+
 	mStateManager = new CRenderStateManager;
 
 	mStateManager->Init();
@@ -55,25 +90,21 @@ bool CRenderManager::Init()
 
 	mDepthDisable = mStateManager->FindState("DepthDisable");
 
+	mMouseWidget = CSceneUIManager::CreateWidgetStatic<CMouseWidget>("Mouse");
+
+	ShowCursor(FALSE);
+
 	return true;
+}
+
+void CRenderManager::Update(float DeltaTime)
+{
+	if (mMouseWidget)
+		mMouseWidget->Update(DeltaTime);
 }
 
 void CRenderManager::Render()
 {
-	switch (mRenderSortType)
-	{
-	case ERenderSortType::None:
-		break;
-	case ERenderSortType::Y:
-		if (mRenderList.size() > 1)
-			mRenderList.sort(CRenderManager::SortY);
-		break;
-	case ERenderSortType::Alpha:
-		if (mRenderList.size() > 1)
-			mRenderList.sort(CRenderManager::SortAlpha);
-		break;
-	}
-
 	CDevice::GetInst()->GetContext()->PSSetSamplers(0,
 		1, &mSampler);
 
@@ -81,39 +112,98 @@ void CRenderManager::Render()
 
 	mDepthDisable->SetState();
 
-	auto	iter = mRenderList.begin();
-	auto	iterEnd = mRenderList.end();
+	auto	iter = mLayerList.begin();
+	auto	iterEnd = mLayerList.end();
 
-	for (; iter != iterEnd;)
+	for (; iter != iterEnd; ++iter)
 	{
-		if (!(*iter)->IsActive())
+		FRenderLayer* Layer = iter->second;
+
+		switch (mRenderSortType)
 		{
-			iter = mRenderList.erase(iter);
-			iterEnd = mRenderList.end();
-			continue;
+		case ERenderSortType::None:
+			break;
+		case ERenderSortType::Y:
+			if (Layer->RenderList.size() > 1)
+				Layer->RenderList.sort(CRenderManager::SortY);
+			break;
+		case ERenderSortType::Alpha:
+			if (Layer->RenderList.size() > 1)
+				Layer->RenderList.sort(CRenderManager::SortAlpha);
+			break;
 		}
 
-		else if (!(*iter)->IsEnable())
+		auto	iter1 = Layer->RenderList.begin();
+		auto	iter1End = Layer->RenderList.end();
+
+		for (; iter1 != iter1End;)
 		{
-			++iter;
-			continue;
+			if (!(*iter1)->IsActive())
+			{
+				iter1 = Layer->RenderList.erase(iter1);
+				iter1End = Layer->RenderList.end();
+				continue;
+			}
+
+			else if (!(*iter1)->IsEnable())
+			{
+				++iter1;
+				continue;
+			}
+
+			(*iter1)->PreRender();
+
+			(*iter1)->Render();
+
+			(*iter1)->PostRender();
+
+			++iter1;
 		}
-
-		(*iter)->PreRender();
-
-		(*iter)->Render();
-
-		(*iter)->PostRender();
-
-		++iter;
 	}
 
 	// UI 출력
 	CSceneManager::GetInst()->RenderUI();
 
+
+	// 마우스 출력
+	if (mMouseWidget)
+		mMouseWidget->Render();
+
 	mDepthDisable->ResetState();
 
 	mAlphaBlend->ResetState();
+}
+
+bool CRenderManager::CreateRenderLayer(const std::string& Name, 
+	int ZOrder)
+{
+	FRenderLayer* Layer = FindLayer(Name);
+
+	if (Layer)
+		return false;
+
+	Layer = new FRenderLayer;
+
+	Layer->ZOrder = ZOrder;
+
+	mLayerList.insert(std::make_pair(ZOrder, Layer));
+	mLayerNameList[Name] = ZOrder;
+
+	return true;
+}
+
+FRenderLayer* CRenderManager::FindLayer(const std::string& Name)
+{
+	auto	iter1 = mLayerNameList.find(Name);
+
+	if (iter1 == mLayerNameList.end())
+		return nullptr;
+
+	int	ZOrder = iter1->second;
+
+	auto	iter = mLayerList.find(ZOrder);
+
+	return iter->second;
 }
 
 bool CRenderManager::SortY(

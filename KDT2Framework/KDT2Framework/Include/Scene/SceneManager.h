@@ -9,6 +9,12 @@ private:
 	class CScene* mLoadScene = nullptr;
 
 public:
+	class CScene* GetCurrentScene()	const
+	{
+		return mCurrentScene;
+	}
+
+public:
 	bool Init();
 	void Input(float DeltaTime);
 	bool Update(float DeltaTime);

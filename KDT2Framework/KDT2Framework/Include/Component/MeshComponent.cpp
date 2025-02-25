@@ -7,6 +7,7 @@
 CMeshComponent::CMeshComponent()
 {
     mRenderType = EComponentRender::Render;
+    mRenderLayerName = "Object";
 }
 
 CMeshComponent::CMeshComponent(const CMeshComponent& Com)   :
