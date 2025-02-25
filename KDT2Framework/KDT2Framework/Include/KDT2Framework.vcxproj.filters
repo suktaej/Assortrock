@@ -208,6 +208,9 @@
     <Filter Include="07. Component\02. NonSceneComponent\03. TileMap">
       <UniqueIdentifier>{57161331-24b5-4761-a438-f929fb0e214f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="07. Component\01. SceneComponent\07. TileMap">
+      <UniqueIdentifier>{0deeb0cb-c6a2-42c2-b435-7d2768660bd4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -530,6 +533,9 @@
     </ClCompile>
     <ClCompile Include="Component\Tile.cpp">
       <Filter>07. Component\02. NonSceneComponent\03. TileMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\TileMapRendererComponent.cpp">
+      <Filter>07. Component\01. SceneComponent\07. TileMap</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -898,6 +904,9 @@
     </ClInclude>
     <ClInclude Include="Component\Tile.h">
       <Filter>07. Component\02. NonSceneComponent\03. TileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\TileMapRendererComponent.h">
+      <Filter>07. Component\01. SceneComponent\07. TileMap</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

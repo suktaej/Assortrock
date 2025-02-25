@@ -317,3 +317,9 @@ struct FItemData
 	EItemType		Type;
 	CSharedPtr<class CTexture>	Icon;
 };
+
+enum class ETileType
+{
+	None,
+	UnableToMove
+};

@@ -103,6 +103,40 @@ public:
 		return Component;
 	}
 
+	template <typename T>
+	T* FindNonSceneComponent()
+	{
+		auto	iter = mNonComponentList.begin();
+		auto	iterEnd = mNonComponentList.end();
+
+		for (; iter != iterEnd; ++iter)
+		{
+			T* Com = dynamic_cast<T*>((*iter).Get());
+
+			if (Com)
+				return Com;
+		}
+
+		return nullptr;
+	}
+
+	template <typename T>
+	T* FindSceneComponent()
+	{
+		auto	iter = mSceneComponentList.begin();
+		auto	iterEnd = mSceneComponentList.end();
+
+		for (; iter != iterEnd; ++iter)
+		{
+			T* Com = dynamic_cast<T*>((*iter).Get());
+
+			if (Com)
+				return Com;
+		}
+
+		return nullptr;
+	}
+
 
 
 public:

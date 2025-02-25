@@ -1,4 +1,6 @@
 #include "TileMapComponent.h"
+#include "TileMapRendererComponent.h"
+#include "../Object/SceneObject.h"
 
 CTileMapComponent::CTileMapComponent()
 {
@@ -22,12 +24,22 @@ bool CTileMapComponent::Init()
 {
     CComponent::Init();
 
+    CTileMapRendererComponent* Renderer =
+        mOwnerObject->FindSceneComponent<CTileMapRendererComponent>();
+
+    Renderer->SetTileMapComponent(this);
+
     return true;
 }
 
 bool CTileMapComponent::Init(const char* FileName)
 {
     CComponent::Init(FileName);
+
+    CTileMapRendererComponent* Renderer =
+        mOwnerObject->FindSceneComponent<CTileMapRendererComponent>();
+
+    Renderer->SetTileMapComponent(this);
 
     return true;
 }
