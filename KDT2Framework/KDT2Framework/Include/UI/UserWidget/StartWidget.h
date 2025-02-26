@@ -13,6 +13,7 @@ protected:
 
 protected:
 	CSharedPtr<class CButton>	mStartButton;
+	CSharedPtr<class CButton>	mEditorButton;
 	CSharedPtr<class CButton>	mExitButton;
 
 public:
@@ -20,6 +21,7 @@ public:
 
 private:
 	void StartButtonClick();
+	void EditorButtonClick();
 	void ExitButtonClick();
 };
 

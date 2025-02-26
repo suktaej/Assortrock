@@ -55,6 +55,23 @@ bool CMeshManager::Init()
         sizeof(unsigned short), 6, DXGI_FORMAT_R16_UINT))
         return false;
 
+    FVector3D    FrameLBRect[4] =
+    {
+        FVector3D(0.f, 1.f, 0.f),
+        FVector3D(1.f, 1.f, 0.f),
+        FVector3D(0.f, 0.f, 0.f),
+        FVector3D(1.f, 0.f, 0.f),
+    };
+
+    unsigned short FrameRectIdx[5] = { 0, 1, 3, 2, 0 };
+
+    if (!CreateMesh("FrameLBRect", FrameLBRect,
+        sizeof(FVector3D),
+        4, D3D11_USAGE_DEFAULT,
+        D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP, FrameRectIdx,
+        sizeof(unsigned short), 5, DXGI_FORMAT_R16_UINT))
+        return false;
+
     FVector3D    FrameCenterRect[4] =
     {
         FVector3D(-0.5f, 0.5f, 0.f),
@@ -62,8 +79,6 @@ bool CMeshManager::Init()
         FVector3D(-0.5f, -0.5f, 0.f),
         FVector3D(0.5f, -0.5f, 0.f),
     };
-
-    unsigned short FrameRectIdx[5] = { 0, 1, 3, 2, 0 };
 
     if (!CreateMesh("FrameCenterRect", FrameCenterRect, 
         sizeof(FVector3D),

@@ -21,13 +21,8 @@ protected:
 	CSharedPtr<class CTexture>		mTileTexture;
 	class CTileMapComponent* mTileMap = nullptr;
 
-	class CSpriteCBuffer* mSpriteCBuffer;
-
 public:
-	void SetTileMapComponent(CTileMapComponent* TileMap)
-	{
-		mTileMap = TileMap;
-	}
+	void SetTileMapComponent(CTileMapComponent* TileMap);
 
 	void SetShader(const std::string& Name);
 	void SetShader(class CShader* Shader);

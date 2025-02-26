@@ -189,6 +189,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object\BulletDot.cpp" />
     <ClCompile Include="Object\BulletObject.cpp" />
+    <ClCompile Include="Object\EditorPlayer.cpp" />
     <ClCompile Include="Object\GravityBullet.cpp" />
     <ClCompile Include="Object\GunnerMonster.cpp" />
     <ClCompile Include="Object\MonsterObject.cpp" />
@@ -199,6 +200,7 @@
     <ClCompile Include="Object\SceneObject.cpp" />
     <ClCompile Include="Object\SpriteEffect.cpp" />
     <ClCompile Include="Object\TalonR.cpp" />
+    <ClCompile Include="Object\TileMapObj.cpp" />
     <ClCompile Include="Object\TornadoBullet.cpp" />
     <ClCompile Include="ProfileManager.cpp" />
     <ClCompile Include="Render\BlendState.cpp" />
@@ -231,6 +233,7 @@
     <ClCompile Include="Shader\SpriteCBuffer.cpp" />
     <ClCompile Include="Shader\SpriteShader.cpp" />
     <ClCompile Include="Shader\StaticMeshShader.cpp" />
+    <ClCompile Include="Shader\TileMapShader.cpp" />
     <ClCompile Include="Shader\TransformCBuffer.cpp" />
     <ClCompile Include="Shader\UICBuffer.cpp" />
     <ClCompile Include="Shader\UIShader.cpp" />
@@ -309,6 +312,7 @@
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Object\BulletDot.h" />
     <ClInclude Include="Object\BulletObject.h" />
+    <ClInclude Include="Object\EditorPlayer.h" />
     <ClInclude Include="Object\GravityBullet.h" />
     <ClInclude Include="Object\GunnerMonster.h" />
     <ClInclude Include="Object\MonsterObject.h" />
@@ -319,6 +323,7 @@
     <ClInclude Include="Object\SceneObject.h" />
     <ClInclude Include="Object\SpriteEffect.h" />
     <ClInclude Include="Object\TalonR.h" />
+    <ClInclude Include="Object\TileMapObj.h" />
     <ClInclude Include="Object\TornadoBullet.h" />
     <ClInclude Include="ProfileManager.h" />
     <ClInclude Include="Render\BlendState.h" />
@@ -353,6 +358,7 @@
     <ClInclude Include="Shader\SpriteCBuffer.h" />
     <ClInclude Include="Shader\SpriteShader.h" />
     <ClInclude Include="Shader\StaticMeshShader.h" />
+    <ClInclude Include="Shader\TileMapShader.h" />
     <ClInclude Include="Shader\TransformCBuffer.h" />
     <ClInclude Include="Shader\UICBuffer.h" />
     <ClInclude Include="Shader\UIShader.h" />
@@ -431,6 +437,20 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">SpriteVS</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="..\Bin\Shader\TileMap.fx">
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TileMapVS</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TileMapVS</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TileMapVS</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TileMapVS</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Effect</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>

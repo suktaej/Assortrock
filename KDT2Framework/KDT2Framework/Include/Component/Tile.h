@@ -22,6 +22,21 @@ public:
 		return mType;
 	}
 
+	const FVector2D& GetPos()	const
+	{
+		return mPos;
+	}
+
+	const FVector2D& GetCenter()	const
+	{
+		return mCenter;
+	}
+
+	const FVector2D& GetSize()	const
+	{
+		return mSize;
+	}
+
 public:
 	void SetTileType(ETileType Type)
 	{

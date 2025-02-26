@@ -31,7 +31,20 @@ CTileMapRendererComponent::CTileMapRendererComponent(CTileMapRendererComponent&&
 
 CTileMapRendererComponent::~CTileMapRendererComponent()
 {
-    SAFE_DELETE(mSpriteCBuffer);
+}
+
+void CTileMapRendererComponent::SetTileMapComponent(
+    CTileMapComponent* TileMap)
+{
+    mTileMap = TileMap;
+
+    if (mTileMap)
+    {
+        FVector2D   Scale;
+        Scale.x = mTileMap->GetTileSize().x * mTileMap->GetTileCountX();
+        Scale.y = mTileMap->GetTileSize().y * mTileMap->GetTileCountY();
+        SetWorldScale(Scale);
+    }
 }
 
 void CTileMapRendererComponent::SetShader(const std::string& Name)
@@ -120,6 +133,22 @@ bool CTileMapRendererComponent::Init()
 
     mTileMap = mOwnerObject->FindNonSceneComponent<CTileMapComponent>();
 
+    if (mTileMap)
+    {
+        FVector2D   Scale;
+        Scale.x = mTileMap->GetTileSize().x * mTileMap->GetTileCountX();
+        Scale.y = mTileMap->GetTileSize().y * mTileMap->GetTileCountY();
+        SetWorldScale(Scale);
+    }
+
+    SetShader("TileMapShader");
+
+    if (mScene)
+        mMesh = mScene->GetAssetManager()->FindMesh("SpriteRect");
+
+    else
+        mMesh = CAssetManager::GetInst()->GetMeshManager()->FindMesh("SpriteRect");
+
     return true;
 }
 
@@ -128,6 +157,22 @@ bool CTileMapRendererComponent::Init(const char* FileName)
     CSceneComponent::Init(FileName);
 
     mTileMap = mOwnerObject->FindNonSceneComponent<CTileMapComponent>();
+
+    if (mTileMap)
+    {
+        FVector2D   Scale;
+        Scale.x = mTileMap->GetTileSize().x * mTileMap->GetTileCountX();
+        Scale.y = mTileMap->GetTileSize().y * mTileMap->GetTileCountY();
+        SetWorldScale(Scale);
+    }
+
+    SetShader("TileMapShader");
+
+    if (mScene)
+        mMesh = mScene->GetAssetManager()->FindMesh("SpriteRect");
+
+    else
+        mMesh = CAssetManager::GetInst()->GetMeshManager()->FindMesh("SpriteRect");
 
     return true;
 }
@@ -160,6 +205,38 @@ void CTileMapRendererComponent::PreRender()
 void CTileMapRendererComponent::Render()
 {
     CSceneComponent::Render();
+
+    if (mBackTexture)
+    {
+        mTransformCBuffer->SetWorldMatrix(mmatWorld);
+
+        FMatrix matView, matProj;
+        matView = mScene->GetCameraManager()->GetViewMatrix();
+        matProj = mScene->GetCameraManager()->GetProjMatrix();
+
+        mTransformCBuffer->SetViewMatrix(matView);
+        mTransformCBuffer->SetProjMatrix(matProj);
+        mTransformCBuffer->SetPivot(mPivot);
+
+        mTransformCBuffer->UpdateBuffer();
+
+        mShader->SetShader();
+
+        if (mBackTexture)
+        {
+            mBackTexture->SetShader(0, EShaderBufferType::Pixel,
+                0);
+        }
+
+        mMesh->Render();
+    }
+
+    // 타일 외곽선 출력
+    if (mTileMap)
+    {
+        mTileMap->RenderTile();
+        mTileMap->RenderTileOutLine();
+    }
 }
 
 void CTileMapRendererComponent::PostRender()

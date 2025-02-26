@@ -45,7 +45,6 @@ CColliderBase::~CColliderBase()
 
 #ifdef _DEBUG
 
-    SAFE_DELETE(mTransformCBuffer);
     SAFE_DELETE(mCBuffer);
 
 #endif // _DEBUG
@@ -127,10 +126,6 @@ bool CColliderBase::Init()
     mCBuffer = new CColliderCBuffer;
 
     mCBuffer->Init();
-
-    mTransformCBuffer = new CTransformCBuffer;
-
-    mTransformCBuffer->Init();
 
 #endif // _DEBUG
 

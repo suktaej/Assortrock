@@ -49,7 +49,7 @@ public:
 	virtual void EndFrame();
 
 protected:
-	class CTransformCBuffer* mTransformCBuffer;
+	class CTransformCBuffer* mTransformCBuffer = nullptr;
 	FVector3D	mRelativeScale = FVector3D(1.f, 1.f, 1.f);
 	FVector3D	mRelativeRot;
 	FVector3D	mRelativePos;

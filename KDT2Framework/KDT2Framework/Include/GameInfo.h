@@ -318,6 +318,12 @@ struct FItemData
 	CSharedPtr<class CTexture>	Icon;
 };
 
+enum class ETileShape
+{
+	Rect,
+	Isometric
+};
+
 enum class ETileType
 {
 	None,

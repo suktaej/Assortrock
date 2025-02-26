@@ -53,7 +53,7 @@ bool CSoundManager::Init()
 	/*CSound* BGM = FindSound("BGM");
 
 	BGM->Play();*/
-	Play("BGM");
+	//Play("BGM");
 	
 	/*Play("BGM");
 	Play("Effect1");

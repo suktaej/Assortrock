@@ -6,6 +6,7 @@
 #include "../Device.h"
 #include "SpriteShader.h"
 #include "UIShader.h"
+#include "TileMapShader.h"
 
 DEFINITION_SINGLE(CShaderManager)
 
@@ -35,6 +36,8 @@ bool CShaderManager::Init()
 	CreateShader<CSpriteShader>("SpriteShader");
 
 	CreateShader<CUIShader>("UIShader");
+
+	CreateShader<CTileMapShader>("TileMapShader");
 
 
 

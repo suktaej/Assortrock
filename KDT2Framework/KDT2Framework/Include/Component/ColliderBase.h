@@ -31,7 +31,6 @@ protected:
 
 #ifdef _DEBUG
 
-	class CTransformCBuffer* mTransformCBuffer = nullptr;
 	class CColliderCBuffer* mCBuffer = nullptr;
 	CSharedPtr<class CMesh> mMesh;
 	CSharedPtr<class CShader> mShader;
