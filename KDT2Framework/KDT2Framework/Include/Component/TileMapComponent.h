@@ -52,6 +52,28 @@ public:
 	void SetTileOutLineRender(bool Render);
 
 public:
+	int GetTileIndexX(const FVector3D& Pos)	const;
+	int GetTileIndexX(const FVector2D& Pos)	const;
+	int GetTileIndexX(float x)	const;
+
+	int GetTileIndexY(const FVector3D& Pos)	const;
+	int GetTileIndexY(const FVector2D& Pos)	const;
+	int GetTileIndexY(float y)	const;
+
+	int GetTileIndex(const FVector3D& Pos)	const;
+	int GetTileIndex(const FVector2D& Pos)	const;
+	int GetTileIndex(float x, float y)	const;
+
+	const CTile* GetTile(const FVector3D& Pos)	const;
+	const CTile* GetTile(const FVector2D& Pos)	const;
+	const CTile* GetTile(float x, float y)	const;
+
+	ETileType ChangeTileType(ETileType Type, const FVector3D& Pos);
+	ETileType ChangeTileType(ETileType Type, const FVector2D& Pos);
+	ETileType ChangeTileType(ETileType Type, float x, float y);
+	ETileType ChangeTileType(ETileType Type, int Index);
+
+public:
 	virtual bool Init();
 	virtual bool Init(const char* FileName);
 	virtual void PreUpdate(float DeltaTime);

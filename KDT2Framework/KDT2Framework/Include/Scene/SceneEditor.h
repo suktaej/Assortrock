@@ -11,9 +11,15 @@ private:
 	CSceneEditor();
 	virtual ~CSceneEditor();
 
+private:
+	CSharedPtr<class CTileMapObj>	mTileMapObj;
+
 protected:
 	virtual bool InitAsset();
 	virtual bool InitObject();
 	virtual bool InitWidget();
+
+private:
+	void TileTypeKey(float DeltaTime);
 };
 

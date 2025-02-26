@@ -11,7 +11,7 @@ private:
 	~CTile();
 
 private:
-	ETileType	mType = ETileType::None;
+	ETileType	mType = ETileType::Normal;
 	FVector2D	mPos;
 	FVector2D	mSize;
 	FVector2D	mCenter;

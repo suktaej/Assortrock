@@ -62,6 +62,224 @@ void CTileMapComponent::SetTileOutLineRender(bool Render)
     }
 }
 
+int CTileMapComponent::GetTileIndexX(const FVector3D& Pos) const
+{
+    float Convert = Pos.x -
+        mOwnerObject->GetWorldPosition().x;
+
+    float   Value = Convert / mTileSize.x;
+
+    if (Value < 0.f)
+        return -1;
+
+    int Index = (int)Value;
+
+    return (Index < 0 || Index >= mCountX) ? -1 : Index;
+}
+
+int CTileMapComponent::GetTileIndexX(const FVector2D& Pos) const
+{
+    float Convert = Pos.x -
+        mOwnerObject->GetWorldPosition().x;
+
+    float   Value = Convert / mTileSize.x;
+
+    if (Value < 0.f)
+        return -1;
+
+    int Index = (int)Value;
+
+    return (Index < 0 || Index >= mCountX) ? -1 : Index;
+}
+
+int CTileMapComponent::GetTileIndexX(float x) const
+{
+    float Convert = x - mOwnerObject->GetWorldPosition().x;
+
+    float   Value = Convert / mTileSize.x;
+
+    if (Value < 0.f)
+        return -1;
+
+    int Index = (int)Value;
+
+    return (Index < 0 || Index >= mCountX) ? -1 : Index;
+}
+
+int CTileMapComponent::GetTileIndexY(const FVector3D& Pos) const
+{
+    float Convert = Pos.y -
+        mOwnerObject->GetWorldPosition().y;
+
+    float   Value = Convert / mTileSize.y;
+
+    if (Value < 0.f)
+        return -1;
+
+    int Index = (int)Value;
+
+    return (Index < 0 || Index >= mCountY) ? -1 : Index;
+}
+
+int CTileMapComponent::GetTileIndexY(const FVector2D& Pos) const
+{
+    float Convert = Pos.y -
+        mOwnerObject->GetWorldPosition().y;
+
+    float   Value = Convert / mTileSize.y;
+
+    if (Value < 0.f)
+        return -1;
+
+    int Index = (int)Value;
+
+    return (Index < 0 || Index >= mCountY) ? -1 : Index;
+}
+
+int CTileMapComponent::GetTileIndexY(float y) const
+{
+    float Convert = y - mOwnerObject->GetWorldPosition().y;
+
+    float   Value = Convert / mTileSize.y;
+
+    if (Value < 0.f)
+        return -1;
+
+    int Index = (int)Value;
+
+    return (Index < 0 || Index >= mCountY) ? -1 : Index;
+}
+
+int CTileMapComponent::GetTileIndex(const FVector3D& Pos) const
+{
+    int IndexX = GetTileIndexX(Pos.x);
+
+    if (IndexX == -1)
+        return -1;
+
+    int IndexY = GetTileIndexY(Pos.y);
+
+    if (IndexY == -1)
+        return -1;
+
+    return IndexY * mCountX + IndexX;
+}
+
+int CTileMapComponent::GetTileIndex(const FVector2D& Pos) const
+{
+    int IndexX = GetTileIndexX(Pos.x);
+
+    if (IndexX == -1)
+        return -1;
+
+    int IndexY = GetTileIndexY(Pos.y);
+
+    if (IndexY == -1)
+        return -1;
+
+    return IndexY * mCountX + IndexX;
+}
+
+int CTileMapComponent::GetTileIndex(float x, float y) const
+{
+    int IndexX = GetTileIndexX(x);
+
+    if (IndexX == -1)
+        return -1;
+
+    int IndexY = GetTileIndexY(y);
+
+    if (IndexY == -1)
+        return -1;
+
+    return IndexY * mCountX + IndexX;
+}
+
+const CTile* CTileMapComponent::GetTile(const FVector3D& Pos) const
+{
+    int Index = GetTileIndex(Pos);
+
+    if (Index == -1)
+        return nullptr;
+
+    return mTileList[Index];
+}
+
+const CTile* CTileMapComponent::GetTile(const FVector2D& Pos) const
+{
+    int Index = GetTileIndex(Pos);
+
+    if (Index == -1)
+        return nullptr;
+
+    return mTileList[Index];
+}
+
+const CTile* CTileMapComponent::GetTile(float x, float y) const
+{
+    int Index = GetTileIndex(x, y);
+
+    if (Index == -1)
+        return nullptr;
+
+    return mTileList[Index];
+}
+
+ETileType CTileMapComponent::ChangeTileType(ETileType Type,
+    const FVector3D& Pos)
+{
+    int Index = GetTileIndex(Pos);
+
+    if (Index == -1)
+        return ETileType::None;
+
+    ETileType   PrevType = mTileList[Index]->GetType();
+
+    mTileList[Index]->SetTileType(Type);
+
+    return PrevType;
+}
+
+ETileType CTileMapComponent::ChangeTileType(ETileType Type,
+    const FVector2D& Pos)
+{
+    int Index = GetTileIndex(Pos);
+
+    if (Index == -1)
+        return ETileType::None;
+
+    ETileType   PrevType = mTileList[Index]->GetType();
+
+    mTileList[Index]->SetTileType(Type);
+
+    return PrevType;
+}
+
+ETileType CTileMapComponent::ChangeTileType(ETileType Type,
+    float x, float y)
+{
+    int Index = GetTileIndex(x, y);
+
+    if (Index == -1)
+        return ETileType::None;
+
+    ETileType   PrevType = mTileList[Index]->GetType();
+
+    mTileList[Index]->SetTileType(Type);
+
+    return PrevType;
+}
+
+ETileType CTileMapComponent::ChangeTileType(ETileType Type, 
+    int Index)
+{
+    ETileType   PrevType = mTileList[Index]->GetType();
+
+    mTileList[Index]->SetTileType(Type);
+
+    return PrevType;
+}
+
 bool CTileMapComponent::Init()
 {
     CComponent::Init();
@@ -115,6 +333,10 @@ void CTileMapComponent::Update(float DeltaTime)
 
     // 화면의 Min, Max를 구한다.
     FVector3D   Center = mScene->GetCameraManager()->GetCameraWorldPos();
+
+    // 타일맵의 시작점 좌표를 빼준다.
+    Center -= mOwnerObject->GetWorldPosition();
+
     FResolution RS = CDevice::GetInst()->GetResolution();
 
     mViewStartX = (int)((Center.x - RS.Width * 0.5f) / mTileSize.x);
@@ -196,11 +418,14 @@ void CTileMapComponent::RenderTileOutLine()
 
             switch (mTileList[Index]->GetType())
             {
-            case ETileType::None:
+            case ETileType::Normal:
                 mColorCBuffer->SetColor(0.f, 1.f, 0.f, 1.f);
                 break;
             case ETileType::UnableToMove:
                 mColorCBuffer->SetColor(1.f, 0.f, 0.f, 1.f);
+                break;
+            case ETileType::MouseOver:
+                mColorCBuffer->SetColor(1.f, 1.f, 0.f, 1.f);
                 break;
             }
 

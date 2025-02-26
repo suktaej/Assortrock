@@ -321,11 +321,15 @@ struct FItemData
 enum class ETileShape
 {
 	Rect,
-	Isometric
+	Isometric,
+	End
 };
 
 enum class ETileType
 {
-	None,
-	UnableToMove
+	None = -2,
+	MouseOver,
+	Normal,
+	UnableToMove,
+	End
 };
