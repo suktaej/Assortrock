@@ -22,6 +22,17 @@ protected:
 	class CTileMapComponent* mTileMap = nullptr;
 
 public:
+	CTexture* GetBackTexture()	const
+	{
+		return mBackTexture;
+	}
+
+	CTexture* GetTileTexture()	const
+	{
+		return mTileTexture;
+	}
+
+public:
 	void SetTileMapComponent(CTileMapComponent* TileMap);
 
 	void SetShader(const std::string& Name);

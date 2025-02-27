@@ -21,9 +21,18 @@ private:
     ETileType       mEditTileType = ETileType::Normal;
     ETileType       mOnMousePrevTileType = ETileType::None;
     int             mOnMousePrevIndex = -1;
+    EEditorMode     mEditorMode = EEditorMode::TileType;
+
+    int         mEditTileFrame = 0;
 
 public:
+    void SetEditorMode(EEditorMode Mode)
+    {
+        mEditorMode = Mode;
+    }
+
     void AddTileType();
+    void AddTileFrame();
 
 public:
     virtual bool Init();

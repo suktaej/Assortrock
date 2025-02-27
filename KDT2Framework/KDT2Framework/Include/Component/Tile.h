@@ -15,8 +15,14 @@ private:
 	FVector2D	mPos;
 	FVector2D	mSize;
 	FVector2D	mCenter;
+	int			mTextureFrame = -1;
 
 public:
+	int GetTextureFrame()	const
+	{
+		return mTextureFrame;
+	}
+
 	ETileType GetType()	const
 	{
 		return mType;
@@ -42,5 +48,14 @@ public:
 	{
 		mType = Type;
 	}
+
+	void SetTextureFrame(int Frame)
+	{
+		mTextureFrame = Frame;
+	}
+
+public:
+	void Save(FILE* File);
+	void Load(FILE* File);
 };
 

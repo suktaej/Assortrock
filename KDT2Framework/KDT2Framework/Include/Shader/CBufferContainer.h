@@ -53,3 +53,9 @@ struct FUICBufferInfo
     int         BrushTextureEnable;
     FVector2D   BrushEmpty;
 };
+
+struct FTileMapCBufferInfo
+{
+    FVector2D   LTUV;
+    FVector2D   RBUV;
+};

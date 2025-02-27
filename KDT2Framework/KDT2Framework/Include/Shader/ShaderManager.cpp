@@ -7,6 +7,7 @@
 #include "SpriteShader.h"
 #include "UIShader.h"
 #include "TileMapShader.h"
+#include "TileShader.h"
 
 DEFINITION_SINGLE(CShaderManager)
 
@@ -39,6 +40,8 @@ bool CShaderManager::Init()
 
 	CreateShader<CTileMapShader>("TileMapShader");
 
+	CreateShader<CTileShader>("TileShader");
+
 
 
 	if (!LoadPixelShader("DefaultMaterialShader",
@@ -69,6 +72,10 @@ bool CShaderManager::Init()
 	CreateConstantBuffer("UI",
 		sizeof(FUICBufferInfo),
 		3, EShaderBufferType::Vertex | EShaderBufferType::Pixel);
+
+	CreateConstantBuffer("TileMap",
+		sizeof(FTileMapCBufferInfo),
+		3, EShaderBufferType::Vertex);
 
 	return true;
 }

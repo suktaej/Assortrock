@@ -333,3 +333,10 @@ enum class ETileType
 	UnableToMove,
 	End
 };
+
+enum class EEditorMode
+{
+	TileType,
+	TileImage,
+	End
+};

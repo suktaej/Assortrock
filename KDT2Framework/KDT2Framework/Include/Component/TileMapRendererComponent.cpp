@@ -99,6 +99,13 @@ void CTileMapRendererComponent::SetTileTexture(const std::string& Name)
 
     else
         mTileTexture = CAssetManager::GetInst()->GetTextureManager()->FindTexture(Name);
+
+    if (mTileMap && mTileTexture)
+    {
+        mTileMap->SetTileTextureSize(
+            mTileTexture->GetTexture(0)->Width,
+            mTileTexture->GetTexture(0)->Height);
+    }
 }
 
 void CTileMapRendererComponent::SetTileTexture(const std::string& Name, const TCHAR* FileName)
@@ -120,11 +127,25 @@ void CTileMapRendererComponent::SetTileTexture(const std::string& Name, const TC
         }
         mTileTexture = CAssetManager::GetInst()->GetTextureManager()->FindTexture(Name);
     }
+
+    if (mTileMap && mTileTexture)
+    {
+        mTileMap->SetTileTextureSize(
+            mTileTexture->GetTexture(0)->Width,
+            mTileTexture->GetTexture(0)->Height);
+    }
 }
 
 void CTileMapRendererComponent::SetTileTexture(CTexture* Texture)
 {
     mTileTexture = Texture;
+
+    if (mTileMap && mTileTexture)
+    {
+        mTileMap->SetTileTextureSize(
+            mTileTexture->GetTexture(0)->Width,
+            mTileTexture->GetTexture(0)->Height);
+    }
 }
 
 bool CTileMapRendererComponent::Init()
@@ -234,7 +255,13 @@ void CTileMapRendererComponent::Render()
     // 타일 외곽선 출력
     if (mTileMap)
     {
-        mTileMap->RenderTile();
+        if (mTileTexture)
+        {
+            mTileTexture->SetShader(0, EShaderBufferType::Pixel,
+                0);
+            mTileMap->RenderTile();
+        }
+
         mTileMap->RenderTileOutLine();
     }
 }

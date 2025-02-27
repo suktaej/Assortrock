@@ -233,7 +233,9 @@
     <ClCompile Include="Shader\SpriteCBuffer.cpp" />
     <ClCompile Include="Shader\SpriteShader.cpp" />
     <ClCompile Include="Shader\StaticMeshShader.cpp" />
+    <ClCompile Include="Shader\TileMapCBuffer.cpp" />
     <ClCompile Include="Shader\TileMapShader.cpp" />
+    <ClCompile Include="Shader\TileShader.cpp" />
     <ClCompile Include="Shader\TransformCBuffer.cpp" />
     <ClCompile Include="Shader\UICBuffer.cpp" />
     <ClCompile Include="Shader\UIShader.cpp" />
@@ -358,7 +360,9 @@
     <ClInclude Include="Shader\SpriteCBuffer.h" />
     <ClInclude Include="Shader\SpriteShader.h" />
     <ClInclude Include="Shader\StaticMeshShader.h" />
+    <ClInclude Include="Shader\TileMapCBuffer.h" />
     <ClInclude Include="Shader\TileMapShader.h" />
+    <ClInclude Include="Shader\TileShader.h" />
     <ClInclude Include="Shader\TransformCBuffer.h" />
     <ClInclude Include="Shader\UICBuffer.h" />
     <ClInclude Include="Shader\UIShader.h" />

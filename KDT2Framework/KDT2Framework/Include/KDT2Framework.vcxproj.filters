@@ -217,6 +217,9 @@
     <Filter Include="04. Shader\02. Shader Class\06. TileMap">
       <UniqueIdentifier>{ba5de6af-d66a-466b-ab5a-84d387448e7b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Shader\03. ConstantBuffer\07. TileMap">
+      <UniqueIdentifier>{1df436ee-07f0-4827-82c3-6f8d71fb5952}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -551,6 +554,12 @@
     </ClCompile>
     <ClCompile Include="Object\EditorPlayer.cpp">
       <Filter>06. Object\01. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\TileMapCBuffer.cpp">
+      <Filter>04. Shader\03. ConstantBuffer\07. TileMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\TileShader.cpp">
+      <Filter>04. Shader\02. Shader Class\06. TileMap</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -931,6 +940,12 @@
     </ClInclude>
     <ClInclude Include="Object\EditorPlayer.h">
       <Filter>06. Object\01. Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\TileMapCBuffer.h">
+      <Filter>04. Shader\03. ConstantBuffer\07. TileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\TileShader.h">
+      <Filter>04. Shader\02. Shader Class\06. TileMap</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

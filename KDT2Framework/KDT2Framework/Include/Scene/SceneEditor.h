@@ -13,6 +13,7 @@ private:
 
 private:
 	CSharedPtr<class CTileMapObj>	mTileMapObj;
+	EEditorMode	mEditorMode = EEditorMode::TileType;
 
 protected:
 	virtual bool InitAsset();
@@ -20,6 +21,8 @@ protected:
 	virtual bool InitWidget();
 
 private:
+	void EditorMode(float DeltaTime);
 	void TileTypeKey(float DeltaTime);
+	void TileFrameKey(float DeltaTime);
 };
 
