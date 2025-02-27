@@ -465,9 +465,9 @@ void CInput::UpdateBind(float DeltaTime)
 	{
 		// Down이 충족될 경우 등록된 함수를 호출한다.
 		if (iter->second->Key->Down &&
-			iter->second->Ctrl == mCtrl[EInputType::Down] &&
-			iter->second->Alt == mAlt[EInputType::Down] &&
-			iter->second->Shift == mShift[EInputType::Down])
+			iter->second->Ctrl == mCtrl[EInputType::Hold] &&
+			iter->second->Alt == mAlt[EInputType::Hold] &&
+			iter->second->Shift == mShift[EInputType::Hold])
 		{
 			size_t	Size = iter->second->FunctionList[EInputType::Down].size();
 

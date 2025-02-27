@@ -37,5 +37,9 @@ public:
 public:
     virtual bool Init();
     virtual void Update(float DeltaTime);
+
+public:
+    void Save(const TCHAR* FullPath);
+    void Load(const TCHAR* FullPath);
 };
 

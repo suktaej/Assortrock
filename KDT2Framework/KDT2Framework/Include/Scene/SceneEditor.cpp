@@ -2,6 +2,7 @@
 #include "../Object/TileMapObj.h"
 #include "../Object/EditorPlayer.h"
 #include "Input.h"
+#include "../GameManager.h"
 
 CSceneEditor::CSceneEditor()
 {
@@ -38,6 +39,18 @@ bool CSceneEditor::InitObject()
     mInput->AddBindFunction<CSceneEditor>("TileFrame",
         EInputType::Down, this, &CSceneEditor::TileFrameKey);
 
+    mInput->AddBindKey("Save", 'S');
+    mInput->ChangeKeyCtrl("Save", true);
+
+    mInput->AddBindFunction<CSceneEditor>("Save",
+        EInputType::Down, this, &CSceneEditor::SaveKey);
+
+    mInput->AddBindKey("Load", 'O');
+    mInput->ChangeKeyCtrl("Load", true);
+
+    mInput->AddBindFunction<CSceneEditor>("Load",
+        EInputType::Down, this, &CSceneEditor::LoadKey);
+
     return true;
 }
 
@@ -64,4 +77,66 @@ void CSceneEditor::TileTypeKey(float DeltaTime)
 void CSceneEditor::TileFrameKey(float DeltaTime)
 {
     mTileMapObj->AddTileFrame();
+}
+
+void CSceneEditor::SaveKey(float DeltaTime)
+{
+    OPENFILENAME    ofn = {};
+
+    // 선택한 경로를 저장하기 위한 배열
+    TCHAR   FullPath[MAX_PATH] = {};
+    TCHAR   Filter[] = TEXT("모든파일\0*.*\0Map 파일\0*.tlm\0");
+    
+    TCHAR	DefaultPath[MAX_PATH] = {};
+
+    lstrcpy(DefaultPath, gRootPath);
+    lstrcat(DefaultPath, TEXT("Asset\\Data\\"));
+
+    ofn.lStructSize = sizeof(OPENFILENAME);
+    ofn.hwndOwner = CGameManager::GetInst()->GetWindowHandle();
+    ofn.lpstrFilter = Filter;
+    ofn.lpstrDefExt = TEXT("tlm");
+    ofn.lpstrInitialDir = DefaultPath;
+    ofn.nMaxFile = MAX_PATH;
+    ofn.lpstrFile = FullPath;
+
+    ShowCursor(TRUE);
+
+    if (GetSaveFileName(&ofn) != 0)
+    {
+        mTileMapObj->Save(FullPath);
+    }
+
+    ShowCursor(FALSE);
+}
+
+void CSceneEditor::LoadKey(float DeltaTime)
+{
+    OPENFILENAME    ofn = {};
+
+    // 선택한 경로를 저장하기 위한 배열
+    TCHAR   FullPath[MAX_PATH] = {};
+    TCHAR   Filter[] = TEXT("모든파일\0*.*\0Map 파일\0*.tlm\0");
+
+    TCHAR	DefaultPath[MAX_PATH] = {};
+
+    lstrcpy(DefaultPath, gRootPath);
+    lstrcat(DefaultPath, TEXT("Asset\\Data\\"));
+
+    ofn.lStructSize = sizeof(OPENFILENAME);
+    ofn.hwndOwner = CGameManager::GetInst()->GetWindowHandle();
+    ofn.lpstrFilter = Filter;
+    ofn.lpstrDefExt = TEXT("tlm");
+    ofn.lpstrInitialDir = DefaultPath;
+    ofn.nMaxFile = MAX_PATH;
+    ofn.lpstrFile = FullPath;
+
+    ShowCursor(TRUE);
+
+    if (GetOpenFileName(&ofn) != 0)
+    {
+        mTileMapObj->Load(FullPath);
+    }
+
+    ShowCursor(FALSE);
 }

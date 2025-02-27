@@ -127,7 +127,9 @@ public:
 public:
 	void CreateTile(ETileShape Shape, int CountX, int CountY,
 		const FVector2D& TileSize, int TileTextureFrame = -1);
+	void Save(const TCHAR* FullPath);
 	void Save(const char* FileName);
+	void Load(const TCHAR* FullPath);
 	void Load(const char* FileName);
 };
 

@@ -24,5 +24,7 @@ private:
 	void EditorMode(float DeltaTime);
 	void TileTypeKey(float DeltaTime);
 	void TileFrameKey(float DeltaTime);
+	void SaveKey(float DeltaTime);
+	void LoadKey(float DeltaTime);
 };
 

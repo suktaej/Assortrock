@@ -58,7 +58,7 @@ bool CTileMapObj::Init()
     SetRootComponent(mTileMapRenderer);
 
     mTileMap->CreateTile(ETileShape::Rect,
-        100, 100, FVector2D(64.f, 64.f), 0);
+        100, 100, FVector2D(64.f, 64.f), -1);
 
     return true;
 }
@@ -115,4 +115,14 @@ void CTileMapObj::Update(float DeltaTime)
         if (mScene->GetInput()->GetMouseHold(EMouseButtonType::LButton))
             mTileMap->ChangeTileFrame(mEditTileFrame, MousePos);
     }
+}
+
+void CTileMapObj::Save(const TCHAR* FullPath)
+{
+    mTileMap->Save(FullPath);
+}
+
+void CTileMapObj::Load(const TCHAR* FullPath)
+{
+    mTileMap->Load(FullPath);
 }

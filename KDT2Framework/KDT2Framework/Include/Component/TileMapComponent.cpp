@@ -644,6 +644,28 @@ void CTileMapComponent::CreateTile(ETileShape Shape,
     }
 }
 
+void CTileMapComponent::Save(const TCHAR* FullPath)
+{
+    char    ConvertPath[MAX_PATH] = {};
+
+    int Count = WideCharToMultiByte(CP_ACP, 0, FullPath,
+        -1, nullptr, 0, nullptr, nullptr);
+    WideCharToMultiByte(CP_ACP, 0, FullPath, -1,
+        ConvertPath, Count, nullptr, nullptr);
+
+    // Bin\\ 폴더까지의 경로와 이후의 경로를 분리한다.
+    char    FileName[MAX_PATH] = {};
+
+    // 루트패스까지의 글자 수 얻어오기
+    int RootPathCount = (int)strlen(gRootPathMultibyte);
+    RootPathCount += (int)strlen("Asset\\Data\\");
+    int FullPathCount = (int)strlen(ConvertPath);
+
+    strcpy_s(FileName, &ConvertPath[RootPathCount]);
+
+    Save(FileName);
+}
+
 void CTileMapComponent::Save(const char* FileName)
 {
     char	FullPath[MAX_PATH] = {};
@@ -735,6 +757,28 @@ void CTileMapComponent::Save(const char* FileName)
     }
 
     fclose(File);
+}
+
+void CTileMapComponent::Load(const TCHAR* FullPath)
+{
+    char    ConvertPath[MAX_PATH] = {};
+
+    int Count = WideCharToMultiByte(CP_ACP, 0, FullPath,
+        -1, nullptr, 0, nullptr, nullptr);
+    WideCharToMultiByte(CP_ACP, 0, FullPath, -1,
+        ConvertPath, Count, nullptr, nullptr);
+
+    // Bin\\ 폴더까지의 경로와 이후의 경로를 분리한다.
+    char    FileName[MAX_PATH] = {};
+
+    // 루트패스까지의 글자 수 얻어오기
+    int RootPathCount = (int)strlen(gRootPathMultibyte);
+    RootPathCount += (int)strlen("Asset\\Data\\");
+    int FullPathCount = (int)strlen(ConvertPath);
+
+    strcpy_s(FileName, &ConvertPath[RootPathCount]);
+
+    Load(FileName);
 }
 
 void CTileMapComponent::Load(const char* FileName)
