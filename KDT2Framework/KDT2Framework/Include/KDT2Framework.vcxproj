@@ -175,6 +175,7 @@
     <ClCompile Include="Component\InventoryComponent.cpp" />
     <ClCompile Include="Component\MeshComponent.cpp" />
     <ClCompile Include="Component\MovementComponent.cpp" />
+    <ClCompile Include="Component\NavAgent.cpp" />
     <ClCompile Include="Component\RotationComponent.cpp" />
     <ClCompile Include="Component\SceneComponent.cpp" />
     <ClCompile Include="Component\SpriteComponent.cpp" />
@@ -211,6 +212,7 @@
     <ClCompile Include="Scene\CameraManager.cpp" />
     <ClCompile Include="Scene\CollisionQuadTree.cpp" />
     <ClCompile Include="Scene\Input.cpp" />
+    <ClCompile Include="Scene\Navigation.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneAssetManager.cpp" />
     <ClCompile Include="Scene\SceneCollision.cpp" />
@@ -299,6 +301,7 @@
     <ClInclude Include="Component\InventoryComponent.h" />
     <ClInclude Include="Component\MeshComponent.h" />
     <ClInclude Include="Component\MovementComponent.h" />
+    <ClInclude Include="Component\NavAgent.h" />
     <ClInclude Include="Component\RotationComponent.h" />
     <ClInclude Include="Component\SceneComponent.h" />
     <ClInclude Include="Component\SpriteComponent.h" />
@@ -337,6 +340,7 @@
     <ClInclude Include="Scene\CameraManager.h" />
     <ClInclude Include="Scene\CollisionQuadTree.h" />
     <ClInclude Include="Scene\Input.h" />
+    <ClInclude Include="Scene\Navigation.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneAssetManager.h" />
     <ClInclude Include="Scene\SceneCollision.h" />

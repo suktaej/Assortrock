@@ -220,6 +220,9 @@
     <Filter Include="04. Shader\03. ConstantBuffer\07. TileMap">
       <UniqueIdentifier>{1df436ee-07f0-4827-82c3-6f8d71fb5952}</UniqueIdentifier>
     </Filter>
+    <Filter Include="05. Scene\06. Navigation">
+      <UniqueIdentifier>{e3c5dc54-d6fc-492c-9321-c6a9f090ec18}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -560,6 +563,12 @@
     </ClCompile>
     <ClCompile Include="Shader\TileShader.cpp">
       <Filter>04. Shader\02. Shader Class\06. TileMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\NavAgent.cpp">
+      <Filter>07. Component\02. NonSceneComponent\01. Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Navigation.cpp">
+      <Filter>05. Scene\06. Navigation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -946,6 +955,12 @@
     </ClInclude>
     <ClInclude Include="Shader\TileShader.h">
       <Filter>04. Shader\02. Shader Class\06. TileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\NavAgent.h">
+      <Filter>07. Component\02. NonSceneComponent\01. Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Navigation.h">
+      <Filter>05. Scene\06. Navigation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

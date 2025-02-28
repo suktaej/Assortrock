@@ -29,7 +29,6 @@ CShaderManager::~CShaderManager()
 bool CShaderManager::Init()
 {
 	CreateShader<CColorMeshShader>("ColorMeshShader");
-
 	CreateShader<CFrameMeshShader>("FrameMeshShader");
 
 	CreateShader<CStaticMeshShader>("StaticMeshShader");

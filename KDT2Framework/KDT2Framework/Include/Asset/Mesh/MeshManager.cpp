@@ -72,6 +72,23 @@ bool CMeshManager::Init()
         sizeof(unsigned short), 5, DXGI_FORMAT_R16_UINT))
         return false;
 
+    FVector3D    FrameIsometric[4] =
+    {
+        FVector3D(0.5f, 1.f, 0.f),
+        FVector3D(1.f, 0.5f, 0.f),
+        FVector3D(0.5f, 0.f, 0.f),
+        FVector3D(0.f, 0.5f, 0.f),
+    };
+
+    unsigned short FrameIsometricIdx[5] = { 0, 1, 2, 3, 0 };
+
+    if (!CreateMesh("FrameIsometric", FrameIsometric,
+        sizeof(FVector3D),
+        4, D3D11_USAGE_DEFAULT,
+        D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP, FrameIsometricIdx,
+        sizeof(unsigned short), 5, DXGI_FORMAT_R16_UINT))
+        return false;
+
     FVector3D    FrameCenterRect[4] =
     {
         FVector3D(-0.5f, 0.5f, 0.f),

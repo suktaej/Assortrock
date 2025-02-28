@@ -17,10 +17,16 @@ protected:
 	class CSceneCollision* mCollision = nullptr;
 	class CSceneAssetManager* mAssetManager = nullptr;
 	class CSceneUIManager* mUIManager = nullptr;
+	class CNavigation* mNavigation = nullptr;
 	std::list<CSharedPtr<class CSceneObject>>	mObjList;
 	bool	mDebugQuadTree = true;
 
 public:
+	class CNavigation* GetNavigation()	const
+	{
+		return mNavigation;
+	}
+
 	class CSceneUIManager* GetUIManager()	const
 	{
 		return mUIManager;

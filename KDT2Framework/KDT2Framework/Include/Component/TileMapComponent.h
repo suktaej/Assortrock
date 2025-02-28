@@ -19,6 +19,7 @@ protected:
 	std::vector<CTile*>	mTileList;
 	ETileShape	mTileShape = ETileShape::Rect;
 	FVector2D	mTileSize;
+	FVector2D	mMapSize;
 	int			mCountX = 0;
 	int			mCountY = 0;
 	bool		mTileOutLineRender = false;
@@ -40,6 +41,11 @@ protected:
 	int			mViewEndY;
 
 public:
+	ETileShape GetTileShape()	const
+	{
+		return mTileShape;
+	}
+
 	int GetTileFrameCount()	const
 	{
 		return (int)mTileFrameList.size();
@@ -87,11 +93,9 @@ public:
 public:
 	int GetTileIndexX(const FVector3D& Pos)	const;
 	int GetTileIndexX(const FVector2D& Pos)	const;
-	int GetTileIndexX(float x)	const;
 
 	int GetTileIndexY(const FVector3D& Pos)	const;
 	int GetTileIndexY(const FVector2D& Pos)	const;
-	int GetTileIndexY(float y)	const;
 
 	int GetTileIndex(const FVector3D& Pos)	const;
 	int GetTileIndex(const FVector2D& Pos)	const;
@@ -100,6 +104,7 @@ public:
 	const CTile* GetTile(const FVector3D& Pos)	const;
 	const CTile* GetTile(const FVector2D& Pos)	const;
 	const CTile* GetTile(float x, float y)	const;
+	const CTile* GetTile(int Index)	const;
 
 	ETileType ChangeTileType(ETileType Type, const FVector3D& Pos);
 	ETileType ChangeTileType(ETileType Type, const FVector2D& Pos);
@@ -110,6 +115,13 @@ public:
 	void ChangeTileFrame(int Frame, const FVector2D& Pos);
 	void ChangeTileFrame(int Frame, float x, float y);
 	void ChangeTileFrame(int Frame, int Index);
+
+	FVector2D GetTilePos(int Index);
+	FVector2D GetTileCenter(int Index);
+
+private:
+	int GetTileRenderIndexX(const FVector2D& Pos)	const;
+	int GetTileRenderIndexY(const FVector2D& Pos)	const;
 
 public:
 	virtual bool Init();

@@ -48,6 +48,18 @@ bool CTileMapObj::Init()
 
     mTileMapRenderer->SetTileTexture("Tile",
         TEXT("Texture\\Floors.png"));
+   /* mTileMapRenderer->SetTileTexture("Tile",
+        TEXT("Texture\\Diablos_Lair_Floor_TRS\\Diablos_Lair_Floor.png"));*/
+
+    /*for (int i = 0; i < 76; ++i)
+    {
+        for (int j = 0; j < 5; ++j)
+        {
+            mTileMap->AddTileTextureFrame(j * 160.f, 
+                i * 80.f,
+                160.f, 80.f);
+        }
+    }*/
 
     mTileMap->AddTileTextureFrame(0.f, 0.f, 64.f, 64.f);
     mTileMap->AddTileTextureFrame(0.f, 64.f, 64.f, 64.f);
@@ -59,6 +71,8 @@ bool CTileMapObj::Init()
 
     mTileMap->CreateTile(ETileShape::Rect,
         100, 100, FVector2D(64.f, 64.f), -1);
+    /*mTileMap->CreateTile(ETileShape::Isometric,
+        100, 100, FVector2D(160.f, 80.f), 3);*/
 
     return true;
 }

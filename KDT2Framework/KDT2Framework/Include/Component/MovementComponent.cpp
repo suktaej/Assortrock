@@ -1,5 +1,6 @@
 #include "MovementComponent.h"
 #include "SceneComponent.h"
+#include "NavAgent.h"
 
 CMovementComponent::CMovementComponent()
 {
@@ -18,6 +19,7 @@ CMovementComponent::CMovementComponent(CMovementComponent&& Com) :
 
 CMovementComponent::~CMovementComponent()
 {
+    SAFE_DELETE(mNavAgent);
 }
 
 void CMovementComponent::SetUpdateComponent(CSceneComponent* Target)
@@ -30,6 +32,10 @@ bool CMovementComponent::Init()
     if (!CComponent::Init())
         return false;
 
+    mNavAgent = new CNavAgent;
+
+    mNavAgent->Init();
+
     return true;
 }
 
@@ -37,6 +43,10 @@ bool CMovementComponent::Init(const char* FileName)
 {
     if (!CComponent::Init(FileName))
         return false;
+
+    mNavAgent = new CNavAgent;
+
+    mNavAgent->Init();
 
     return true;
 }

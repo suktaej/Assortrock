@@ -17,6 +17,7 @@ protected:
 protected:
 	CSharedPtr<class CSceneComponent>	mUpdateComponent;
 	EAxis::Type		mMoveAxis = EAxis::None;
+	class CNavAgent* mNavAgent = nullptr;
 
 protected:
 	FVector3D		mVelocity;

@@ -3,6 +3,7 @@
 #include <Windows.h>
 #include <list>
 #include <vector>
+#include <queue>
 #include <unordered_map>
 #include <map>
 #include <crtdbg.h>

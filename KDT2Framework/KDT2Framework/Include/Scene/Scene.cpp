@@ -7,6 +7,7 @@
 #include "SceneAssetManager.h"
 #include "../Render/RenderManager.h"
 #include "SceneUIManager.h"
+#include "Navigation.h"
 
 CScene::CScene()
 {
@@ -29,6 +30,7 @@ CScene::~CScene()
 	SAFE_DELETE(mCollision);
 	SAFE_DELETE(mCameraManager);
 	SAFE_DELETE(mInput);
+	SAFE_DELETE(mNavigation);
 }
 
 bool CScene::Init()
@@ -64,6 +66,13 @@ bool CScene::Init()
 	mUIManager->mScene = this;
 
 	if (!mUIManager->Init())
+		return false;
+
+	mNavigation = new CNavigation;
+
+	mNavigation->mScene = this;
+
+	if (!mNavigation->Init())
 		return false;
 
 	InitAsset();
