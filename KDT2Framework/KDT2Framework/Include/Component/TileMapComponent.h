@@ -91,6 +91,7 @@ public:
 		float SizeX, float SizeY);
 
 public:
+	ETileType GetTileType(int Index)	const;
 	int GetTileIndexX(const FVector3D& Pos)	const;
 	int GetTileIndexX(const FVector2D& Pos)	const;
 

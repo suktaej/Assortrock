@@ -117,6 +117,11 @@ void CTileMapComponent::AddTileTextureFrame(float StartX,
     mTileFrameList.emplace_back(Frame);
 }
 
+ETileType CTileMapComponent::GetTileType(int Index) const
+{
+    return mTileList[Index]->GetType();
+}
+
 int CTileMapComponent::GetTileIndexX(const FVector3D& Pos) const
 {
     return GetTileIndexX(FVector2D(Pos.x, Pos.y));
