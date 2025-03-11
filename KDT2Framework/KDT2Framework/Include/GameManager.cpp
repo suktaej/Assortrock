@@ -16,6 +16,7 @@
 #include "Render/RenderState.h"
 #include "Asset/Sound/SoundManager.h"
 #include "UI/Widget.h"
+#include "Thread/ThreadManager.h"
 
 TCHAR   gRootPath[MAX_PATH];
 char   gRootPathMultibyte[MAX_PATH];
@@ -31,6 +32,8 @@ CGameManager::CGameManager()
 CGameManager::~CGameManager()
 {
     CSceneManager::DestroyInst();
+
+    CThreadManager::DestroyInst();
 
     CRenderManager::DestroyInst();
 
@@ -71,6 +74,9 @@ bool CGameManager::Init(HINSTANCE hInst)
 
     // 디바이스 초기화
     if (!CDevice::GetInst()->Init(mhWnd, 1280, 720, true))
+        return false;
+
+    if (!CThreadManager::GetInst()->Init())
         return false;
 
     // Shader 관리자 초기화

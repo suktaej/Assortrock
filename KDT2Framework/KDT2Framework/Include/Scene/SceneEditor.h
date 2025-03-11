@@ -13,7 +13,15 @@ private:
 
 private:
 	CSharedPtr<class CTileMapObj>	mTileMapObj;
-	EEditorMode	mEditorMode = EEditorMode::TileType;
+	EEditorMode		mEditorMode = EEditorMode::TileType;
+	ETileType       mEditTileType = ETileType::Normal;
+	ETileType       mOnMousePrevTileType = ETileType::None;
+	int             mOnMousePrevIndex = -1;
+
+	int				mEditTileFrame = 0;
+
+public:
+	virtual void Update(float DeltaTime);
 
 protected:
 	virtual bool InitAsset();

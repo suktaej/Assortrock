@@ -201,7 +201,7 @@ void CPlayerObject::Update(float DeltaTime)
 {
     //중력 적용
     //MovementComponent의 Velocity변수를 변경하는 함수
-    //
+    //변경 후 상태가 Update되어야 하므로 SceneObjec::Update() 전에 사용
     mMovement->AddMove(mRootComponent->GetAxis(EAxis::Y) * -1);
     
     CSceneObject::Update(DeltaTime);

@@ -221,6 +221,7 @@
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="Scene\SceneStart.cpp" />
     <ClCompile Include="Scene\SceneUIManager.cpp" />
+    <ClCompile Include="Scene\ThreadNavigation.cpp" />
     <ClCompile Include="Shader\Animation2DCBuffer.cpp" />
     <ClCompile Include="Shader\ColliderCBuffer.cpp" />
     <ClCompile Include="Shader\ColorMeshShader.cpp" />
@@ -244,6 +245,8 @@
     <ClCompile Include="Share\Log.cpp" />
     <ClCompile Include="Share\Object.cpp" />
     <ClCompile Include="Share\Timer.cpp" />
+    <ClCompile Include="Thread\ThreadBase.cpp" />
+    <ClCompile Include="Thread\ThreadManager.cpp" />
     <ClCompile Include="UI\Common\Button.cpp" />
     <ClCompile Include="UI\Common\Image.cpp" />
     <ClCompile Include="UI\Common\ProgressBar.cpp" />
@@ -349,6 +352,7 @@
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Scene\SceneStart.h" />
     <ClInclude Include="Scene\SceneUIManager.h" />
+    <ClInclude Include="Scene\ThreadNavigation.h" />
     <ClInclude Include="Shader\Animation2DCBuffer.h" />
     <ClInclude Include="Shader\CBufferContainer.h" />
     <ClInclude Include="Shader\ColliderCBuffer.h" />
@@ -374,6 +378,8 @@
     <ClInclude Include="Share\Object.h" />
     <ClInclude Include="Share\SharedPtr.h" />
     <ClInclude Include="Share\Timer.h" />
+    <ClInclude Include="Thread\ThreadBase.h" />
+    <ClInclude Include="Thread\ThreadManager.h" />
     <ClInclude Include="UI\Common\Button.h" />
     <ClInclude Include="UI\Common\Image.h" />
     <ClInclude Include="UI\Common\ProgressBar.h" />

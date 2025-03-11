@@ -18,21 +18,12 @@ protected:
 private:
     CSharedPtr<CTileMapRendererComponent>   mTileMapRenderer;
     CSharedPtr<CTileMapComponent>   mTileMap;
-    ETileType       mEditTileType = ETileType::Normal;
-    ETileType       mOnMousePrevTileType = ETileType::None;
-    int             mOnMousePrevIndex = -1;
-    EEditorMode     mEditorMode = EEditorMode::TileType;
-
-    int         mEditTileFrame = 0;
 
 public:
-    void SetEditorMode(EEditorMode Mode)
+    CTileMapComponent* GetTileMap() const
     {
-        mEditorMode = Mode;
+        return mTileMap;
     }
-
-    void AddTileType();
-    void AddTileFrame();
 
 public:
     virtual bool Init();

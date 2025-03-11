@@ -223,6 +223,9 @@
     <Filter Include="05. Scene\06. Navigation">
       <UniqueIdentifier>{e3c5dc54-d6fc-492c-9321-c6a9f090ec18}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. GameManager\04. Thread">
+      <UniqueIdentifier>{2f65c7f1-f8f1-49c6-82f7-3b89f9e93623}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -568,6 +571,15 @@
       <Filter>07. Component\02. NonSceneComponent\01. Movement</Filter>
     </ClCompile>
     <ClCompile Include="Scene\Navigation.cpp">
+      <Filter>05. Scene\06. Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="Thread\ThreadBase.cpp">
+      <Filter>01. GameManager\04. Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="Thread\ThreadManager.cpp">
+      <Filter>01. GameManager\04. Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\ThreadNavigation.cpp">
       <Filter>05. Scene\06. Navigation</Filter>
     </ClCompile>
   </ItemGroup>
@@ -960,6 +972,15 @@
       <Filter>07. Component\02. NonSceneComponent\01. Movement</Filter>
     </ClInclude>
     <ClInclude Include="Scene\Navigation.h">
+      <Filter>05. Scene\06. Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="Thread\ThreadManager.h">
+      <Filter>01. GameManager\04. Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="Thread\ThreadBase.h">
+      <Filter>01. GameManager\04. Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\ThreadNavigation.h">
       <Filter>05. Scene\06. Navigation</Filter>
     </ClInclude>
   </ItemGroup>

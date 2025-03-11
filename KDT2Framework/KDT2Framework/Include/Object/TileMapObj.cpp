@@ -20,20 +20,6 @@ CTileMapObj::~CTileMapObj()
 {
 }
 
-void CTileMapObj::AddTileType()
-{
-    mEditTileType = (ETileType)((int)mEditTileType + 1);
-
-    if (mEditTileType == ETileType::End)
-        mEditTileType = ETileType::Normal;
-}
-
-void CTileMapObj::AddTileFrame()
-{
-    mEditTileFrame = (mEditTileFrame + 1) %
-        mTileMap->GetTileFrameCount();
-}
-
 bool CTileMapObj::Init()
 {
     CSceneObject::Init();
@@ -80,55 +66,6 @@ bool CTileMapObj::Init()
 void CTileMapObj::Update(float DeltaTime)
 {
     CSceneObject::Update(DeltaTime);
-
-    const FVector2D& MousePos =
-        mScene->GetInput()->GetMouseWorldPos2D();
-
-    if (mEditorMode == EEditorMode::TileType)
-    {
-        if (mScene->GetInput()->GetMouseHold(EMouseButtonType::LButton))
-        {
-            mOnMousePrevTileType = mEditTileType;
-            mTileMap->ChangeTileType(mEditTileType, MousePos);
-        }
-
-        else if (!mScene->GetInput()->GetMouseDown(EMouseButtonType::LButton))
-        {
-            int Index = mTileMap->GetTileIndex(MousePos);
-
-            if (Index != mOnMousePrevIndex)
-            {
-                ETileType PrevType =
-                    mTileMap->ChangeTileType(ETileType::MouseOver, MousePos);
-
-                if (PrevType != ETileType::None)
-                {
-                    if (mOnMousePrevIndex != -1)
-                    {
-                        mTileMap->ChangeTileType(mOnMousePrevTileType,
-                            mOnMousePrevIndex);
-                    }
-
-                    mOnMousePrevIndex = mTileMap->GetTileIndex(MousePos);
-                    mOnMousePrevTileType = PrevType;
-                }
-
-                else
-                {
-                    mTileMap->ChangeTileType(mOnMousePrevTileType,
-                        mOnMousePrevIndex);
-                    mOnMousePrevTileType = ETileType::None;
-                    mOnMousePrevIndex = -1;
-                }
-            }
-        }
-    }
-
-    else if (mEditorMode == EEditorMode::TileImage)
-    {
-        if (mScene->GetInput()->GetMouseHold(EMouseButtonType::LButton))
-            mTileMap->ChangeTileFrame(mEditTileFrame, MousePos);
-    }
 }
 
 void CTileMapObj::Save(const TCHAR* FullPath)

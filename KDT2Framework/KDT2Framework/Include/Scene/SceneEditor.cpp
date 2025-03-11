@@ -12,6 +12,60 @@ CSceneEditor::~CSceneEditor()
 {
 }
 
+void CSceneEditor::Update(float DeltaTime)
+{
+    CScene::Update(DeltaTime);
+    // mTileMapObj
+    const FVector2D& MousePos =
+        mInput->GetMouseWorldPos2D();
+
+    if (mEditorMode == EEditorMode::TileType)
+    {
+        if (mInput->GetMouseHold(EMouseButtonType::LButton))
+        {
+            mOnMousePrevTileType = mEditTileType;
+            mTileMapObj->GetTileMap()->ChangeTileType(mEditTileType, MousePos);
+        }
+
+        else if (!mInput->GetMouseDown(EMouseButtonType::LButton))
+        {
+            int Index = mTileMapObj->GetTileMap()->GetTileIndex(MousePos);
+
+            if (Index != mOnMousePrevIndex)
+            {
+                ETileType PrevType =
+                    mTileMapObj->GetTileMap()->ChangeTileType(ETileType::MouseOver, MousePos);
+
+                if (PrevType != ETileType::None)
+                {
+                    if (mOnMousePrevIndex != -1)
+                    {
+                        mTileMapObj->GetTileMap()->ChangeTileType(mOnMousePrevTileType,
+                            mOnMousePrevIndex);
+                    }
+
+                    mOnMousePrevIndex = mTileMapObj->GetTileMap()->GetTileIndex(MousePos);
+                    mOnMousePrevTileType = PrevType;
+                }
+
+                else
+                {
+                    mTileMapObj->GetTileMap()->ChangeTileType(mOnMousePrevTileType,
+                        mOnMousePrevIndex);
+                    mOnMousePrevTileType = ETileType::None;
+                    mOnMousePrevIndex = -1;
+                }
+            }
+        }
+    }
+
+    else if (mEditorMode == EEditorMode::TileImage)
+    {
+        if (mInput->GetMouseHold(EMouseButtonType::LButton))
+            mTileMapObj->GetTileMap()->ChangeTileFrame(mEditTileFrame, MousePos);
+    }
+}
+
 bool CSceneEditor::InitAsset()
 {
     return true;
@@ -65,18 +119,20 @@ void CSceneEditor::EditorMode(float DeltaTime)
 
     if (mEditorMode == EEditorMode::End)
         mEditorMode = EEditorMode::TileType;
-
-    mTileMapObj->SetEditorMode(mEditorMode);
 }
 
 void CSceneEditor::TileTypeKey(float DeltaTime)
 {
-    mTileMapObj->AddTileType();
+    mEditTileType = (ETileType)((int)mEditTileType + 1);
+
+    if (mEditTileType == ETileType::End)
+        mEditTileType = ETileType::Normal;
 }
 
 void CSceneEditor::TileFrameKey(float DeltaTime)
 {
-    mTileMapObj->AddTileFrame();
+    mEditTileFrame = (mEditTileFrame + 1) %
+        mTileMapObj->GetTileMap()->GetTileFrameCount();
 }
 
 void CSceneEditor::SaveKey(float DeltaTime)
