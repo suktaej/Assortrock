@@ -14,14 +14,28 @@ protected:
 	bool	mEnable = true;
 
 public:
-	int GetRefCount() const { return mRefCount; }
-	bool IsActive()	const { return mActive; }
-	bool IsEnable()	const { return mEnable; }
-	void SetEnable(bool Enable) { mEnable = Enable; }
+	bool IsActive()	const
+	{
+		return mActive;
+	}
+
+	bool IsEnable()	const
+	{
+		return mEnable;
+	}
+
+	int GetRefCount()	const
+	{
+		return mRefCount;
+	}
 
 public:
 	virtual void AddRef();
 	virtual void Release();
-	void Destroy();
+	virtual void Destroy();
+	void SetEnable(bool Enable)
+	{
+		mEnable = Enable;
+	}
 };
 

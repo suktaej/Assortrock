@@ -26,7 +26,7 @@ struct FVector2D
 	{
 	}
 
-	FVector2D(FVector2D&& v) :
+	FVector2D(FVector2D&& v)	:
 		x(v.x),
 		y(v.y)
 	{
@@ -362,7 +362,7 @@ struct FVector2D
 
 	float Length()	const
 	{
-		// sqrtf : ·çÆ®°ª ±¸ÇØÁÖ´Â ±â´É.
+		// sqrtf : ë£¨íŠ¸ê°’ êµ¬í•´ì£¼ëŠ” ê¸°ëŠ¥.
 		return sqrtf(x * x + y * y);
 	}
 

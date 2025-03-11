@@ -1,7 +1,10 @@
 #include "AssetManager.h"
 #include "Mesh/MeshManager.h"
-//#include "Texture/TextureManager.h"
-//#include "Material/MaterialManager.h"
+#include "Texture/TextureManager.h"
+#include "Material/MaterialManager.h"
+#include "Animation/Animation2DManager.h"
+#include "Sound/SoundManager.h"
+#include "Font/FontManager.h"
 #include "Asset.h"
 
 DEFINITION_SINGLE(CAssetManager)
@@ -12,17 +15,19 @@ CAssetManager::CAssetManager()
 
 CAssetManager::~CAssetManager()
 {
-	//SAFE_DELETE(mMaterialManager);
-	//SAFE_DELETE(mTextureManager);
+	SAFE_DELETE(mFontManager);
+	SAFE_DELETE(mSoundManager);
+	SAFE_DELETE(mAnimation2DManager);
+	SAFE_DELETE(mMaterialManager);
+	SAFE_DELETE(mTextureManager);
 	SAFE_DELETE(mMeshManager);
 }
 
 bool CAssetManager::Init()
 {
-	/*
-	// RootÆú´õ °æ·Î »ý¼º
-	// ¾Æ·¡ ÇÔ¼ö´Â ½ÇÇàÆÄÀÏ ÀÌ¸§±îÁö Æ÷ÇÔÇÑ ÀüÃ¼°æ·Î¸¦
-	// ¾ò¾î¿Â´Ù.
+	// Rootí´ë” ê²½ë¡œ ìƒì„±
+	// ì•„ëž˜ í•¨ìˆ˜ëŠ” ì‹¤í–‰íŒŒì¼ ì´ë¦„ê¹Œì§€ í¬í•¨í•œ ì „ì²´ê²½ë¡œë¥¼
+	// ì–»ì–´ì˜¨ë‹¤.
 	GetModuleFileName(0, gRootPath, MAX_PATH);
 
 	// D:\Lecture\KDT20242\KDT2Framework\KDT2Framework\Bin\KDT2Framework.exe
@@ -38,25 +43,45 @@ bool CAssetManager::Init()
 		}
 	}
 
+	// TCHAR -> char
+	Length = WideCharToMultiByte(CP_ACP, 0, gRootPath, -1, nullptr, 0,
+		nullptr, nullptr);
+	WideCharToMultiByte(CP_ACP, 0, gRootPath, -1, 
+		gRootPathMultibyte, Length,	nullptr, nullptr);
+
 	mMaterialManager = new CMaterialManager;
 
 	if (!mMaterialManager->Init())
+		return false;
+
+	mMeshManager = new CMeshManager;
+
+	if (!mMeshManager->Init())
 		return false;
 
 	mTextureManager = new CTextureManager;
 
 	if (!mTextureManager->Init())
 		return false;
-*/
-	mMeshManager = new CMeshManager;
 
-	if (!mMeshManager->Init())
+	mAnimation2DManager = new CAnimation2DManager;
+
+	if (!mAnimation2DManager->Init())
+		return false;
+
+	mSoundManager = new CSoundManager;
+
+	if (!mSoundManager->Init())
+		return false;
+
+	mFontManager = new CFontManager;
+
+	if (!mFontManager->Init())
 		return false;
 
 	return true;
 }
 
-/*
 void CAssetManager::ReleaseAsset(CAsset* Asset)
 {
 	switch (Asset->GetAssetType())
@@ -67,6 +92,14 @@ void CAssetManager::ReleaseAsset(CAsset* Asset)
 	case EAssetType::Texture:
 		mTextureManager->ReleaseTexture(Asset);
 		break;
+	case EAssetType::Material:
+		mMaterialManager->ReleaseMaterial(Asset);
+		break;
+	case EAssetType::Animation2D:
+		mAnimation2DManager->ReleaseAnimation(Asset);
+		break;
+	case EAssetType::Sound:
+		mSoundManager->ReleaseSound(Asset);
+		break;
 	}
 }
-*/

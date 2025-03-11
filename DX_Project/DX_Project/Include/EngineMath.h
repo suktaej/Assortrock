@@ -3,12 +3,15 @@
 #include <DirectXMath.h>
 #include <DirectXPackedVector.h>
 
-enum class  EAxis
+namespace EAxis
 {
-	None = -1,
-	X,
-	Y,
-	Z,
-	End
-};
+	enum Type
+	{
+		None = -1,
+		X,
+		Y,
+		Z,
+		End
+	};
+}
 

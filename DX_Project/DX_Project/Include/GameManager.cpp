@@ -3,16 +3,22 @@
 #include "Share/Timer.h"
 #include "Device.h"
 #include "Asset/AssetManager.h"
-//#include "Shader/ShaderManager.h"
+#include "Shader/ShaderManager.h"
 #include "Asset/Mesh/MeshManager.h"
 #include "Asset/Mesh/Mesh.h"
-//#include "Shader/Shader.h"
-//#include "Shader/TransformCBuffer.h"
-//#include "Scene/SceneManager.h"
+#include "Shader/Shader.h"
+#include "Shader/TransformCBuffer.h"
+#include "Scene/SceneManager.h"
 #include "Share/Log.h"
-//#include "ProfileManager.h"
+#include "ProfileManager.h"
+#include "Render/RenderManager.h"
+#include "Render/RenderStateManager.h"
+#include "Render/RenderState.h"
+#include "Asset/Sound/SoundManager.h"
+#include "UI/Widget.h"
 
 TCHAR   gRootPath[MAX_PATH];
+char   gRootPathMultibyte[MAX_PATH];
 
 DEFINITION_SINGLE(CGameManager)
 
@@ -24,10 +30,16 @@ CGameManager::CGameManager()
 
 CGameManager::~CGameManager()
 {
-    //CProfileManager::DestroyInst();
-    //CSceneManager::DestroyInst();
+    CSceneManager::DestroyInst();
+
+    CRenderManager::DestroyInst();
+
+    CProfileManager::DestroyInst();
+
     CAssetManager::DestroyInst();
-    //CShaderManager::DestroyInst();
+
+    CShaderManager::DestroyInst();
+
     CDevice::DestroyInst();
 
     ReleaseDC(mhWnd, mhDC);
@@ -37,10 +49,13 @@ CGameManager::~CGameManager()
 
 bool CGameManager::Init(HINSTANCE hInst)
 {
-    mhInst = hInst;
+    srand(GetTickCount());
+    rand();
 
-    lstrcpy(mClassName, TEXT("DX_Project"));
-    lstrcpy(mTitleName, TEXT("DX_Project"));
+	mhInst = hInst;
+
+	lstrcpy(mClassName, TEXT("KDT2Framework"));
+	lstrcpy(mTitleName, TEXT("KDT2Framework"));
 
     RegisterWindowClass();
 
@@ -50,33 +65,43 @@ bool CGameManager::Init(HINSTANCE hInst)
     if (!CLog::Init())
         return false;
 
-    // ÀÎÀÚ·Î µé¾î°£ À©µµ¿ì¿¡ Ãâ·ÂÇÒ ¼ö ÀÖ´Â DC°¡ ¸¸µé¾îÁø´Ù.
+
+    // ì¸ìžë¡œ ë“¤ì–´ê°„ ìœˆë„ìš°ì— ì¶œë ¥í•  ìˆ˜ ìžˆëŠ” DCê°€ ë§Œë“¤ì–´ì§„ë‹¤.
     mhDC = GetDC(mhWnd);
 
-    // µð¹ÙÀÌ½º ÃÊ±âÈ­
+    // ë””ë°”ì´ìŠ¤ ì´ˆê¸°í™”
     if (!CDevice::GetInst()->Init(mhWnd, 1280, 720, true))
         return false;
 
-    //// Shader °ü¸®ÀÚ ÃÊ±âÈ­
-    //if (!CShaderManager::GetInst()->Init())
-    //    return false;
+    // Shader ê´€ë¦¬ìž ì´ˆê¸°í™”
+    if (!CShaderManager::GetInst()->Init())
+        return false;
 
-    // ¾Ö¼Â °ü¸®ÀÚ ÃÊ±âÈ­
+    // ì• ì…‹ ê´€ë¦¬ìž ì´ˆê¸°í™”
     if (!CAssetManager::GetInst()->Init())
         return false;
 
-    //// Profile °ü¸®ÀÚ ÃÊ±âÈ­
-    //if (!CProfileManager::GetInst()->Init())
-    //    return false;
+    // Profile ê´€ë¦¬ìž ì´ˆê¸°í™”
+    if (!CProfileManager::GetInst()->Init())
+        return false;
 
-    // Å¸ÀÌ¸Ó ÃÊ±âÈ­
+    // Render ê´€ë¦¬ìž ì´ˆê¸°í™”
+    if (!CRenderManager::GetInst()->Init())
+        return false;
+
+    // íƒ€ì´ë¨¸ ì´ˆê¸°í™”
     CTimer::Init();
 
-    //// Àå¸é°ü¸®ÀÚ ÃÊ±âÈ­
-    //if (!CSceneManager::GetInst()->Init())
-    //    return false;
+    // ìž¥ë©´ê´€ë¦¬ìž ì´ˆê¸°í™”
+    if (!CSceneManager::GetInst()->Init())
+        return false;
 
-    return true;
+    FResolution RS = CDevice::GetInst()->GetResolution();
+
+    CWidget::CreateUIProjection((float)RS.Width, (float)RS.Height,
+        1000.f);
+
+	return true;
 }
 
 int CGameManager::Run()
@@ -87,42 +112,49 @@ int CGameManager::Run()
     {
         if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
-            // Å°º¸µå ÀÔ·Â ¸Þ¼¼Áö°¡ ¹ß»ýÇÒ °æ¿ì µ¿ÀÛÇÑ´Ù.
-            // WM_KEYDOWN, WM_KEYUP µî ¸Þ¼¼Áö°¡ ¹ß»ýÇÏ¸é ¹®ÀÚÀÏ °æ¿ì WM_CHAR ¸Þ¼¼Áö¸¦ ÇÏ³ª´õ
-            // ¸¸µé¾îÁÖ´Â ¿ªÇÒÀ» ÇÑ´Ù.
+            // í‚¤ë³´ë“œ ìž…ë ¥ ë©”ì„¸ì§€ê°€ ë°œìƒí•  ê²½ìš° ë™ìž‘í•œë‹¤.
+            // WM_KEYDOWN, WM_KEYUP ë“± ë©”ì„¸ì§€ê°€ ë°œìƒí•˜ë©´ ë¬¸ìžì¼ ê²½ìš° WM_CHAR ë©”ì„¸ì§€ë¥¼ í•˜ë‚˜ë”
+            // ë§Œë“¤ì–´ì£¼ëŠ” ì—­í• ì„ í•œë‹¤.
             TranslateMessage(&msg);
 
-            // ¸Þ¼¼Áö¸¦ WndProc·Î Àü´ÞÇØÁØ´Ù.
+            // ë©”ì„¸ì§€ë¥¼ WndProcë¡œ ì „ë‹¬í•´ì¤€ë‹¤.
             DispatchMessage(&msg);
         }
 
-        // À©µµ¿ì µ¥µåÅ¸ÀÓÀÏ °æ¿ì µ¿ÀÛÇÑ´Ù.(¸Þ¼¼Áö Å¥¿¡ ¸Þ¼¼Áö°¡ ¾ø´Â °æ¿ì)
+        // ìœˆë„ìš° ë°ë“œíƒ€ìž„ì¼ ê²½ìš° ë™ìž‘í•œë‹¤.(ë©”ì„¸ì§€ íì— ë©”ì„¸ì§€ê°€ ì—†ëŠ” ê²½ìš°)
         else
         {
             Logic();
         }
     }
 
-    return (int)msg.wParam;
+	return (int)msg.wParam;
 }
 
 void CGameManager::Logic()
 {
     float DeltaTime = CTimer::Update();
+
     Input(DeltaTime);
-    Update(DeltaTime);
+
+    if (Update(DeltaTime))
+        return;
+
     Collision(DeltaTime);
+
     Render(DeltaTime);
+
+    CAssetManager::GetInst()->GetSoundManager()->Update();
 }
 
 void CGameManager::Input(float DeltaTime)
 {
-    //CSceneManager::GetInst()->Input(DeltaTime);
+    CSceneManager::GetInst()->Input(DeltaTime);
 }
 
-void CGameManager::Update(float DeltaTime)
+bool CGameManager::Update(float DeltaTime)
 {
-    CLog::PrintLog("Update");
+    //CLog::PrintLog("Update");
 
     static bool Push = false;
 
@@ -136,12 +168,15 @@ void CGameManager::Update(float DeltaTime)
         Push = false;
         CLog::SaveLog();
     }
-    //CSceneManager::GetInst()->Update(DeltaTime);
+
+    CRenderManager::GetInst()->Update(DeltaTime);
+
+    return CSceneManager::GetInst()->Update(DeltaTime);
 }
 
 void CGameManager::Collision(float DeltaTime)
 {
-    //CSceneManager::GetInst()->Collision(DeltaTime);
+    CSceneManager::GetInst()->Collision(DeltaTime);
 }
 
 void CGameManager::Render(float DeltaTime)
@@ -150,7 +185,19 @@ void CGameManager::Render(float DeltaTime)
     CDevice::GetInst()->ClearDepthStencil(1.f, 0);
     CDevice::GetInst()->SetTarget();
 
-    //CSceneManager::GetInst()->Render();
+    //CRenderState* AlphaBlend = CRenderManager::GetInst()->GetStateManager()->FindState("AlphaBlend");
+
+    //AlphaBlend->SetState();
+
+    // ì¶œë ¥ì´ ì•„ë‹Œ Componentë“¤ì˜ Render ê´€ë ¨ í•¨ìˆ˜ë¥¼
+    // í˜¸ì¶œí•˜ê¸° ìœ„í•œ ìš©ë„.
+    CSceneManager::GetInst()->Render();
+
+    CRenderManager::GetInst()->Render();
+
+    CSceneManager::GetInst()->EndFrame();
+
+    //AlphaBlend->ResetState();
 
     CDevice::GetInst()->Render();
 }
@@ -159,62 +206,62 @@ void CGameManager::RegisterWindowClass()
 {
     WNDCLASSEXW wcex;
 
-    // À©µµ¿ìÅ¬·¡½º ±¸Á¶Ã¼ÀÇ Å©±â¸¦ ³ªÅ¸³½´Ù. ¹Ýµå½Ã ÁöÁ¤µÇ¾î¾ß ÇÑ´Ù.
+    // ìœˆë„ìš°í´ëž˜ìŠ¤ êµ¬ì¡°ì²´ì˜ í¬ê¸°ë¥¼ ë‚˜íƒ€ë‚¸ë‹¤. ë°˜ë“œì‹œ ì§€ì •ë˜ì–´ì•¼ í•œë‹¤.
     wcex.cbSize = sizeof(WNDCLASSEX);
 
-    // È­¸é¿¡ Ãâ·Â°¡´ÉÇÑ ¿µ¿ªÀ» Å¬¶óÀÌ¾ðÆ® ¿µ¿ªÀÌ¶ó°í ÇÑ´Ù.
-    // Å¬¶óÀÌ¾ðÆ® ¿µ¿ªÀÇ Å©±â(°¡·Î, ¼¼·Î)°¡ º¯°æµÉ ½Ã ÀüºÎ ´Ù½Ã ±×·ÁÁÖµµ·Ï ÇÑ´Ù.
+    // í™”ë©´ì— ì¶œë ¥ê°€ëŠ¥í•œ ì˜ì—­ì„ í´ë¼ì´ì–¸íŠ¸ ì˜ì—­ì´ë¼ê³  í•œë‹¤.
+    // í´ë¼ì´ì–¸íŠ¸ ì˜ì—­ì˜ í¬ê¸°(ê°€ë¡œ, ì„¸ë¡œ)ê°€ ë³€ê²½ë  ì‹œ ì „ë¶€ ë‹¤ì‹œ ê·¸ë ¤ì£¼ë„ë¡ í•œë‹¤.
     wcex.style = CS_HREDRAW | CS_VREDRAW;
 
-    // ¸Þ¼¼ÁöÅ¥¿¡¼­ ¾ò¾î¿Â ¸Þ¼¼Áö¸¦ ÀÎÀÚ·Î ³Ö¾î¼­ È£ÃâÇØÁÙ ÇÔ¼öÀÇ ÁÖ¼Ò¸¦ ³Ñ°ÜÁØ´Ù.
+    // ë©”ì„¸ì§€íì—ì„œ ì–»ì–´ì˜¨ ë©”ì„¸ì§€ë¥¼ ì¸ìžë¡œ ë„£ì–´ì„œ í˜¸ì¶œí•´ì¤„ í•¨ìˆ˜ì˜ ì£¼ì†Œë¥¼ ë„˜ê²¨ì¤€ë‹¤.
     wcex.lpfnWndProc = WndProc;
     wcex.cbClsExtra = 0;
     wcex.cbWndExtra = 0;
 
-    // ¿î¿µÃ¼Á¦¿¡¼­ ºÎ¿©ÇØÁØ HINSTANCE¸¦ Àü´ÞÇÑ´Ù.
+    // ìš´ì˜ì²´ì œì—ì„œ ë¶€ì—¬í•´ì¤€ HINSTANCEë¥¼ ì „ë‹¬í•œë‹¤.
     wcex.hInstance = mhInst;
 
-    // ½ÇÇàÆÄÀÏ ¾ÆÀÌÄÜÀ» ÁöÁ¤ÇÑ´Ù.
+    // ì‹¤í–‰íŒŒì¼ ì•„ì´ì½˜ì„ ì§€ì •í•œë‹¤.
     wcex.hIcon = LoadIcon(mhInst, MAKEINTRESOURCE(IDI_ICON1));
 
-    // À©µµ¿ì Ã¢¿¡¼­ÀÇ Ä¿¼­ ¸ð¾çÀ» ³ªÅ¸³½´Ù.
+    // ìœˆë„ìš° ì°½ì—ì„œì˜ ì»¤ì„œ ëª¨ì–‘ì„ ë‚˜íƒ€ë‚¸ë‹¤.
     wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
 
-    // Å¬¶óÀÌ¾ðÆ® ¿µ¿ªÀÇ »ö»óÀ» ÁöÁ¤ÇÑ´Ù.
+    // í´ë¼ì´ì–¸íŠ¸ ì˜ì—­ì˜ ìƒ‰ìƒì„ ì§€ì •í•œë‹¤.
     wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
 
-    // À©µµ¿ì ¸Þ´º¸¦ ÁöÁ¤ÇÑ´Ù.
-    // 0À» ´ëÀÔÇÏ¸é ¸Þ´º¸¦ ¾ø¾Ø´Ù.
+    // ìœˆë„ìš° ë©”ë‰´ë¥¼ ì§€ì •í•œë‹¤.
+    // 0ì„ ëŒ€ìž…í•˜ë©´ ë©”ë‰´ë¥¼ ì—†ì•¤ë‹¤.
     wcex.lpszMenuName = 0;
 
-    // µî·ÏÇÒ À©µµ¿ìÅ¬·¡½ºÀÇ ÀÌ¸§À» ÁöÁ¤ÇÑ´Ù.
+    // ë“±ë¡í•  ìœˆë„ìš°í´ëž˜ìŠ¤ì˜ ì´ë¦„ì„ ì§€ì •í•œë‹¤.
     wcex.lpszClassName = mClassName;
 
-    // À©µµ¿ìÃ¢ ÁÂÃø »ó´ÜÀÇ ÀÛÀº ¾ÆÀÌÄÜÀ» ÁöÁ¤ÇÑ´Ù.
+    // ìœˆë„ìš°ì°½ ì¢Œì¸¡ ìƒë‹¨ì˜ ìž‘ì€ ì•„ì´ì½˜ì„ ì§€ì •í•œë‹¤.
     wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_ICON1));
 
-    // À§¿¡¼­ ¼³Á¤ÇÑ À©µµ¿ìÅ¬·¡½º¸¦ µî·ÏÇÑ´Ù.
+    // ìœ„ì—ì„œ ì„¤ì •í•œ ìœˆë„ìš°í´ëž˜ìŠ¤ë¥¼ ë“±ë¡í•œë‹¤.
     RegisterClassExW(&wcex);
 }
 
 bool CGameManager::Create()
 {
-    // CreateWindow : À©µµ¿ì Ã¢À» »ý¼ºÇØÁÖ´Â ÇÔ¼öÀÌ´Ù.
-    // WinAPI¿¡¼­ ÇÔ¼ö¸íµÚ¿¡ W°¡ ºÙÀ¸¸é À¯´ÏÄÚµå, A°¡ ºÙÀ¸¸é ¸ÖÆ¼¹ÙÀÌÆ®ÀÌ´Ù.
-    // 1¹øÀÎÀÚ : À©µµ¿ì Å¬·¡½º ÀÌ¸§À» ÁöÁ¤ÇÑ´Ù.
-    // 2¹øÀÎÀÚ : À©µµ¿ì Å¸ÀÌÆ²¹Ù¿¡ Ãâ·ÂÇÒ ÀÌ¸§À» ÁöÁ¤ÇÑ´Ù.
-    // 3¹øÀÎÀÚ : À©µµ¿ì Ã¢ÀÇ ¸ð¾çÀ» °áÁ¤ÇÑ´Ù.
-    // 4¹øÀÎÀÚ : È­¸é¿¡¼­ À©µµ¿ì°¡ ½ÃÀÛÇÒ XÁöÁ¡À» ÁöÁ¤ÇÑ´Ù.
-    // 5¹øÀÎÀÚ : È­¸é¿¡¼­ À©µµ¿ì°¡ ½ÃÀÛÇÒ YÁöÁ¡À» ÁöÁ¤ÇÑ´Ù.
-    // 6¹øÀÎÀÚ : À©µµ¿ì Ã¢ÀÇ °¡·Î Å©±â¸¦ ÁöÁ¤ÇÑ´Ù.
-    // 7¹øÀÎÀÚ : À©µµ¿ì Ã¢ÀÇ ¼¼·Î Å©±â¸¦ ÁöÁ¤ÇÑ´Ù.
-    // 8¹øÀÎÀÚ : ºÎ¸ðÀ©µµ¿ì°¡ ÀÖÀ» °æ¿ì ºÎ¸ðÀ©µµ¿ìÀÇ ÇÚµéÀ» ÁöÁ¤ÇÑ´Ù.
-    // 9¹øÀÎÀÚ : ¸Þ´º ÇÚµéÀ» Àü´ÞÇÑ´Ù.
-    // 10¹øÀÎÀÚ : À©µµ¿ì ÀÎ½ºÅÏ½º¸¦ Àü´ÞÇÑ´Ù. WinMain¿¡¼­ Àü´ÞÀº °ªÀ¸·Î Àü´ÞÇØ¾ß ÇÑ´Ù.
-    // 11¹øÀÎÀÚ : Ã¢ »ý¼º µ¥ÀÌÅÍ¸¦ ÁöÁ¤ÇÑ´Ù. WM_CREATE´Â À©µµ¿ì »ý¼º½Ã ¹ß»ýÇÏ´Â ¸Þ¼¼ÁöÀÎµ¥
-    // ÀÌ ¸Þ¼¼Áö°¡ ¹ß»ýÇÏ¸é WndProc ÇÔ¼öÀÇ lParam¿¡ ÀÌ °ªÀÌ Àü´ÞµÈ´Ù.
-    // ÀÌ·¸°Ô À©µµ¿ì¸¦ »ý¼ºÇÏ¸é À©µµ¿ì ÇÚµéÀ» ¸¸µé¾îÁØ´Ù.
-    // Àß¸øµÈ »ý¼ºÀÏ °æ¿ì 0À» ¹ÝÈ¯ÇÑ´Ù.
+    // CreateWindow : ìœˆë„ìš° ì°½ì„ ìƒì„±í•´ì£¼ëŠ” í•¨ìˆ˜ì´ë‹¤.
+    // WinAPIì—ì„œ í•¨ìˆ˜ëª…ë’¤ì— Wê°€ ë¶™ìœ¼ë©´ ìœ ë‹ˆì½”ë“œ, Aê°€ ë¶™ìœ¼ë©´ ë©€í‹°ë°”ì´íŠ¸ì´ë‹¤.
+    // 1ë²ˆì¸ìž : ìœˆë„ìš° í´ëž˜ìŠ¤ ì´ë¦„ì„ ì§€ì •í•œë‹¤.
+    // 2ë²ˆì¸ìž : ìœˆë„ìš° íƒ€ì´í‹€ë°”ì— ì¶œë ¥í•  ì´ë¦„ì„ ì§€ì •í•œë‹¤.
+    // 3ë²ˆì¸ìž : ìœˆë„ìš° ì°½ì˜ ëª¨ì–‘ì„ ê²°ì •í•œë‹¤.
+    // 4ë²ˆì¸ìž : í™”ë©´ì—ì„œ ìœˆë„ìš°ê°€ ì‹œìž‘í•  Xì§€ì ì„ ì§€ì •í•œë‹¤.
+    // 5ë²ˆì¸ìž : í™”ë©´ì—ì„œ ìœˆë„ìš°ê°€ ì‹œìž‘í•  Yì§€ì ì„ ì§€ì •í•œë‹¤.
+    // 6ë²ˆì¸ìž : ìœˆë„ìš° ì°½ì˜ ê°€ë¡œ í¬ê¸°ë¥¼ ì§€ì •í•œë‹¤.
+    // 7ë²ˆì¸ìž : ìœˆë„ìš° ì°½ì˜ ì„¸ë¡œ í¬ê¸°ë¥¼ ì§€ì •í•œë‹¤.
+    // 8ë²ˆì¸ìž : ë¶€ëª¨ìœˆë„ìš°ê°€ ìžˆì„ ê²½ìš° ë¶€ëª¨ìœˆë„ìš°ì˜ í•¸ë“¤ì„ ì§€ì •í•œë‹¤.
+    // 9ë²ˆì¸ìž : ë©”ë‰´ í•¸ë“¤ì„ ì „ë‹¬í•œë‹¤.
+    // 10ë²ˆì¸ìž : ìœˆë„ìš° ì¸ìŠ¤í„´ìŠ¤ë¥¼ ì „ë‹¬í•œë‹¤. WinMainì—ì„œ ì „ë‹¬ì€ ê°’ìœ¼ë¡œ ì „ë‹¬í•´ì•¼ í•œë‹¤.
+    // 11ë²ˆì¸ìž : ì°½ ìƒì„± ë°ì´í„°ë¥¼ ì§€ì •í•œë‹¤. WM_CREATEëŠ” ìœˆë„ìš° ìƒì„±ì‹œ ë°œìƒí•˜ëŠ” ë©”ì„¸ì§€ì¸ë°
+    // ì´ ë©”ì„¸ì§€ê°€ ë°œìƒí•˜ë©´ WndProc í•¨ìˆ˜ì˜ lParamì— ì´ ê°’ì´ ì „ë‹¬ëœë‹¤.
+    // ì´ë ‡ê²Œ ìœˆë„ìš°ë¥¼ ìƒì„±í•˜ë©´ ìœˆë„ìš° í•¸ë“¤ì„ ë§Œë“¤ì–´ì¤€ë‹¤.
+    // ìž˜ëª»ëœ ìƒì„±ì¼ ê²½ìš° 0ì„ ë°˜í™˜í•œë‹¤.
     mhWnd = CreateWindowW(mClassName, mTitleName, WS_OVERLAPPEDWINDOW,
         100, 100, 1280, 720, nullptr, nullptr, mhInst, nullptr);
 
@@ -223,23 +270,23 @@ bool CGameManager::Create()
         return false;
     }
 
-    // À©µµ¿ì Å¬¶óÀÌ¾ðÆ® ¿µ¿ªÀÇ Å©±â¸¦ ¿øÇÏ´Â Å©±â·Î ÁöÁ¤ÇÑ´Ù.
-    // À§¿¡¼­ ÁöÁ¤ÇÑ À©µµ¿ì Å©±â´Â Å¸ÀÌÆ²¹Ù µîÀÇ Å©±â°¡ ¸ðµÎ ÇÕÃÄÁø Å©±â·Î ÁöÁ¤µÈ´Ù.
+    // ìœˆë„ìš° í´ë¼ì´ì–¸íŠ¸ ì˜ì—­ì˜ í¬ê¸°ë¥¼ ì›í•˜ëŠ” í¬ê¸°ë¡œ ì§€ì •í•œë‹¤.
+    // ìœ„ì—ì„œ ì§€ì •í•œ ìœˆë„ìš° í¬ê¸°ëŠ” íƒ€ì´í‹€ë°” ë“±ì˜ í¬ê¸°ê°€ ëª¨ë‘ í•©ì³ì§„ í¬ê¸°ë¡œ ì§€ì •ëœë‹¤.
     RECT    WindowRC = { 0, 0, 1280, 720 };
 
-    // Å¬¶óÀÌ¾ðÆ® ¿µ¿ªÀÌ 1280, 720ÀÌ µÇ±â À§ÇØ ÇÊ¿äÇÑ À©µµ¿ì ÀüÃ¼ Å©±â¸¦ ¾ò¾î¿Â´Ù.
-    // (ThickFrame, Menu, TitleBar µîÀÌ Æ÷ÇÔµÈ ÀüÃ¼Å©±â)
+    // í´ë¼ì´ì–¸íŠ¸ ì˜ì—­ì´ 1280, 720ì´ ë˜ê¸° ìœ„í•´ í•„ìš”í•œ ìœˆë„ìš° ì „ì²´ í¬ê¸°ë¥¼ ì–»ì–´ì˜¨ë‹¤.
+    // (ThickFrame, Menu, TitleBar ë“±ì´ í¬í•¨ëœ ì „ì²´í¬ê¸°)
     AdjustWindowRect(&WindowRC, WS_OVERLAPPEDWINDOW, FALSE);
 
     SetWindowPos(mhWnd, HWND_TOPMOST, 100, 100, WindowRC.right - WindowRC.left,
         WindowRC.bottom - WindowRC.top, SWP_NOMOVE | SWP_NOZORDER);
 
-    // À§¿¡¼­ À©µµ¿ì Ã¢À» ¸¸µé¾ú´Ù¸é ShowWindow ÇÔ¼ö¸¦ ÀÌ¿ëÇØ¼­ Ã¢À» º¸¿©ÁÙÁö ¼û±æÁö¸¦
-    // °áÁ¤ÇÑ´Ù.
+    // ìœ„ì—ì„œ ìœˆë„ìš° ì°½ì„ ë§Œë“¤ì—ˆë‹¤ë©´ ShowWindow í•¨ìˆ˜ë¥¼ ì´ìš©í•´ì„œ ì°½ì„ ë³´ì—¬ì¤„ì§€ ìˆ¨ê¸¸ì§€ë¥¼
+    // ê²°ì •í•œë‹¤.
     ShowWindow(mhWnd, SW_SHOW);
 
-    // Å¬¶óÀÌ¾ðÆ® ¿µ¿ªÀ» °­Á¦·Î ´Ù½Ã ±×¸®°Ô ¿äÃ»ÇØÁÖ´Â ÇÔ¼öÀÌ´Ù.
-    // Ã³À½ »ý¼º½Ã³ª Æ¯Á¤»óÈ²¿¡ Ã¢À» »õ·Î°íÄ§ ÇØ¾ß ÇÒ °æ¿ì »ç¿ëÇÑ´Ù.
+    // í´ë¼ì´ì–¸íŠ¸ ì˜ì—­ì„ ê°•ì œë¡œ ë‹¤ì‹œ ê·¸ë¦¬ê²Œ ìš”ì²­í•´ì£¼ëŠ” í•¨ìˆ˜ì´ë‹¤.
+    // ì²˜ìŒ ìƒì„±ì‹œë‚˜ íŠ¹ì •ìƒí™©ì— ì°½ì„ ìƒˆë¡œê³ ì¹¨ í•´ì•¼ í•  ê²½ìš° ì‚¬ìš©í•œë‹¤.
     UpdateWindow(mhWnd);
 
     return true;
@@ -249,14 +296,14 @@ LRESULT CGameManager::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
 {
     switch (message)
     {
-        // À©µµ¿ì Ã¢ Á¾·á¸Þ¼¼Áö
+    // ìœˆë„ìš° ì°½ ì¢…ë£Œë©”ì„¸ì§€
     case WM_DESTROY:
         mLoop = false;
         PostQuitMessage(0);
         break;
     default:
-        // À§¿¡¼­ ÁöÁ¤ÇÑ ¸Þ¼¼Áö ¿ÜÀÇ ´Ù¸¥ ¸Þ¼¼Áö°¡ ¹ß»ýÇÒ °æ¿ì À©µµ¿ìÀÇ ±âº» µ¿ÀÛÀ¸·Î
-        // Ã³¸®°¡ µÇ°Ô ¸¸µé¾îÁØ´Ù.
+        // ìœ„ì—ì„œ ì§€ì •í•œ ë©”ì„¸ì§€ ì™¸ì˜ ë‹¤ë¥¸ ë©”ì„¸ì§€ê°€ ë°œìƒí•  ê²½ìš° ìœˆë„ìš°ì˜ ê¸°ë³¸ ë™ìž‘ìœ¼ë¡œ
+        // ì²˜ë¦¬ê°€ ë˜ê²Œ ë§Œë“¤ì–´ì¤€ë‹¤.
         return DefWindowProc(hWnd, message, wParam, lParam);
     }
     return 0;

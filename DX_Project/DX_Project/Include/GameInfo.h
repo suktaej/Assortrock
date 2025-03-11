@@ -3,15 +3,23 @@
 #include <Windows.h>
 #include <list>
 #include <vector>
+#include <queue>
 #include <unordered_map>
+#include <map>
+#include <crtdbg.h>
 #include <string>
 #include <functional>
 #include <iostream>
-
-#include <crtdbg.h>
+#include <algorithm>
 
 #include <d3d11.h>
 #include <d3dcompiler.h>
+
+//#include <dwrite.h> // Window7 ì´ìƒ ì§€ì›
+//#include <dwrite_1.h>	// ìœ„ì˜ ê¸°ëŠ¥ì— Window8 ê¸°ëŠ¥ ì¶”ê°€ 
+//#include <dwrite_2.h> // ìœ„ì˜ ê¸°ëŠ¥ì— Window8.1 ê¸°ëŠ¥ ì¶”ê°€
+#include <dwrite_3.h>	// ìœ„ì˜ ê¸°ëŠ¥ì— Window10 ê¸°ëŠ¥ ì¶”ê°€
+#include <d2d1.h>
 
 #include "Vector2D.h"
 #include "Vector3D.h"
@@ -20,17 +28,22 @@
 
 #include "Share/SharedPtr.h"
 
-// .lib ¸¦ ¸µÅ© °É¾îÁÖ´Â ±â´ÉÀÌ´Ù.
+// extern ì€ ì„ ì–¸ëœ ì „ì—­ë³€ìˆ˜ë¥¼ ë‹¤ë¥¸ê³³ì—ì„œ ì‚¬ìš©í•  ìˆ˜ ìˆê²Œ
+// í•´ì£¼ëŠ” ê¸°ëŠ¥ì´ë‹¤.
+extern TCHAR   gRootPath[MAX_PATH];
+extern char   gRootPathMultibyte[MAX_PATH];
+
+// .lib ë¥¼ ë§í¬ ê±¸ì–´ì£¼ëŠ” ê¸°ëŠ¥ì´ë‹¤.
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "dxguid.lib")
+#pragma comment(lib, "dwrite.lib")
+#pragma comment(lib, "d2d1.lib")
 
 #define	SAFE_DELETE(p)	if(p)	{ delete p; p = nullptr; }
 #define	SAFE_DELETE_ARRAY(p)	if(p)	{ delete[] p; p = nullptr; }
-//SharedPtr Count°¨¼Ò ¹× 0ÀÏ °æ¿ì Á¦°Å
 #define	SAFE_RELEASE(p)	if(p)	{ p->Release(); p = nullptr; }
 
-#define	DEFINITION_SINGLE(Type)	Type* Type::mInst = nullptr;
 #define	DECLARE_SINGLE(Type)	\
 private:\
 	Type();\
@@ -49,22 +62,39 @@ public:\
 		SAFE_DELETE(mInst);\
 	}
 
-//ÇØ»óµµ
+#define	DEFINITION_SINGLE(Type)	Type* Type::mInst = nullptr;
+
+int Clamp(int Value, int Min, int Max);
+float Clamp(float Value, float Min, float Max);
+
+
+namespace EShaderBufferType
+{
+	enum Type
+	{
+		Vertex = 0x1,
+		Pixel = 0x2,
+		Hull = 0x4,
+		Domain = 0x8,
+		Geometry = 0x10,
+		Compute = 0x20,
+		Graphic = Vertex | Pixel | Hull | Domain | Geometry,
+		All = Graphic | Compute
+	};
+}
+
+
 struct FResolution
 {
 	unsigned int	Width = 0;
 	unsigned int	Height = 0;
 };
 
-//Á¤Á¡¹öÆÛ
 struct FVertexBuffer
 {
-	//¹öÆÛÅ¸ÀÔ
 	ID3D11Buffer* Buffer = nullptr;
-	//µ¥ÀÌÅÍ Å©±â, °³¼ö
 	int			Size = 0;
 	int			Count = 0;
-	//ÀúÀåÇÒ µ¥ÀÌÅÍ(¾î¶² Å¸ÀÔÀÌ ¿ÃÁö ¸ğ¸£¹Ç·Î nullptr)
 	void* Data = nullptr;
 
 	FVertexBuffer()
@@ -80,23 +110,20 @@ struct FVertexBuffer
 
 struct FIndexBuffer
 {
-	// µ¥ÀÌÅÍ¸¦ ÀúÀåÇÏ±â À§ÇÑ ¹öÆÛ
-	// DX º¯¼ö¿¡¼­ I·Î ½ÃÀÛÇÏ´Â °ÍÀº COM°´Ã¼
-	// °øÀ¯Æ÷ÀÎÅÍ¸¦ »ç¿ëÇÏ°í ÀÖÀ¸¹Ç·Î »ç¿ë ¿Ï·á ½Ã Release
+	// ë°ì´í„°ë¥¼ ì €ì¥í•˜ê¸° ìœ„í•œ ë²„í¼
 	ID3D11Buffer* Buffer = nullptr;
-	// µ¥ÀÌÅÍ 1°³ÀÇ Å©±â
+	// ë°ì´í„° 1ê°œì˜ í¬ê¸°
 	int		Size = 0;
-	// µ¥ÀÌÅÍ °³¼ö
+	// ë°ì´í„° ê°œìˆ˜
 	int		Count = 0;
-	// µ¥ÀÌÅÍ Æ÷¸Ë
+	// ë°ì´í„° í¬ë§·
 	DXGI_FORMAT	Fmt = DXGI_FORMAT_UNKNOWN;
 	void* Data = nullptr;
 
 	FIndexBuffer()
 	{
 	}
-	//ÆíÀÇ¸¦ À§ÇÑ ¼Ò¸êÀÚ
-	//µ¿ÀûÇÒ´ç µÈ Á¤º¸´Â ¸ğµÎ »èÁ¦
+
 	~FIndexBuffer()
 	{
 		SAFE_RELEASE(Buffer);
@@ -104,43 +131,213 @@ struct FIndexBuffer
 	}
 };
 
-// Vertex(»ö»óÁ¤º¸¸¦ °¡Áö´Â Å¸ÀÔ)
 struct FVertexColor
 {
-	FVector3D	Pos;	//ÁÂÇ¥
-	FVector4D	Color;	//»ö»ó
+	FVector3D	Pos;
+	FVector4D	Color;
 
 	FVertexColor()
 	{
 	}
 
-	FVertexColor(const FVector3D& _Pos, const FVector4D& _Color) :
+	FVertexColor(const FVector3D& _Pos, const FVector4D& _Color)	:
 		Pos(_Pos),
 		Color(_Color)
 	{
 	}
 
-	FVertexColor(float x, float y, float z, float r, float g, float b, float a) :
+	FVertexColor(float x, float y, float z, float r, float g, float b, float a)	:
 		Pos(x, y, z),
 		Color(r, g, b, a)
 	{
 	}
 };
 
+struct FVertexTexture
+{
+	FVector3D	Pos;
+	FVector2D	UV;
+
+	FVertexTexture()
+	{
+	}
+
+	FVertexTexture(float x, float y, float z, float u,
+		float v) :
+		Pos(x, y, z),
+		UV(u, v)
+	{
+	}
+};
+
+enum class EColliderType : unsigned char
+{
+	Colider2D,
+	Colider3D
+};
+
+enum class EColliderShape : unsigned char
+{
+	AABB2D,
+	Sphere2D,
+	OBB2D,
+	Line2D
+};
+
+struct FAABB2D
+{
+	FVector2D	Min;
+	FVector2D	Max;
+};
+
+struct FOBB2D
+{
+	FVector2D	Center;
+	FVector2D	Axis[2];
+	FVector2D	HalfSize;
+};
+
+struct FLine2D
+{
+	FVector2D	Start;
+	FVector2D	End;
+};
+
+namespace ECollisionChannel
+{
+	enum Type : unsigned char
+	{
+		Default,
+		Player,
+		Monster,
+		PlayerAttack,
+		MonsterAttack,
+		MonsterDetect,
+		End
+	};
+}
+
+namespace ECollisionInteraction
+{
+	enum Type : unsigned char
+	{
+		Ignore,			// ì¶©ëŒ ë¬´ì‹œ
+		Collision,		// ì¶©ëŒ
+		End
+	};
+}
+
+/*
+í”Œë ˆì´ì–´ í”„ë¡œíŒŒì¼ì„ ë§Œë“¤ê³  ì±„ë„ì„ Playerë¡œ ì§€ì •í–ˆë‹¤.
+ì´ë•Œ ë‹¤ë¥¸ ì±„ë„ì„ ì‚¬ìš©í•˜ëŠ” í”„ë¡œíŒŒì¼ê³¼ ì¶©ëŒí•´ì•¼ í• ì§€ ì—¬ë¶€ë¥¼
+íŒë‹¨í•˜ê¸° ìœ„í•´ì„œ ì¶©ëŒìƒí˜¸ì‘ìš©ì´ ë‹¤ë¥¸ ì±„ë„ê³¼ ì–´ë–»ê²Œ ë˜ì–´ ìˆëŠ”ì§€ë¥¼
+ì €ì¥í•´ì•¼ í•œë‹¤.
+
+1ë²ˆí”„ë¡œíŒŒì¼ ì •ë³´
+Channel : Player
+Enable : true
+Iteraction[Default] = Collision;
+Iteraction[Player] = Collision;
+Iteraction[Monster] = Collision;
+Iteraction[PlayerAttack] = Ignore;
+Iteraction[MonsterAttack] = Ignore;
+
+2ë²ˆí”„ë¡œíŒŒì¼ ì •ë³´
+Channel : MonsterAttack
+Enable : true
+Iteraction[Default] = Collision;
+Iteraction[Player] = Collision;
+Iteraction[Monster] = Ignore;
+Iteraction[PlayerAttack] = Ignore;
+Iteraction[MonsterAttack] = Ignore;
+*/
+struct FCollisionProfile
+{
+	std::string		Name;
+	// í˜„ì¬ í”„ë¡œíŒŒì¼ì´ ì‚¬ìš©í•˜ëŠ” ì¶©ëŒì±„ë„
+	ECollisionChannel::Type	Channel = ECollisionChannel::Default;
+	bool			Enable = true;
+	ECollisionInteraction::Type	Interaction[ECollisionChannel::End];
+};
+
 enum class EAssetType
 {
 	Mesh,
-	Texture
+	Texture,
+	Material,
+	Animation2D,
+	Sound
 };
 
-enum class EShaderBufferType
+namespace ERenderStateType
 {
-	Vertex = 0x1,
-	Pixel = 0x2,
-	Hull = 0x4,
-	Domain = 0x8,
-	Geometry = 0x10,
-	Compute = 0x20,
-	Graphic = Vertex | Pixel | Hull | Domain | Geometry,
-	All = Graphic | Compute
+	enum Type
+	{
+		Blend,
+		Rasterizer,
+		DepthStencil
+	};
+}
+
+enum class EComponentRender
+{
+	None,
+	Render
+};
+
+enum class ERenderSortType
+{
+	None,
+	Y,
+	Alpha
+};
+
+enum class EAnimationTextureType
+{
+	SpriteSheet,
+	Frame
+};
+
+struct FAnimationFrame
+{
+	FVector2D   Start;
+	FVector2D   Size;
+};
+
+enum class EItemType : unsigned char
+{
+	Weapon,
+	Armor,
+	Consume,
+	Other
+};
+
+struct FItemData
+{
+	std::string		Name;
+	EItemType		Type;
+	CSharedPtr<class CTexture>	Icon;
+};
+
+enum class ETileShape
+{
+	Rect,
+	Isometric,
+	End
+};
+
+enum class ETileType
+{
+	None = -2,
+	MouseOver,
+	Normal,
+	UnableToMove,
+	End
+};
+
+enum class EEditorMode
+{
+	TileType,
+	TileImage,
+	End
 };

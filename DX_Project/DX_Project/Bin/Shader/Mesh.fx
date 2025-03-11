@@ -31,6 +31,7 @@ PS_Output_Single DefaultMaterialPS(VS_Output_Tex input)
     float4 Color = gBaseTexture.Sample(gBaseSampler, input.UV);
     
     Color.rgb *= gMtrlBaseColor.rgb;
+    
     Color.a *= gMtrlOpacity;
     
     output.Color = Color;

@@ -49,10 +49,44 @@ bool CMeshManager::Init()
 
     unsigned short RectIdx[6] = { 0, 1, 3, 0, 3, 2 };
 
-    if (!CreateMesh("CenterRect", CenterRect, sizeof(FVertexColor),
+    if (!CreateMesh("CenterRect", CenterRect, sizeof(FVertexColor), 
         4, D3D11_USAGE_DEFAULT,
         D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST, RectIdx,
         sizeof(unsigned short), 6, DXGI_FORMAT_R16_UINT))
+        return false;
+
+    FVector3D    FrameLBRect[4] =
+    {
+        FVector3D(0.f, 1.f, 0.f),
+        FVector3D(1.f, 1.f, 0.f),
+        FVector3D(0.f, 0.f, 0.f),
+        FVector3D(1.f, 0.f, 0.f),
+    };
+
+    unsigned short FrameRectIdx[5] = { 0, 1, 3, 2, 0 };
+
+    if (!CreateMesh("FrameLBRect", FrameLBRect,
+        sizeof(FVector3D),
+        4, D3D11_USAGE_DEFAULT,
+        D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP, FrameRectIdx,
+        sizeof(unsigned short), 5, DXGI_FORMAT_R16_UINT))
+        return false;
+
+    FVector3D    FrameIsometric[4] =
+    {
+        FVector3D(0.5f, 1.f, 0.f),
+        FVector3D(1.f, 0.5f, 0.f),
+        FVector3D(0.5f, 0.f, 0.f),
+        FVector3D(0.f, 0.5f, 0.f),
+    };
+
+    unsigned short FrameIsometricIdx[5] = { 0, 1, 2, 3, 0 };
+
+    if (!CreateMesh("FrameIsometric", FrameIsometric,
+        sizeof(FVector3D),
+        4, D3D11_USAGE_DEFAULT,
+        D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP, FrameIsometricIdx,
+        sizeof(unsigned short), 5, DXGI_FORMAT_R16_UINT))
         return false;
 
     FVector3D    FrameCenterRect[4] =
@@ -63,16 +97,14 @@ bool CMeshManager::Init()
         FVector3D(0.5f, -0.5f, 0.f),
     };
 
-    unsigned short FrameRectIdx[5] = { 0, 1, 3, 2, 0 };
-
-    if (!CreateMesh("FrameCenterRect", FrameCenterRect,
+    if (!CreateMesh("FrameCenterRect", FrameCenterRect, 
         sizeof(FVector3D),
         4, D3D11_USAGE_DEFAULT,
         D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP, FrameRectIdx,
         sizeof(unsigned short), 5, DXGI_FORMAT_R16_UINT))
         return false;
 
-    FVector3D Sphere2DPoint[37];
+    FVector3D   Sphere2DPoint[37];
 
     for (int i = 0; i < 37; ++i)
     {
@@ -100,6 +132,7 @@ bool CMeshManager::Init()
         D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP))
         return false;
 
+
     FVector3D   LineRight[2] =
     {
         FVector3D(0.f, 0.f, 0.f),
@@ -111,8 +144,8 @@ bool CMeshManager::Init()
         2, D3D11_USAGE_DEFAULT,
         D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP))
         return false;
-/*
-    FVertexTexture CenterTexRect[4] =
+
+    FVertexTexture    CenterTexRect[4] =
     {
         FVertexTexture(-0.5f, 0.5f, 0.f, 0.f, 0.f),
         FVertexTexture(0.5f, 0.5f, 0.f, 1.f, 0.f),
@@ -126,48 +159,50 @@ bool CMeshManager::Init()
         D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST, RectIdx,
         sizeof(unsigned short), 6, DXGI_FORMAT_R16_UINT))
         return false;
-*/
+
+    FVertexTexture    SpriteRect[4] =
+    {
+        FVertexTexture(0.f, 1.f, 0.f, 0.f, 0.f),
+        FVertexTexture(1.f, 1.f, 0.f, 1.f, 0.f),
+        FVertexTexture(0.f, 0.f, 0.f, 0.f, 1.f),
+        FVertexTexture(1.f, 0.f, 0.f, 1.f, 1.f),
+    };
+
+    if (!CreateMesh("SpriteRect", SpriteRect,
+        sizeof(FVertexTexture),
+        4, D3D11_USAGE_DEFAULT,
+        D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST, RectIdx,
+        sizeof(unsigned short), 6, DXGI_FORMAT_R16_UINT))
+        return false;
+
     return true;
 }
 
-// MeshÀÇ CreateMesh¸¦ Á÷Á¢ÀûÀ¸·Î È£ÃâÇÏ´Â °ÍÀÌ ¾Æ´Ï¶ó 
-// Manager¸¦ ÅëÇØ¼­ È£Ãâ
-bool CMeshManager::CreateMesh(
-	const std::string& Name,    
-	void* VertexData,
-	int Size,
-	int Count,
-	D3D11_USAGE VertexUsage,
-	D3D11_PRIMITIVE_TOPOLOGY Primitive,
-	void* IndexData,
-	int IndexSize,
-	int IndexCount,
-	DXGI_FORMAT Fmt,
-	D3D11_USAGE IndexUsage)
+bool CMeshManager::CreateMesh(const std::string& Name, void* VertexData,
+    int Size, int Count, D3D11_USAGE VertexUsage, 
+    D3D11_PRIMITIVE_TOPOLOGY Primitive, void* IndexData, 
+    int IndexSize, int IndexCount, DXGI_FORMAT Fmt, D3D11_USAGE IndexUsage)
 {
-    // ÀÌ¸§À» ÀÌ¿ëÇÏ¿© ¸Þ½¬¸¦ ¾ò¾î¿Â´Ù.
+    // ì´ë¦„ì„ ì´ìš©í•˜ì—¬ ë©”ì‰¬ë¥¼ ì–»ì–´ì˜¨ë‹¤.
     CMesh* Mesh = FindMesh(Name);
 
-    // ¸Þ½¬°¡ ÀÌ¹Ì ÀÖÀ» °æ¿ì °°Àº ÀÌ¸§ÀÇ Áßº¹µÈ ¸Þ½¬°¡ ÀÖÀ¸¹Ç·Î
-    // »ý¼ºÀ» Áß´ÜÇÑ´Ù.
+    // ë©”ì‰¬ê°€ ì´ë¯¸ ìžˆì„ ê²½ìš° ê°™ì€ ì´ë¦„ì˜ ì¤‘ë³µëœ ë©”ì‰¬ê°€ ìžˆìœ¼ë¯€ë¡œ
+    // ìƒì„±ì„ ì¤‘ë‹¨í•œë‹¤.
     if (Mesh)
         return true;
 
-    // ÀÌ¸§ÀÌ ¾ø´Ù¸é »õ Mesh ÇÒ´ç
     Mesh = new CStaticMesh;
-    // ÇÒ´çÇÑ Mesh¿¡ ÀÌ¸§´ëÀÔ
+
     Mesh->SetName(Name);
-    // ÇÒ´çÇÑ Mesh¸¦ ½ÇÁ¦·Î »ý¼º
+
     if (!Mesh->CreateMesh(VertexData, Size, Count, VertexUsage,
         Primitive, IndexData, IndexSize, IndexCount, Fmt,
         IndexUsage))
-    // »ý¼ºµÇÁö ¾Ê¾ÒÀ» °æ¿ì Mesh Á¦°Å ÈÄ return false 
     {
         SAFE_DELETE(Mesh);
         return false;
     }
-    
-    // Mesh°¡ »ý¼ºµÇ¾ú´Ù¸é ¸Ê¿¡ insert
+
     mMeshMap.insert(std::make_pair(Name, Mesh));
 
     return true;
@@ -175,25 +210,24 @@ bool CMeshManager::CreateMesh(
 
 CMesh* CMeshManager::FindMesh(const std::string& Name)
 {
-    //std::unordered_map<std::string, CSharedPtr<CMesh>>::iterator iter = mMeshMap.find(Name);
-    //key°ªÀ¸·Î ÀÌ¸§À» Å½»ö
-    auto iter = mMeshMap.find(Name);
+    std::unordered_map<std::string, CSharedPtr<CMesh>>::iterator   iter = mMeshMap.find(Name);
 
     if (iter == mMeshMap.end())
         return nullptr;
-    
+
     return iter->second;
 }
 
 void CMeshManager::ReleaseMesh(CAsset* Mesh)
 {
-    auto iter = mMeshMap.find(Mesh->GetName());
+    auto    iter = mMeshMap.find(Mesh->GetName());
 
     if (iter != mMeshMap.end())
     {
-        // QUE : MeshÀÇ RefCnt µ¿ÀÛ¹æ¹ý
-        // ´Ù¸¥°÷¿¡¼­ °¡Áö°í ÀÖ´Â°Ô ¾ø±â ¶§¹®¿¡ Á¦°ÅÇÑ´Ù.
+        // ë‹¤ë¥¸ê³³ì—ì„œ ê°€ì§€ê³  ìžˆëŠ”ê²Œ ì—†ê¸° ë•Œë¬¸ì— ì œê±°í•œë‹¤.
         if (iter->second->GetRefCount() == 1)
+        {
             mMeshMap.erase(iter);
+        }
     }
 }

@@ -1,19 +1,18 @@
 #include "Mesh.h"
 #include "../../Device.h"
-//#include "../Material/Material.h"
-//#include "../Material/MaterialManager.h"
-//#include "../../Asset/AssetManager.h"
-//#include "../../Scene/Scene.h"
-//#include "../../Scene/SceneAssetManager.h"
+#include "../Material/Material.h"
+#include "../Material/MaterialManager.h"
+#include "../../Asset/AssetManager.h"
+#include "../../Scene/Scene.h"
+#include "../../Scene/SceneAssetManager.h"
 
 CMesh::CMesh()
 {
-	//mAssetType = EAssetType::Mesh;
+	mAssetType = EAssetType::Mesh;
 }
 
 CMesh::~CMesh()
 {
-	//SlotÀº µ¿ÀûÇÒ´çµÇ¾î »ý¼ºµÇ¹Ç·Î ¼Ò¸êÀÚ È£Ãâ ½Ã Á¦°Å
 	size_t	Size = mMeshSlot.size();
 
 	for (size_t i = 0; i < Size; ++i)
@@ -22,56 +21,24 @@ CMesh::~CMesh()
 	}
 }
 
-bool CMesh::CreateMesh(
-	void* VertexData,
-	int Size,
-	int Count,
-	D3D11_USAGE VertexUsage,
-	D3D11_PRIMITIVE_TOPOLOGY Primitive,
-	void* IndexData,
-	int IndexSize,
-	int IndexCount,
-	DXGI_FORMAT Fmt,
-	D3D11_USAGE IndexUsage)
+bool CMesh::CreateMesh(void* VertexData, int Size, int Count, D3D11_USAGE VertexUsage,
+	D3D11_PRIMITIVE_TOPOLOGY Primitive, void* IndexData, int IndexSize,
+	int IndexCount, DXGI_FORMAT Fmt, D3D11_USAGE IndexUsage)
 {
-/*
-struct FVertexBuffer {
-	ID3D11Buffer* Buffer = nullptr;
-	int	Size = 0;
-	int	Count = 0;
-	void* Data = nullptr;
-*/
 	mVertexBuffer.Size = Size;
 	mVertexBuffer.Count = Count;
-/*
-struct FVector3D {
-	float	x = 0.f;
-	float	y = 0.f;
-	float	z = 0.f;
-*/
-	//Á¤Á¡ Á¤º¸´Â Vector3D struct type
-	//Å©±â¸¸Å­ µ¿ÀûÇÒ´ç
-	//QUE:µ¿ÀûÇÒ´ç ÇÑ ¸Þ¸ð¸® Á¦°Å ÇÊ¿ä¿©ºÎ
 	mVertexBuffer.Data = new char[Size * Count];
-	//ÇÒ´çµÈ ¸Þ¸ð¸®¿¡ µ¥ÀÌÅÍ¸¦ º¹»ç
 	memcpy(mVertexBuffer.Data, VertexData, Size * Count);
-	
-	//ÀÔ·Â¹ÞÀº Á¤º¸·Î ¹öÆÛ¸¦ »ý¼ºÇÏ±â À§ÇØ °ªÀ» ³Ñ°ÜÁÜ
-	if (!CreateBuffer(
-		&mVertexBuffer.Buffer,
-		D3D11_BIND_VERTEX_BUFFER,
-		VertexData,
-		Size,
-		Count,
-		VertexUsage))
+
+	if (!CreateBuffer(&mVertexBuffer.Buffer, D3D11_BIND_VERTEX_BUFFER,
+		VertexData, Size, Count, VertexUsage))
 		return false;
-	//¸ð¾çÁöÁ¤
+
 	mPrimitive = Primitive;
 
-	// ÀÎµ¦½º µ¥ÀÌÅÍ°¡ ÀÖ´Ù¸é ÀÎµ¦½º¹öÆÛ »ý¼º
+	// ì¸ë±ìŠ¤ ë°ì´í„°ê°€ ìžˆë‹¤ë©´ ì¸ë±ìŠ¤ë²„í¼ë¥¼ ë§Œë“¤ì–´ì¤€ë‹¤.
 	if (IndexData)
 	{
-		//IndexBuffer´Â Slot struct¿¡ Æ÷ÇÔµÇ¾î ÀÖÀ¸¹Ç·Î Slot »ý¼º
 		FMeshSlot* Slot = new FMeshSlot;
 
 		Slot->IndexBuffer.Size = IndexSize;
@@ -79,68 +46,51 @@ struct FVector3D {
 		Slot->IndexBuffer.Data = new char[IndexSize * IndexCount];
 		Slot->IndexBuffer.Fmt = Fmt;
 		memcpy(Slot->IndexBuffer.Data, IndexData, IndexSize * IndexCount);
-	
-		//Index Buffer »ý¼ºÀ» À§ÇØ °ªÀ» ³Ñ°ÜÁÜ
-		if (!CreateBuffer(
-			&Slot->IndexBuffer.Buffer,
-			D3D11_BIND_INDEX_BUFFER,
-			IndexData,
-			IndexSize,
-			IndexCount,
-			IndexUsage))
+
+		if (!CreateBuffer(&Slot->IndexBuffer.Buffer, D3D11_BIND_INDEX_BUFFER,
+			IndexData, IndexSize, IndexCount, IndexUsage))
 		{
 			SAFE_DELETE(Slot);
 			return false;
 		}
-		//Slot->Material = CAssetManager::GetInst()->GetMaterialManager()->FindMaterial("DefaultMaterial");
 
-		//½½·ÔÀÌ »ý¼ºµÇ¾ú´Ù¸é ½½·Ôº¤ÅÍ¿¡ »ðÀÔ
+		Slot->Material = CAssetManager::GetInst()->GetMaterialManager()->FindMaterial("DefaultMaterial");
+
 		mMeshSlot.push_back(Slot);
 	}
 
 	return true;
 }
 
-bool CMesh::CreateBuffer(
-	ID3D11Buffer** Buffer,
-	D3D11_BIND_FLAG Flag,
-	void* Data,
-	int Size,
-	int Count,
-	D3D11_USAGE Usage)
+bool CMesh::CreateBuffer(ID3D11Buffer** Buffer, D3D11_BIND_FLAG Flag, void* Data,
+	int Size, int Count, D3D11_USAGE Usage)
 {
-	//DX¿¡¼­ Áö¿ø
-	//¹öÆÛ »ý¼º½Ã »ç¿ëµÇ´Â ±¸Á¶Ã¼
 	D3D11_BUFFER_DESC	BufferDesc = {};
 
+	// ë²„í¼ì˜ ë°”ì´íŠ¸ ìˆ˜ë¥¼ ì§€ì •í•œë‹¤.
+	// í•˜ë‚˜ì˜í¬ê¸° * ê°œìˆ˜
 	BufferDesc.ByteWidth = Size * Count;
 	BufferDesc.Usage = Usage;
 	BufferDesc.BindFlags = Flag;
 
-	// Dynamic ÀÏ °æ¿ì CPU¿¡¼­ ¹öÆÛ µ¥ÀÌÅÍ¸¦ ¹Ù²Ü ¼ö ÀÖ°Ô ÇÑ´Ù.
+	// Dynamic ì¼ ê²½ìš° CPUì—ì„œ ë²„í¼ ë°ì´í„°ë¥¼ ë°”ê¿€ ìˆ˜ ìžˆê²Œ í•œë‹¤.
 	if (Usage == D3D11_USAGE_DYNAMIC)
 		BufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+
 	else if (Usage == D3D11_USAGE_STAGING)
 		BufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE | D3D11_CPU_ACCESS_READ;
-	
-	// DX Áö¿ø
-	// ¹öÆÛ³ª ÅØ½ºÃ³¸¦ ÃÊ±âÈ­ ÇÒ ¶§ »ç¿ë
-	// ID3D11Device::CreateBuffer ¶Ç´Â 
-	// ID3D11Device::CreateTexture* ÇÔ¼ö¿¡¼­ ÃÊ±â µ¥ÀÌÅÍ¸¦ Á¦°øÇÏ´Â ¿ëµµ
+
+	// ë²„í¼ë¥¼ ìƒì„±í•œë‹¤.
 	D3D11_SUBRESOURCE_DATA	BufferData = {};
 
-	BufferData.pSysMem = Data;	//ÃÊ±âÈ­ÇÒ µ¥ÀÌÅÍÀÇ Æ÷ÀÎÅÍ
+	BufferData.pSysMem = Data;
 
-	if (FAILED(CDevice::GetInst()->GetDevice()->
-		//DXÁö¿ø
-		//½ÇÁ¦ ¹öÆÛ »ý¼º
-		CreateBuffer(&BufferDesc, &BufferData, Buffer)))
+	if (FAILED(CDevice::GetInst()->GetDevice()->CreateBuffer(&BufferDesc, &BufferData, Buffer)))
 		return false;
 
 	return true;
 }
 
-/*
 void CMesh::SetMaterial(int SlotIndex, const std::string& Name)
 {
 	CMaterial* Material = nullptr;
@@ -164,25 +114,25 @@ void CMesh::Render()
 	unsigned int Stride = mVertexBuffer.Size;
 	unsigned int Offset = 0;
 
-	// ±×·ÁÁÙ µµÇü Å¸ÀÔÀ» ÁöÁ¤ÇÑ´Ù.
+	// ê·¸ë ¤ì¤„ ë„í˜• íƒ€ìž…ì„ ì§€ì •í•œë‹¤.
 	CDevice::GetInst()->GetContext()->IASetPrimitiveTopology(mPrimitive);
-	// ¹öÅØ½º¹öÆÛ¸¦ ÁöÁ¤ÇÑ´Ù.
+	// ë²„í…ìŠ¤ë²„í¼ë¥¼ ì§€ì •í•œë‹¤.
 	CDevice::GetInst()->GetContext()->IASetVertexBuffers(0, 1,
 		&mVertexBuffer.Buffer, &Stride, &Offset);
 
 	size_t	SlotCount = mMeshSlot.size();
 
-	// ÀÎµ¦½º¹öÆÛ°¡ ÀÖÀ» °æ¿ì ¾øÀ» °æ¿ì·Î ³ª´©¾î¼­ Ãâ·ÂÇÑ´Ù.
+	// ì¸ë±ìŠ¤ë²„í¼ê°€ ìžˆì„ ê²½ìš° ì—†ì„ ê²½ìš°ë¡œ ë‚˜ëˆ„ì–´ì„œ ì¶œë ¥í•œë‹¤.
 
 	if (SlotCount > 0)
 	{
 		for (size_t i = 0; i < SlotCount; ++i)
 		{
-			// Ãâ·Â¿¡ »ç¿ëÇÒ ÀÎµ¦½º¹öÆÛ¸¦ ÁöÁ¤ÇÑ´Ù.
+			// ì¶œë ¥ì— ì‚¬ìš©í•  ì¸ë±ìŠ¤ë²„í¼ë¥¼ ì§€ì •í•œë‹¤.
 			CDevice::GetInst()->GetContext()->IASetIndexBuffer(mMeshSlot[i]->IndexBuffer.Buffer,
 				mMeshSlot[i]->IndexBuffer.Fmt, 0);
 
-			// ÀÎµ¦½º¸¦ Âü°íÇÏ¿© È­¸é¿¡ µµÇüÀ» ±×¸°´Ù.
+			// ì¸ë±ìŠ¤ë¥¼ ì°¸ê³ í•˜ì—¬ í™”ë©´ì— ë„í˜•ì„ ê·¸ë¦°ë‹¤.
 			CDevice::GetInst()->GetContext()->DrawIndexed(mMeshSlot[i]->IndexBuffer.Count,
 				0, 0);
 		}
@@ -202,23 +152,23 @@ void CMesh::Render(int SlotIndex)
 	unsigned int Stride = mVertexBuffer.Size;
 	unsigned int Offset = 0;
 
-	// ±×·ÁÁÙ µµÇü Å¸ÀÔÀ» ÁöÁ¤ÇÑ´Ù.
+	// ê·¸ë ¤ì¤„ ë„í˜• íƒ€ìž…ì„ ì§€ì •í•œë‹¤.
 	CDevice::GetInst()->GetContext()->IASetPrimitiveTopology(mPrimitive);
-	// ¹öÅØ½º¹öÆÛ¸¦ ÁöÁ¤ÇÑ´Ù.
+	// ë²„í…ìŠ¤ë²„í¼ë¥¼ ì§€ì •í•œë‹¤.
 	CDevice::GetInst()->GetContext()->IASetVertexBuffers(0, 1,
 		&mVertexBuffer.Buffer, &Stride, &Offset);
 
 	size_t	SlotCount = mMeshSlot.size();
 
-	// ÀÎµ¦½º¹öÆÛ°¡ ÀÖÀ» °æ¿ì ¾øÀ» °æ¿ì·Î ³ª´©¾î¼­ Ãâ·ÂÇÑ´Ù.
+	// ì¸ë±ìŠ¤ë²„í¼ê°€ ìžˆì„ ê²½ìš° ì—†ì„ ê²½ìš°ë¡œ ë‚˜ëˆ„ì–´ì„œ ì¶œë ¥í•œë‹¤.
 
 	if (SlotCount > 0)
 	{
-		// Ãâ·Â¿¡ »ç¿ëÇÒ ÀÎµ¦½º¹öÆÛ¸¦ ÁöÁ¤ÇÑ´Ù.
+		// ì¶œë ¥ì— ì‚¬ìš©í•  ì¸ë±ìŠ¤ë²„í¼ë¥¼ ì§€ì •í•œë‹¤.
 		CDevice::GetInst()->GetContext()->IASetIndexBuffer(mMeshSlot[SlotIndex]->IndexBuffer.Buffer,
 			mMeshSlot[SlotIndex]->IndexBuffer.Fmt, 0);
 
-		// ÀÎµ¦½º¸¦ Âü°íÇÏ¿© È­¸é¿¡ µµÇüÀ» ±×¸°´Ù.
+		// ì¸ë±ìŠ¤ë¥¼ ì°¸ê³ í•˜ì—¬ í™”ë©´ì— ë„í˜•ì„ ê·¸ë¦°ë‹¤.
 		CDevice::GetInst()->GetContext()->DrawIndexed(mMeshSlot[SlotIndex]->IndexBuffer.Count,
 			0, 0);
 	}
@@ -231,4 +181,3 @@ void CMesh::Render(int SlotIndex)
 			0);
 	}
 }
-*/

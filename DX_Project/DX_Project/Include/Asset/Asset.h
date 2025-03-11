@@ -1,7 +1,8 @@
 #pragma once
+
 #include "../Share/Object.h"
 
-class CAsset abstract:
+class CAsset abstract :
     public CObject
 {
 public:
@@ -11,11 +12,23 @@ public:
 protected:
     class CScene* mScene = nullptr;
     std::string     mName;
-    EAssetType      mAssetType; 
+    EAssetType      mAssetType;
 
 public:
-    const std::string& GetName() const { return mName; }
-    void SetName(const std::string& Name) { mName = Name; }
-    EAssetType GetAssetType() const { return mAssetType; }
+    const std::string& GetName()    const
+    {
+        return mName;
+    }
+
+    EAssetType GetAssetType()   const
+    {
+        return mAssetType;
+    }
+
+public:
+    void SetName(const std::string& Name)
+    {
+        mName = Name;
+    }
 };
 

@@ -1,9 +1,11 @@
+
 #include "Vector3D.h"
 #include "Matrix.h"
 
+
 FVector3D FVector3D::Zero;
 FVector3D FVector3D::One = { 1.f, 1.f, 1.f };
-FVector3D FVector3D::Axis[(int)EAxis::End] =
+FVector3D FVector3D::Axis[EAxis::End] =
 {
 	{1.f, 0.f, 0.f},
 	{0.f, 1.f, 0.f},
@@ -39,7 +41,7 @@ FVector3D::FVector3D(FVector3D&& v) :
 
 FVector3D::FVector3D(const DirectX::XMVECTOR& v)
 {
-	// XMVECTOR¸¦ XMFLOAT3·Î ¸¸µé¾îÁØ´Ù.
+	// XMVECTORë¥¼ XMFLOAT3ë¡œ ë§Œë“¤ì–´ì¤€ë‹¤.
 	DirectX::XMStoreFloat3((DirectX::XMFLOAT3*)this, v);
 }
 
@@ -419,7 +421,7 @@ const FVector3D& FVector3D::operator /= (int Value)
 
 float FVector3D::Length()	const
 {
-	// sqrtf : ·çÆ®°ª ±¸ÇØÁÖ´Â ±â´É.
+	// sqrtf : ë£¨íŠ¸ê°’ êµ¬í•´ì£¼ëŠ” ê¸°ëŠ¥.
 	return sqrtf(x * x + y * y + z * z);
 }
 
@@ -478,8 +480,8 @@ DirectX::XMVECTOR FVector3D::Convert()	const
 
 FVector3D FVector3D::TransformNormal(FMatrix& mat)	const
 {
-	// XMVector3TransformNormal : w¸¦ 0À¸·Î ÇÏ¿© 4x4 Çà·Ä°ú °öÇÏ°í ±× °á°ú¸¦
-	// ¹ÝÈ¯ÇØÁØ´Ù.
+	// XMVector3TransformNormal : wë¥¼ 0ìœ¼ë¡œ í•˜ì—¬ 4x4 í–‰ë ¬ê³¼ ê³±í•˜ê³  ê·¸ ê²°ê³¼ë¥¼
+	// ë°˜í™˜í•´ì¤€ë‹¤.
 	DirectX::XMVECTOR result = DirectX::XMVector3TransformNormal(Convert(),
 		mat.m);
 
@@ -488,8 +490,8 @@ FVector3D FVector3D::TransformNormal(FMatrix& mat)	const
 
 FVector3D FVector3D::TransformCoord(FMatrix& mat)	const
 {
-	// XMVector3TransformCoord : w¸¦ 1·Î ÇÏ¿© 4x4 Çà·Ä°ú °öÇÏ°í ±× °á°ú¸¦
-	// ¹ÝÈ¯ÇØÁØ´Ù.
+	// XMVector3TransformCoord : wë¥¼ 1ë¡œ í•˜ì—¬ 4x4 í–‰ë ¬ê³¼ ê³±í•˜ê³  ê·¸ ê²°ê³¼ë¥¼
+	// ë°˜í™˜í•´ì¤€ë‹¤.
 	DirectX::XMVECTOR result = DirectX::XMVector3TransformCoord(Convert(),
 		mat.m);
 
@@ -521,9 +523,9 @@ float FVector3D::GetAngle(const FVector3D& v) const
 }
 
 float FVector3D::GetViewTargetAngle(const FVector3D& v,
-	EAxis AxisType)	const
+	EAxis::Type AxisType)	const
 {
-	FVector3D	v1 = Axis[(int)AxisType];
+	FVector3D	v1 = Axis[AxisType];
 	FVector3D	v2 = v - *this;
 
 	v1.Normalize();

@@ -158,7 +158,7 @@ struct FVector3D
 
 	float GetAngle(const FVector3D& v)	const;
 	float GetViewTargetAngle(const FVector3D& v,
-		EAxis AxisType = EAxis::Y)	const;
+		EAxis::Type AxisType = EAxis::Y)	const;
 
 	static float GetAngle(const FVector3D& v1, const FVector3D& v2);
 
@@ -169,7 +169,7 @@ struct FVector3D
 
 	static FVector3D	Zero;
 	static FVector3D	One;
-	static FVector3D	Axis[(int)EAxis::End];
+	static FVector3D	Axis[EAxis::End];
 
 #pragma endregion StaticVariable
 };

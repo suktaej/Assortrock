@@ -3,9 +3,6 @@
 template <typename T>
 class CSharedPtr
 {
-private:
-	T* mObj = nullptr;
-
 public:
 	CSharedPtr()
 	{
@@ -127,5 +124,8 @@ public:
 	{
 		return mObj;
 	}
+
+private:
+	T* mObj = nullptr;
 };
 

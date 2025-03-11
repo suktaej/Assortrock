@@ -31,7 +31,8 @@ cbuffer Animation2D : register(b2)
     float2  gAnim2DLTUV;
     float2  gAnim2DRBUV;
     int     gAnim2DEnable;
-    float3  gAnim2DEmpty;
+    int     gAnim2DRevX;
+    float2  gAnim2DEmpty;
 };
 
 SamplerState gBaseSampler : register(s0);
@@ -44,6 +45,9 @@ float2 UpdateAnimation2D(float2 UV)
         return UV;
     
     float2 Result = (float2) 0.f;
+    
+    if (gAnim2DRevX == 1)
+        UV.x = 1 - UV.x;
     
     // 왼쪽 점일 경우
     if (UV.x == 0.f)

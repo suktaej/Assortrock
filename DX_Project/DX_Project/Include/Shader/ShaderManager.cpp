@@ -1,9 +1,13 @@
 #include "ShaderManager.h"
 #include "ColorMeshShader.h"
-//#include "FrameMeshShader.h"
-//#include "ConstantBuffer.h"
-//#include "StaticMeshShader.h"
+#include "FrameMeshShader.h"
+#include "ConstantBuffer.h"
+#include "StaticMeshShader.h"
 #include "../Device.h"
+#include "SpriteShader.h"
+#include "UIShader.h"
+#include "TileMapShader.h"
+#include "TileShader.h"
 
 DEFINITION_SINGLE(CShaderManager)
 
@@ -13,56 +17,68 @@ CShaderManager::CShaderManager()
 
 CShaderManager::~CShaderManager()
 {
-	//auto	iter = mPixelShaderMap.begin();
-	//auto	iterEnd = mPixelShaderMap.end();
+	auto	iter = mPixelShaderMap.begin();
+	auto	iterEnd = mPixelShaderMap.end();
 
-	//for (; iter != iterEnd; ++iter)
-	//{
-	//	SAFE_DELETE(iter->second);
-	//}
+	for (; iter != iterEnd; ++iter)
+	{
+		SAFE_DELETE(iter->second);
+	}
 }
 
 bool CShaderManager::Init()
 {
 	CreateShader<CColorMeshShader>("ColorMeshShader");
-	//CreateShader<CFrameMeshShader>("FrameMeshShader");
-	//CreateShader<CStaticMeshShader>("StaticMeshShader");
+	CreateShader<CFrameMeshShader>("FrameMeshShader");
 
-	//if (!LoadPixelShader("DefaultMaterialShader", "DefaultMaterialPS", TEXT("Mesh.fx"))) return false;
+	CreateShader<CStaticMeshShader>("StaticMeshShader");
 
-	//CreateConstantBuffer(
-	//	"Transform",
-	//	sizeof(FTransformCBufferInfo),
-	//	0,
-	//	EShaderBufferType::Vertex);
+	CreateShader<CSpriteShader>("SpriteShader");
 
-	//CreateConstantBuffer(
-	//	"Material",
-	//	sizeof(FMaterialCBufferInfo),
-	//	1,
-	//	EShaderBufferType::Pixel);
+	CreateShader<CUIShader>("UIShader");
 
-	//CreateConstantBuffer(
-	//	"Collider",
-	//	sizeof(FColliderCBufferInfo),
-	//	2,
-	//	EShaderBufferType::Pixel);
+	CreateShader<CTileMapShader>("TileMapShader");
+
+	CreateShader<CTileShader>("TileShader");
+
+
+
+	if (!LoadPixelShader("DefaultMaterialShader",
+		"DefaultMaterialPS", TEXT("Mesh.fx")))
+		return false;
+
+
+	CreateConstantBuffer("Transform",
+		sizeof(FTransformCBufferInfo),
+		0, EShaderBufferType::Vertex);
+
+	CreateConstantBuffer("Material",
+		sizeof(FMaterialCBufferInfo),
+		1, EShaderBufferType::Pixel);
+
+	CreateConstantBuffer("Animation2D",
+		sizeof(FAnimation2DCBufferInfo),
+		2, EShaderBufferType::Vertex);
+
+	CreateConstantBuffer("Collider",
+		sizeof(FColliderCBufferInfo),
+		3, EShaderBufferType::Pixel);
+
+	CreateConstantBuffer("Sprite",
+		sizeof(FSpriteCBufferInfo),
+		3, EShaderBufferType::Pixel);
+
+	CreateConstantBuffer("UI",
+		sizeof(FUICBufferInfo),
+		3, EShaderBufferType::Vertex | EShaderBufferType::Pixel);
+
+	CreateConstantBuffer("TileMap",
+		sizeof(FTileMapCBufferInfo),
+		3, EShaderBufferType::Vertex);
 
 	return true;
 }
 
-CShader* CShaderManager::FindShader(const std::string& Name)
-{
-	//std::unordered_map<std::string, CSharedPtr>::iterator
-	auto iter = mShaderMap.find(Name);
-
-	if (iter == mShaderMap.end())
-		return nullptr;
-
-	return iter->second;
-}
-
-/*
 bool CShaderManager::LoadPixelShader(
 	const std::string& Name, const char* EntryName,
 	const TCHAR* FileName)
@@ -123,6 +139,34 @@ const FMaterialPixelShader* CShaderManager::FindPixelShader(
 	return iter->second;
 }
 
+CShader* CShaderManager::FindShader(const std::string& Name)
+{
+	//std::unordered_map<std::string, CSharedPtr>::iterator
+	auto iter = mShaderMap.find(Name);
+
+	if (iter == mShaderMap.end())
+		return nullptr;
+
+	return iter->second;
+}
+
+void CShaderManager::ReleaseShader(const std::string& Name)
+{
+	auto iter = mShaderMap.find(Name);
+
+	if (iter != mShaderMap.end())
+	{
+		mShaderMap.erase(iter);
+	}
+}
+
+/*
+	CreateConstantBuffer(
+		"Transform", 
+		sizeof(FTransformCBufferInfo), 
+		0, 
+		EShaderBufferType::Vertex);
+*/
 bool CShaderManager::CreateConstantBuffer(
 	const std::string& Name, int Size, 
 	int Register, int ShaderBufferType)
@@ -144,6 +188,7 @@ bool CShaderManager::CreateConstantBuffer(
 
 	return true;
 }
+
 CConstantBuffer* CShaderManager::FindCBuffer(
 	const std::string& Name)
 {
@@ -164,12 +209,3 @@ void CShaderManager::ReleaseCBuffer(const std::string& Name)
 		mCBufferMap.erase(iter);
 	}
 }
-*/
-void CShaderManager::ReleaseShader(const std::string& Name)
-{
-	auto iter = mShaderMap.find(Name);
-
-	if (iter != mShaderMap.end())
-		mShaderMap.erase(iter);
-}
-

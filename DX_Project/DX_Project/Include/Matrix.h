@@ -21,7 +21,7 @@ __declspec(align(16)) union FMatrix
 
 	FMatrix()
 	{
-		// XMMatrixIdentity : Ç×µîÇà·ÄÀ» ¸¸µé¾îÁÖ´Â ÇÔ¼ö.
+		// XMMatrixIdentity : í•­ë“±í–‰ë ¬ì„ ë§Œë“¤ì–´ì£¼ëŠ” í•¨ìˆ˜.
 		m = DirectX::XMMatrixIdentity();
 	}
 
@@ -122,12 +122,12 @@ __declspec(align(16)) union FMatrix
 		float y = DirectX::XMConvertToRadians(_v.y);
 		float z = DirectX::XMConvertToRadians(_v.z);
 
-		// x, y, z È¸Àü°ªÀ» ÀÌ¿ëÇÏ¿© »ç¿ø¼ö¸¦ ±¸ÇÑ´Ù.
+		// x, y, z íšŒì „ê°’ì„ ì´ìš©í•˜ì—¬ ì‚¬ì›ìˆ˜ë¥¼ êµ¬í•œë‹¤.
 		DirectX::XMVECTOR Quat =
 			DirectX::XMQuaternionRotationRollPitchYaw(x, y, z);
 
-		// À§¿¡¼­ ±¸ÇØÁØ »ç¿ø¼ö¸¦ ÀÌ¿ëÇÏ¿© È¸ÀüÇà·ÄÀ»
-		// ¸¸µé¾îÁØ´Ù.
+		// ìœ„ì—ì„œ êµ¬í•´ì¤€ ì‚¬ì›ìˆ˜ë¥¼ ì´ìš©í•˜ì—¬ íšŒì „í–‰ë ¬ì„
+		// ë§Œë“¤ì–´ì¤€ë‹¤.
 		m = DirectX::XMMatrixRotationQuaternion(Quat);
 
 		//DirectX::XMMatrixRotationX
@@ -139,12 +139,12 @@ __declspec(align(16)) union FMatrix
 		float y = DirectX::XMConvertToRadians(_y);
 		float z = DirectX::XMConvertToRadians(_z);
 
-		// x, y, z È¸Àü°ªÀ» ÀÌ¿ëÇÏ¿© »ç¿ø¼ö¸¦ ±¸ÇÑ´Ù.
+		// x, y, z íšŒì „ê°’ì„ ì´ìš©í•˜ì—¬ ì‚¬ì›ìˆ˜ë¥¼ êµ¬í•œë‹¤.
 		DirectX::XMVECTOR Quat =
 			DirectX::XMQuaternionRotationRollPitchYaw(x, y, z);
 
-		// À§¿¡¼­ ±¸ÇØÁØ »ç¿ø¼ö¸¦ ÀÌ¿ëÇÏ¿© È¸ÀüÇà·ÄÀ»
-		// ¸¸µé¾îÁØ´Ù.
+		// ìœ„ì—ì„œ êµ¬í•´ì¤€ ì‚¬ì›ìˆ˜ë¥¼ ì´ìš©í•˜ì—¬ íšŒì „í–‰ë ¬ì„
+		// ë§Œë“¤ì–´ì¤€ë‹¤.
 		m = DirectX::XMMatrixRotationQuaternion(Quat);
 	}
 
@@ -241,12 +241,12 @@ __declspec(align(16)) union FMatrix
 		float y = DirectX::XMConvertToRadians(_v.y);
 		float z = DirectX::XMConvertToRadians(_v.z);
 
-		// x, y, z È¸Àü°ªÀ» ÀÌ¿ëÇÏ¿© »ç¿ø¼ö¸¦ ±¸ÇÑ´Ù.
+		// x, y, z íšŒì „ê°’ì„ ì´ìš©í•˜ì—¬ ì‚¬ì›ìˆ˜ë¥¼ êµ¬í•œë‹¤.
 		DirectX::XMVECTOR Quat =
 			DirectX::XMQuaternionRotationRollPitchYaw(x, y, z);
 
-		// À§¿¡¼­ ±¸ÇØÁØ »ç¿ø¼ö¸¦ ÀÌ¿ëÇÏ¿© È¸ÀüÇà·ÄÀ»
-		// ¸¸µé¾îÁØ´Ù.
+		// ìœ„ì—ì„œ êµ¬í•´ì¤€ ì‚¬ì›ìˆ˜ë¥¼ ì´ìš©í•˜ì—¬ íšŒì „í–‰ë ¬ì„
+		// ë§Œë“¤ì–´ì¤€ë‹¤.
 		return DirectX::XMMatrixRotationQuaternion(Quat);
 
 		//DirectX::XMMatrixRotationX
@@ -258,12 +258,12 @@ __declspec(align(16)) union FMatrix
 		float y = DirectX::XMConvertToRadians(_y);
 		float z = DirectX::XMConvertToRadians(_z);
 
-		// x, y, z È¸Àü°ªÀ» ÀÌ¿ëÇÏ¿© »ç¿ø¼ö¸¦ ±¸ÇÑ´Ù.
+		// x, y, z íšŒì „ê°’ì„ ì´ìš©í•˜ì—¬ ì‚¬ì›ìˆ˜ë¥¼ êµ¬í•œë‹¤.
 		DirectX::XMVECTOR Quat =
 			DirectX::XMQuaternionRotationRollPitchYaw(x, y, z);
 
-		// À§¿¡¼­ ±¸ÇØÁØ »ç¿ø¼ö¸¦ ÀÌ¿ëÇÏ¿© È¸ÀüÇà·ÄÀ»
-		// ¸¸µé¾îÁØ´Ù.
+		// ìœ„ì—ì„œ êµ¬í•´ì¤€ ì‚¬ì›ìˆ˜ë¥¼ ì´ìš©í•˜ì—¬ íšŒì „í–‰ë ¬ì„
+		// ë§Œë“¤ì–´ì¤€ë‹¤.
 		return DirectX::XMMatrixRotationQuaternion(Quat);
 	}
 
@@ -323,7 +323,7 @@ __declspec(align(16)) union FMatrix
 
 
 /*
-4x4 * 4x4
+4x4 * 4x4 
 
 1x4       4x4
 1 2 3 4 * 1 2 3 4 = 1 + 10 + 27 + 12 = 50  = 50, 30, 40, 78
@@ -332,7 +332,7 @@ __declspec(align(16)) union FMatrix
 		  3 4 5 6   4 + 16 + 6 + 24 = 50
 
 1 2 3 4	  1 2 3 4   50, 30, 40, 78
-5 6 7 8 * 5 6 7 8 = 122,
+5 6 7 8 * 5 6 7 8 = 122, 
 9 0 1 2	  9 0 1 2
 3 4 5 6	  3 4 5 6
 
@@ -342,13 +342,13 @@ __declspec(align(16)) union FMatrix
 0 0 0 1	  3 4 5 6
 
 1 2 3 4   1 0 0 0   1 2 3 4
-5 6 7 8 * 0 1 0 0 =
+5 6 7 8 * 0 1 0 0 = 
 9 0 1 2	  0 0 1 0
 3 4 5 6	  0 0 0 1
 
-A Çà·Ä¿¡ AÇà·ÄÀÇ ¿ªÇà·ÄÀ» °öÇÏ¸é Ç×µî(´ÜÀ§)Çà·ÄÀÌ ³ª¿Â´Ù.
+A í–‰ë ¬ì— Aí–‰ë ¬ì˜ ì—­í–‰ë ¬ì„ ê³±í•˜ë©´ í•­ë“±(ë‹¨ìœ„)í–‰ë ¬ì´ ë‚˜ì˜¨ë‹¤.
 
-ÀüÄ¡Çà·Ä : Çà°ú ¿­À» ¹Ù²ãÁØ´Ù.
+ì „ì¹˜í–‰ë ¬ : í–‰ê³¼ ì—´ì„ ë°”ê¿”ì¤€ë‹¤.
 1 2 3 4
 5 6 7 8
 9 0 1 2
@@ -359,10 +359,10 @@ A Çà·Ä¿¡ AÇà·ÄÀÇ ¿ªÇà·ÄÀ» °öÇÏ¸é Ç×µî(´ÜÀ§)Çà·ÄÀÌ ³ª¿Â´Ù.
 3 7 1 5
 4 8 2 6
 
-¿ùµåÇà·Ä ±¸¼º¿ä¼Ò
-Å©±â, ÀÚÀü, À§Ä¡(ÀÌµ¿), °øÀü, ºÎ¸ğ
-¿ùµåÇà·Ä = Å©±âÇà·Ä * ÀÚÀüÇà·Ä * ÀÌµ¿Çà·Ä * °øÀüÇà·Ä *
-ºÎ¸ğÇà·Ä
+ì›”ë“œí–‰ë ¬ êµ¬ì„±ìš”ì†Œ
+í¬ê¸°, ìì „, ìœ„ì¹˜(ì´ë™), ê³µì „, ë¶€ëª¨
+ì›”ë“œí–‰ë ¬ = í¬ê¸°í–‰ë ¬ * ìì „í–‰ë ¬ * ì´ë™í–‰ë ¬ * ê³µì „í–‰ë ¬ *
+ë¶€ëª¨í–‰ë ¬
 
 
 
@@ -377,39 +377,39 @@ x 0 0 0
 			 0   0   0   1
 
 -1, 1, 0, 1 * 100 0   0   0 = -100, 100, 0
-			  0   100 0   0
+ 			  0   100 0   0 
 			  0   0   100 0
 			  0   0   0   1
 
 cos -sin
 sin cos
 
-XÃà È¸Àü
+Xì¶• íšŒì „
 1 0   0    0
 0 cos -sin 0
 0 sin cos  0
 0 0   0    1
 
-YÃà È¸Àü
+Yì¶• íšŒì „
 cos  0 sin 0
 0    1 0   0
 -sin 0 cos 0
 0    0 0   1
 
-ZÃà È¸Àü
+Zì¶• íšŒì „
 cos -sin 0 0
 sin cos  0 0
 0   0    1 0
 0   0    0 1
 
-ÃÖÁ¾ È¸ÀüÇà·Ä = XÃàÈ¸ÀüÇà·Ä * YÃàÈ¸ÀüÇà·Ä * ZÃàÈ¸ÀüÇà·Ä
+ìµœì¢… íšŒì „í–‰ë ¬ = Xì¶•íšŒì „í–‰ë ¬ * Yì¶•íšŒì „í–‰ë ¬ * Zì¶•íšŒì „í–‰ë ¬
 
 100, 100, 0, 1 * 1 0   0    0 = 100, 0
 				 0 cos -sin 0
 				 0 sin cos  0
 				 0 0   0    1
 
-ÀÌµ¿Çà·Ä
+ì´ë™í–‰ë ¬
 1 0 0 0
 0 1 0 0
 0 0 1 0
@@ -421,9 +421,9 @@ x y z 1
 			 200 200 0   1
 
 
-PI = 180µµ¸¦ ÀÇ¹ÌÇÑ´Ù.
-¶óµğ¾È * 180 / PI
-°¢µµ * PI / 180
+PI = 180ë„ë¥¼ ì˜ë¯¸í•œë‹¤.
+ë¼ë””ì•ˆ * 180 / PI
+ê°ë„ * PI / 180
 
 
 

@@ -164,8 +164,13 @@ bool CPlayerObject::Init()
     mScene->GetInput()->AddBindKey("MoveUp", 'W');
     mScene->GetInput()->AddBindKey("MoveDown", 'S');
 
-    mScene->GetInput()->AddBindKey("RotationZ", 'D');
-    mScene->GetInput()->AddBindKey("RotationZInv", 'A');
+    /*mScene->GetInput()->AddBindKey("RotationZ", 'D');
+    mScene->GetInput()->AddBindKey("RotationZInv", 'A');*/
+
+    mScene->GetInput()->AddBindKey("MoveRight", 'D');
+    mScene->GetInput()->AddBindKey("MoveLeft", 'A');;
+    mScene->GetInput()->AddBindKey("MovePoint", VK_RBUTTON);
+
 
     mScene->GetInput()->AddBindKey("Fire", VK_SPACE);
 
@@ -187,12 +192,23 @@ bool CPlayerObject::Init()
 
     mScene->GetInput()->AddBindFunction<CPlayerObject>("MoveDown",
         EInputType::Hold, this, &CPlayerObject::MoveDown);
+    
+    mScene->GetInput()->AddBindFunction<CPlayerObject>("MoveRight",
+        EInputType::Hold, this, &CPlayerObject::MoveRight);
 
-    mScene->GetInput()->AddBindFunction<CPlayerObject>("RotationZ",
+    mScene->GetInput()->AddBindFunction<CPlayerObject>("MoveLeft",
+        EInputType::Hold, this, &CPlayerObject::MoveLeft);
+
+    mScene->GetInput()->AddBindFunction<CPlayerObject>("MovePoint",
+        EInputType::Down, this, &CPlayerObject::MovePoint);
+
+
+
+   /* mScene->GetInput()->AddBindFunction<CPlayerObject>("RotationZ",
         EInputType::Hold, this, &CPlayerObject::RotationZ);
 
     mScene->GetInput()->AddBindFunction<CPlayerObject>("RotationZInv",
-        EInputType::Hold, this, &CPlayerObject::RotationZInv);
+        EInputType::Hold, this, &CPlayerObject::RotationZInv);*/
 
     mScene->GetInput()->AddBindFunction<CPlayerObject>("Fire",
         EInputType::Down, this, &CPlayerObject::Fire);
@@ -344,6 +360,12 @@ void CPlayerObject::MoveDown(float DeltaTime)
     mAutoBasePose = true;
 }
 
+void CPlayerObject::MovePoint(float DeltaTime)
+{
+    mMovement->SetMovePoint(
+        mScene->GetInput()->GetMouseWorldPos2D());
+}
+
 void CPlayerObject::RotationZ(float DeltaTime)
 {
     FVector3D   Rot = mRootComponent->GetWorldRotation();
@@ -354,6 +376,28 @@ void CPlayerObject::RotationZInv(float DeltaTime)
 {
     FVector3D   Rot = mRootComponent->GetWorldRotation();
     mRootComponent->SetWorldRotationZ(Rot.z + DeltaTime * 90.f);
+}
+
+void CPlayerObject::MoveRight(float DeltaTime)
+{
+    mMovement->AddMove(mRootComponent->GetAxis(EAxis::X));
+
+    mAnimation->ChangeAnimation("PlayerWalk");
+
+    mAnimation->SetAnimationReverseX(false);
+
+    mAutoBasePose = true;
+}
+
+void CPlayerObject::MoveLeft(float DeltaTime)
+{
+    mMovement->AddMove(mRootComponent->GetAxis(EAxis::X) * -1);
+
+    mAnimation->ChangeAnimation("PlayerWalk");
+
+    mAnimation->SetAnimationReverseX(true);
+
+    mAutoBasePose = true;
 }
 
 void CPlayerObject::Fire(float DeltaTime)
