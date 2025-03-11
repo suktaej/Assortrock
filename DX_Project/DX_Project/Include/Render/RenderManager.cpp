@@ -210,11 +210,8 @@ bool CRenderManager::SortY(
 	const CSharedPtr<class CSceneComponent>& Src, 
 	const CSharedPtr<class CSceneComponent>& Dest)
 {
-	float SrcY = Src->GetWorldPosition().y -
-		Src->GetWorldScale().y * Src->GetPivot().y;
-
-	float DestY = Dest->GetWorldPosition().y -
-		Dest->GetWorldScale().y * Dest->GetPivot().y;
+	float SrcY = Src->GetWorldPosition().y - Src->GetWorldScale().y * Src->GetPivot().y;
+	float DestY = Dest->GetWorldPosition().y - Dest->GetWorldScale().y * Dest->GetPivot().y;
 
 	return SrcY > DestY;
 }

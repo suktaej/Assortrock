@@ -26,11 +26,7 @@ private:
     int         mEditTileFrame = 0;
 
 public:
-    void SetEditorMode(EEditorMode Mode)
-    {
-        mEditorMode = Mode;
-    }
-
+    void SetEditorMode(EEditorMode Mode) { mEditorMode = Mode; }
     void AddTileType();
     void AddTileFrame();
 
@@ -41,5 +37,12 @@ public:
 public:
     void Save(const TCHAR* FullPath);
     void Load(const TCHAR* FullPath);
+
+public:
+	//0311
+	//충돌가능여부 확인
+    bool IsTileBlocked(FVector2D Pos) { return mTileMap->IsTileBlocked(Pos); }
+    //타일크기 반환
+    FVector2D GetTileSize() { return mTileMap->GetTileSize(); }
 };
 

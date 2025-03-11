@@ -37,18 +37,20 @@ bool CSceneMain::InitAsset()
 
 bool CSceneMain::InitObject()
 {
+    //타일맵 생성
     CTileMapObj* TileMapObj = CreateObj<CTileMapObj>("TileMap");
 
     TCHAR	FullPath[MAX_PATH] = {};
-
+    //타일맵 호출
     lstrcpy(FullPath, gRootPath);
     lstrcat(FullPath, TEXT("Asset\\Data\\TileMap.tlm"));
 
     TileMapObj->Load(FullPath);
-
+    
+    //플레이어 생성
     CPlayerObject* Player = CreateObj<CPlayerObject>("Player");
 
-    CObjectSpawnPoint* MonsterPoint =
+    /*CObjectSpawnPoint* MonsterPoint =
         CreateObj<CObjectSpawnPoint>("Monster1");
 
     MonsterPoint->SetSpawnType(EObjectSpawnType::GunnerMonster);
@@ -98,7 +100,7 @@ bool CSceneMain::InitObject()
 
     Monster->SetTarget(Player);
 
-    Monster->SetWorldPos(-400.f, 0.f);
+    Monster->SetWorldPos(-400.f, 0.f);*/
 
     return true;
 }

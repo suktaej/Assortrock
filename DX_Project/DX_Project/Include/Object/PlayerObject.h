@@ -27,8 +27,8 @@ protected:
     CSharedPtr<class CColliderOBB2D>        mBody;
     CSharedPtr<class CColliderLine2D>       mLine;
     CSharedPtr<class CSceneComponent>       mRotationPivot;
-    CSharedPtr<class CSpriteComponent>  mSub;
-    CSharedPtr<class CSpriteComponent>  mSub2;
+    //CSharedPtr<class CSpriteComponent>  mSub;
+    //CSharedPtr<class CSpriteComponent>  mSub2;
     CSharedPtr<class CCameraComponent>      mCamera;
     CSharedPtr<class CWidgetComponent>    mHPBar;
 
@@ -57,6 +57,10 @@ protected:
     ESkill4State    mSkill4State = ESkill4State::Expansion;
 
     int             mHP = 10;
+    //0311
+    bool mIsOnGround = false;   //바닥 충돌상태
+    bool mIsJumping = false;    //도약 상태
+    float mJumpingTime = 0.5f;    //도약시간
 
 public:
     virtual bool Init();
@@ -101,12 +105,19 @@ private:
     void Skill9(float DeltaTime);
 
 
-private:
-    void UpdateSkill2(float DeltaTime);
-    void UpdateSkill4(float DeltaTime);
+//private:
+//    void UpdateSkill2(float DeltaTime);
+//    void UpdateSkill4(float DeltaTime);
 
 public:
     void AttackEnd();
     void AttackNotify();
+
+private:
+    //0311
+    //플레이어가 중력의 적용을 받는지, 타일 위에 있는지 확인
+    void IsPlayerOnGround(float DeltaTime);
+    void Jump(float DeltaTime);
+    void JumpUpdate(float DeltaTime);
 };
 

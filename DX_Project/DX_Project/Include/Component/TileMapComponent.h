@@ -144,5 +144,10 @@ public:
 	void Save(const char* FileName);
 	void Load(const TCHAR* FullPath);
 	void Load(const char* FileName);
+
+public:
+	//0311
+	//이동불가능 블록인지 확인
+	bool IsTileBlocked(const FVector2D& Pos);
 };
 

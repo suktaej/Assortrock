@@ -28,6 +28,7 @@
 #include "../Asset/AssetManager.h"
 #include "../Asset/Texture/Texture.h"
 #include "../Asset/Texture/TextureManager.h"
+#include "../Object/TileMapObj.h"
 
 CPlayerObject::CPlayerObject()
 {
@@ -88,7 +89,7 @@ bool CPlayerObject::Init()
     mAnimation->AddNotify<CPlayerObject>("PlayerAttack",
         2, this, &CPlayerObject::AttackNotify);
 
-    mRoot->SetWorldPos(0.f, 0.f, 0.f);
+    mRoot->SetWorldPos(500.f, 1000.f, 0.f);
     mRoot->SetWorldScale(100.f, 100.f, 1.f);
 
     SetRootComponent(mRoot);
@@ -136,8 +137,10 @@ bool CPlayerObject::Init()
     mScene->GetInput()->AddBindKey("Skill8", '8');
     mScene->GetInput()->AddBindKey("Skill9", '9');
 
+    //0311
+    //Jump키 변경
     mScene->GetInput()->AddBindFunction<CPlayerObject>("MoveUp",
-        EInputType::Hold, this, &CPlayerObject::MoveUp);
+        EInputType::Hold, this, &CPlayerObject::Jump);
 
     mScene->GetInput()->AddBindFunction<CPlayerObject>("MoveDown",
         EInputType::Hold, this, &CPlayerObject::MoveDown);
@@ -198,23 +201,27 @@ bool CPlayerObject::Init()
 }
 
 void CPlayerObject::Update(float DeltaTime)
-{
-    //중력 적용
-    //MovementComponent의 Velocity변수를 변경하는 함수
-    //변경 후 상태가 Update되어야 하므로 SceneObjec::Update() 전에 사용
-    mMovement->AddMove(mRootComponent->GetAxis(EAxis::Y) * -1);
+{   
+    //0311
+    //플레이어 위치 확인
+    IsPlayerOnGround(DeltaTime); 
     
-    CSceneObject::Update(DeltaTime);
- 
-    if (mSkill2Enable)
-    {
-        UpdateSkill2(DeltaTime);
-    }
+    //Jump상태 확인
+    if (mIsJumping)
+        JumpUpdate(DeltaTime);
 
-    if (mSkill4Enable)
-    {
-        UpdateSkill4(DeltaTime);
-    }
+    CSceneObject::Update(DeltaTime);
+
+ 
+    //if (mSkill2Enable)
+    //{
+    //    UpdateSkill2(DeltaTime);
+    //}
+
+    //if (mSkill4Enable)
+    //{
+    //    UpdateSkill4(DeltaTime);
+    //}
 
     if (mMovement->GetVelocityLength() == 0.f && mAutoBasePose)
         mAnimation->ChangeAnimation("PlayerIdle");
@@ -522,98 +529,98 @@ void CPlayerObject::Skill9(float DeltaTime)
     Root->SetWorldPos(Pos + Dir * 75.f);
 }
 
-void CPlayerObject::UpdateSkill2(float DeltaTime)
-{
-    mSkill2TimeAcc += DeltaTime;
-
-    if (mSkill2TimeAcc >= mSkill2TimeInterval)
-    {
-        mSkill2TimeAcc -= mSkill2TimeInterval;
-
-        CBulletObject* Bullet = mScene->CreateObj<CBulletObject>("Bullet");
-
-        CSceneComponent* Root = Bullet->GetRootComponent();
-
-        FVector3D Pos = mSub->GetWorldPosition();
-        FVector3D   Dir = mSub->GetAxis(EAxis::Y);
-
-        Root->SetWorldRotation(mRoot->GetWorldRotation());
-        Root->SetWorldPos(Pos + Dir);
-
-        Bullet->SetLifeTime(1.f);
-
-        Bullet = mScene->CreateObj<CBulletObject>("Bullet");
-
-        Root = Bullet->GetRootComponent();
-
-        Pos = mSub2->GetWorldPosition();
-        Dir = mSub2->GetAxis(EAxis::Y);
-
-        Root->SetWorldRotation(mRoot->GetWorldRotation());
-        Root->SetWorldPos(Pos + Dir);
-
-        Bullet->SetLifeTime(1.f);
-    }
-
-    mSkill2Time -= DeltaTime;
-
-    if (mSkill2Time <= 0.f)
-    {
-        mSkill2Enable = false;
-    }
-}
-
-void CPlayerObject::UpdateSkill4(float DeltaTime)
-{
-    mSkill4TimeAcc += DeltaTime;
-
-    switch (mSkill4State)
-    {
-    case ESkill4State::Expansion:
-        // DeltaTime / mSkill4ReadyTime 을 하게 되면 확장되는 2초라는
-        // 시간에 대해서 현재 DeltaTime이 몇퍼센트의 시간이 흘렀는지를
-        // 구해낸다.
-        mSkill4Range += DeltaTime / mSkill4ReadyTime * 
-            mSkill4RangeLength;
-        if (mSkill4TimeAcc >= mSkill4ReadyTime)
-        {
-            mSkill4TimeAcc -= mSkill4ReadyTime;
-            mSkill4Range = mSkill4MaxRange;
-            mSkill4State = ESkill4State::Maintain;
-        }
-
-        mSub->SetRelativePos(-mSkill4Range, 0.f, 0.f);
-
-        mSub2->SetRelativePos(mSkill4Range, 0.f, 0.f);
-        break;
-    case ESkill4State::Maintain:
-
-        if (mSkill4TimeAcc >= mSkill4Time)
-        {
-            mSkill4TimeAcc = 0.f;
-            mSkill4State = ESkill4State::Reduction;
-        }
-        break;
-    case ESkill4State::Reduction:
-
-        mSkill4Range -= DeltaTime / mSkill4ReadyTime *
-            mSkill4RangeLength;
-        if (mSkill4TimeAcc >= mSkill4ReadyTime)
-        {
-            mSkill4Enable = false;
-            mSkill4TimeAcc = 0.f;
-            mSkill4Range = 2.f;
-            mSkill4State = ESkill4State::Expansion;
-            mPivotRotationSpeed = 180.f;
-        }
-
-        mSub->SetRelativePos(-mSkill4Range, 0.f, 0.f);
-
-        mSub2->SetRelativePos(mSkill4Range, 0.f, 0.f);
-        break;
-    }
-
-}
+//void CPlayerObject::UpdateSkill2(float DeltaTime)
+//{
+//    mSkill2TimeAcc += DeltaTime;
+//
+//    if (mSkill2TimeAcc >= mSkill2TimeInterval)
+//    {
+//        mSkill2TimeAcc -= mSkill2TimeInterval;
+//
+//        CBulletObject* Bullet = mScene->CreateObj<CBulletObject>("Bullet");
+//
+//        CSceneComponent* Root = Bullet->GetRootComponent();
+//
+//        FVector3D Pos = mSub->GetWorldPosition();
+//        FVector3D   Dir = mSub->GetAxis(EAxis::Y);
+//
+//        Root->SetWorldRotation(mRoot->GetWorldRotation());
+//        Root->SetWorldPos(Pos + Dir);
+//
+//        Bullet->SetLifeTime(1.f);
+//
+//        Bullet = mScene->CreateObj<CBulletObject>("Bullet");
+//
+//        Root = Bullet->GetRootComponent();
+//
+//        Pos = mSub2->GetWorldPosition();
+//        Dir = mSub2->GetAxis(EAxis::Y);
+//
+//        Root->SetWorldRotation(mRoot->GetWorldRotation());
+//        Root->SetWorldPos(Pos + Dir);
+//
+//        Bullet->SetLifeTime(1.f);
+//    }
+//
+//    mSkill2Time -= DeltaTime;
+//
+//    if (mSkill2Time <= 0.f)
+//    {
+//        mSkill2Enable = false;
+//    }
+//}
+//
+//void CPlayerObject::UpdateSkill4(float DeltaTime)
+//{
+//    mSkill4TimeAcc += DeltaTime;
+//
+//    switch (mSkill4State)
+//    {
+//    case ESkill4State::Expansion:
+//        // DeltaTime / mSkill4ReadyTime 을 하게 되면 확장되는 2초라는
+//        // 시간에 대해서 현재 DeltaTime이 몇퍼센트의 시간이 흘렀는지를
+//        // 구해낸다.
+//        mSkill4Range += DeltaTime / mSkill4ReadyTime * 
+//            mSkill4RangeLength;
+//        if (mSkill4TimeAcc >= mSkill4ReadyTime)
+//        {
+//            mSkill4TimeAcc -= mSkill4ReadyTime;
+//            mSkill4Range = mSkill4MaxRange;
+//            mSkill4State = ESkill4State::Maintain;
+//        }
+//
+//        mSub->SetRelativePos(-mSkill4Range, 0.f, 0.f);
+//
+//        mSub2->SetRelativePos(mSkill4Range, 0.f, 0.f);
+//        break;
+//    case ESkill4State::Maintain:
+//
+//        if (mSkill4TimeAcc >= mSkill4Time)
+//        {
+//            mSkill4TimeAcc = 0.f;
+//            mSkill4State = ESkill4State::Reduction;
+//        }
+//        break;
+//    case ESkill4State::Reduction:
+//
+//        mSkill4Range -= DeltaTime / mSkill4ReadyTime *
+//            mSkill4RangeLength;
+//        if (mSkill4TimeAcc >= mSkill4ReadyTime)
+//        {
+//            mSkill4Enable = false;
+//            mSkill4TimeAcc = 0.f;
+//            mSkill4Range = 2.f;
+//            mSkill4State = ESkill4State::Expansion;
+//            mPivotRotationSpeed = 180.f;
+//        }
+//
+//        mSub->SetRelativePos(-mSkill4Range, 0.f, 0.f);
+//
+//        mSub2->SetRelativePos(mSkill4Range, 0.f, 0.f);
+//        break;
+//    }
+//
+//}
 
 void CPlayerObject::AttackEnd()
 {
@@ -639,3 +646,67 @@ void CPlayerObject::AttackNotify()
 
     Bullet->SetLifeTime(2.f);
 }
+
+//0311
+//중력 적용
+void CPlayerObject::IsPlayerOnGround(float DeltaTime)
+{
+    //플레이어 객체의 하단 좌표
+    //좌표값을 가지는 RootComponent의 전역공간에서의 중심점
+    //컴포넌트의 스케일에서 절반을 뺀 크기만큼의 좌표
+    FVector2D FeetPos = FVector2D(mRoot->GetWorldPosition().x, mRoot->GetWorldPosition().y - mRoot->GetWorldScale().y / 2);
+    
+    //자신이 속해있는 Scene에서 TileMapObj탐색
+    CTileMapObj* TileMap = mScene->FindObjectFromType<CTileMapObj>();
+    //타일맵이 존재한다면
+    if (TileMap)
+    {
+        //플레이어의 발이 위치한 좌표의 타일의 이동가능 여부를 확인
+        if (TileMap->IsTileBlocked(FeetPos))
+        {
+            //상태를 바닥 위로 설정
+            mIsOnGround = true;
+            //플레이어의 Y좌표를 다시 지정
+            //발의 위치를 타일 크기만큼 나누면
+            //해당 타일이 Y축으로 몇 번째 타일인지 확인 가능
+            //정수부에 타일의 크기를 다시 곱하면 타일의 좌표를 도출
+            //플레이어의 발에 위치를 타일의 위치로 변경
+            //플레이어의 중심좌표를 설정해야 하므로 크기의 절반을 합
+            mRoot->SetWorldPos(mRoot->GetWorldPosition().x,
+                (FeetPos.y / TileMap->GetTileSize().y) * TileMap->GetTileSize().y + mRoot->GetWorldScale().y / 2);
+        }
+        else
+            //상태를 공중으로 설정
+            mIsOnGround = false;
+    }
+
+    //MovementComponent의 Velocity변수를 변경하는 함수
+    //변경 후 상태가 Update되어야 하므로 SceneObjec::Update() 전에 사용
+    if (!mIsOnGround)
+		mMovement->AddMove(mRootComponent->GetAxis(EAxis::Y) * -1);
+}
+
+void CPlayerObject::Jump(float DeltaTime)
+{
+    //공중에 있다면 점프 불가
+    if (!mIsOnGround)
+        return;
+    
+    if (!mIsJumping)
+    {
+        mIsJumping = true;
+		mIsOnGround = false;
+        mJumpingTime = 0.5f;
+    }
+}
+
+void CPlayerObject::JumpUpdate(float DeltaTime)
+{
+    mJumpingTime -= DeltaTime;
+
+    mMovement->AddMove(mRootComponent->GetAxis(EAxis::Y) * 2);
+   
+    if (mJumpingTime <= 0.f)
+        mIsJumping = false;
+}
+

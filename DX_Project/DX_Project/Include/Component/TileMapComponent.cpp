@@ -1353,3 +1353,17 @@ void CTileMapComponent::Load(const char* FileName)
 
     fclose(File);
 }
+
+//0311
+//이동 불가능 타일인지 확인
+bool CTileMapComponent::IsTileBlocked(const FVector2D& Pos)
+{
+    int Index = GetTileIndex(Pos);
+    
+    if(Index < 0)
+		return false;
+
+    ETileType TileType = GetTileType(Index);
+
+    return TileType == ETileType::UnableToMove;
+}
