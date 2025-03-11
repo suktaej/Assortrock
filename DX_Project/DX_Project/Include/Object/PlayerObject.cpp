@@ -205,6 +205,7 @@ void CPlayerObject::Update(float DeltaTime)
     //0311
     //플레이어 위치 확인
     IsPlayerOnGround(DeltaTime); 
+    IsPlayerCollsionTile(DeltaTime);
     
     //Jump상태 확인
     if (mIsJumping)
@@ -651,6 +652,8 @@ void CPlayerObject::AttackNotify()
 //중력 적용
 void CPlayerObject::IsPlayerOnGround(float DeltaTime)
 {
+    //***비교값은 y축만이므로 FVector2D를 사용하지말고 float로 자료크기를 줄일 수 있음
+     
     //플레이어 객체의 하단 좌표
     //좌표값을 가지는 RootComponent의 전역공간에서의 중심점
     //컴포넌트의 스케일에서 절반을 뺀 크기만큼의 좌표
@@ -708,5 +711,23 @@ void CPlayerObject::JumpUpdate(float DeltaTime)
    
     if (mJumpingTime <= 0.f)
         mIsJumping = false;
+}
+
+void CPlayerObject::IsPlayerCollsionTile(float DeltaTime)
+{
+    //좌표값을 가지는 RootComponent의 전역공간에서의 중심점
+    //컴포넌트의 스케일에서 절반을 뺀 크기만큼의 좌표
+    FVector2D RightPos = FVector2D(mRoot->GetWorldPosition().x + mRoot->GetWorldScale().x / 2, mRoot->GetWorldPosition().y);
+    FVector2D LeftPos = FVector2D(mRoot->GetWorldPosition().x - mRoot->GetWorldScale().x / 2, mRoot->GetWorldPosition().y);
+
+    CTileMapObj* TileMap = mScene->FindObjectFromType<CTileMapObj>();
+
+    if (TileMap)
+    {
+        if (TileMap->IsTileBlocked(RightPos))
+            mMovement->AddMove(mRootComponent->GetAxis(EAxis::X) * -1);
+        else if (TileMap->IsTileBlocked(LeftPos))
+            mMovement->AddMove(mRootComponent->GetAxis(EAxis::X));
+    }
 }
 

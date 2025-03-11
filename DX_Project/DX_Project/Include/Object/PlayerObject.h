@@ -117,7 +117,12 @@ private:
     //0311
     //플레이어가 중력의 적용을 받는지, 타일 위에 있는지 확인
     void IsPlayerOnGround(float DeltaTime);
+    //점프 구현
     void Jump(float DeltaTime);
     void JumpUpdate(float DeltaTime);
+    //벽 충돌
+    void IsPlayerCollsionTile(float DeltaTime);
+
+
 };
 
