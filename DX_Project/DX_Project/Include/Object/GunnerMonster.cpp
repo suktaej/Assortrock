@@ -40,17 +40,11 @@ bool CGunnerMonster::Init()
     mAIAnimationName[(int)EMonsterAI::Attack] = "GunnerAttack";
     mAIAnimationName[(int)EMonsterAI::Skill] = "GunnerSkill";
 
-    mAnimation->AddNotify<CGunnerMonster>("GunnerAttack",
-        8, this, &CGunnerMonster::AttackNotify);
+    mAnimation->AddNotify<CGunnerMonster>("GunnerAttack", 8, this, &CGunnerMonster::AttackNotify);
+    mAnimation->SetEndFunction<CGunnerMonster>("GunnerAttack", this, &CGunnerMonster::AttackEnd);
 
-    mAnimation->SetEndFunction<CGunnerMonster>("GunnerAttack",
-        this, &CGunnerMonster::AttackEnd);
-
-    mAnimation->AddNotify<CGunnerMonster>("GunnerSkill",
-        2, this, &CGunnerMonster::SkillNotify);
-
-    mAnimation->SetEndFunction<CGunnerMonster>("GunnerSkill",
-        this, &CGunnerMonster::SkillEnd);
+    mAnimation->AddNotify<CGunnerMonster>("GunnerSkill", 2, this, &CGunnerMonster::SkillNotify);
+    mAnimation->SetEndFunction<CGunnerMonster>("GunnerSkill", this, &CGunnerMonster::SkillEnd);
 
 
     //mRoot->SetTexture("Monster1Tex", TEXT("Texture/block_wall.png"));

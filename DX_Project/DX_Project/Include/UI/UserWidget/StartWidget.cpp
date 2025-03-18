@@ -5,6 +5,7 @@
 #include "../../Scene/SceneUIManager.h"
 #include "../../Scene/SceneManager.h"
 #include "../../Scene/SceneMain.h"
+#include "../../Scene/SceneD1.h"
 #include "../../Scene/SceneEditor.h"
 #include "../../Device.h"
 #include "../../GameManager.h"
@@ -97,7 +98,8 @@ bool CStartWidget::Init()
 
 void CStartWidget::StartButtonClick()
 {
-    CSceneManager::GetInst()->CreateLoadScene<CSceneMain>();
+    //CSceneManager::GetInst()->CreateLoadScene<CSceneMain>();
+    CSceneManager::GetInst()->CreateLoadScene<CSceneD1>();
 }
 
 void CStartWidget::EditorButtonClick()

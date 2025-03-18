@@ -22,7 +22,8 @@ protected:
 	CAnimation2D* mAnimation = nullptr;
 	FVector4D	mTint = FVector4D::White;
 	int			mTextureIndex = 0;
-
+	//0313
+	bool mVisiblity = true;
 	class CSpriteCBuffer* mSpriteCBuffer;
 
 public:
@@ -75,5 +76,9 @@ public:
 
 		return (T*)mAnimation;
 	}
+public:
+	//0312
+	void SetVisiblity(bool vi) { mVisiblity = vi; }
+	class CTexture* GetTexture() { return mTexture; }
 };
 

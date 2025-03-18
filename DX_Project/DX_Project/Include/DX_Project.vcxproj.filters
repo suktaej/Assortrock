@@ -223,6 +223,15 @@
     <Filter Include="05. Scene\06. Navigation">
       <UniqueIdentifier>{e3c5dc54-d6fc-492c-9321-c6a9f090ec18}</UniqueIdentifier>
     </Filter>
+    <Filter Include="10. UI\02. UserWidget\03. Dungeon">
+      <UniqueIdentifier>{8cc62329-b04e-47ed-a13e-13f5a7b67ccc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Object\06. Item">
+      <UniqueIdentifier>{951a967f-80bb-43e1-ab3f-9be2b4292045}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Object\06. Item\Weapon">
+      <UniqueIdentifier>{0a85dcc3-3052-479f-b800-49c3a96e4f98}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -569,6 +578,30 @@
     </ClCompile>
     <ClCompile Include="Scene\Navigation.cpp">
       <Filter>05. Scene\06. Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SceneD1.cpp">
+      <Filter>05. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UserWidget\EditorWidget.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\ItemObject.cpp">
+      <Filter>06. Object\06. Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WeaponObject.cpp">
+      <Filter>06. Object\06. Item\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\SwordHitboxObj.cpp">
+      <Filter>06. Object\06. Item\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\HitboxObj.cpp">
+      <Filter>06. Object\06. Item\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\EnemySmallSkel.cpp">
+      <Filter>06. Object\03. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\MonsterHitboxObj.cpp">
+      <Filter>06. Object\03. Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -961,6 +994,30 @@
     </ClInclude>
     <ClInclude Include="Scene\Navigation.h">
       <Filter>05. Scene\06. Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneD1.h">
+      <Filter>05. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UserWidget\EditorWidget.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\ItemObject.h">
+      <Filter>06. Object\06. Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WeaponObject.h">
+      <Filter>06. Object\06. Item\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\SwordHitboxObj.h">
+      <Filter>06. Object\06. Item\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\HitboxObj.h">
+      <Filter>06. Object\06. Item\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\EnemySmallSkel.h">
+      <Filter>06. Object\03. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\MonsterHitboxObj.h">
+      <Filter>06. Object\03. Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

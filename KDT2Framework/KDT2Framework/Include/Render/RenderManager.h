@@ -41,8 +41,7 @@ public:
 	void Render();
 
 public:
-	bool CreateRenderLayer(const std::string& Name,
-		int ZOrder);
+	bool CreateRenderLayer(const std::string& Name, int ZOrder);
 
 private:
 	FRenderLayer* FindLayer(const std::string& Name);

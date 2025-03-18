@@ -15,74 +15,81 @@ bool CAnimation2DManager::Init()
 {
     CAnimation2D::CreateCBuffer();
 
+#pragma region Player
     CreateAnimation("PlayerIdle");
-    SetAnimationTextureType("PlayerIdle",
-        EAnimationTextureType::SpriteSheet);
-    SetTexture("PlayerIdle", "PlayerSprite",
-        TEXT("Texture\\Player\\Player.png"));
+    SetAnimationTextureType("PlayerIdle", EAnimationTextureType::SpriteSheet);
+    SetTexture("PlayerIdle", "PlayerSprite", TEXT("Texture\\Player\\Basic\\player_idle.png"));
 
-    for (int i = 0; i < 2; ++i)
-    {
-        for (int j = 0; j < 7; ++j)
-        {
-            AddFrame("PlayerIdle", j * 50.f, 185.f + i * 37.f, 
-                50.f, 37.f);
-        }
-    }
+    for (int i = 0; i < 5; i++)
+        AddFrame("PlayerIdle", i * 15.f, 0.f, 15.f, 20.f);
 
     CreateAnimation("PlayerRun");
-    SetAnimationTextureType("PlayerRun",
-        EAnimationTextureType::SpriteSheet);
-    SetTexture("PlayerRun", "PlayerSprite");
-    // 2, 8
-    for (int i = 0; i < 5; ++i)
-    {
-        AddFrame("PlayerRun", (2 + i) * 50.f, 8 * 37.f,
-            50.f, 37.f);
-    }
+    SetAnimationTextureType("PlayerRun", EAnimationTextureType::SpriteSheet);
+    SetTexture("PlayerRun", "PlayerRun", TEXT("Texture\\Player\\Basic\\player_run.png"));
+    
+    for (int i = 0; i < 8; ++i)
+        AddFrame("PlayerRun", i * 17.f, 0.f, 15.f, 20.f);
 
-    CreateAnimation("PlayerWalk");
-    SetAnimationTextureType("PlayerWalk",
-        EAnimationTextureType::Frame);
+    CreateAnimation("PlayerJump");
+    SetAnimationTextureType("PlayerJump", EAnimationTextureType::SpriteSheet);
 
+    SetTexture("PlayerJump", "PlayerJump", TEXT("Texture\\Player\\Basic\\player_jump.png"));
+    AddFrame("PlayerJump", 0.f, 0.f, 15.f, 20.f);
+
+    CreateAnimation("PlayerDie");
+    SetAnimationTextureType("PlayerDie", EAnimationTextureType::SpriteSheet);
+
+    SetTexture("PlayerDie", "PlayerDie", TEXT("Texture\\Player\\Basic\\player_die.png"));
+    AddFrame("PlayerDie", 0.f, 0.f, 15.f, 20.f);
+#pragma endregion Player
+
+#pragma region Weapon
+    CreateAnimation("SwordAttack");
+    SetAnimationTextureType("SwordAttack", EAnimationTextureType::SpriteSheet);
+    SetTexture("SwordAttack", "SwordAttack", TEXT("Texture\\Weapon\\SwingFX.png"));
+    
+    for (int i = 0; i < 3; ++i)
+        AddFrame("SwordAttack", i * 28.f, 0.f, 28.f, 40.f);
+#pragma endregion Weapon
+
+#pragma region Monster
+    //Small Skel
+    CreateAnimation("SmallSkelIdle");
+    SetAnimationTextureType("SmallSkelIdle", EAnimationTextureType::SpriteSheet);
+    SetTexture("SmallSkelIdle", "SmallSkelIdle", TEXT("Texture\\Enemy\\Skel\\Small\\idle.png"));
+    AddFrame("SmallSkelIdle", 0.f, 0.f, 13.f, 19.f);
+    
+    CreateAnimation("SmallSkelMove");
+    SetAnimationTextureType("SmallSkelMove", EAnimationTextureType::SpriteSheet);
+    SetTexture("SmallSkelMove", "SmallSkelMove", TEXT("Texture\\Enemy\\Skel\\Small\\move.png"));
+    
+    for (int i = 0; i < 6; ++i)
+        AddFrame("SmallSkelMove", i * 14.f, 0.f, 14.f, 20.f);
+
+    //Small Skel Attack
+    CreateAnimation("SmallSkelAttack");
+    SetAnimationTextureType("SmallSkelAttack", EAnimationTextureType::SpriteSheet);
+    SetTexture("SmallSkelAttack", "Dagger", TEXT("Texture\\Enemy\\Skel\\Small\\dagger.png"));
+
+    for (int i = 0; i < 12; ++i)
+        AddFrame("SmallSkelAttack", i * 26.f, 0.f, 26.f, 30.f);
+	//AddFrame("SmallSkelAttack", 0.f, 0.f, 26.f, 30.f);
+
+    CreateAnimation("SmallSkelAttackIdle");
+    SetAnimationTextureType("SmallSkelAttackIdle", EAnimationTextureType::SpriteSheet);
+    SetTexture("SmallSkelAttackIdle", "Dagger", TEXT("Texture\\Enemy\\Skel\\Small\\dagger.png"));
+
+    AddFrame("SmallSkelAttackIdle", 26.f, 0.f, 26.f, 30.f);
+#pragma endregion Monster
     std::vector<const TCHAR*>   FileNames;
-    FileNames.emplace_back(TEXT("Texture\\Player\\PlayerFrame\\adventurer-walk-00.png"));
-    FileNames.emplace_back(TEXT("Texture\\Player\\PlayerFrame\\adventurer-walk-01.png"));
-    FileNames.emplace_back(TEXT("Texture\\Player\\PlayerFrame\\adventurer-walk-02.png"));
-    FileNames.emplace_back(TEXT("Texture\\Player\\PlayerFrame\\adventurer-walk-03.png"));
-    FileNames.emplace_back(TEXT("Texture\\Player\\PlayerFrame\\adventurer-walk-04.png"));
-    FileNames.emplace_back(TEXT("Texture\\Player\\PlayerFrame\\adventurer-walk-05.png"));
-    SetTexture("PlayerWalk", "PlayerWalk",
-        FileNames);
-    AddFrameCount("PlayerWalk", 6, 0.f, 0.f, 1.f, 1.f);
-
-    // adventurer-punch-00, 6개
-    CreateAnimation("PlayerAttack");
-    SetAnimationTextureType("PlayerAttack",
-        EAnimationTextureType::Frame);
-
-    FileNames.clear();
-    FileNames.emplace_back(TEXT("Texture\\Player\\PlayerFrame\\adventurer-punch-00.png"));
-    FileNames.emplace_back(TEXT("Texture\\Player\\PlayerFrame\\adventurer-punch-01.png"));
-    FileNames.emplace_back(TEXT("Texture\\Player\\PlayerFrame\\adventurer-punch-02.png"));
-    FileNames.emplace_back(TEXT("Texture\\Player\\PlayerFrame\\adventurer-punch-03.png"));
-    FileNames.emplace_back(TEXT("Texture\\Player\\PlayerFrame\\adventurer-punch-04.png"));
-    FileNames.emplace_back(TEXT("Texture\\Player\\PlayerFrame\\adventurer-punch-05.png"));
-    SetTexture("PlayerAttack", "PlayerAttack",
-        FileNames);
-    AddFrameCount("PlayerAttack", 6, 0.f, 0.f, 1.f, 1.f);
-
 
     CreateAnimation("GunnerIdle");
-    SetAnimationTextureType("GunnerIdle",
-        EAnimationTextureType::SpriteSheet);
-    SetTexture("GunnerIdle", "GunnerSprite",
-        TEXT("Texture\\Monster.png"));
+    SetAnimationTextureType("GunnerIdle", EAnimationTextureType::SpriteSheet);
+    SetTexture("GunnerIdle", "GunnerSprite", TEXT("Texture\\Monster.png"));
     
     for (int i = 0; i < 14; ++i)
     {
-        AddFrame("GunnerIdle", i * 45.f, 60.f,
-            45.f, 60.f);
+        AddFrame("GunnerIdle", i * 45.f, 60.f, 45.f, 60.f);
     }
 
     CreateAnimation("GunnerAttack");
@@ -183,9 +190,7 @@ bool CAnimation2DManager::SetTexture(const std::string& Name,
     return true;
 }
 
-bool CAnimation2DManager::SetTexture(
-    const std::string& Name, 
-    const std::string& TextureName, const TCHAR* FileName)
+bool CAnimation2DManager::SetTexture( const std::string& Name, const std::string& TextureName, const TCHAR* FileName)
 {
     CAnimation2DData* Animation = FindAnimation(Name);
 
@@ -270,8 +275,7 @@ bool CAnimation2DManager::AddFrame(const std::string& Name,
     return true;
 }
 
-bool CAnimation2DManager::AddFrame(const std::string& Name,
-    float StartX, float StartY, float SizeX, float SizeY)
+bool CAnimation2DManager::AddFrame(const std::string& Name, float StartX, float StartY, float SizeX, float SizeY)
 {
     CAnimation2DData* Animation = FindAnimation(Name);
 

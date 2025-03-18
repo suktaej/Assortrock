@@ -82,8 +82,7 @@ bool CRenderManager::Init()
 	Desc.MinLOD = -FLT_MAX;
 	Desc.MaxLOD = FLT_MAX;
 
-	if (FAILED(CDevice::GetInst()->GetDevice()->CreateSamplerState(
-		&Desc, &mSampler)))
+	if (FAILED(CDevice::GetInst()->GetDevice()->CreateSamplerState( &Desc, &mSampler)))
 		return false;
 
 	mAlphaBlend = mStateManager->FindState("AlphaBlend");

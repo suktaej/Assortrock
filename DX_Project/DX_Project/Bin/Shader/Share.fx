@@ -52,7 +52,6 @@ float2 UpdateAnimation2D(float2 UV)
     // 왼쪽 점일 경우
     if (UV.x == 0.f)
         Result.x = gAnim2DLTUV.x;
-    
     else
         Result.x = gAnim2DRBUV.x;
     

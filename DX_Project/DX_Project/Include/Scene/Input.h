@@ -160,8 +160,7 @@ private:
 
 public:
 	template <typename T>
-	void AddBindFunction(const std::string& KeyName, EInputType::Type Type,
-		T* Object, void (T::* Func)(float))
+	void AddBindFunction(const std::string& KeyName, EInputType::Type Type, T* Object, void (T::* Func)(float))
 	{
 		FBindKey* BindKey = FindBindKey(KeyName);
 

@@ -29,11 +29,8 @@ bool CTileMapObj::Init()
 
     mTileMap->SetTileOutLineRender(true);
 
-    mTileMapRenderer->SetBackTexture("TileMapBack",
-        TEXT("Texture\\MapBackGround.png"));
-
-    mTileMapRenderer->SetTileTexture("Tile",
-        TEXT("Texture\\Floors.png"));
+    mTileMapRenderer->SetBackTexture("TileMapBack", TEXT("Texture\\MapBackGround.png"));
+    mTileMapRenderer->SetTileTexture("Tile", TEXT("Texture\\Floors.png"));
    /* mTileMapRenderer->SetTileTexture("Tile",
         TEXT("Texture\\Diablos_Lair_Floor_TRS\\Diablos_Lair_Floor.png"));*/
 

@@ -25,20 +25,16 @@ void CCameraComponent::SetProjectionType(
 {
     mProjType = Type;
 
+    float newWidth = mWidth / mZoomFactor;
+    float newHeight = mHeight / mZoomFactor;
+
     switch (mProjType)
     {
     case ECameraProjectionType::Perspective:
-        mmatProj = DirectX::XMMatrixPerspectiveFovLH(
-            DirectX::XMConvertToRadians(mViewAngle),
-            mWidth / mHeight, 0.5f, mViewDistance);
+        mmatProj = DirectX::XMMatrixPerspectiveFovLH( DirectX::XMConvertToRadians(mViewAngle), mWidth / mHeight, 0.5f, mViewDistance);
         break;
     case ECameraProjectionType::Ortho:
-        mmatProj = DirectX::XMMatrixOrthographicOffCenterLH(mWidth / -2.f,
-            mWidth / 2.f, mHeight / -2.f, mHeight / 2.f,
-            0.f, mViewDistance);
-        /*mmatProj = DirectX::XMMatrixOrthographicOffCenterLH(0.f,
-            mWidth, 0.f, mHeight,
-            0.f, mViewDistance);*/
+        mmatProj = DirectX::XMMatrixOrthographicOffCenterLH(newWidth / -2.f, newWidth / 2.f, newHeight / -2.f, newHeight / 2.f, 0.f, mViewDistance);
         break;
     }
 }

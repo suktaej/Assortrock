@@ -16,6 +16,15 @@
 #include "../Device.h"
 #include "../Asset/Texture/Texture.h"
 
+enum class EAABBVertex
+{
+    LB,
+    RT,
+    LT,
+    RB,
+    End
+};
+
 CTileMapComponent::CTileMapComponent()
 {
 }
@@ -1356,14 +1365,21 @@ void CTileMapComponent::Load(const char* FileName)
 
 //0311
 //이동 불가능 타일인지 확인
-bool CTileMapComponent::IsTileBlocked(const FVector2D& Pos)
+//ECollisionDir CTileMapComponent::IsTileBlocked(const FVector2D& LT, const FVector2D& RB)
+//Player의 중심점과 크기를 인자로 전달받고 충돌방향을 반환
+//0312
+//충돌하는 Vertex 2개를 받아와 충돌여부를 반환
+bool CTileMapComponent::IsTileBlocked(const FVector2D& Vtx)
 {
-    int Index = GetTileIndex(Pos);
-    
-    if(Index < 0)
-		return false;
+    //각 타일의 index를 가져옴
+	int Index = GetTileIndex(Vtx);
 
-    ETileType TileType = GetTileType(Index);
+    //Index가 없으면 false 반환
+	if (Index < 0)
+		return false;
+    
+    //Index Tile의 타일 타입을 확인
+	ETileType TileType = GetTileType(Index);
 
     return TileType == ETileType::UnableToMove;
 }

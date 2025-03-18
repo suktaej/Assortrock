@@ -33,11 +33,9 @@ public:
 
 public:
 	template <typename T>
-	void SetChangeFunction(T* Obj, 
-		void(T::* Func)(const FItemData*, int))
+	void SetChangeFunction(T* Obj, void(T::* Func)(const FItemData*, int))
 	{
-		mChangeFunction = std::bind(Func, Obj,
-			std::placeholders::_1, std::placeholders::_2);
+		mChangeFunction = std::bind(Func, Obj, std::placeholders::_1, std::placeholders::_2);
 	}
 };
 

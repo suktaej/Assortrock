@@ -3,6 +3,8 @@
 #include "../Object/EditorPlayer.h"
 #include "Input.h"
 #include "../GameManager.h"
+#include "SceneUIManager.h"
+#include "../UI/UserWidget/EditorWidget.h"
 
 CSceneEditor::CSceneEditor()
 {
@@ -56,6 +58,9 @@ bool CSceneEditor::InitObject()
 
 bool CSceneEditor::InitWidget()
 {
+    CEditorWidget* Widget = mUIManager->CreateWidget<CEditorWidget>("Editor");
+    mUIManager->AddToViewport(Widget);
+    
     return true;
 }
 
@@ -85,7 +90,7 @@ void CSceneEditor::SaveKey(float DeltaTime)
 
     // 선택한 경로를 저장하기 위한 배열
     TCHAR   FullPath[MAX_PATH] = {};
-    TCHAR   Filter[] = TEXT("모든파일\0*.*\0Map 파일\0*.tlm\0");
+    TCHAR   Filter[] = TEXT("All Files\0*.*\0Map File\0*.tlm\0");
     
     TCHAR	DefaultPath[MAX_PATH] = {};
 
@@ -116,7 +121,7 @@ void CSceneEditor::LoadKey(float DeltaTime)
 
     // 선택한 경로를 저장하기 위한 배열
     TCHAR   FullPath[MAX_PATH] = {};
-    TCHAR   Filter[] = TEXT("모든파일\0*.*\0Map 파일\0*.tlm\0");
+    TCHAR   Filter[] = TEXT("All Files\0*.*\0Map File\0*.tlm\0");
 
     TCHAR	DefaultPath[MAX_PATH] = {};
 

@@ -104,10 +104,8 @@ bool CPlayerObject::Init()
     mAnimation->AddSequence("PlayerWalk", 0.7f, 1.f, true, false);
     mAnimation->AddSequence("PlayerAttack", 1.f, 1.f, false, false);
 
-    mAnimation->SetEndFunction<CPlayerObject>("PlayerAttack",
-        this, &CPlayerObject::AttackEnd);
-    mAnimation->AddNotify<CPlayerObject>("PlayerAttack",
-        2, this, &CPlayerObject::AttackNotify);
+    mAnimation->SetEndFunction<CPlayerObject>("PlayerAttack", this, &CPlayerObject::AttackEnd);
+    mAnimation->AddNotify<CPlayerObject>("PlayerAttack", 2, this, &CPlayerObject::AttackNotify);
 
     mRoot->SetWorldPos(0.f, 0.f, 0.f);
     mRoot->SetWorldScale(100.f, 100.f, 1.f);
@@ -138,7 +136,7 @@ bool CPlayerObject::Init()
 
     mRotation->SetVelocityInit(false);
 
-    mRotation->SetMoveZ(360.f);
+    mRotation->SetMoveZ(90.f);
 
     mRoot->AddChild(mRotationPivot);
     mRotationPivot->AddChild(mSub);

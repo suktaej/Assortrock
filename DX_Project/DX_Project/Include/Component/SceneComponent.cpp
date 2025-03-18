@@ -37,9 +37,7 @@ CSceneComponent::~CSceneComponent()
 void CSceneComponent::AddChild(CSceneComponent* Child)
 {
     Child->mParent = this;
-
     mChildList.emplace_back(Child);
-
     Child->ComputeTransform();
 }
 
@@ -357,8 +355,6 @@ void CSceneComponent::SetRelativeRotation(const FVector3D& Rot)
     {
         mWorldRot = mRelativeRot;
     }
-
-
 
     FVector3D   Axis[EAxis::End] =
     {

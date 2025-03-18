@@ -186,8 +186,11 @@ void CSpriteComponent::Render()
     {
         CAnimation2D::DisableAnimation();
     }
-
-    mSpriteCBuffer->SetTint(mTint);
+    
+    if (mVisiblity == true)
+        mSpriteCBuffer->SetTint(mTint);
+    else
+        mSpriteCBuffer->SetTint(FVector4D(0.f, 0.f, 0.f, 0.f));
 
     mSpriteCBuffer->UpdateBuffer();
 

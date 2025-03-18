@@ -21,17 +21,11 @@ protected:
     virtual ~CPlayerObject();
 
 protected:
-    //CSharedPtr<class CStaticMeshComponent>  mRoot;
     CSharedPtr<class CSpriteComponent>  mRoot;
-    //CSharedPtr<class CColliderSphere2D>       mBody;
-    CSharedPtr<class CColliderOBB2D>        mBody;
-    CSharedPtr<class CColliderLine2D>       mLine;
-    CSharedPtr<class CSceneComponent>       mRotationPivot;
-    //CSharedPtr<class CSpriteComponent>  mSub;
-    //CSharedPtr<class CSpriteComponent>  mSub2;
+    CSharedPtr<class CColliderAABB2D>        mBody;
     CSharedPtr<class CCameraComponent>      mCamera;
     CSharedPtr<class CWidgetComponent>    mHPBar;
-
+    CSharedPtr<class CSceneComponent>       mRotationPivot;
     CSharedPtr<class CMovementComponent>    mMovement;
     CSharedPtr<class CRotationComponent>    mRotation;
     CSharedPtr<class CInventoryComponent>    mInventory;
@@ -61,7 +55,27 @@ protected:
     bool mIsOnGround = false;   //바닥 충돌상태
     bool mIsJumping = false;    //도약 상태
     float mJumpingTime = 0.5f;    //도약시간
+    //0313
+    class CInput* mInput = nullptr;
+    
+    FVector2D mMousePos;    //마우스 좌표
+    float mMouseDeg = 0.f;    //플레이어에서 마우스까지의 각도
+    float mSwingDeg = 90.f;     //마우스 방향에서 무기를 수직으로 변경
 
+    FVector3D mWeaponPos;
+    FVector3D mWeaponDir;
+    FVector3D mWeaponRot;
+
+    //CSharedPtr<class CSwordObject> mSword;  //무기1
+    //CSharedPtr<class CBowObject> mBow; //무기2
+    //CSharedPtr<class CSpriteComponent>  mWeaponSlot;
+    CSharedPtr<class CWeaponObject> mWeaponSlot;
+
+    //FWeaponData mSword;
+    //FWeaponData mBow;
+
+    bool mSwap = true;  //무기전환
+    
 public:
     virtual bool Init();
     virtual void Update(float DeltaTime);
@@ -115,14 +129,21 @@ public:
 
 private:
     //0311
-    //플레이어가 중력의 적용을 받는지, 타일 위에 있는지 확인
-    void IsPlayerOnGround(float DeltaTime);
     //점프 구현
     void Jump(float DeltaTime);
     void JumpUpdate(float DeltaTime);
-    //벽 충돌
-    void IsPlayerCollsionTile(float DeltaTime);
-
-
+    //플레이어 충돌
+    void CheckBottomCollision(float DeltaTime);
+    void CheckWallCollision(float DeltaTime);
+    void CheckCeilingCollision(float DeltaTime);
+    //0313
+    //마우스 좌표 회전
+    void FollowMouse(float DeltaTime,const FVector2D& MousePos);
+    //화살발사
+    void ArrowFire();
+    //플레이어 좌우방향
+    void CalPlayerDir();
+public:
+    //무기 슬롯
+    void SwapWeapon(float DeltaTime);
 };
-

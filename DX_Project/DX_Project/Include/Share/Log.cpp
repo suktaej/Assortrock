@@ -30,8 +30,7 @@ void CLog::Destroy()
 #endif // _DEBUG
 }
 
-void CLog::PrintLog(const std::string& Text, 
-	ELogPrintType PrintType)
+void CLog::PrintLog(const std::string& Text, ELogPrintType PrintType)
 {
 	SYSTEMTIME	sysTime;
 	

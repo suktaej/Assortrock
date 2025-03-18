@@ -148,6 +148,12 @@ public:
 public:
 	//0311
 	//이동불가능 블록인지 확인
-	bool IsTileBlocked(const FVector2D& Pos);
+	//0312
+	//반환값 구조체 생성
+	bool IsTileBlocked(const FVector2D& Vtx);
+	FAnimationFrame GetTileFrame(int idx)
+	{
+		return mTileFrameList[idx];
+	}
 };
 

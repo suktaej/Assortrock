@@ -29,6 +29,8 @@ protected:
 	float		mWidth = 1280.f;
 	float		mHeight = 720.f;
 	float		mViewDistance = 1000.f;
+	//0313
+	float mZoomFactor = 3.f;
 
 public:
 	const FMatrix& GetViewMatrix()	const

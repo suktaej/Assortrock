@@ -208,11 +208,13 @@ namespace ECollisionChannel
 	enum Type : unsigned char
 	{
 		Default,
-		Player,
-		Monster,
-		PlayerAttack,
-		MonsterAttack,
-		MonsterDetect,
+		Player,	//플레이어
+		Weapon,	//무기
+		Monster,	//몬스터
+		PlayerAttack,	//플레이어 공격 Hitbox
+		MonsterAttack,	//몬스터 공격 Hitbox
+		MonsterDetect,	//몬스터 탐지범위
+		MonsterAttackRange,	//몬스터 공격범위
 		End
 	};
 }
@@ -306,6 +308,7 @@ struct FAnimationFrame
 
 enum class EItemType : unsigned char
 {
+	None,
 	Weapon,
 	Armor,
 	Consume,

@@ -41,8 +41,16 @@ public:
 public:
 	//0311
 	//충돌가능여부 확인
-    bool IsTileBlocked(FVector2D Pos) { return mTileMap->IsTileBlocked(Pos); }
+    bool IsTileBlocked(float x1, float y1)
+    {
+        FVector2D Vtx(x1, y1);
+        return mTileMap->IsTileBlocked(Vtx);
+    }
+
     //타일크기 반환
     FVector2D GetTileSize() { return mTileMap->GetTileSize(); }
+    //현재 선택된 타일 정보 반환
+    FAnimationFrame GetTileInfo() { return mTileMap->GetTileFrame(mEditTileFrame); }
+
 };
 

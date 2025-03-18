@@ -87,12 +87,15 @@ public:
 	virtual CColliderBase* Clone();
 	virtual void EraseOwner();
 	virtual bool Collision(FVector3D& HitPoint, CColliderBase* Dest) = 0;
-
+	//???0317
+	//dynamic cast 방법 확인
+	//순수가상함수 설정 시 모든 child에서 사용하지 않음
+	virtual void SetBoxSize(const FVector2D& Size) {}
+	virtual void SetBoxSize(float x, float y) {}
 
 public:
 	template <typename T>
-	void SetCollisionBeginFunc(T* Obj,
-		void (T::* Func)(const FVector3D&, CColliderBase*))
+	void SetCollisionBeginFunc(T* Obj, void (T::* Func)(const FVector3D&, CColliderBase*))
 	{
 		mBeginObj = Obj;
 		mCollisionBeginFunc = std::bind(Func, Obj,

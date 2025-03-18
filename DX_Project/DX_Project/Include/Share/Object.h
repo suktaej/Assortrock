@@ -37,5 +37,9 @@ public:
 	{
 		mEnable = Enable;
 	}
-};
 
+	void SetActive(bool Active)
+	{
+		mActive = Active;
+	}
+};

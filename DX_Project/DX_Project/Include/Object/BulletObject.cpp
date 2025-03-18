@@ -1,7 +1,7 @@
 #include "BulletObject.h"
 #include "../Component/StaticMeshComponent.h"
 #include "../Component/MovementComponent.h"
-#include "../Component/ColliderAABB2D.h"
+#include "../Component/ColliderOBB2D.h"
 #include "../Share/Log.h"
 #include "../Component/SpriteComponent.h"
 #include "SpriteEffect.h"
@@ -34,30 +34,24 @@ void CBulletObject::SetBulletCollisionProfile(
 bool CBulletObject::Init()
 {
     mRoot = CreateComponent<CSpriteComponent>();
-    mBody = CreateComponent<CColliderAABB2D>();
+    mBody = CreateComponent<CColliderOBB2D>();
 
     mMovement = CreateComponent<CMovementComponent>();
 
-    /*mRoot->SetMesh("CenterRect");
-    mRoot->SetShader("ColorMeshShader");*/
-
-    mRoot->SetTexture("Bullet", TEXT("Texture/block_ball.png"));
+    mRoot->SetTexture("Arrow", TEXT("Texture/Weapon/Arrow.png"));
     mRoot->SetPivot(0.5f, 0.5f);
 
     mRoot->SetWorldScale(0.5f, 0.5f, 1.f);
 
     SetRootComponent(mRoot);
-
-    mBody->SetBoxSize(50.f, 50.f);
-
-    mBody->SetCollisionBeginFunc<CBulletObject>(this,
-        &CBulletObject::CollisionBullet);
+    mBody->SetBoxSize(13.f, 5.f);
+    mBody->SetCollisionBeginFunc<CBulletObject>(this, &CBulletObject::CollisionBullet);
 
     mRoot->AddChild(mBody);
 
     mMovement->SetUpdateComponent(mRoot);
 
-    mMovement->SetMoveAxis(EAxis::Y);
+    mMovement->SetMoveAxis(EAxis::X);
     mMovement->SetMoveSpeed(500.f);
 
     return true;
@@ -86,7 +80,7 @@ void CBulletObject::CollisionBullet(const FVector3D& HitPoint,
     Effect->SetAnimation("Explosion");
 
     Effect->SetWorldPos(HitPoint);
-    Effect->SetWorldScale(100.f, 100.f);
+    Effect->SetWorldScale(20.f, 20.f);
 
     Destroy();
 }

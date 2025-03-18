@@ -19,9 +19,7 @@ protected:
 public:
 	static void CreateUIProjection(float Width, float Height, float ViewDist)
 	{
-		mUIProj = DirectX::XMMatrixOrthographicOffCenterLH(0.f,
-			Width, 0.f, Height,
-			0.f, ViewDist);
+		mUIProj = DirectX::XMMatrixOrthographicOffCenterLH(0.f, Width, 0.f, Height, 0.f, ViewDist);
 	}
 
 protected:

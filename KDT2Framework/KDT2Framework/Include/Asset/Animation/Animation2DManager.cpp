@@ -16,10 +16,8 @@ bool CAnimation2DManager::Init()
     CAnimation2D::CreateCBuffer();
 
     CreateAnimation("PlayerIdle");
-    SetAnimationTextureType("PlayerIdle",
-        EAnimationTextureType::SpriteSheet);
-    SetTexture("PlayerIdle", "PlayerSprite",
-        TEXT("Texture\\Player\\Player.png"));
+    SetAnimationTextureType("PlayerIdle", EAnimationTextureType::SpriteSheet);
+    SetTexture("PlayerIdle", "PlayerSprite", TEXT("Texture\\Player\\Player.png"));
 
     for (int i = 0; i < 2; ++i)
     {
@@ -31,8 +29,7 @@ bool CAnimation2DManager::Init()
     }
 
     CreateAnimation("PlayerRun");
-    SetAnimationTextureType("PlayerRun",
-        EAnimationTextureType::SpriteSheet);
+    SetAnimationTextureType("PlayerRun", EAnimationTextureType::SpriteSheet);
     SetTexture("PlayerRun", "PlayerSprite");
     // 2, 8
     for (int i = 0; i < 5; ++i)
@@ -52,8 +49,7 @@ bool CAnimation2DManager::Init()
     FileNames.emplace_back(TEXT("Texture\\Player\\PlayerFrame\\adventurer-walk-03.png"));
     FileNames.emplace_back(TEXT("Texture\\Player\\PlayerFrame\\adventurer-walk-04.png"));
     FileNames.emplace_back(TEXT("Texture\\Player\\PlayerFrame\\adventurer-walk-05.png"));
-    SetTexture("PlayerWalk", "PlayerWalk",
-        FileNames);
+    SetTexture("PlayerWalk", "PlayerWalk", FileNames);
     AddFrameCount("PlayerWalk", 6, 0.f, 0.f, 1.f, 1.f);
 
     // adventurer-punch-00, 6개

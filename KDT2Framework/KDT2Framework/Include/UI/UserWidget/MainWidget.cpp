@@ -23,7 +23,7 @@ bool CMainWidget::Init()
 
     mInventory = mScene->GetUIManager()->CreateWidget<CInventory>("Inventory");
 
-    mInventory->SetZOrder(10);
+    mInventory->SetZOrder(1);
     mInventory->SetPos(100.f, 100.f);
 
     AddWidget(mInventory);

@@ -105,11 +105,9 @@ void CRenderManager::Update(float DeltaTime)
 
 void CRenderManager::Render()
 {
-	CDevice::GetInst()->GetContext()->PSSetSamplers(0,
-		1, &mSampler);
+	CDevice::GetInst()->GetContext()->PSSetSamplers(0, 1, &mSampler);
 
 	mAlphaBlend->SetState();
-
 	mDepthDisable->SetState();
 
 	auto	iter = mLayerList.begin();
@@ -174,8 +172,7 @@ void CRenderManager::Render()
 	mAlphaBlend->ResetState();
 }
 
-bool CRenderManager::CreateRenderLayer(const std::string& Name, 
-	int ZOrder)
+bool CRenderManager::CreateRenderLayer(const std::string& Name, int ZOrder)
 {
 	FRenderLayer* Layer = FindLayer(Name);
 
@@ -206,9 +203,7 @@ FRenderLayer* CRenderManager::FindLayer(const std::string& Name)
 	return iter->second;
 }
 
-bool CRenderManager::SortY(
-	const CSharedPtr<class CSceneComponent>& Src, 
-	const CSharedPtr<class CSceneComponent>& Dest)
+bool CRenderManager::SortY( const CSharedPtr<class CSceneComponent>& Src, const CSharedPtr<class CSceneComponent>& Dest)
 {
 	float SrcY = Src->GetWorldPosition().y - Src->GetWorldScale().y * Src->GetPivot().y;
 	float DestY = Dest->GetWorldPosition().y - Dest->GetWorldScale().y * Dest->GetPivot().y;

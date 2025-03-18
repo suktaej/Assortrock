@@ -58,8 +58,7 @@ void CAnimation2D::Update(float DeltaTime)
 	mCurrentSequence->Update(DeltaTime);
 }
 
-bool CAnimation2D::AddSequence(const std::string& Name, 
-	float PlayTime, float PlayRate, bool Loop, bool Reverse)
+bool CAnimation2D::AddSequence(const std::string& Name, float PlayTime, float PlayRate, bool Loop, bool Reverse)
 {
 	CAnimation2DSequence* Sequence = FindSequence(Name);
 
@@ -239,7 +238,11 @@ void CAnimation2D::SetShader()
 	}
 
 	mAnimCBuffer->SetAnimation2DEnable(true);
-	mAnimCBuffer->SetUV(LTX, LTY, RBX, RBY);
+
+	if (mUVRevX == false)
+		mAnimCBuffer->SetUV(LTX, LTY, RBX, RBY);
+	else
+		mAnimCBuffer->SetUV(RBX, LTY, LTX, RBY);
 
 	mAnimCBuffer->UpdateBuffer();
 }
@@ -259,3 +262,4 @@ CAnimation2DSequence* CAnimation2D::FindSequence(
 
 	return iter->second;
 }
+

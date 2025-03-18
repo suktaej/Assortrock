@@ -157,7 +157,6 @@ public:
 		mPivot.y = y;
 	}
 
-
 public:
 	void SetRelativeScale(const FVector3D& Scale);
 	void SetRelativeScale(float x, float y, float z);

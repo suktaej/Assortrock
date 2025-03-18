@@ -66,8 +66,7 @@ bool CInventoryComponent::Init()
 
     if (Inventory)
     {
-        SetChangeFunction<CInventory>(Inventory,
-            &CInventory::InventoryChange);
+        SetChangeFunction<CInventory>(Inventory, &CInventory::InventoryChange);
     }
 
     mItemList.resize(25, nullptr);

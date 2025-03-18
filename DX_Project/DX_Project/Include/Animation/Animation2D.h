@@ -28,6 +28,10 @@ private:
 	CAnimation2DSequence* mCurrentSequence = nullptr;
 
 public:
+	//0313 UV반전확인
+	bool mFlipCheck = true;
+
+public:
 	bool Init();
 	void Update(float DeltaTime);
 	bool AddSequence(const std::string& Name,
@@ -67,8 +71,7 @@ public:
 	}
 
 	template <typename T>
-	void AddNotify(const std::string& Name,
-		int Frame, T* Obj, void(T::* Func)())
+	void AddNotify(const std::string& Name, int Frame, T* Obj, void(T::* Func)())
 	{
 		CAnimation2DSequence* Sequence = FindSequence(Name);
 
@@ -77,5 +80,12 @@ public:
 
 		Sequence->AddNotify<T>(Name, Frame, Obj, Func);
 	}
+
+	//0313
+	//UV좌표 반전
+private:
+	bool mUVRevX = false;
+public:
+	void SetUVRev(bool Rev) { mUVRevX = Rev; }
 };
 

@@ -29,6 +29,13 @@
 #include "../Asset/Texture/Texture.h"
 #include "../Asset/Texture/TextureManager.h"
 #include "../Object/TileMapObj.h"
+#include "../Scene/Input.h"
+#include "../Object/HitboxObj.h"
+#include "../Object/SwordHitboxObj.h"
+#include "../Object/WeaponObject.h"
+//#include "../Object/BowObject.h
+//#include "../Object/SwordObject.h"
+#include "string"
 
 CPlayerObject::CPlayerObject()
 {
@@ -50,98 +57,91 @@ CPlayerObject::~CPlayerObject()
 
 bool CPlayerObject::Init()
 {
-    //mRoot = CreateComponent<CStaticMeshComponent>();
     mRoot = CreateComponent<CSpriteComponent>("Player");
-    //mBody = CreateComponent<CColliderAABB2D>();
-    //mBody = CreateComponent<CColliderSphere2D>();
-    mBody = CreateComponent<CColliderOBB2D>();
-    mLine = CreateComponent<CColliderLine2D>();
-    //mRotationPivot = CreateComponent<CSceneComponent>();
-    //mSub = CreateComponent<CSpriteComponent>();
-    //mSub2 = CreateComponent<CSpriteComponent>();
-    mCamera = CreateComponent<CCameraComponent>();
+    mBody = CreateComponent<CColliderAABB2D>();
+    mMovement = CreateComponent<CMovementComponent>();
+
+    mRotation = CreateComponent<CRotationComponent>();
+    mRotationPivot = CreateComponent<CSceneComponent>();
+
+    mAnimation = mRoot->CreateAnimation2D<CAnimation2D>();
+
     mHPBar = CreateComponent<CWidgetComponent>();
+    mInventory = CreateComponent<CInventoryComponent>();
+    
+    mCamera = CreateComponent<CCameraComponent>();
+    
+    mInput = mScene->GetInput();
 
-    mHPBar->SetRelativePos(-50.f, 50.f);
-
+    SetRootComponent(mRoot);
+    
+    //중심점 위치 조정
+    mRoot->SetPivot(0.5f, 0.5f);
+    mRoot->SetWorldPos(115.f, 120.f, 0.f);
+    mRoot->SetWorldScale(20.f, 20.f, 1.f);
+   
+    mRoot->AddChild(mBody);
+    mBody->SetCollisionProfile("Player");
+    mBody->SetBoxSize(15.f, 20.f);
+    
+    mRoot->AddChild(mCamera);
+    mCamera->SetProjectionType(ECameraProjectionType::Ortho);
+    
     CHeadInfo* HeadInfo = mScene->GetUIManager()->CreateWidget<CHeadInfo>("HeadInfo");
-
+    
+    mHPBar->SetRelativePos(-50.f, 50.f);
     mHPBar->SetWidget(HeadInfo);
 
     mRoot->AddChild(mHPBar);
 
-    mMovement = CreateComponent<CMovementComponent>();
-    mRotation = CreateComponent<CRotationComponent>();
-    mInventory = CreateComponent<CInventoryComponent>();
-
-    mRoot->SetTexture("Teemo", TEXT("Texture/teemo.png"));
-    mRoot->SetPivot(0.5f, 0.5f);
-
-    mAnimation = mRoot->CreateAnimation2D<CAnimation2D>();
-
-    mAnimation->AddSequence("PlayerIdle", 1.f, 1.f, true, false);
-    mAnimation->AddSequence("PlayerRun", 0.7f, 1.f, true, false);
-    mAnimation->AddSequence("PlayerWalk", 0.7f, 1.f, true, false);
-    mAnimation->AddSequence("PlayerAttack", 1.f, 1.f, false, false);
-
-    mAnimation->SetEndFunction<CPlayerObject>("PlayerAttack",
-        this, &CPlayerObject::AttackEnd);
-    mAnimation->AddNotify<CPlayerObject>("PlayerAttack",
-        2, this, &CPlayerObject::AttackNotify);
-
-    mRoot->SetWorldPos(500.f, 1000.f, 0.f);
-    mRoot->SetWorldScale(100.f, 100.f, 1.f);
-
-    SetRootComponent(mRoot);
-    
-    mBody->SetCollisionProfile("Player");
-    mBody->SetBoxSize(100.f, 100.f);
-    //mBody->SetRadius(50.f);
-
-    mRoot->AddChild(mBody);
-    mRoot->AddChild(mLine);
-
-    // Default
-    mLine->SetCollisionProfile("Player");
-    mLine->SetRelativePos(0.f, 50.f);
-    mLine->SetLineDistance(300.f);
-
-    mCamera->SetProjectionType(ECameraProjectionType::Ortho);
-
-    mRoot->AddChild(mCamera);
+    mAnimation->AddSequence("PlayerIdle", 0.7f, 1.f, true, false);
+    mAnimation->AddSequence("PlayerRun", 1.f, 1.f, true, false);
+    mAnimation->AddSequence("PlayerJump", 1.0f, 1.f, true, false);
+    mAnimation->AddSequence("PlayerDie", 1.f, 1.f, true, false);
 
     mMovement->SetUpdateComponent(mRoot);
     mMovement->SetMoveSpeed(200.f); 
-    //mRotation->SetUpdateComponent(mRotationPivot);
-    //mRotation->SetVelocityInit(false);
-    //mRotation->SetMoveZ(360.f);
+
+    mRoot->AddChild(mRotationPivot);
+
+#pragma region Weapon
+    //0313 > 0317 수정
+    //무기 생성
+    ////Default Slot은 Sword
+    mWeaponSlot = mScene->CreateObj<CWeaponObject>("Slot");
+    mWeaponSlot->GetRootComponent()->SetPivot(0.f, 0.5f);
+    mWeaponSlot->GetRootComponent()->SetRelativePos(0.f, 0.f);
+
+    mSwap = true;
+
+    //RotationPivot Scale 초기화
+    mRotationPivot->SetName("Hand");
+    mRotationPivot->SetWorldScale(1.f, 1.f, 1.f);
+
+    //Pivot에 Slot의 SpriteComponent 적용
+    mRotationPivot->AddChild(mWeaponSlot->GetRootComponent());
+
+#pragma endregion Weapon
 
     mScene->GetInput()->AddBindKey("MoveUp", 'W');
-    mScene->GetInput()->AddBindKey("MoveDown", 'S');
+    //mScene->GetInput()->AddBindKey("MoveDown", 'S');
     mScene->GetInput()->AddBindKey("MoveRight", 'D');
     mScene->GetInput()->AddBindKey("MoveLeft", 'A');;
     mScene->GetInput()->AddBindKey("MovePoint", VK_RBUTTON);
 
     mScene->GetInput()->AddBindKey("Fire", VK_SPACE);
+    
+    mScene->GetInput()->AddBindKey("Slot", '1');
 
-    mScene->GetInput()->AddBindKey("Skill1", '1');
-    mScene->GetInput()->ChangeKeyCtrl("Skill1", true);
-    mScene->GetInput()->ChangeKeyShift("Skill1", true);
-
-    mScene->GetInput()->AddBindKey("Skill2", '2');
-    mScene->GetInput()->AddBindKey("Skill3", '3');
-    mScene->GetInput()->AddBindKey("Skill4", '4');
-    mScene->GetInput()->AddBindKey("Skill5", '5');
-    mScene->GetInput()->AddBindKey("Skill6", '6');
-    mScene->GetInput()->AddBindKey("Skill7", '7');
-    mScene->GetInput()->AddBindKey("Skill8", '8');
-    mScene->GetInput()->AddBindKey("Skill9", '9');
+    //mScene->GetInput()->AddBindKey("Skill1", '1');
+    //mScene->GetInput()->ChangeKeyCtrl("Skill1", true);
+    //mScene->GetInput()->ChangeKeyShift("Skill1", true);
 
     //0311
     //Jump키 변경
     mScene->GetInput()->AddBindFunction<CPlayerObject>("MoveUp",
         EInputType::Hold, this, &CPlayerObject::Jump);
-
+    //하단점프 추가 구현필요
     mScene->GetInput()->AddBindFunction<CPlayerObject>("MoveDown",
         EInputType::Hold, this, &CPlayerObject::MoveDown);
     
@@ -151,12 +151,12 @@ bool CPlayerObject::Init()
     mScene->GetInput()->AddBindFunction<CPlayerObject>("MoveLeft",
         EInputType::Hold, this, &CPlayerObject::MoveLeft);
 
-    mScene->GetInput()->AddBindFunction<CPlayerObject>("MovePoint",
-        EInputType::Down, this, &CPlayerObject::MovePoint);
-
-
-
-   /* mScene->GetInput()->AddBindFunction<CPlayerObject>("RotationZ",
+    mScene->GetInput()->AddBindFunction<CPlayerObject>("MovePoint", EInputType::Down, this, &CPlayerObject::MovePoint);
+    
+    mScene->GetInput()->AddBindFunction<CPlayerObject>("Slot", EInputType::Down, this, &CPlayerObject::SwapWeapon);
+    
+   
+    /* mScene->GetInput()->AddBindFunction<CPlayerObject>("RotationZ",
         EInputType::Hold, this, &CPlayerObject::RotationZ);
 
     mScene->GetInput()->AddBindFunction<CPlayerObject>("RotationZInv",
@@ -165,55 +165,56 @@ bool CPlayerObject::Init()
     mScene->GetInput()->AddBindFunction<CPlayerObject>("Fire",
         EInputType::Down, this, &CPlayerObject::Fire);
 
-    mScene->GetInput()->AddBindFunction<CPlayerObject>("Skill1",
-        EInputType::Hold, this, &CPlayerObject::Skill1);
-
-    mScene->GetInput()->AddBindFunction<CPlayerObject>("Skill1",
-        EInputType::Up, this, &CPlayerObject::Skill1Fire);
-
-
-    mScene->GetInput()->AddBindFunction<CPlayerObject>("Skill2",
-        EInputType::Down, this, &CPlayerObject::Skill2);
-
-
-    mScene->GetInput()->AddBindFunction<CPlayerObject>("Skill3",
-        EInputType::Down, this, &CPlayerObject::Skill3);
-
-    mScene->GetInput()->AddBindFunction<CPlayerObject>("Skill4",
-        EInputType::Down, this, &CPlayerObject::Skill4);
-
-    mScene->GetInput()->AddBindFunction<CPlayerObject>("Skill5",
-        EInputType::Down, this, &CPlayerObject::Skill5);
-
-    mScene->GetInput()->AddBindFunction<CPlayerObject>("Skill6",
-        EInputType::Down, this, &CPlayerObject::Skill6);
-
-    mScene->GetInput()->AddBindFunction<CPlayerObject>("Skill7",
-        EInputType::Down, this, &CPlayerObject::Skill7);
-
-    mScene->GetInput()->AddBindFunction<CPlayerObject>("Skill8",
-        EInputType::Down, this, &CPlayerObject::Skill8);
-
-    mScene->GetInput()->AddBindFunction<CPlayerObject>("Skill9",
-        EInputType::Down, this, &CPlayerObject::Skill9);
-
     return true;
 }
 
 void CPlayerObject::Update(float DeltaTime)
 {   
     //0311
-    //플레이어 위치 확인
-    IsPlayerOnGround(DeltaTime); 
-    IsPlayerCollsionTile(DeltaTime);
-    
     //Jump상태 확인
     if (mIsJumping)
         JumpUpdate(DeltaTime);
-
+   
+    //플레이어 위치 확인
+    CheckWallCollision(DeltaTime);
+    CheckBottomCollision(DeltaTime);
+    CheckCeilingCollision(DeltaTime);
+    
+    //마우스 위치에 따른 플레이어 좌우반전
+    CalPlayerDir();
+    
     CSceneObject::Update(DeltaTime);
+    CLog::PrintLog(std::to_string(mHP));
+    //0313
+    //마우스 위치를 가져옴
+    const FVector2D& MousePos = mInput->GetMouseWorldPos2D();
+    //Pivot과 마우스의 각도확인
+    FollowMouse(DeltaTime, MousePos);
+    //마우스 방향으로 무기를 듦
+    mRotationPivot->SetWorldRotationZ(mMouseDeg);
+    
+    //무기가 검이라면 마우스 방향 90도 위치
+    if(!strcmp("Sword",mWeaponSlot->GetWeaponName().c_str()))
+		mWeaponSlot->GetSpriteComponent()->SetRelativeRotationZ(mSwingDeg);
+    else
+		mWeaponSlot->GetSpriteComponent()->SetRelativeRotationZ(0.f);
 
- 
+    if (mInput->GetMouseDown(EMouseButtonType::LButton))
+    {   
+        if (mSwap == true)
+        {
+            //Hitbox 생성 및 제거
+            CSwordHitboxObj* SwordHitbox = mScene->CreateObj<CSwordHitboxObj>("SwordAttackHitBox");
+            SwordHitbox->AttackAction(mWeaponPos, mWeaponDir, mWeaponRot);
+            //무기좌표를 반전
+            mWeaponSlot->GetSpriteComponent()->SetRelativeRotationZ(mSwingDeg+=180.f);
+        }
+        else
+        {
+            ArrowFire();
+        }
+    }
+
     //if (mSkill2Enable)
     //{
     //    UpdateSkill2(DeltaTime);
@@ -237,6 +238,7 @@ void CPlayerObject::Update(float DeltaTime)
     else if (ItemTest)
     {
         ItemTest = false;
+
         std::string NameArray[2] =
         {
             "IconSword",
@@ -302,7 +304,7 @@ void CPlayerObject::MoveUp(float DeltaTime)
 {
     mMovement->AddMove(mRootComponent->GetAxis(EAxis::Y));
 
-    mAnimation->ChangeAnimation("PlayerWalk");
+    mAnimation->ChangeAnimation("PlayerJump");
 
     mAutoBasePose = true;
 }
@@ -311,7 +313,7 @@ void CPlayerObject::MoveDown(float DeltaTime)
 {
     mMovement->AddMove(mRootComponent->GetAxis(EAxis::Y) * -1.f);
 
-    mAnimation->ChangeAnimation("PlayerWalk");
+    mAnimation->ChangeAnimation("PlayerRun");
 
     mAutoBasePose = true;
 }
@@ -337,9 +339,11 @@ void CPlayerObject::MoveRight(float DeltaTime)
 {
     mMovement->AddMove(mRootComponent->GetAxis(EAxis::X));
 
-    mAnimation->ChangeAnimation("PlayerWalk");
-
-    mAnimation->SetAnimationReverseX(false);
+    //CalPlayerDir();
+    //mAnimation->SetUVRev(false);
+    mAnimation->ChangeAnimation("PlayerRun");
+	
+    //mAnimation->SetAnimationReverseX(false);
 
     mAutoBasePose = true;
 }
@@ -348,9 +352,11 @@ void CPlayerObject::MoveLeft(float DeltaTime)
 {
     mMovement->AddMove(mRootComponent->GetAxis(EAxis::X) * -1);
 
-    mAnimation->ChangeAnimation("PlayerWalk");
+    //CalPlayerDir();
+    //mAnimation->SetUVRev(true);
+    mAnimation->ChangeAnimation("PlayerRun");
 
-    mAnimation->SetAnimationReverseX(true);
+    //mAnimation->SetAnimationReverseX(true);
 
     mAutoBasePose = true;
 }
@@ -648,47 +654,6 @@ void CPlayerObject::AttackNotify()
     Bullet->SetLifeTime(2.f);
 }
 
-//0311
-//중력 적용
-void CPlayerObject::IsPlayerOnGround(float DeltaTime)
-{
-    //***비교값은 y축만이므로 FVector2D를 사용하지말고 float로 자료크기를 줄일 수 있음
-     
-    //플레이어 객체의 하단 좌표
-    //좌표값을 가지는 RootComponent의 전역공간에서의 중심점
-    //컴포넌트의 스케일에서 절반을 뺀 크기만큼의 좌표
-    FVector2D FeetPos = FVector2D(mRoot->GetWorldPosition().x, mRoot->GetWorldPosition().y - mRoot->GetWorldScale().y / 2);
-    
-    //자신이 속해있는 Scene에서 TileMapObj탐색
-    CTileMapObj* TileMap = mScene->FindObjectFromType<CTileMapObj>();
-    //타일맵이 존재한다면
-    if (TileMap)
-    {
-        //플레이어의 발이 위치한 좌표의 타일의 이동가능 여부를 확인
-        if (TileMap->IsTileBlocked(FeetPos))
-        {
-            //상태를 바닥 위로 설정
-            mIsOnGround = true;
-            //플레이어의 Y좌표를 다시 지정
-            //발의 위치를 타일 크기만큼 나누면
-            //해당 타일이 Y축으로 몇 번째 타일인지 확인 가능
-            //정수부에 타일의 크기를 다시 곱하면 타일의 좌표를 도출
-            //플레이어의 발에 위치를 타일의 위치로 변경
-            //플레이어의 중심좌표를 설정해야 하므로 크기의 절반을 합
-            mRoot->SetWorldPos(mRoot->GetWorldPosition().x,
-                (FeetPos.y / TileMap->GetTileSize().y) * TileMap->GetTileSize().y + mRoot->GetWorldScale().y / 2);
-        }
-        else
-            //상태를 공중으로 설정
-            mIsOnGround = false;
-    }
-
-    //MovementComponent의 Velocity변수를 변경하는 함수
-    //변경 후 상태가 Update되어야 하므로 SceneObjec::Update() 전에 사용
-    if (!mIsOnGround)
-		mMovement->AddMove(mRootComponent->GetAxis(EAxis::Y) * -1);
-}
-
 void CPlayerObject::Jump(float DeltaTime)
 {
     //공중에 있다면 점프 불가
@@ -707,27 +672,146 @@ void CPlayerObject::JumpUpdate(float DeltaTime)
 {
     mJumpingTime -= DeltaTime;
 
-    mMovement->AddMove(mRootComponent->GetAxis(EAxis::Y) * 2);
+    mMovement->AddMoveY(2);
    
     if (mJumpingTime <= 0.f)
+    {
         mIsJumping = false;
+    }
 }
-
-void CPlayerObject::IsPlayerCollsionTile(float DeltaTime)
+//0312
+//방향별 충돌 확인
+void CPlayerObject::CheckBottomCollision(float DeltaTime)
 {
-    //좌표값을 가지는 RootComponent의 전역공간에서의 중심점
-    //컴포넌트의 스케일에서 절반을 뺀 크기만큼의 좌표
-    FVector2D RightPos = FVector2D(mRoot->GetWorldPosition().x + mRoot->GetWorldScale().x / 2, mRoot->GetWorldPosition().y);
-    FVector2D LeftPos = FVector2D(mRoot->GetWorldPosition().x - mRoot->GetWorldScale().x / 2, mRoot->GetWorldPosition().y);
-
     CTileMapObj* TileMap = mScene->FindObjectFromType<CTileMapObj>();
+
+    FVector2D LT(mRoot->GetWorldPosition().x - mRoot->GetWorldScale().x / 2, mRoot->GetWorldPosition().y + mRoot->GetWorldScale().y / 2);
+    FVector2D RB(mRoot->GetWorldPosition().x + mRoot->GetWorldScale().x / 2, mRoot->GetWorldPosition().y - mRoot->GetWorldScale().y / 2);
+    FVector2D Center(mRoot->GetWorldPosition().x, mRoot->GetWorldPosition().y);
 
     if (TileMap)
     {
-        if (TileMap->IsTileBlocked(RightPos))
-            mMovement->AddMove(mRootComponent->GetAxis(EAxis::X) * -1);
-        else if (TileMap->IsTileBlocked(LeftPos))
-            mMovement->AddMove(mRootComponent->GetAxis(EAxis::X));
+        if (TileMap->IsTileBlocked(LT.x+1, RB.y) ||
+            TileMap->IsTileBlocked(RB.x-1, RB.y) ||
+            TileMap->IsTileBlocked(Center.x, RB.y))
+        {
+            //상태를 바닥 위로 설정
+            mIsOnGround = true;
+        }
+        else
+            //바닥 타일이 없다면 공중
+            mIsOnGround = false;
+        
+        //바닥과 충돌 상태가 아니라면 중력 생성
+        if (!mIsOnGround)
+            mMovement->AddMoveY(-1);
     }
 }
 
+void CPlayerObject::CheckWallCollision(float DeltaTime)
+{
+    CTileMapObj* TileMap = mScene->FindObjectFromType<CTileMapObj>();
+
+    FVector2D LT(mRoot->GetWorldPosition().x - mRoot->GetWorldScale().x / 2, mRoot->GetWorldPosition().y + mRoot->GetWorldScale().y / 2);
+    FVector2D RB(mRoot->GetWorldPosition().x + mRoot->GetWorldScale().x / 2, mRoot->GetWorldPosition().y - mRoot->GetWorldScale().y / 2);
+    FVector2D Center(mRoot->GetWorldPosition().x, mRoot->GetWorldPosition().y);
+
+    if (TileMap)
+    {
+        float TileSizeX = TileMap->GetTileSize().x; 
+		float PlayerX = mRoot->GetWorldPosition().x; 
+
+        //좌측 벽 충돌
+        if (TileMap->IsTileBlocked(LT.x, LT.y) ||
+            TileMap->IsTileBlocked(LT.x, Center.y)||
+            TileMap->IsTileBlocked(LT.x, RB.y+1))
+        {
+            // 좌측 이동을 방지
+            mMovement->AddMoveX(1);
+        }
+        //우측 벽 충돌
+		else if (TileMap->IsTileBlocked(RB.x, LT.y) ||
+			TileMap->IsTileBlocked(RB.x, Center.y) ||
+			TileMap->IsTileBlocked(RB.x, RB.y+1))
+        {
+            // 우측 이동을 방지
+            mMovement->AddMoveX(-1);
+        }
+    }
+}
+
+void CPlayerObject::CheckCeilingCollision(float DeltaTime)
+{
+    CTileMapObj* TileMap = mScene->FindObjectFromType<CTileMapObj>();
+
+    FVector2D LT(mRoot->GetWorldPosition().x - mRoot->GetWorldScale().x / 2, mRoot->GetWorldPosition().y + mRoot->GetWorldScale().y / 2);
+    FVector2D RB(mRoot->GetWorldPosition().x + mRoot->GetWorldScale().x / 2, mRoot->GetWorldPosition().y - mRoot->GetWorldScale().y / 2);
+    FVector2D Center(mRoot->GetWorldPosition().x, mRoot->GetWorldPosition().y);
+
+    if (TileMap)
+    {
+        if (TileMap->IsTileBlocked(LT.x, LT.y) ||
+            TileMap->IsTileBlocked(RB.x, LT.y) ||
+            TileMap->IsTileBlocked(Center.x, LT.y))
+        {
+            mIsJumping = false;
+            mIsOnGround = false;
+            //mMovement->SetMoveSpeed(400);
+        }
+    }
+}
+
+void CPlayerObject::FollowMouse(float DeltaTime,const FVector2D& MousePos)
+{
+    FVector3D PivotPos = mRotationPivot->GetWorldPosition();
+ 
+    mMousePos = FVector2D(MousePos.x - PivotPos.x, MousePos.y - PivotPos.y);
+    mMousePos.Normalize();
+
+    float angleRad = atan2(mMousePos.y, mMousePos.x);
+    mMouseDeg = angleRad * (180.0 / 3.14159265358979323846);
+
+    mWeaponPos =FVector3D(mRotationPivot->GetWorldPosition());
+	mWeaponDir = FVector3D(mMousePos.x, mMousePos.y, 0.f);
+    mWeaponRot = FVector3D(mRotationPivot->GetWorldRotation());
+}
+
+void CPlayerObject::ArrowFire()
+{
+    CBulletObject* Bullet = mScene->CreateObj<CBulletObject>("Arrow");
+    CSceneComponent* Root = Bullet->GetRootComponent();
+
+    Bullet->SetBulletCollisionProfile("PlayerAttack");
+
+    FVector3D Pos = mRotationPivot->GetWorldPosition();
+    FVector3D Dir(mMousePos.x, mMousePos.y, 0.f);
+
+    Root->SetWorldScale(13.f, 5.f);
+    Root->SetWorldRotation(mRotationPivot->GetWorldRotation());
+    Root->SetWorldPos(Pos + Dir * 20.f);
+
+    Bullet->SetLifeTime(2.f);
+}
+
+void CPlayerObject::CalPlayerDir()
+{
+    //CLog::PrintLog(std::to_string(mMousePos.x));
+    if(mMousePos.x > 0)
+        mAnimation->SetUVRev(false);
+    else
+        mAnimation->SetUVRev(true);
+}
+
+void CPlayerObject::SwapWeapon(float DeltaTime)
+{
+    if (mSwap)
+    {
+        mSwap = false;
+        mWeaponSlot->SetInfo("Bow", TEXT("Texture/Weapon/Bow.png"), FVector2D(17.f, 13.f));
+    }
+    else
+    {
+        mSwap = true; 
+        mWeaponSlot->SetInfo("Sword", TEXT("Texture/Weapon/Sword.png"), FVector2D(19.f, 7.f));
+    }
+}

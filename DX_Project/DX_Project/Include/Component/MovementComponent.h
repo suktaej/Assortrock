@@ -4,7 +4,7 @@
 #include "NavAgent.h"
 
 class CMovementComponent :
-    public CComponent,
+	public CComponent,
 	public CNavAgent
 {
 	friend class CScene;
@@ -59,6 +59,22 @@ public:
 	void AddMove(const FVector3D& Dir)
 	{
 		mVelocity += Dir;
+	}
+
+	//0312
+	void AddMoveX(const float& x)
+	{
+		mVelocity.x += x;
+	}
+
+	void AddMoveY(const float& y)
+	{
+		mVelocity.y += y;
+	}
+
+	void AddMoveZ(const float& z)
+	{
+		mVelocity.z += z;
 	}
 
 	void SetMove(const FVector3D& Dir)

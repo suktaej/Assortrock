@@ -5,7 +5,7 @@
 struct FRenderLayer
 {
 	std::list<CSharedPtr<class CSceneComponent>>	RenderList;
-	int			ZOrder = 0;
+	int ZOrder = 0;
 };
 
 class CRenderManager
@@ -41,18 +41,14 @@ public:
 	void Render();
 
 public:
-	bool CreateRenderLayer(const std::string& Name,
-		int ZOrder);
+	bool CreateRenderLayer(const std::string& Name, int ZOrder);
 
 private:
 	FRenderLayer* FindLayer(const std::string& Name);
 
 private:
-	static bool SortY(const CSharedPtr<class CSceneComponent>& Src,
-		const CSharedPtr<class CSceneComponent>& Dest);
-
-	static bool SortAlpha(const CSharedPtr<class CSceneComponent>& Src,
-		const CSharedPtr<class CSceneComponent>& Dest);
+	static bool SortY(const CSharedPtr<class CSceneComponent>& Src, const CSharedPtr<class CSceneComponent>& Dest);
+	static bool SortAlpha(const CSharedPtr<class CSceneComponent>& Src, const CSharedPtr<class CSceneComponent>& Dest);
 
 	DECLARE_SINGLE(CRenderManager)
 };

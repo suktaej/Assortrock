@@ -191,8 +191,12 @@
     <ClCompile Include="Object\BulletDot.cpp" />
     <ClCompile Include="Object\BulletObject.cpp" />
     <ClCompile Include="Object\EditorPlayer.cpp" />
+    <ClCompile Include="Object\EnemySmallSkel.cpp" />
     <ClCompile Include="Object\GravityBullet.cpp" />
     <ClCompile Include="Object\GunnerMonster.cpp" />
+    <ClCompile Include="Object\HitboxObj.cpp" />
+    <ClCompile Include="Object\ItemObject.cpp" />
+    <ClCompile Include="Object\MonsterHitboxObj.cpp" />
     <ClCompile Include="Object\MonsterObject.cpp" />
     <ClCompile Include="Object\NearingMonster.cpp" />
     <ClCompile Include="Object\ObjectSpawnPoint.cpp" />
@@ -200,9 +204,16 @@
     <ClCompile Include="Object\PlayerObject.cpp" />
     <ClCompile Include="Object\SceneObject.cpp" />
     <ClCompile Include="Object\SpriteEffect.cpp" />
+    <ClCompile Include="Object\SwordHitboxObj.cpp" />
     <ClCompile Include="Object\TalonR.cpp" />
     <ClCompile Include="Object\TileMapObj.cpp" />
     <ClCompile Include="Object\TornadoBullet.cpp" />
+    <ClCompile Include="Object\WeaponObject.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="ProfileManager.cpp" />
     <ClCompile Include="Render\BlendState.cpp" />
     <ClCompile Include="Render\DepthStencilState.cpp" />
@@ -216,6 +227,7 @@
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneAssetManager.cpp" />
     <ClCompile Include="Scene\SceneCollision.cpp" />
+    <ClCompile Include="Scene\SceneD1.cpp" />
     <ClCompile Include="Scene\SceneEditor.cpp" />
     <ClCompile Include="Scene\SceneMain.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
@@ -249,6 +261,7 @@
     <ClCompile Include="UI\Common\ProgressBar.cpp" />
     <ClCompile Include="UI\Common\TextBlock.cpp" />
     <ClCompile Include="UI\Common\TitleBar.cpp" />
+    <ClCompile Include="UI\UserWidget\EditorWidget.cpp" />
     <ClCompile Include="UI\UserWidget\HeadInfo.cpp" />
     <ClCompile Include="UI\UserWidget\Inventory.cpp" />
     <ClCompile Include="UI\UserWidget\MainWidget.cpp" />
@@ -318,8 +331,12 @@
     <ClInclude Include="Object\BulletDot.h" />
     <ClInclude Include="Object\BulletObject.h" />
     <ClInclude Include="Object\EditorPlayer.h" />
+    <ClInclude Include="Object\EnemySmallSkel.h" />
     <ClInclude Include="Object\GravityBullet.h" />
     <ClInclude Include="Object\GunnerMonster.h" />
+    <ClInclude Include="Object\HitboxObj.h" />
+    <ClInclude Include="Object\ItemObject.h" />
+    <ClInclude Include="Object\MonsterHitboxObj.h" />
     <ClInclude Include="Object\MonsterObject.h" />
     <ClInclude Include="Object\NearingMonster.h" />
     <ClInclude Include="Object\ObjectSpawnPoint.h" />
@@ -327,9 +344,16 @@
     <ClInclude Include="Object\PlayerObject.h" />
     <ClInclude Include="Object\SceneObject.h" />
     <ClInclude Include="Object\SpriteEffect.h" />
+    <ClInclude Include="Object\SwordHitboxObj.h" />
     <ClInclude Include="Object\TalonR.h" />
     <ClInclude Include="Object\TileMapObj.h" />
     <ClInclude Include="Object\TornadoBullet.h" />
+    <ClInclude Include="Object\WeaponObject.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="ProfileManager.h" />
     <ClInclude Include="Render\BlendState.h" />
     <ClInclude Include="Render\DepthStencilState.h" />
@@ -344,6 +368,7 @@
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneAssetManager.h" />
     <ClInclude Include="Scene\SceneCollision.h" />
+    <ClInclude Include="Scene\SceneD1.h" />
     <ClInclude Include="Scene\SceneEditor.h" />
     <ClInclude Include="Scene\SceneMain.h" />
     <ClInclude Include="Scene\SceneManager.h" />
@@ -380,6 +405,7 @@
     <ClInclude Include="UI\Common\TextBlock.h" />
     <ClInclude Include="UI\Common\TitleBar.h" />
     <ClInclude Include="UI\UIInfo.h" />
+    <ClInclude Include="UI\UserWidget\EditorWidget.h" />
     <ClInclude Include="UI\UserWidget\HeadInfo.h" />
     <ClInclude Include="UI\UserWidget\Inventory.h" />
     <ClInclude Include="UI\UserWidget\MainWidget.h" />
